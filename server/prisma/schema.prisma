@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminPrediction {
+  id                         String   @id
+  predictedEventCount        Int
+  predictedTotalParticipants Int
+  predictedAverageAttendance Float
+  predictedPopularCategory   String
+  predictionMonth            String
+  confidence                 Float
+  generatedAt                DateTime @default(now())
+
+  @@index([generatedAt])
+  @@index([predictionMonth])
+}
+
+model CreditPurchase {
+  id             String        @id
+  organizationId String
+  purchasedBy    String
+  package        CreditPackage
+  credits        Int
+  amount         Float
+  purchasedAt    DateTime      @default(now())
+  Organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  User           User          @relation(fields: [purchasedBy], references: [id])
+
+  @@index([organizationId])
+  @@index([purchasedBy])
+}
+
+model Event {
+  id                String              @id
+  organizationId    String
+  creatorId         String
+  title             String
+  description       String
+  location          String
+  startDate         DateTime
+  endDate           DateTime
+  capacity          Int
+  status            EventStatus         @default(PUBLISHED)
+  category          String
+  tags              String[]
+  image             String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime
+  User              User                @relation(fields: [creatorId], references: [id])
+  Organization      Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  EventEmbedding    EventEmbedding?
+  EventMetrics      EventMetrics?
+  EventParticipants EventParticipants[]
+  UserInteraction   UserInteraction[]
+
+  @@index([category])
+  @@index([creatorId])
+  @@index([organizationId])
+  @@index([startDate])
+  @@index([status])
+}
+
+model EventEmbedding {
+  id        String   @id
+  eventId   String   @unique
+  embedding Float[]
+  updatedAt DateTime
+  Event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+}
+
+model EventMetrics {
+  id                 String   @id
+  eventId            String   @unique
+  totalViews         Int      @default(0)
+  totalRegistrations Int      @default(0)
+  totalAttendees     Int      @default(0)
+  updatedAt          DateTime
+  Event              Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+}
+
+model EventParticipants {
+  id          String   @id
+  eventId     String
+  userId      String
+  registerdAt DateTime @default(now())
+  attended    Boolean  @default(false)
+  Event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([userId])
+}
+
+model Notification {
+  id        String   @id
+  userId    String
+  link      String?
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model Organization {
+  id                 String               @id
+  name               String
+  thumbnail          String?
+  image              String?
+  description        String
+  credits            Int                  @default(20)
+  lastCreditReset    DateTime             @default(now())
+  isPremium          Boolean              @default(false)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime
+  CreditPurchase     CreditPurchase[]
+  Event              Event[]
+  OrganizationMember OrganizationMember[]
+
+  @@index([name])
+}
+
+model OrganizationMember {
+  id             String           @id
+  userId         String
+  organizationId String
+  role           OrganizationRole
+  joinedAt       DateTime         @default(now())
+  Organization   Organization     @relation(fields: [organizationId], references: [id])
+  User           User             @relation(fields: [userId], references: [id])
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+  @@index([role])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id
+  userId       String
+  accessToken  String   @unique
+  refreshToken String   @unique
+  expiresOn    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([accessToken])
+  @@index([refreshToken])
+  @@index([userId])
+}
+
+model User {
+  id                 String               @id
+  email              String               @unique
+  name               String
+  phone              String?
+  password           String?
+  role               Role                 @default(CUSTOMER)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime
+  image              String?
+  CreditPurchase     CreditPurchase[]
+  Event              Event[]
+  EventParticipants  EventParticipants[]
+  Notification       Notification[]
+  OrganizationMember OrganizationMember[]
+  Session            Session[]
+  UserEmbedding      UserEmbedding?
+  UserInteraction    UserInteraction[]
+}
+
+model UserEmbedding {
+  id        String   @id
+  userId    String   @unique
+  embedding Float[]
+  updatedAt DateTime
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model UserInteraction {
+  id        String   @id
+  userId    String
+  eventId   String
+  createdAt DateTime @default(now())
+  Event     Event    @relation(fields: [eventId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, eventId])
+  @@index([eventId])
+  @@index([userId])
+}
+
+enum CreditPackage {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum EventStatus {
+  PUBLISHED
+  CANCELLED
+  COMPLETED
+}
+
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
+  CREATOR
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
