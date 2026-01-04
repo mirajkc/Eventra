@@ -12,6 +12,7 @@ app.use(cors())
 app.use(helmet())
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000, 
+  limit : 10000
 }))
 app.use(express.json())
 app.use(express.urlencoded())

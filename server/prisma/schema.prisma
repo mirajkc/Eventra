@@ -56,7 +56,7 @@ model User {
 //session table to store user loggedin details and past sessions of an use r
 model Session {
   id           String   @id @default(cuid())
-  userId       String
+  userId       String   @unique
   accessToken  String   @unique
   refreshToken String   @unique
   expiresOn    DateTime

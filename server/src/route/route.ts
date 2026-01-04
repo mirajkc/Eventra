@@ -2,5 +2,5 @@ import express, { Router } from 'express'
 import authRouter from './auth.route.ts'
 const router:Router = express.Router()
 
-router.use('/user', authRouter)
+router.use('/auth', authRouter)
 export default router
