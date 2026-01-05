@@ -6,6 +6,7 @@ import cookieParser  from 'cookie-parser'
 import errorHandler from "../middleware/errorhandler.middleware.ts";
 import notFound from "../notfound.ts";
 import router from "../route/route.ts";
+import emailService from "../service/email.service.ts";
 const app:Application = express()
 
 app.use(cors())
@@ -17,6 +18,7 @@ app.use(rateLimit({
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieParser())
+emailService
 app.get('/' , (req,res)=>{
   res.json({
     message : "Server is working"
