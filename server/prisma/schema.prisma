@@ -62,7 +62,7 @@ model User {
 model Otpdetails {
   id        String     @id @default(uuid())
   userId    String
-  otp       String
+  otp       String     @unique
   purpose   OtpPurpose
   expiresAt DateTime
   used      Boolean    @default(false)

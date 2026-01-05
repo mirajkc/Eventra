@@ -137,7 +137,7 @@ class AuthController {
       next(error)
     }
   }
-  async forgotPassword(req: Request, res: Response, next: NextFunction) {
+  async getForgotPassword(req: Request, res: Response, next: NextFunction) {
   try {
     const { email } = req.body;
 
@@ -155,10 +155,10 @@ class AuthController {
       length: 5,
       charset: "alphanumeric", 
     }).toUpperCase();
-
+    const hashedOTP = await bcrypt.hash(otp, 12)
     const otpdetails: ICreateOTP = {
       userId: userDetails.id,
-      otp,
+      otp : hashedOTP,
       purpose: "FORGOT_PASSWORD",
       expiresAt: new Date(Date.now() + 6 * 60 * 1000), 
     };
@@ -168,7 +168,7 @@ class AuthController {
     await emailService.sendEmail({
       to: userDetails.email,
       subject: "Eventra Password Reset OTP", 
-      message: forgotPasswordTemplate(newOtp.otp),
+      message: forgotPasswordTemplate(otp),
     });
 
     return res.status(200).json({
@@ -179,11 +179,87 @@ class AuthController {
   }
 }
 
-async verifyForgotPass(){
-  
+async verifyForgotPass(req:Request,res:Response,next:NextFunction){
+  try {
+    const {otp, email}  = req.body
+    const userDetails = await authService.getUserDetails({email : email})
+    if(!userDetails){
+      throw {
+        code : 404,
+        message : "User not found",
+        status : "USER_NOT_FOUND_ERR"
+      } as IErrorTypes
+    }
+    const otpDetails = await otpService.getOtp({filter : {userId : userDetails.id, purpose : 'FORGOT_PASSWORD'}, orderBy : {createdAt : 'desc'}}) //!otpdetials already done by the sevice so will allways be not null here
+    if(otpDetails.used === true){
+      throw {
+        code : 401, 
+        message : "Otp has already been used",
+        status : "OTP_USED_ERR"
+      } as IErrorTypes
+    }
+    if(otpDetails.expiresAt < new Date()){
+      await otpService.updateOTP({filter : {id : otpDetails.id} , data : {used : true}})
+      throw {
+        code  :401, 
+        message : "OTP expired please send new otp for the request.",
+        status : "OTP EXPIRATION ERR"
+      } as IErrorTypes
+    }
+    const isValid = await bcrypt.compare(otp, otpDetails.otp)
+    if(!isValid){
+      throw {
+        code : 401, 
+        message : "OTP does not match",
+        status : "OTP_DOESNOT_MATCH_ERR"
+      } as IErrorTypes
+    }
+    const accessToken =  generateToken({payload : userDetails.id , expiresIn : '6m'})
+    await otpService.updateOTP({filter : {id : otpDetails.id} , data : {used : true}})
+    res.json({
+      message : 'OTP verified successfully you can change password now',
+      data : accessToken
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+async forgotPassword(req:Request, res:Response, next:NextFunction){
+  try {
+    const data: {token : string, password: string} = req.body
+    const decoded:any = verifyToken(data.token)
+    const userDetails = await authService.getUserDetails({
+      id : decoded.userId
+    })
+    if(!userDetails){
+      throw {
+        code : 404, 
+        message : "User not found please send request again"
+      } as IErrorTypes
+    }
+    const hashedPassword = await bcrypt.hash(data.password, 12)
+     await authService.updateUser({filter : {id : decoded.userId}, data : {password : hashedPassword}})
+    res.json({
+      message : "Password changed successfully please login with new password"
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+async changePassword(req:Request,res:Response,next:NextFunction){
+  try {
+    const data:{password : string} = req.body
+    const userDetails = req.userDetails
+    const hashedPassword = await bcrypt.hash(data.password, 12)
+    await authService.updateUser({filter : {id : userDetails.id}, data : {password : hashedPassword}})
+    return res.json({
+      message : "Password changed successfully"
+    })
+  } catch (error) {
+    next(error)
+  }
 }
 
-  
 }
 const authController = new AuthController()
 export default authController

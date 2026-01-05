@@ -28,5 +28,29 @@ export const emailDTO = Joi.object({
 })
 
 export const OTPDTO = Joi.object({
+  email : Joi.string().required(),
   otp : Joi.string().required()
 })
+export const forgotPassDTO = Joi.object({
+  token : Joi.string().required(),
+    password: Joi.string()
+    .min(6)
+    .max(30)
+    .required(),
+
+  confirmPassword: Joi.string()
+    .valid(Joi.ref("password"))
+    .required(),
+})
+
+export const changePasswordDTO = Joi.object({
+    password: Joi.string()
+    .min(6)
+    .max(30)
+    .required(),
+
+  confirmPassword: Joi.string()
+    .valid(Joi.ref("password"))
+    .required(),
+})
+

@@ -1,4 +1,5 @@
 import { prisma } from "../config/prisma.config.ts"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
 import type { IRegisterTypes } from "../lib/types/user.types.ts"
 
 class AuthService{
@@ -20,6 +21,20 @@ class AuthService{
       }
     }
     return newUser
+  }
+  async updateUser({filter, data}:{filter : {id : string}, data :any}){
+    const updatedUser = await prisma.user.update({
+      where : filter,
+      data : data
+    })
+    if(!updatedUser){
+      throw {
+        code : 500, 
+        message : "Error while updating the user please try again",
+        status : "USER_UPDATE_ERR"
+      } as IErrorTypes
+    }
+    return updatedUser
   }
 }
 const authService = new AuthService()
