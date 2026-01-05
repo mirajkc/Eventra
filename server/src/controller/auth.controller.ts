@@ -8,6 +8,10 @@ import type { IRegisterSession } from "../lib/types/session.types.ts"
 import sessionService from "../service/session.service.ts"
 import enviroment from "../config/enviroment.config.ts"
 import { generateToken, verifyToken } from "../service/jwt.service.ts"
+import type { ICreateOTP } from "../lib/types/otp.types.ts"
+import otpService from "../service/otp.service.ts"
+import emailService from "../service/email.service.ts"
+import  { forgotPasswordTemplate } from "../emailtemplates.ts"
 class AuthController {
   async register(req:Request,res:Response,next:NextFunction){
     try {
@@ -133,6 +137,52 @@ class AuthController {
       next(error)
     }
   }
+  async forgotPassword(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { email } = req.body;
+
+    const userDetails = await authService.getUserDetails({ email });
+
+    if (!userDetails) {
+      throw {
+        code: 404,
+        message: "User not found",
+        status: "USER_NOT_FOUND_ERR",
+      } as IErrorTypes;
+    }
+
+    const otp = generateString({
+      length: 5,
+      charset: "alphanumeric", 
+    }).toUpperCase();
+
+    const otpdetails: ICreateOTP = {
+      userId: userDetails.id,
+      otp,
+      purpose: "FORGOT_PASSWORD",
+      expiresAt: new Date(Date.now() + 6 * 60 * 1000), 
+    };
+
+    const newOtp = await otpService.createOtp(otpdetails);
+
+    await emailService.sendEmail({
+      to: userDetails.email,
+      subject: "Eventra Password Reset OTP", 
+      message: forgotPasswordTemplate(newOtp.otp),
+    });
+
+    return res.status(200).json({
+      message: "OTP sent successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async verifyForgotPass(){
+  
+}
+
   
 }
 const authController = new AuthController()

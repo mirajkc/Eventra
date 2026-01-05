@@ -22,6 +22,7 @@ export default function errorHandler(
       });
     }
   }
+  console.log(error);
   return res.status(code).json({
     message,
     status,

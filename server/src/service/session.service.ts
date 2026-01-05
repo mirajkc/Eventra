@@ -51,18 +51,10 @@ class SessionService {
     return updatesSession
   }
   async deleteSession(filter : { userId : string }) { 
-    const deletedSession = await prisma.session.delete({
-      where : filter
-    })
-    if(!deletedSession){
-      throw {
-        code : 404, 
-        message : "Session not found",
-        status :  "SESSION_NOT_FOUND_ERR"
-       } as IErrorTypes
-    }
-
-    return deletedSession
+    const result = await prisma.session.deleteMany({
+    where: filter
+  })
+  return result
   }
 }
 const sessionService = new SessionService()

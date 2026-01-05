@@ -31,6 +31,11 @@ enum CreditPackage {
   LARGE
 }
 
+enum OtpPurpose {
+  FORGOT_PASSWORD
+  RESET_PASSWORD
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -51,6 +56,21 @@ model User {
   eventParticipants  EventParticipants[]
   userEmbedding      UserEmbedding?
   notifications      Notification[]
+  otpdetails         Otpdetails[]
+}
+
+model Otpdetails {
+  id        String     @id @default(uuid())
+  userId    String
+  otp       String
+  purpose   OtpPurpose
+  expiresAt DateTime
+  used      Boolean    @default(false)
+  createdAt DateTime   @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 //session table to store user loggedin details and past sessions of an use r
