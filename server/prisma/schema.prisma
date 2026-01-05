@@ -84,6 +84,7 @@ model Organization {
   members         OrganizationMember[]
   events          Event[]
   creditPurchases CreditPurchase[]
+  // categories
 
   @@index([name])
 }

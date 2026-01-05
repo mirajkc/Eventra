@@ -62,6 +62,7 @@ class AuthController {
        userId : userDetails.id,
        expiresOn : new Date(Date.now() + 1296000000)
       }
+      await sessionService.deleteSession({ userId : userDetails.id})
       const newSession = await sessionService.createSession(sessionDetails)
       res.cookie("refreshToken" , newSession.refreshToken, {
         httpOnly : true,
@@ -120,7 +121,9 @@ class AuthController {
   async logout(req:Request, res:Response, next:NextFunction){
     try {
       const userDetails = req.userDetails
-       await sessionService.deleteSession({  userId : userDetails})
+       await sessionService.deleteSession({userId : userDetails.id
+        
+       })
       res.clearCookie('refreshToken')
       res.json({
         message : "User logged out successfully.",
