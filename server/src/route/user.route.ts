@@ -7,21 +7,8 @@ import { userUpdateDTO } from '../rules/user.rules.ts'
 const userRouter:Router = express.Router()
 // ===== User Profile =====
 userRouter.get('/me', authorize({}), userController.getLoggedInUser)
-// PATCH  /user/me
 userRouter.post('/update-user', authorize({}),upload.single('image'),validator(userUpdateDTO), userController.updateUser)
-// DELETE /user/me
+userRouter.delete('/delete-user' , authorize({}), userController.deleteUser)
+userRouter.get('/me/getdetails', authorize({}), userController.getUserDetails)
 
-// // ===== Admin =====
-// GET    /user
-
-// // ===== Notifications =====
-// GET    /user/me/notifications
-// PATCH  /user/me/notifications/:notificationId/read
-// PATCH  /user/me/notifications/read-all
-
-// // ===== Organizations =====
-// GET    /user/me/organizations
-
-// // ===== Events (optional) =====
-// GET    /user/me/events
 export default userRouter

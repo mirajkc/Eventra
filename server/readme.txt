@@ -1,4 +1,4 @@
-Day 1 – User Controller
+Day 1 – User Controller   // completed
 Day 2 – Organization Controller
 Day 3 – Event Controller
 Day 4 – Event Participation

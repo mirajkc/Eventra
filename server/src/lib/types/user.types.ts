@@ -22,3 +22,12 @@ export interface IUserDetails {
     updatedAt?: Date;
     image?: string  ;
 }
+export interface IUserQuery {
+           page?: string;
+           limit?: string;
+           organizationMember?: string;
+           createdEvents?: string;
+           eventParticipants?: string;  
+           creditPurchases?: string;    
+           notifications?: string;
+     }

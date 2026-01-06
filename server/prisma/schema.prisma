@@ -76,7 +76,7 @@ model Otpdetails {
 //session table to store user loggedin details and past sessions of an use r
 model Session {
   id           String   @id @default(cuid())
-  userId       String   @unique
+  userId       String
   accessToken  String   @unique
   refreshToken String   @unique
   expiresOn    DateTime
@@ -158,18 +158,21 @@ model Event {
   @@index([startDate])
   @@index([status])
   @@index([category])
+  @@index([status, startDate])
+  @@index([organizationId, status])
 }
 
 model EventParticipants {
-  id          String   @id @default(cuid())
-  eventId     String
-  userId      String
-  registerdAt DateTime @default(now())
-  attended    Boolean  @default(false)
+  id           String   @id @default(cuid())
+  eventId      String
+  userId       String
+  registeredAt DateTime @default(now())
+  attended     Boolean  @default(false)
 
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([eventId, userId])
   @@index([eventId])
   @@index([userId])
 }
@@ -199,7 +202,10 @@ model Notification {
   message   String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
 }
 
 // ========= Tables Machine Learning and Algorithms ===================== //
@@ -238,6 +244,8 @@ model UserInteraction {
   @@unique([userId, eventId])
   @@index([userId])
   @@index([eventId])
+  @@index([createdAt])
+  @@index([eventId, createdAt])
 }
 
 /// the final recommendation will be mix of both ie BERT and Cosine 
