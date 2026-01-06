@@ -20,5 +20,5 @@ export interface IUserDetails {
     role: "CUSTOMER" | "ADMIN";
     createdAt: Date;
     updatedAt?: Date;
-    image?: string ;
+    image?: string  ;
 }

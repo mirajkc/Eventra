@@ -1,19 +1,35 @@
-import cloudinary from "../config/connect.cloudinary.config.ts";
-import streamifier from "streamifier";
-export default function uploadImages (
-  buffer : Buffer,
-  folder : string
-):Promise<any>{
-  return new Promise((resolve, reject)=>{
-    const stream = cloudinary.uploader.upload_stream({
-      folder : folder, 
-      resource_type : "image"
-    },
-    (err, result) =>{
-      if(err) return reject(err);
-      resolve(result)
-    }
-  )
-  streamifier.createReadStream(buffer).pipe(stream)
+import { Readable } from "node:stream";
+import {v2 as cloudinary} from 'cloudinary'
+import enviroment from "../config/enviroment.config.ts";
+
+
+
+
+cloudinary.config({
+  cloud_name : enviroment.cloudinaryKeys.cloudName || "",
+  api_key: enviroment.cloudinaryKeys.apiKey || "",
+  api_secret: enviroment.cloudinaryKeys.apiSecret || "",
+})
+
+export function uploadImage(
+  buffer: Buffer,
+  folderName: string
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: folderName,
+        resource_type: "image"
+      },
+      (error, result) => {
+        if (error) return reject(error)
+        if (!result?.secure_url) {
+          return reject(new Error("Cloudinary upload failed"))
+        }
+        resolve(result.secure_url)
+      }
+    )
+
+    Readable.from(buffer).pipe(uploadStream)
   })
 }
