@@ -32,10 +32,8 @@ class UserController {
 
   async updateUser(req:Request, res:Response, next:NextFunction){
     try {
-      const file = req.file?.buffer
-      res.json({
-        file
-      })
+      const data = req.body
+      const userDetails = req.userDetails
     } catch (error) {
       next(error)
     }
