@@ -11,6 +11,12 @@ class Enviroment {
     password: process.env.SMTP_PASSWORD,
     from: process.env.SMTP_FROM,
   };
+
+  cloudinaryKeys = {
+    cloudName :process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey : process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET
+  }
 }
 const enviroment = new Enviroment()
 export default enviroment
