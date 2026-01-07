@@ -95,6 +95,7 @@ model Organization {
   name            String
   thumbnail       String?
   image           String?
+  website         String?
   description     String
   credits         Int                  @default(20)
   lastCreditReset DateTime             @default(now())
@@ -104,7 +105,6 @@ model Organization {
   members         OrganizationMember[]
   events          Event[]
   creditPurchases CreditPurchase[]
-  // categories
 
   @@index([name])
 }
@@ -197,7 +197,6 @@ model CreditPurchase {
 model Notification {
   id        String   @id @default(cuid())
   userId    String
-  link      String?
   title     String
   message   String
   isRead    Boolean  @default(false)

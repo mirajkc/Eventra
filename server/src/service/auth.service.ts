@@ -3,7 +3,7 @@ import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
 import type { IRegisterTypes } from "../lib/types/user.types.ts"
 
 class AuthService{
-  async getUserDetails(filter:any, include : any){
+  async getUserDetails(filter:any, include? : any){
     return  await prisma.user.findFirst({
       where : filter,
       include : include

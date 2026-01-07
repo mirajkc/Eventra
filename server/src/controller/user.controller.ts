@@ -7,7 +7,7 @@ import userService from "../service/user.service.ts"
 import eventService from "../service/event.service.ts"
 import organizationService from "../service/organization.service.ts"
 import creditService from "../service/creditpurchase.service.ts"
-import notoficationService from "../service/notification.service.ts"
+import notificationService from "../service/notification.service.ts"
 class UserController {
     async getLoggedInUser(req:Request, res:Response , next:NextFunction ){
       try {
@@ -131,7 +131,7 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
       counts.creditPurchases = await creditService.getCreditPurchaseCount({purchasedBy : userDetails.id})
     }
     if(query.notifications === 'true'){
-      counts.notifications = await notoficationService.getNotificationCount({userId : userDetails.id})
+      counts.notifications = await notificationService.getNotificationCount({userId : userDetails.id})
     }
 
     const pagination: any = {};

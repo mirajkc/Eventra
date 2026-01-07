@@ -11,7 +11,7 @@ import { generateToken, verifyToken } from "../service/jwt.service.ts"
 import type { ICreateOTP } from "../lib/types/otp.types.ts"
 import otpService from "../service/otp.service.ts"
 import emailService from "../service/email.service.ts"
-import  { forgotPasswordTemplate } from "../emailtemplates.ts"
+import  { forgotPasswordTemplate } from '../emailtemplates/forgotPassTemplate.ts'  
 class AuthController {
   async register(req:Request,res:Response,next:NextFunction){
     try {
