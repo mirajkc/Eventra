@@ -26,6 +26,38 @@ class OrganizationMember {
     }
     return result
   }
+
+  async deleteMember ({filter} : {filter : {id : string}}){
+    const result = await prisma.organizationMember.delete({
+      where : filter
+    })
+    if(!result){
+      throw {
+        code : 500,
+        message : "Error cant leave the organization at the momment please try again. ",
+        status : "LEAVE_ORGANIZATION_ERR"
+      } as IErrorTypes
+    }
+    return result
+  }
+
+  async updateMember({filter , data} : {
+    filter : {id : string},
+    data : {role : "OWNER" |"ADMIN"| "MEMBER" |"CREATOR",organizationId:string }
+  }){
+    const result = await prisma.organizationMember.update({
+      where : filter,
+      data :data
+    })
+    if(!result) {
+      throw {
+        code : 500, 
+        message : "Error while updating the user role please try again. ",
+        status : "MEMBER_UPDATE_ERR"
+      } as IErrorTypes
+    }
+    return result
+  }
 }
 const organizationMemberService = new OrganizationMember()
 export default organizationMemberService

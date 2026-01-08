@@ -4,3 +4,9 @@ export interface ICreateMember {
         organizationId : string,
         role? : IOrganizationMemberTypes
  }
+
+ export interface IUpdateMemberRole {
+        id : string,
+        role : IOrganizationMemberTypes,
+        organizationId : string
+ }

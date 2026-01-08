@@ -1,5 +1,6 @@
 import { prisma } from "../config/prisma.config.ts"
 import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
+import type { ICreateNotificaion } from "../lib/types/notification.types.ts"
 
 class NotificationService {
   async getNotificationCount(filter : {userId : string}){
@@ -7,14 +8,7 @@ class NotificationService {
         where : filter
       })
     }
-  async sendNotificaion({userId,title,message, type, entityId, entityType}:{
-    userId : string,
-    title : string,
-    message : string,
-    type : "EVENT_CREATED" | "EVENT_UPDATED" | "EVENT_REMINDER" | "EVENT_CANCELLED" | "ORG_APPROVED" | "PAYMENT_SUCCESS",
-    entityType : "EVENT" | "ORGANIZATION" |"USER"| "PAYMENT",
-    entityId : string
-  }){
+  async sendNotificaion({userId,title,message, type, entityId, entityType}:ICreateNotificaion){
     const newNotifications = await prisma.notification.create({
       data : {
         userId : userId,
@@ -33,6 +27,18 @@ class NotificationService {
       } as IErrorTypes
     }
     return newNotifications
+  }
+
+  async sendManyNotification(data :Array<ICreateNotificaion>){
+    const notifications = await prisma.notification.createMany({data  :data})
+    if(!notifications || notifications.count <= 0 ){
+      throw {
+        code : 500,
+        message : "Error while sending the notifications. ",
+        status : "NOTIFICATION_SEND_ERR"
+      } as IErrorTypes
+    }
+    return notifications
   }
 }
 const notificationService = new NotificationService()

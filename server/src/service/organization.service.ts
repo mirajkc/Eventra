@@ -1,6 +1,6 @@
 import { prisma } from "../config/prisma.config.ts"
 import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import type { ICreateOrganization } from "../lib/types/organization.types.ts"
+import type { ICreateOrganization, IUploadOrganizationData } from "../lib/types/organization.types.ts"
 
 class OrganizationService {
    async getOrganizationCount(filter : any){
@@ -61,7 +61,8 @@ class OrganizationService {
   async getOrganizationByFilter({filter, include} : {filter : {id : string}, include : any}){
     const result = await prisma.organization.findUnique({
       where : filter,
-      include : include}
+      include : include
+    }
     )
     if(!result){
       throw {
@@ -88,6 +89,39 @@ class OrganizationService {
       } as IErrorTypes
     }
     return oraganizationArray
+  }
+  async uploadOrganization({filter, data}:{
+    filter : {id : string},
+    data : IUploadOrganizationData
+  }){
+    const result = await prisma.organization.update({
+      where : filter,
+      data : data
+    })
+    if(!result){
+      throw {
+        code : 500,
+        message : "Error while updating the organization please try again",
+        status : "ORGANIZATION_UPLOAD_ERR"
+      } as IErrorTypes
+    }
+    return result
+  }
+
+  async deleteOrganization(id : string){
+    const result = await prisma.organization.delete({
+      where : {
+        id : id
+      }
+    })
+    if(!result){
+      throw {
+        code : 500,
+        message : "Error while deleting the organization please try again",
+        status : "ORGANIZATION_DELETE_ERR"
+      } as IErrorTypes
+    }
+    return result
   }
 
 }
