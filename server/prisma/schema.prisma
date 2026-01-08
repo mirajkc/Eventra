@@ -52,6 +52,24 @@ enum NotificationEntity {
   PAYMENT
 }
 
+enum OrganizationType {
+  INDIVIDUAL
+  COMPANY
+  EDUCATIONAL
+  COMMUNITY
+  NON_PROFIT
+  GOVERNMENT
+}
+
+enum EventType {
+  WORKSHOP
+  MEETUP
+  CONFERENCE
+  WEBINAR
+  HACKATHON
+  COMPETITION
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -113,6 +131,7 @@ model Organization {
   image           String?
   website         String?
   description     String
+  type            OrganizationType     @default(INDIVIDUAL)
   credits         Int                  @default(20)
   lastCreditReset DateTime             @default(now())
   isPremium       Boolean              @default(false)
@@ -152,6 +171,7 @@ model Event {
   endDate        DateTime
   capacity       Int
   status         EventStatus @default(PUBLISHED)
+  type           EventType
 
   //event metadata for the recommendation system 
   category String

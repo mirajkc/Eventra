@@ -79,7 +79,7 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
     const take = Number(query.limit) || 10;
     const skip = (page - 1) * take;
 
-    const include: any = {};
+    const include: any = {}; 
     if (query.createdEvents === 'true') {
       include.createdEvents = {
         skip,

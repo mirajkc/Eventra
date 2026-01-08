@@ -58,6 +58,20 @@ class OrganizationService {
     }
     return newOrganization
   }
+  async getOrganizationByFilter({filter, include} : {filter : {id : string}, include : any}){
+    const result = await prisma.organization.findUnique({
+      where : filter,
+      include : include}
+    )
+    if(!result){
+      throw {
+        code : 404, 
+        message : "Organization not found please try again. ",
+        status : "ORGANIZATIOM_NOT_FOUND_ERR"
+      } as IErrorTypes
+    }
+    return result
+  }
 }
 const organizationService = new OrganizationService()
 export default organizationService
