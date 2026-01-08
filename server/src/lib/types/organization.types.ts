@@ -11,10 +11,22 @@ export interface IUploadOrganizationData {
         image? : string | null,
 }
 
+export type IOrganizationTypes = "INDIVIDUAL"| "COMPANY" | "EDUCATIONAL" | "COMMUNITY" |  "NON_PROFIT" | "GOVERNMENT"
+
+
 export interface IOrganizationQuery{
         take? : number | string,
         page?: number | string,
         members? : 'true',
         credits? : 'true',
-        type? : "INDIVIDUAL"| "COMPANY" | "EDUCATIONAL" | "COMMUNITY" |  "NON_PROFIT" | "GOVERNMENT"
+        type? : IOrganizationTypes
 }
+export interface IOrganizationsQuery {
+        page? : string,
+        take? : string,
+        name? :string,
+        type? : IOrganizationTypes,
+        premium? :  'true' | 'false',
+        createdAt : 'asc' | "desc",
+        updatedAt : 'asc' | "desc",
+      }

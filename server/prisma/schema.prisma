@@ -148,7 +148,7 @@ model OrganizationMember {
   id             String           @id @default(cuid())
   userId         String
   organizationId String
-  role           OrganizationRole
+  role           OrganizationRole @default(MEMBER)
   joinedAt       DateTime         @default(now())
 
   user         User         @relation(fields: [userId], references: [id])

@@ -1,7 +1,7 @@
 import type {Request, Response, NextFunction } from "express"
 import organizationService from "../service/organization.service.ts"
 import type { IUserDetails } from "../lib/types/user.types.ts"
-import type { ICreateOrganization, IOrganizationQuery, IUploadOrganizationData } from "../lib/types/organization.types.ts"
+import type { ICreateOrganization, IOrganizationQuery, IOrganizationsQuery, IOrganizationTypes, IUploadOrganizationData } from "../lib/types/organization.types.ts"
 import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
 import { uploadImage } from "../service/upload.service.ts"
 import emailService from "../service/email.service.ts"
@@ -9,6 +9,8 @@ import  { newOrganizationCreation } from "../emailtemplates/newOrganizationTempl
 import notificationService from "../service/notification.service.ts"
 import creditService from "../service/creditpurchase.service.ts"
 import organizationMemberService from "../service/organizationmember.service.ts"
+import type { ICreateMember } from "../lib/types/organizationmember.types.ts"
+import { joinedOrganizationEmail } from "../emailtemplates/joinedOrganizationTemplate.ts"
 
 class OrganizationController  {
   async createOrganization(req:Request, res:Response, next : NextFunction){
@@ -126,6 +128,108 @@ class OrganizationController  {
       next(error)
     }
   }
+  async getAllOrganization(req:Request, res:Response, next :NextFunction){
+    try {
+      const query = req.query as unknown as IOrganizationsQuery
+      const page:number = Number(query.page) || 1
+      const take:number = Number(query.take) || 10
+      const  skip:number = (page -1 )*take
+      let filter: any = {}
+      if(query.name){
+        filter["name"] = {contains : query.name , mode : 'insensitive'}
+      }
+       if(query.type){
+        filter["type"] =  query.type
+      }
+       if (query.premium !== undefined) {
+            filter["isPremium"] = query.premium === 'true';
+      }
+      let orderBy:any =[]
+      if(query.createdAt){
+        orderBy.push({"createdAt" : query.createdAt})
+      }
+
+      if(query.updatedAt){
+        orderBy.push({"updatedAt" : query.updatedAt})
+      }
+      
+      const fetchedOrganizations = await organizationService.getAllOrganizationByFilter({
+        filter : filter, 
+        orderBy : orderBy,
+        take : take, 
+        skip : skip
+      })
+      const totalCount = await organizationService.getOrganizationCount(filter)
+      return res.json({
+        message : "Successfullt fetched the organizations data. ",
+        data : fetchedOrganizations,
+        pagination : {
+          currentPage : page,
+          totalPages : Math.ceil(totalCount/take),
+          take, 
+          totalDocs : totalCount,
+          hasNextPage : page < Math.ceil(totalCount/take),
+          hasPrevPage : page > 1
+        }
+      })
+
+    } catch (error) {
+      next(error)
+    }
+  }
+  async joinOrganization(req:Request, res:Response, next :NextFunction){
+    try {
+      const userDetails:IUserDetails = req.userDetails
+      const organizationId:string = String(req.params.organizationId)
+      const organizationDetails = await organizationService.getOrganizationByFilter({
+        filter : {id : organizationId},
+        include : {}
+      })
+      if(!organizationDetails){
+        throw {
+          code : 404, 
+          message : "Organization not found. ",
+          status : "ORGANIZATION_NOT_FOUND_ERR"
+        } as IErrorTypes
+      }
+      const memberDetails = await organizationMemberService.getMemberByFilter({
+          userId : userDetails.id,
+          organizationId : organizationId
+      })
+      if(memberDetails){
+        throw {
+          code : 403, 
+          message : "You are already in the organization. ",
+          status : "ALREADY_IN_ORGANIZATION_ERR"
+        } as IErrorTypes
+      }
+      const newMemberDetail : ICreateMember = {
+        userId : userDetails.id,
+        organizationId : organizationId,
+      }
+      const newMember = await organizationMemberService.createNewMember(newMemberDetail)
+      await notificationService.sendNotificaion({
+        userId : userDetails.id,
+        title : "Joined a new organization"+organizationDetails.name,
+        message : `Hello ${userDetails.name} you joined a new organization ${organizationDetails.name}. You will get notified for activites related to this organization`,
+        type : "ORG_APPROVED",
+        entityType : "ORGANIZATION",
+        entityId : organizationDetails.id
+      })
+      await emailService.sendEmail({
+        to : userDetails.email,
+        subject : "Joined the new organization",
+        message : joinedOrganizationEmail(organizationDetails.name, userDetails.name)
+      })
+      return res.json({
+        message : "Successfully joined the organization",
+        data : newMember
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
   
 
 }

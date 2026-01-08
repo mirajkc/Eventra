@@ -3,8 +3,8 @@ import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
 import type { ICreateOrganization } from "../lib/types/organization.types.ts"
 
 class OrganizationService {
-   async getOrganizationCount(filter : {userId :string}){
-    return await prisma.organizationMember.count({
+   async getOrganizationCount(filter : any){
+    return await prisma.organization.count({
       where : filter
     })
   }
@@ -72,6 +72,24 @@ class OrganizationService {
     }
     return result
   }
+
+  async getAllOrganizationByFilter({filter, orderBy, take = 10, skip =0}:{filter : any, orderBy : any, take : number, skip : number}){
+    const oraganizationArray = await prisma.organization.findMany({
+      take : take, 
+      skip : skip, 
+      where : filter, 
+      orderBy : orderBy
+    })
+    if(!oraganizationArray){
+      throw {
+        code :500, 
+        message : "Error while fetching the organizations",
+        status :"GET_ORGANIZATIONS_ERR"
+      } as IErrorTypes
+    }
+    return oraganizationArray
+  }
+
 }
 const organizationService = new OrganizationService()
 export default organizationService
