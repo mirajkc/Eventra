@@ -21,7 +21,6 @@ class OrganizationController  {
           status : "ORGANIZATION_ALREADY_EXISTS_ERR"
         } as IErrorTypes
       }
-
       const files = req.files as {
         image? : Express.Multer.File[],
         thumbnail? : Express.Multer.File[],
@@ -49,7 +48,10 @@ class OrganizationController  {
        await notificationService.sendNotificaion( {
         userId : userDetails.id,
         title : "New Organization created",
-        message : `Hello, ${userDetails.name} you created a new organization named ${newOrganization.name} and 20 credits has been awarded. `
+        message : `Hello, ${userDetails.name} you created a new organization named ${newOrganization.name} and 20 credits has been awarded. `,
+        entityType :'EVENT',
+        type : "ORG_APPROVED",
+        entityId : newOrganization.id
        })
        return res.json({
         message : "New organization created. ",

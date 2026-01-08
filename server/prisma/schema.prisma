@@ -36,6 +36,22 @@ enum OtpPurpose {
   RESET_PASSWORD
 }
 
+enum NotificationType {
+  EVENT_CREATED
+  EVENT_UPDATED
+  EVENT_REMINDER
+  EVENT_CANCELLED
+  ORG_APPROVED
+  PAYMENT_SUCCESS
+}
+
+enum NotificationEntity {
+  EVENT
+  ORGANIZATION
+  USER
+  PAYMENT
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -195,13 +211,20 @@ model CreditPurchase {
 }
 
 model Notification {
-  id        String   @id @default(cuid())
-  userId    String
-  title     String
-  message   String
+  id     String @id @default(cuid())
+  userId String
+
+  title   String
+  message String
+
+  type       NotificationType
+  entityType NotificationEntity
+  entityId   String?
+
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isRead])
   @@index([userId, createdAt])
