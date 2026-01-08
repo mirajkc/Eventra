@@ -1,0 +1,4 @@
+Google map to select tge loaction
+Chanbox for people who are registerd in a certain event 
+Share to share the inivitation link of event 
+Ani lastly media gallery type for photos and videos (future plans)
