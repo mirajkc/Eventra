@@ -1,5 +1,5 @@
 Day 1 – User Controller   // completed
-Day 2 – Organization Controller
+Day 2 – Organization Controller // completed
 Day 3 – Event Controller
 Day 4 – Event Participation
 Day 5 – Credits & Purchases
