@@ -13,17 +13,13 @@ organizationRouter.get('/get-single-organization/:organizationId', organizationC
 
 organizationRouter.get('/get-organizations', organizationController.getAllOrganization)
 
-//! not yet tested
-organizationRouter.put('/update-member-role/:organizationId', authorize({}),validator(memberRoleDTO), organizationController.updateMemberRole )
+organizationRouter.put('/update-member-role', authorize({}),validator(memberRoleDTO), organizationController.updateMemberRole )
 
-//! has not been tested 
-organizationRouter.put('/update-organization' ,authorize({}),validator(updateOrganizationDTO),upload.fields([{name : "image" , maxCount : 1}, {name : "thumbnail", maxCount : 1 }]) , organizationController.updateOrganization )
+organizationRouter.put('/update-organization' ,authorize({}),upload.fields([{name : "image" , maxCount : 1}, {name : "thumbnail", maxCount : 1 }]) ,validator(updateOrganizationDTO), organizationController.updateOrganization )
 
-//!needs testing 
 organizationRouter.delete('/delete-organization' , authorize({}), organizationController.deleteOrganization) 
 
 
-//! needs testing
 organizationRouter.delete('/kick-member/organization/:organizationId/:memberId',authorize({}), organizationController.kickMember)
 
 

@@ -7,7 +7,7 @@ class OrganizationMember {
       where : filter
     })
   }
-  async getMemberByFilter(filter : any){
+  async getMemberByFilter({filter} : {filter : any}){
     return await prisma.organizationMember.findFirst({
       where : filter
     })
@@ -27,9 +27,9 @@ class OrganizationMember {
     return result
   }
 
-  async deleteMember ({filter} : {filter : {id : string}}){
+  async deleteMember ({filter} : {filter : {id : string, organizationId? : string}}){
     const result = await prisma.organizationMember.delete({
-      where : filter
+      where : filter,
     })
     if(!result){
       throw {
@@ -42,12 +42,12 @@ class OrganizationMember {
   }
 
   async updateMember({filter , data} : {
-    filter : {id : string},
-    data : {role : "OWNER" |"ADMIN"| "MEMBER" |"CREATOR",organizationId:string }
+    filter : {id : string, organizationId : string},
+    data : {role : "OWNER" |"ADMIN"| "MEMBER" |"CREATOR"}
   }){
     const result = await prisma.organizationMember.update({
       where : filter,
-      data :data
+      data : data
     })
     if(!result) {
       throw {

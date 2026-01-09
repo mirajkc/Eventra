@@ -13,7 +13,7 @@ class OrganizationService {
       where : {
         members : {
           some : {
-            role : "ADMIN",
+            role : "OWNER",
             userId : id
           }
         }
@@ -90,7 +90,7 @@ class OrganizationService {
     }
     return oraganizationArray
   }
-  async uploadOrganization({filter, data}:{
+  async updateOrganization({filter, data}:{
     filter : {id : string},
     data : IUploadOrganizationData
   }){

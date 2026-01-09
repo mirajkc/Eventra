@@ -1,7 +1,8 @@
 export interface ICreateOrganization  {
         name :string  
         description :string 
-        website? :string 
+        website? :string
+        type : IOrganizationTypes 
       }
 export interface IUploadOrganizationData {
         name :string  
@@ -9,6 +10,8 @@ export interface IUploadOrganizationData {
         website? :string 
         thumbnail? :string  | null,
         image? : string | null,
+        type : IOrganizationTypes 
+
 }
 
 export type IOrganizationTypes = "INDIVIDUAL"| "COMPANY" | "EDUCATIONAL" | "COMMUNITY" |  "NON_PROFIT" | "GOVERNMENT"

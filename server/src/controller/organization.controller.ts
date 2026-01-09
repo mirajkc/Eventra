@@ -9,10 +9,13 @@ import  { newOrganizationCreation } from "../emailtemplates/newOrganizationTempl
 import notificationService from "../service/notification.service.ts"
 import creditService from "../service/creditpurchase.service.ts"
 import organizationMemberService from "../service/organizationmember.service.ts"
-import type { ICreateMember, IUpdateMemberRole } from "../lib/types/organizationmember.types.ts"
+import type { ICreateMember, IOrganizationMemberTypes, IUpdateMemberRole } from "../lib/types/organizationmember.types.ts"
 import { joinedOrganizationEmail } from "../emailtemplates/joinedOrganizationTemplate.ts"
 import { leftOrganizationEmail } from "../emailtemplates/leftOrganizationTemplate.ts"
 import type { ICreateNotificaion } from "../lib/types/notification.types.ts"
+import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.ts"
+import userService from "../service/user.service.ts"
+import { userKickedTemplate } from "../emailtemplates/userKickedTemplate.ts"
 
 
 class OrganizationController  {
@@ -198,10 +201,10 @@ class OrganizationController  {
           status : "ORGANIZATION_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const memberDetails = await organizationMemberService.getMemberByFilter({
+      const memberDetails = await organizationMemberService.getMemberByFilter({filter : {
           userId : userDetails.id,
           organizationId : organizationId
-      })
+      }})
       if(memberDetails){
         throw {
           code : 403, 
@@ -264,10 +267,10 @@ class OrganizationController  {
           status : "ORGANIZATION_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const memberDetails = await organizationMemberService.getMemberByFilter({
+      const memberDetails = await organizationMemberService.getMemberByFilter({filter : {
           userId : userDetails.id,
           organizationId : organizationId
-      })
+      }})
       if(!memberDetails){
         throw {
           code : 403, 
@@ -283,7 +286,7 @@ class OrganizationController  {
         } as IErrorTypes
       }
       const leavedUser = await organizationMemberService.deleteMember({
-        filter : {id : memberDetails.id}
+        filter : {id : memberDetails.id} 
       })
       await notificationService.sendNotificaion({
         userId : leavedUser.userId,
@@ -316,7 +319,6 @@ class OrganizationController  {
       next(error)
     }
   }
-//! has not been tested  
   async updateMemberRole (req:Request, res:Response, next :NextFunction){
     try {
       const userDetails:IUserDetails = req.userDetails
@@ -327,18 +329,33 @@ class OrganizationController  {
           code : 404,
           message : "Organization not found make sure that you have created the organization. ",
           status : "ORGANIZATION_NOT_FOUND_ERR"
+        } as IErrorTypes // this also does the ownership check as it only return organization by userdetails id and userdetails id comes from accessToken and authorization middleware
+      }
+      const memberDetails = await organizationMemberService.getMemberByFilter({filter : {id : data.id,organizationId: usersOrganization.id}})
+      if(!memberDetails){
+        throw {
+          code : 404,
+          message : "Member not found in organization. ",
+          status : "MEMBER_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      if(usersOrganization.id !== data.organizationId){
+      if(userDetails.id === memberDetails.userId){
         throw {
-          code : 403,
-          message : "You do not own the organization. ",
-          status : "ORGANIZATION_OWNERSHIP_ERR"
-        } as IErrorTypes
+          code: 400,
+          message: "You cannot change your own role.",
+          status: "SELF_ROLE_UPDATE_ERR"
+        }
+      }
+      if (data.role === 'OWNER') {
+        throw {
+          code: 400,
+          message: "Owner role cannot be modified.",
+          status: "OWNER_ROLE_LOCKED_ERR"
+        }
       }
       const updatedMember = await organizationMemberService.updateMember( {
-        filter : {id : data.id},
-        data : data
+        filter : {id : data.id,organizationId : usersOrganization.id },
+        data : { role : data.role }
       })
       await notificationService.sendNotificaion({
         userId : updatedMember.userId,
@@ -348,54 +365,51 @@ class OrganizationController  {
         entityId : updatedMember.organizationId,
         entityType : "ORGANIZATION"
       })
-
       return res.json({
         message : "Member role updated successfully",
-        data : updatedMember
+        data : updatedMember.role
       })
     } catch (error) {
       next(error)
     }
   }
-
-  //! has not been tested and needs a proper edge case scenario
     async updateOrganization(req:Request, res:Response, next : NextFunction){
     try {
       const userDetails:IUserDetails = req.userDetails
-      const data:ICreateOrganization = req.body
-      const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id) // this service finds the single org details where member is some userId and is "OWNER" so no need to check owbership 
+      const data:ICreateOrganization = req.body 
+      // contains name description types
+      const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id) 
+      // this service finds the single org details where member is some userId and is "OWNER" so no need to check owbership 
+      // Also the form will be prefilled so the iputs such as name description and organization types
       if(!organizationDetails){
         throw {
-          code : 409,
-          message : "Organization is does not exists please create a organozation before updating it. ",
-          status : "ORGANIZATION_DOESNOT_EXISTS_ERR"
+          code : 403,
+          message : "You do not own this organization. ",
+          status : "ORGANIZATION_OWNERSHIP_ERR"
         } as IErrorTypes
       }
-
       const files = req.files as {
         image? : Express.Multer.File[],
         thumbnail? : Express.Multer.File[],
       }
       const imageFile = files.image?.[0]
       const thumbnailFile = files.thumbnail?.[0]
-      let profileURL: string | null 
-      let thumbnailURL: string | null 
-      profileURL = imageFile ? await uploadImage(imageFile.buffer, "Eventra/Organization/profile") : null
-      thumbnailURL = thumbnailFile ? await uploadImage(thumbnailFile.buffer, "Eventra/Organization/thumbnail") : null
+      const profileURL = imageFile ? await uploadImage(imageFile.buffer, "Eventra/Organization/profile") : organizationDetails.image
+      const thumbnailURL = thumbnailFile ? await uploadImage(thumbnailFile.buffer, "Eventra/Organization/thumbnail") : organizationDetails.thumbnail
       const uploadData:IUploadOrganizationData = {
         ...data,
         thumbnail : thumbnailURL,
         image : profileURL,
       }
-       const updatedOrganization = await organizationService.uploadOrganization ({
+       const updatedOrganization = await organizationService.updateOrganization ({
         filter : {id : organizationDetails.id},
         data : uploadData,
        })
        await emailService.sendEmail({
         to : userDetails.email,
-        subject : "New organization created. ",
-        message : newOrganizationCreation(updatedOrganization.name, userDetails.name) //!needs new message service
-       })
+        subject: "Organization updated successfully",
+        message :organizationUpdateTemplate(organizationDetails.name, userDetails.name) 
+      })
        await notificationService.sendNotificaion( {
         userId : userDetails.id,
         title : "Organization updated",
@@ -413,67 +427,144 @@ class OrganizationController  {
     }
   }
   
-//! has not been tested 
   async deleteOrganization(req:Request, res:Response, next : NextFunction){
     try {
       const userDetails:IUserDetails = req.userDetails
-       const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id) // this service finds the single org details where member is some userId and is "OWNER" so no need to check owbership 
+       const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id)
       if(!organizationDetails){
         throw {
-          code : 409,
-          message : "Organization is does not exists please create a organozation before updating it. ",
-          status : "ORGANIZATION_DOESNOT_EXISTS_ERR"
+          code : 403,
+          message : "You do not own this organization. ",
+          status : "ORGANIZATION_OWNERSHIP_ERR"
         } as IErrorTypes
       }
       const deletedOrganization = await organizationService.deleteOrganization(organizationDetails.id)
       return res.json({
         message : "Organization deleted successfully. ",
-        data : this.deleteOrganization
+        data : deletedOrganization.name
       })
     } catch (error) {
       next(error)
     }
   }
-
-  //! has not been tested
-  async kickMember(req:Request, res:Response, next : NextFunction){
-    try {
-      const memberId = String(req.params.memberId)
-      const organizationId = String(req.params.organizationId)
-      const userDetails:IUserDetails= req.userDetails
-      const organizationDetails = await organizationService.getOrganizationByFilter({
-        filter :{id :organizationId},
-        include :  {
+async kickMember(req: Request, res: Response, next: NextFunction) {
+  try {
+    const memberId = String(req.params.memberId)
+    const organizationId = String(req.params.organizationId)
+    const userDetails: IUserDetails = req.userDetails
+    const organization = await organizationService.getOrganizationByFilter({filter : {id : organizationId}, include : {
         members : {
-          where : {
-            OR : [
-              {role : "ADMIN"},
-              {role : 'OWNER'}
-            ],
-            AND : [
-              {userId : userDetails.id}
-            ]
+          select : {
+            userId : true
           }
         }
-      }
-      })
-      if(!organizationDetails){
-        throw {
-          code : 403, 
-          message : "You are not permitted to kick the user",
-          status :"NOT_PERMITED_ERR"
-        } as IErrorTypes
-      }
-      const kickedUser = await organizationMemberService.deleteMember({filter : {id : memberId}})
-      return res.json({
-        message : 'User kicked from the organization successfully. ',
-        data : kickedUser
-      })
-      
-    } catch (error) {
-      next(error)
+      }})
+    if (!organization) {
+      throw {
+        code: 404,
+        message: "Organization not found",
+        status: "ORGANIZATION_NOT_FOUND"
+      } as IErrorTypes
     }
+    const requester = await organizationMemberService.getMemberByFilter({
+      filter : {
+        userId: userDetails.id,
+        organizationId  :organizationId
+    }
+    })
+
+    if (!requester || !["OWNER", "ADMIN"].includes(requester.role)) {
+      throw {
+        code: 403,
+        message: "You are not permitted to kick members",
+        status: "NOT_PERMITTED_ERR"
+      } as IErrorTypes
+    }
+
+    const targetMember = await organizationMemberService.getMemberByFilter({
+      filter: {
+        id: memberId,
+        organizationId : organizationId
+      }
+    })
+
+    if (!targetMember) {
+      throw {
+        code: 404,
+        message: "Member not found in organization",
+        status: "MEMBER_NOT_FOUND"
+      } as IErrorTypes
+    }
+
+    if (targetMember.userId === userDetails.id) {
+      throw {
+        code: 400,
+        message: "You cannot remove yourself from the organization",
+        status: "SELF_KICK_ERR"
+      } as IErrorTypes
+    }
+
+    if (requester.role === "ADMIN" && targetMember.role !== "MEMBER") {
+      throw {
+        code: 403,
+        message: "Admins can only kick members",
+        status: "ROLE_RESTRICTION_ERR"
+      } as IErrorTypes
+    }
+
+    if (targetMember.role === "OWNER") {
+      throw {
+        code: 403,
+        message: "Owner cannot be removed",
+        status: "OWNER_REMOVAL_ERR"
+      } as IErrorTypes
+    }
+    const kickedUser = await organizationMemberService.deleteMember({
+      filter: {
+        id: memberId,
+        organizationId  :organizationId
+      }
+    })
+
+    const kickedUserDetails = await userService.getUserDetails({
+      id : kickedUser.userId, 
+    }, {})
+
+    await notificationService.sendNotificaion({
+      userId : kickedUser.userId,
+      title : "You have been kicked from the organization. ",
+      message : `Hello you have been kicked from the organization ${organization.name}. `,
+      type : "ORG_APPROVED",
+      entityId : organization.id,
+      entityType : 'ORGANIZATION'
+    })
+
+    await emailService.sendEmail({
+      to : kickedUserDetails.email,
+      subject : "Kicked from the organization",
+      message : userKickedTemplate(organization.name, kickedUserDetails.name)
+    })
+
+    const groupNotification:Array<ICreateNotificaion> =
+      organization.members?.map(m => ({
+        userId: (m as { userId: string }).userId,
+        title : "User has the organization.",
+        message : `${userDetails.name} has been kikcked the organization ${organization.name}`,
+        type : 'ORG_APPROVED',
+        entityType : "ORGANIZATION",
+        entityId : organization.id
+      })) ?? []
+
+    return res.json({
+      message: "User kicked from the organization successfully",
+      data: kickedUser
+    })
+
+  } catch (error) {
+    next(error)
   }
+}
+
 
 }
 const organizationController = new OrganizationController()
