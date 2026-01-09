@@ -68,7 +68,7 @@ enum EventType {
   WEBINAR
   HACKATHON
   COMPETITION
-  OTHERS
+  OTHER
 }
 
 model User {
@@ -179,7 +179,7 @@ model Event {
   status EventStatus @default(PUBLISHED)
 
   // recommendation metadata
-  category EventType @default(OTHERS)
+  category EventType @default(OTHER)
   tags     String[]
   image    String?
 
