@@ -4,7 +4,7 @@ import { Prisma } from "../generated/prisma/client.ts";
 import { prisma } from "../config/prisma.config.ts";
 
 
-export default  function errorHandler(
+export default  async function errorHandler(
   error: IErrorTypes,
   req: Request,
   res: Response,
@@ -25,7 +25,7 @@ export default  function errorHandler(
   }
   console.log(error);
   if(code === 500){
-     prisma.errorLog.create({
+    await prisma.errorLog.create({
       data : {
         code : code,
         message : message,

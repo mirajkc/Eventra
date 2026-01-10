@@ -22,7 +22,6 @@ enum OrganizationRole {
 enum EventStatus {
   PUBLISHED
   CANCELLED
-  COMPLETED
 }
 
 enum CreditPackage {
@@ -175,7 +174,7 @@ model Event {
   endDate   DateTime
 
   capacity        Int
-  registeredCount Int @default(0)
+  registeredCount Int @default(1)
 
   status EventStatus @default(PUBLISHED)
 

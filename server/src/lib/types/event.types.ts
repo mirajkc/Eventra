@@ -1,5 +1,5 @@
 export type IEventTypes = "WORKSHOP" |"MEETUP" |"CONFERENCE" |"WEBINAR" |"HACKATHON" |"COMPETITION" |"OTHER"
-export type IEventStatus = "PUBLISHED"|"CANCELLED"|"COMPLETED"
+export type IEventStatus = "PUBLISHED"|"CANCELLED"
 export interface ICreateEvent {
   organizationId: string
     title: string
@@ -62,3 +62,15 @@ export interface IUpdateEvent {
   tags: Array<any>
 }
 
+export interface IEventQuery {
+  page?: number,        // current page
+  limit?: number,       // number of items per page
+  organizationId?: string, // filter by organization
+  creatorId?: string,      // filter by creator (for admin/creator view)
+  slug?: string,           // search by slug
+  capacity?: number,       // filter by capacity
+  category?: IEventTypes,     // filter by category
+  createdAt?: "desc" | 'asc',  // filter by creation date
+  updatedAt?: "desc" | 'asc',  // filter by last update
+  status?: IEventStatus
+}

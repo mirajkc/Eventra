@@ -8,24 +8,16 @@ import eventController from '../controller/event.controller.ts'
 const eventRouter:Router = express.Router()
 
 eventRouter.post('/create-new-event', authorize({}), upload.single('image'), validator(createEventDTO),eventController.createNewEvent)
-// Update event details by event creator
  eventRouter.put('/update-event-details',authorize({}), upload.single('image'), validator(updateEventDTO), eventController.updateEventDetails )
+ eventRouter.get('/get-single-event/:eventId', eventController.getSingleEvent)
+ eventRouter.get('/fetchallevents', eventController.getAllEventsByQuery)
+
+
  
 
 
 
 export default eventRouter
-
-
-
-
-
-
-// Publish or cancel an event
-
-// Get event details by event ID
-
-// List all events of an organization
 
 // Register a user for an event
 
@@ -38,15 +30,7 @@ export default eventRouter
 // Get events registered by a user
 
 
-// EventController
 
-// Create event
-
-// Update event
-
-// Publish / cancel
-
-// Fetch events
 
 // EventRegistrationController
 

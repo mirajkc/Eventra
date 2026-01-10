@@ -3,7 +3,7 @@ import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
 import type { IEvent, IUploadEvent } from "../lib/types/event.types.ts"
 
 class EventService {
-    async getTotalEventsCount(filter : {creatorId :string}){
+    async getTotalEventsCount(filter : any){
     return await prisma.event.count({
       where : filter
     })
@@ -69,10 +69,50 @@ class EventService {
     return updatedEvent
    }
 
-   async getEvent({filter}:{filter : {id? : string, slug? : string}}){
+   async getEvent({filter, include={}}:{filter : {id? : string, slug? : string}, include? : any}){
     return await prisma.event.findFirst({
-      where : filter
+      where : filter,
+      include : include
     })
+   }
+
+   async getManyEvents(skip:number, take:number, filter:any, orderBy:any){
+    const events = await prisma.event.findMany({
+      skip,
+      take,
+      where : filter,
+      orderBy : orderBy,
+      include : {
+        organization : {
+          select : {
+            id : true, 
+            name : true, 
+            image : true, 
+            isPremium : true
+          },
+        },
+        creator : {
+          select : {
+            id : true, 
+            name : true, 
+            image : true
+          }
+        },
+        _count :{
+          select :{
+            participants : true
+          }
+        }
+      }
+    })
+    if(!events || events.length <=0 ){
+      throw {
+        code : 500, 
+        message :"No results found. ",
+        status : "NO_RESULTS_FOUND_ERR"
+      } as IErrorTypes
+    }
+    return events
    }
    
 

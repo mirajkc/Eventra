@@ -1,5 +1,5 @@
 import type {Request, Response, NextFunction } from "express"
-import type { ICreateEvent, IEvent, IUpdateEvent } from "../lib/types/event.types.ts"
+import type { ICreateEvent, IEvent, IEventQuery, IUpdateEvent } from "../lib/types/event.types.ts"
 import type { IUserDetails } from "../lib/types/user.types.ts"
 import organizationService from "../service/organization.service.ts"
 import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
@@ -119,8 +119,7 @@ class EventController {
       data : newEvent
     })
   }
-
-   async updateEventDetails(req:Request, res:Response, next :NextFunction){
+  async updateEventDetails(req:Request, res:Response, next :NextFunction){
     try {
       const data:IUpdateEvent = req.body
       const userDetails:IUserDetails = req.userDetails
@@ -191,6 +190,100 @@ class EventController {
       next(error)
     }
   }
+
+  async getSingleEvent(req:Request, res:Response, next :NextFunction){
+    try {
+      const eventId = String(req.params.eventId)
+      if(!eventId){
+        throw {
+          code : 404, 
+          message : "A valid event Id is required. ",
+          status :"EVENTID_NOT_FOUND_ERR"
+        } as IErrorTypes
+      }
+      const eventDetails = await eventService.getEvent({
+        filter : {id : eventId},
+        include : {
+        organization : {
+          select : {id : true, name : true,image : true,isPremium : true }
+        },
+        creator : {
+          select : { id : true,name : true,  image : true}
+        },
+        participants : {
+          select : {userId : true}
+        }
+      }
+      })
+      if(!eventDetails){
+        throw {
+          code : 500, 
+          message : "Unable to fetch the event details please try again. ",
+          status : "EVENT_DATA_FETCH_ERR"
+        } as IErrorTypes
+      }
+      const totalParticipants = eventDetails.participants?.length
+      eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date()? "COMPLETED" : "PUBLISHED"
+      return res.json({
+        message : "Event details fetched successfully",
+        data : {
+          eventDetails : eventDetails,
+          totalParticipants :totalParticipants
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+async getAllEventsByQuery(req: Request, res: Response, next: NextFunction) {
+  try {
+    const filters: IEventQuery = req.query;
+
+    const page: number = Number(filters.page) || 1;
+    const take: number = Number(filters.limit) || 10;
+    const skip: number = (page - 1) * take;
+
+    const where: any = {};
+
+    if (filters.creatorId) where.creatorId = filters.creatorId;
+    if (filters.organizationId) where.organizationId = filters.organizationId;
+    if (filters.slug) where.slug = { contains: filters.slug, mode: 'insensitive' };
+    if (filters.capacity) where.capacity = { lte: Number(filters.capacity) };
+    if (filters.category) where.category = filters.category;
+    if (filters.status === 'PUBLISHED') where.status = 'PUBLISHED';
+
+
+    const orderBy: Array<any> = [];
+    if (filters.createdAt === 'asc') orderBy.push({ createdAt: 'asc' });
+    if (filters.createdAt === 'desc') orderBy.push({ createdAt: 'desc' });
+    if (filters.updatedAt === 'asc') orderBy.push({ updatedAt: 'asc' });
+    if (filters.updatedAt === 'desc') orderBy.push({ updatedAt: 'desc' });
+
+    if (orderBy.length === 0) orderBy.push({ createdAt: 'desc' });
+
+    const constEventDetails = await eventService.getManyEvents(skip, take, where, orderBy);
+    const totalDocument = await eventService.getTotalEventsCount(where);
+
+    return res.json({
+      message: "Events fetched successfully.",
+      data: constEventDetails,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(totalDocument / take),
+        take,
+        totalDocs: totalDocument,
+        hasNextPage: page < Math.ceil(totalDocument / take),
+        hasPreviousPage: page > 1,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+  
+
 
 } 
 const eventController = new EventController()
