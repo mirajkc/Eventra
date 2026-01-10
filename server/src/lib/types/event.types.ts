@@ -13,6 +13,7 @@ export interface ICreateEvent {
 }
 
 export interface IUploadEvent {
+      slug : string
       organizationId : string
       creatorId : string
       title : string
@@ -21,7 +22,7 @@ export interface IUploadEvent {
       startDate : string
       endDate : string
       capacity : number
-      status? : "PUBLISHED" | "CANCELLED" | "COMPLETED"
+      status : IEventStatus
       category : IEventTypes
       tags : Array<any>
       image : string | null
@@ -29,6 +30,7 @@ export interface IUploadEvent {
 
 export interface IEvent {
   id : string
+  slug : string
   organizationId : string
   creatorId : string
   title   : string
@@ -45,3 +47,18 @@ export interface IEvent {
   createdAt : Date
   updatedAt? : Date
 }
+
+export interface IUpdateEvent {
+  id : string
+  organizationId : string
+  title : string
+  description: string
+  location: string
+  startDate: Date
+  endDate: Date
+  capacity:number
+  status: IEventStatus
+  category: IEventTypes
+  tags: Array<any>
+}
+

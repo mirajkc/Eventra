@@ -163,6 +163,7 @@ model OrganizationMember {
 
 model Event {
   id             String @id @default(cuid())
+  slug           String @unique
   organizationId String
   creatorId      String
 
@@ -337,4 +338,11 @@ model AdminPrediction {
 
   @@index([predictionMonth])
   @@index([generatedAt])
+}
+
+model ErrorLog {
+  id      String @id @default(cuid())
+  code    Int
+  message String
+  status  String
 }
