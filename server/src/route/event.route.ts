@@ -13,33 +13,4 @@ eventRouter.post('/create-new-event', authorize({}), upload.single('image'), val
  eventRouter.get('/fetchallevents', eventController.getAllEventsByQuery)
 
 
- 
-
-
-
 export default eventRouter
-
-// Register a user for an event
-
-// Cancel event registration
-
-// Verify participant attendance using token
-
-// List all participants of an event
-
-// Get events registered by a user
-
-
-
-
-// EventRegistrationController
-
-// Register participant
-
-// Cancel registration
-
-// EventAttendanceController
-
-// Verify token
-
-// Mark attendance

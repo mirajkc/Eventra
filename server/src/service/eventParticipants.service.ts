@@ -16,6 +16,28 @@ class EventParticipantService {
     }
     return paticipants
   }
+
+  async createEvent (eventId:string, data : { eventId : string, userId:string, checkInToken : string }) {
+    return prisma.$transaction(async(tx) => {
+      await tx.event.update({
+        where : {id :eventId },
+        data : {
+          registeredCount : {increment : 1}
+        }
+      })
+      const newMember = await tx.eventParticipants.create({
+        data : data
+      })
+      if(!newMember){
+        throw {
+          code : 500, 
+          message : "Error occured while registering the new user. ",
+          status : "USER_REGISTRATION_ERR"
+        } as IErrorTypes
+      }
+      return newMember
+    })
+  }
 }
 const eventParticipantService = new EventParticipantService
 export default eventParticipantService

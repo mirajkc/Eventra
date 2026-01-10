@@ -205,22 +205,17 @@ model Event {
 }
 
 model EventParticipants {
-  id      String @id @default(cuid())
-  eventId String
-  userId  String
-
+  id           String   @id @default(cuid())
+  eventId      String
+  userId       String
   registeredAt DateTime @default(now())
+  checkInToken String?  @unique
 
-  // attendance verification
-  checkInToken   String?
-  tokenExpiresAt DateTime?
-  attended       Boolean   @default(false)
-  checkedInAt    DateTime?
+  //for check in 
+  attended    Boolean   @default(false)
+  checkedInAt DateTime?
 
-  // cancellation
-  isCancelled Boolean   @default(false)
-  cancelledAt DateTime?
-
+  //relations 
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
