@@ -3,32 +3,16 @@ const eventParticipantRouter:Router = express.Router()
 import authorize from "../middleware/authorize.middleware.ts";
 import eventRegistrationController from '../controller/event.registration.controller.ts';
 eventParticipantRouter.post('/register-new-user/:eventId', authorize({}),eventRegistrationController.registerNewParticipant)
-
-
+eventParticipantRouter.delete('/remove-registration/:eventId', authorize({}), eventRegistrationController.removeRegistration)
+eventParticipantRouter.get('/make-attendance/:eventId', authorize({}), eventRegistrationController.makeAttendance)
+eventParticipantRouter.get('/get-all-participants/:eventId', eventRegistrationController.getAllParticipants )
 
 
 export default eventParticipantRouter
-// Register a user for an event
 
-// Cancel event registration
-
-// Verify participant attendance using token
 
 // List all participants of an event
 
-// Get events registered by a user
 
 
 
-
-// EventRegistrationController
-
-// Register participant
-
-// Cancel registration
-
-// EventAttendanceController
-
-// Verify token
-
-// Mark attendance
