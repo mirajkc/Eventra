@@ -61,7 +61,7 @@ class OrganizationService {
   async getOrganizationByFilter({filter, include} : {filter : {id : string}, include : any}){
     const result = await prisma.organization.findUnique({
       where : filter,
-      include : include
+      include :  include
     }
     )
     if(!result){
