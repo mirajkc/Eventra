@@ -1,7 +1,7 @@
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../config/prisma.config.js";
 export default async function errorHandler(error, req, res, next) {
-    const code = error.code ?? 500;
+    const code = error.code && typeof error.code === 'number' ? error.code : 500;
     const message = error.message ?? "Server error";
     const status = error.status ?? "SERVER_ERR";
     const data = error.data ?? null;

@@ -15,15 +15,7 @@ declare class EventParticipantService {
         eventId: string;
         userId: string;
         checkInToken: string;
-    }): Promise<{
-        id: string;
-        userId: string;
-        eventId: string;
-        registeredAt: Date;
-        checkInToken: string | null;
-        attended: boolean;
-        checkedInAt: Date | null;
-    }>;
+    }): Promise<any>;
     removeUserRegistration(userId: string, eventId: string): Promise<{
         id: string;
         userId: string;

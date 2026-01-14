@@ -42,7 +42,7 @@ class EventRegistrationController {
                     status: "EVENT_CANCELLED_ERR"
                 };
             }
-            if (eventDetails.participants && eventDetails.participants.map(p => p.userId).includes(userDetails.id)) {
+            if (eventDetails.participants && eventDetails.participants.map((p) => p.userId).includes(userDetails.id)) {
                 throw {
                     code: 403,
                     message: "Error you have already participated int the event. ",
@@ -71,7 +71,7 @@ class EventRegistrationController {
                 entityType: "EVENT",
                 entityId: eventDetails.id
             });
-            const groupNotification = eventDetails.participants?.map(m => ({
+            const groupNotification = eventDetails.participants?.map((m) => ({
                 userId: m.userId,
                 title: "New participant joined the event",
                 message: `${userDetails.name} has joined the event ${eventDetails.title}. ${eventDetails.title}`,
@@ -129,7 +129,7 @@ class EventRegistrationController {
                     status: "EVENT_CANCELLED_ERR"
                 };
             }
-            if (!(eventDetails.participants && eventDetails.participants.map(p => p.userId).includes(userDetails.id))) {
+            if (!(eventDetails.participants && eventDetails.participants.map((p) => p.userId).includes(userDetails.id))) {
                 throw {
                     code: 403,
                     message: "Error you have not participated in the event. ",
@@ -151,8 +151,8 @@ class EventRegistrationController {
                 message: leftEventTemplate(userDetails.name, eventDetails.title)
             });
             const groupNotification = eventDetails.participants
-                ?.filter(p => p.userId !== userDetails.id)
-                .map(p => ({
+                ?.filter((p) => p.userId !== userDetails.id)
+                .map((p) => ({
                 userId: p.userId,
                 title: "Participant left the event",
                 message: `${userDetails.name} has left the event ${eventDetails.title}.`,

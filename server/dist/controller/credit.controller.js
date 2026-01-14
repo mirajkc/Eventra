@@ -96,7 +96,7 @@ class CreditController {
                 subject: "Thank you for the credit purchased for the orgnization" + organizationDetails.name,
                 message: thanksForCreditPurchase(userDetails.name, organizationDetails.name, updateData.credits)
             });
-            const groupNotification = organizationDetails.members?.map(m => ({
+            const groupNotification = organizationDetails.members?.map((m) => ({
                 userId: m.userId,
                 title: "Credit purcahsed for the organization.",
                 message: `${userDetails.name} has purchased the organization credits for ${organizationDetails.name}`,

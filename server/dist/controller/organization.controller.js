@@ -189,10 +189,12 @@ class OrganizationController {
                     status: "ORGANIZATION_NOT_FOUND_ERR"
                 };
             }
-            const memberDetails = await organizationMemberService.getMemberByFilter({ filter: {
+            const memberDetails = await organizationMemberService.getMemberByFilter({
+                filter: {
                     userId: userDetails.id,
                     organizationId: organizationId
-                } });
+                }
+            });
             if (memberDetails) {
                 throw {
                     code: 403,
@@ -213,7 +215,7 @@ class OrganizationController {
                 entityType: "ORGANIZATION",
                 entityId: organizationDetails.id
             });
-            const groupNotification = organizationDetails.members?.map(m => ({
+            const groupNotification = organizationDetails.members?.map((m) => ({
                 userId: m.userId,
                 title: "New user joined the organization.",
                 message: `${userDetails.name} has joined the organization ${organizationDetails.name}`,
@@ -255,10 +257,12 @@ class OrganizationController {
                     status: "ORGANIZATION_NOT_FOUND_ERR"
                 };
             }
-            const memberDetails = await organizationMemberService.getMemberByFilter({ filter: {
+            const memberDetails = await organizationMemberService.getMemberByFilter({
+                filter: {
                     userId: userDetails.id,
                     organizationId: organizationId
-                } });
+                }
+            });
             if (!memberDetails) {
                 throw {
                     code: 403,
@@ -284,7 +288,7 @@ class OrganizationController {
                 entityType: "ORGANIZATION",
                 entityId: organizationDetails.id
             });
-            const groupNotification = organizationDetails.members?.map(m => ({
+            const groupNotification = organizationDetails.members?.map((m) => ({
                 userId: m.userId,
                 title: "User has the organization.",
                 message: `${userDetails.name} has left the organization ${organizationDetails.name}`,
@@ -439,13 +443,15 @@ class OrganizationController {
             const memberId = String(req.params.memberId);
             const organizationId = String(req.params.organizationId);
             const userDetails = req.userDetails;
-            const organization = await organizationService.getOrganizationByFilter({ filter: { id: organizationId }, include: {
+            const organization = await organizationService.getOrganizationByFilter({
+                filter: { id: organizationId }, include: {
                     members: {
                         select: {
                             userId: true
                         }
                     }
-                } });
+                }
+            });
             if (!organization) {
                 throw {
                     code: 404,
@@ -522,7 +528,7 @@ class OrganizationController {
                 subject: "Kicked from the organization",
                 message: userKickedTemplate(organization.name, kickedUserDetails.name)
             });
-            const groupNotification = organization.members?.map(m => ({
+            const groupNotification = organization.members?.map((m) => ({
                 userId: m.userId,
                 title: "User has the organization.",
                 message: `${userDetails.name} has been kikcked the organization ${organization.name}`,

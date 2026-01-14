@@ -6,25 +6,7 @@ declare class EventService {
     }): Promise<number>;
     createEvent({ data }: {
         data: IUploadEvent;
-    }): Promise<{
-        id: string;
-        status: import("../generated/prisma/enums.js").EventStatus;
-        createdAt: Date;
-        updatedAt: Date;
-        image: string | null;
-        organizationId: string;
-        slug: string;
-        creatorId: string;
-        title: string;
-        description: string;
-        location: string;
-        startDate: Date;
-        endDate: Date;
-        capacity: number;
-        registeredCount: number;
-        category: import("../generated/prisma/enums.js").EventType;
-        tags: string[];
-    }>;
+    }): Promise<any>;
     updateEvent({ filter, data }: {
         filter: {
             id: string;

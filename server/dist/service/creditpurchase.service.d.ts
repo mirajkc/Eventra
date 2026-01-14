@@ -35,29 +35,8 @@ declare class CreditPurchaseService {
         amount: number;
         package: "SMALL" | "MEDIUM" | "LARGE";
     }): Promise<{
-        organization: {
-            id: string;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            image: string | null;
-            description: string;
-            credits: number;
-            type: import("../generated/prisma/enums.js").OrganizationType;
-            thumbnail: string | null;
-            website: string | null;
-            lastCreditReset: Date;
-            isPremium: boolean;
-        };
-        creditPurchase: {
-            id: string;
-            organizationId: string;
-            purchasedBy: string;
-            package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
-            amount: number;
-            purchasedAt: Date;
-        };
+        organization: any;
+        creditPurchase: any;
     }>;
 }
 declare const creditService: CreditPurchaseService;

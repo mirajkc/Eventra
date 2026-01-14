@@ -25,20 +25,7 @@ declare class OrganizationService {
     createNewOrganization({ data, userId }: {
         data: ICreateOrganization;
         userId: string;
-    }): Promise<{
-        id: string;
-        name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
-        thumbnail: string | null;
-        website: string | null;
-        lastCreditReset: Date;
-        isPremium: boolean;
-    }>;
+    }): Promise<any>;
     getOrganizationByFilter({ filter, include }: {
         filter: {
             id: string;

@@ -4,13 +4,13 @@ import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../config/prisma.config.js";
 
 
-export default  async function errorHandler(
-  error: IErrorTypes,
+export default async function errorHandler(
+  error: any,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const code  = error.code ?? 500;
+  const code = error.code && typeof error.code === 'number' ? error.code : 500;
   const message = error.message ?? "Server error";
   const status = error.status ?? "SERVER_ERR";
   const data = error.data ?? null;
@@ -19,17 +19,17 @@ export default  async function errorHandler(
       return res.status(409).json({
         message: "Duplicate field value. This already exists.",
         status: "UNIQUE_CONSTRAINT_ERROR",
-        field: error.meta?.target,
+        field: (error.meta as any)?.target,
       });
     }
   }
   console.log(error);
-  if(code === 500){
+  if (code === 500) {
     await prisma.errorLog.create({
-      data : {
-        code : code,
-        message : message,
-        status : status
+      data: {
+        code: code,
+        message: message,
+        status: status
       }
     })
   }

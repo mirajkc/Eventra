@@ -40,7 +40,7 @@ class OrganizationService {
     }
   }
   async createNewOrganization({ data, userId }: { data: ICreateOrganization, userId: string }) {
-    const newOrganization = await prisma.$transaction(async (tx) => {
+    const newOrganization = await prisma.$transaction(async (tx: any) => {
       const organization = await tx.organization.create({ data: data })
       await tx.organizationMember.create({
         data: {

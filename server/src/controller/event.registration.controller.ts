@@ -49,7 +49,7 @@ class EventRegistrationController {
           status: "EVENT_CANCELLED_ERR"
         } as IErrorTypes
       }
-      if (eventDetails.participants && eventDetails.participants.map(p => p.userId).includes(userDetails.id)) {
+      if (eventDetails.participants && eventDetails.participants.map((p: any) => p.userId).includes(userDetails.id)) {
         throw {
           code: 403,
           message: "Error you have already participated int the event. ",
@@ -82,7 +82,7 @@ class EventRegistrationController {
       })
 
       const groupNotification: Array<ICreateNotificaion> =
-        eventDetails.participants?.map(m => ({
+        eventDetails.participants?.map((m: any) => ({
           userId: (m as { userId: string }).userId,
           title: "New participant joined the event",
           message: `${userDetails.name} has joined the event ${eventDetails.title}. ${eventDetails.title}`,
@@ -142,7 +142,7 @@ class EventRegistrationController {
           status: "EVENT_CANCELLED_ERR"
         } as IErrorTypes
       }
-      if (!(eventDetails.participants && eventDetails.participants.map(p => p.userId).includes(userDetails.id))) {
+      if (!(eventDetails.participants && eventDetails.participants.map((p: any) => p.userId).includes(userDetails.id))) {
         throw {
           code: 403,
           message: "Error you have not participated in the event. ",
@@ -168,8 +168,8 @@ class EventRegistrationController {
 
       const groupNotification: Array<ICreateNotificaion> =
         eventDetails.participants
-          ?.filter(p => p.userId !== userDetails.id)
-          .map(p => ({
+          ?.filter((p: any) => p.userId !== userDetails.id)
+          .map((p: any) => ({
             userId: p.userId,
             title: "Participant left the event",
             message: `${userDetails.name} has left the event ${eventDetails.title}.`,
@@ -195,7 +195,7 @@ class EventRegistrationController {
     try {
       const ticket = String(req.body.ticket)
       const eventId = String(req.params.eventId)
-      const userDetails:IUserDetails = req.userDetails
+      const userDetails: IUserDetails = req.userDetails
       const eventDetails = await eventService.getEvent({
         filter: { id: eventId },
         include: {}
@@ -207,92 +207,92 @@ class EventRegistrationController {
           status: "EVENT_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      if(eventDetails.creatorId !== userDetails.id){
+      if (eventDetails.creatorId !== userDetails.id) {
         throw {
-          code : 403, 
-          message : "Error only the event creator can take attendance",
-          status : "NOT_PERMITTED_TO_TAKE_ATTENDANCE"
+          code: 403,
+          message: "Error only the event creator can take attendance",
+          status: "NOT_PERMITTED_TO_TAKE_ATTENDANCE"
         } as IErrorTypes
       }
-      if(eventDetails.startDate > new Date(Date.now()) ){
+      if (eventDetails.startDate > new Date(Date.now())) {
         throw {
-          code : 403, 
-          message : "The attendance can only be taken after the event starts",
-          status : "EVENT_NOT_STARTED_ERR"
+          code: 403,
+          message: "The attendance can only be taken after the event starts",
+          status: "EVENT_NOT_STARTED_ERR"
         } as IErrorTypes
       }
-      if(eventDetails.endDate < new Date(Date.now()) ){
+      if (eventDetails.endDate < new Date(Date.now())) {
         throw {
-          code : 403, 
-          message : "Unable to take the attendace after the event has ended. ",
-          status : "EVENT_ENDED_ERR"
+          code: 403,
+          message: "Unable to take the attendace after the event has ended. ",
+          status: "EVENT_ENDED_ERR"
         } as IErrorTypes
       }
 
       const checkedInUser = await eventParticipantService.chekIn(ticket, eventDetails.id)
 
       await notificationService.sendNotificaion({
-        userId : checkedInUser.userId,
-        title : "Successfully checked in for the event. ",
-        message : `Hello, you have successfully cheched in for the event ${eventDetails.title}. We hope that you enjoy your event`,
-        type : "EVENT_CREATED",
-        entityId : eventDetails.id,
-        entityType : 'EVENT'
+        userId: checkedInUser.userId,
+        title: "Successfully checked in for the event. ",
+        message: `Hello, you have successfully cheched in for the event ${eventDetails.title}. We hope that you enjoy your event`,
+        type: "EVENT_CREATED",
+        entityId: eventDetails.id,
+        entityType: 'EVENT'
       })
 
       await emailService.sendEmail({
-        to : userDetails.email, 
-        subject : "Successfully, cheched in. ",
-        message : userCheckIn("User", eventDetails.title)
+        to: userDetails.email,
+        subject: "Successfully, cheched in. ",
+        message: userCheckIn("User", eventDetails.title)
       })
 
       return res.json({
-        message : "User successfully checked in. ",
-        data : checkedInUser.userId
+        message: "User successfully checked in. ",
+        data: checkedInUser.userId
       })
     } catch (error) {
       next(error)
     }
   }
 
-  async getAllParticipants(req: Request, res: Response, next: NextFunction){
+  async getAllParticipants(req: Request, res: Response, next: NextFunction) {
     try {
       const eventId = String(req.params.eventId)
-      if(!eventId){
+      if (!eventId) {
         throw {
-          code : 404, 
-          message : "Please enter a valid event id. ",
-          status : "EVENT_ID_NOT_FOUND_ERR"
+          code: 404,
+          message: "Please enter a valid event id. ",
+          status: "EVENT_ID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const data:{page : string, take : string} = req.query as {page : string, take : string}
-      const page = Number(data.page)  || 1
+      const data: { page: string, take: string } = req.query as { page: string, take: string }
+      const page = Number(data.page) || 1
       const take = Number(data.take) || 10
-      const skip = (page -1 )*take
+      const skip = (page - 1) * take
       const participants = await eventParticipantService.getEventParticipants({
-        filter : {eventId : eventId},
-        select : {
-        registeredAt : true,
-        user : {
-          select : {
-            name : true, 
-            image : true 
+        filter: { eventId: eventId },
+        select: {
+          registeredAt: true,
+          user: {
+            select: {
+              name: true,
+              image: true
+            }
           }
-        }
-      },
-      take : take, 
-      skip : skip
+        },
+        take: take,
+        skip: skip
       })
-      const participantsCount = await eventParticipantService.getParticipantsCount({eventId : eventId})
+      const participantsCount = await eventParticipantService.getParticipantsCount({ eventId: eventId })
       return res.json({
-        message : "User details fetched successfullly. ",
-        data : participants,
-        pagination : {
-          currentPage : page, 
-          take : take, 
-          totalDoccuments : participantsCount,
-          totalPages : Math.ceil(participantsCount / take) ,
-          hasNextPage : page < Math.ceil(participantsCount / take),
+        message: "User details fetched successfullly. ",
+        data: participants,
+        pagination: {
+          currentPage: page,
+          take: take,
+          totalDoccuments: participantsCount,
+          totalPages: Math.ceil(participantsCount / take),
+          hasNextPage: page < Math.ceil(participantsCount / take),
           hasPreviousPage: page > 1,
         }
 

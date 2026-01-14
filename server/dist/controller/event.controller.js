@@ -23,7 +23,8 @@ class EventController {
                 status: "DUPLICATE_EVENT_ERR"
             };
         }
-        const organizationDetails = await organizationService.getOrganizationByFilter({ filter: { id: data.organizationId },
+        const organizationDetails = await organizationService.getOrganizationByFilter({
+            filter: { id: data.organizationId },
             include: {
                 members: {
                     select: { userId: true }
@@ -83,7 +84,7 @@ class EventController {
                 status: "PUBLISHED"
             }
         });
-        const groupNotification = organizationDetails.members?.map(m => ({
+        const groupNotification = organizationDetails.members?.map((m) => ({
             userId: m.userId,
             title: "New event has been created.",
             message: `Hi, ${userDetails.name} a new event has been posted for ${organizationDetails.name}. `,
@@ -114,7 +115,8 @@ class EventController {
         try {
             const data = req.body;
             const userDetails = req.userDetails;
-            const organizationDetails = await organizationService.getOrganizationByFilter({ filter: { id: data.organizationId },
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: { id: data.organizationId },
                 include: {}
             });
             if (!organizationDetails) {
