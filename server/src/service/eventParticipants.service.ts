@@ -1,5 +1,5 @@
-import { prisma } from "../config/prisma.config.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
+﻿import { prisma } from "../config/prisma.config.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 
 class EventParticipantService {
   async getEventParticipants({filter,select,skip, take} : {filter : {eventId : string, }, select : any, skip? : number, take? : number}){

@@ -1,7 +1,7 @@
-import type { Request, Response, NextFunction } from "express";
+﻿import type { Request, Response, NextFunction } from "express";
 import type { IErrorTypes } from "../lib/types/errorhandler.types.js";
-import { Prisma } from "../generated/prisma/client.ts";
-import { prisma } from "../config/prisma.config.ts";
+import { Prisma } from "../generated/prisma/client.js";
+import { prisma } from "../config/prisma.config.js";
 
 
 export default  async function errorHandler(

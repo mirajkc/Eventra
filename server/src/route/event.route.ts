@@ -1,10 +1,10 @@
-
+﻿
 import express, { Router } from 'express'
-import authorize from '../middleware/authorize.middleware.ts'
-import { upload } from '../middleware/uploader.middleware.ts'
-import validator from '../middleware/validator.middleware.ts'
-import { createEventDTO, updateEventDTO } from '../rules/event.rules.ts'
-import eventController from '../controller/event.controller.ts'
+import authorize from '../middleware/authorize.middleware.js'
+import { upload } from '../middleware/uploader.middleware.js'
+import validator from '../middleware/validator.middleware.js'
+import { createEventDTO, updateEventDTO } from '../rules/event.rules.js'
+import eventController from '../controller/event.controller.js'
 const eventRouter:Router = express.Router()
 
 eventRouter.post('/create-new-event', authorize({}), upload.single('image'), validator(createEventDTO),eventController.createNewEvent)

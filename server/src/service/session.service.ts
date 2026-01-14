@@ -1,6 +1,6 @@
-import { prisma } from "../config/prisma.config.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import type { IRegisterSession, ISessionDetails } from "../lib/types/session.types.ts"
+﻿import { prisma } from "../config/prisma.config.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
+import type { IRegisterSession, ISessionDetails } from "../lib/types/session.types.js"
 
 class SessionService {
   async createSession(data:IRegisterSession){

@@ -1,12 +1,12 @@
-import express, { type Application } from "express"
+﻿import express, { type Application } from "express"
 import cors from 'cors'
 import helmet from "helmet"
 import rateLimit from 'express-rate-limit';
 import cookieParser  from 'cookie-parser'
-import errorHandler from "../middleware/errorhandler.middleware.ts";
-import notFound from "../notfound.ts";
-import router from "../route/route.ts";
-import emailService from "../service/email.service.ts";
+import errorHandler from "../middleware/errorhandler.middleware.js";
+import notFound from "../notfound.js";
+import router from "../route/route.js";
+import emailService from "../service/email.service.js";
 
 const app:Application = express()
 

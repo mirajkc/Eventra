@@ -1,6 +1,6 @@
-import http from 'http'
-import app from './config/express.config.ts'
-import enviroment from './config/enviroment.config.ts'
+﻿import http from 'http'
+import app from './config/express.config.js'
+import enviroment from './config/enviroment.config.js'
 import { error } from 'console'
 
 const server = http.createServer(app)

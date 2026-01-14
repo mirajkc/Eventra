@@ -1,8 +1,8 @@
-import express, { Router } from 'express'
-import creditController from '../controller/credit.controller.ts'
-import authorize from '../middleware/authorize.middleware.ts'
-import validator from '../middleware/validator.middleware.ts'
-import { creditPurchaseDTO } from '../rules/credit.rules.ts'
+﻿import express, { Router } from 'express'
+import creditController from '../controller/credit.controller.js'
+import authorize from '../middleware/authorize.middleware.js'
+import validator from '../middleware/validator.middleware.js'
+import { creditPurchaseDTO } from '../rules/credit.rules.js'
 const creditRouter:Router = express.Router()
 
 creditRouter.get('/get-credit/:organizationId' ,  creditController.getCredit)

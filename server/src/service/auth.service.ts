@@ -1,6 +1,6 @@
-import { prisma } from "../config/prisma.config.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import type { IRegisterTypes } from "../lib/types/user.types.ts"
+﻿import { prisma } from "../config/prisma.config.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
+import type { IRegisterTypes } from "../lib/types/user.types.js"
 
 class AuthService{
   async getUserDetails(filter:any, include? : any){

@@ -1,12 +1,12 @@
-import type { NextFunction, Request, Response } from "express"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import organizationService from "../service/organization.service.ts"
-import creditService from "../service/creditpurchase.service.ts"
-import type { IUserDetails } from "../lib/types/user.types.ts"
-import notificationService from "../service/notification.service.ts"
-import emailService from "../service/email.service.ts"
-import type { ICreateNotificaion } from "../lib/types/notification.types.ts"
-import { thanksForCreditPurchase } from "../emailtemplates/creditPurchaseTemplate.ts"
+﻿import type { NextFunction, Request, Response } from "express"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
+import organizationService from "../service/organization.service.js"
+import creditService from "../service/creditpurchase.service.js"
+import type { IUserDetails } from "../lib/types/user.types.js"
+import notificationService from "../service/notification.service.js"
+import emailService from "../service/email.service.js"
+import type { ICreateNotificaion } from "../lib/types/notification.types.js"
+import { thanksForCreditPurchase } from "../emailtemplates/creditPurchaseTemplate.js"
 
 class CreditController {
   async getCredit(req:Request, res:Response, next:NextFunction){

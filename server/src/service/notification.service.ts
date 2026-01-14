@@ -1,6 +1,6 @@
-import { prisma } from "../config/prisma.config.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import type { ICreateNotificaion } from "../lib/types/notification.types.ts"
+﻿import { prisma } from "../config/prisma.config.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
+import type { ICreateNotificaion } from "../lib/types/notification.types.js"
 
 class NotificationService {
   async getNotificationCount(filter : {userId : string}){

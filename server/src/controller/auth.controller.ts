@@ -1,17 +1,17 @@
-import type {Request, Response,  NextFunction } from "express"
-import type { IRegisterTypes, IUserDetails, IUserLogin } from "../lib/types/user.types.ts"
-import authService from "../service/auth.service.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
+﻿import type {Request, Response,  NextFunction } from "express"
+import type { IRegisterTypes, IUserDetails, IUserLogin } from "../lib/types/user.types.js"
+import authService from "../service/auth.service.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 import bcrypt from 'bcrypt'
-import generateString from "../utilities/randomstring.generator.ts"
-import type { IRegisterSession } from "../lib/types/session.types.ts"
-import sessionService from "../service/session.service.ts"
-import enviroment from "../config/enviroment.config.ts"
-import { generateToken, verifyToken } from "../service/jwt.service.ts"
-import type { ICreateOTP } from "../lib/types/otp.types.ts"
-import otpService from "../service/otp.service.ts"
-import emailService from "../service/email.service.ts"
-import  { forgotPasswordTemplate } from '../emailtemplates/forgotPassTemplate.ts'  
+import generateString from "../utilities/randomstring.generator.js"
+import type { IRegisterSession } from "../lib/types/session.types.js"
+import sessionService from "../service/session.service.js"
+import enviroment from "../config/enviroment.config.js"
+import { generateToken, verifyToken } from "../service/jwt.service.js"
+import type { ICreateOTP } from "../lib/types/otp.types.js"
+import otpService from "../service/otp.service.js"
+import emailService from "../service/email.service.js"
+import  { forgotPasswordTemplate } from '../emailtemplates/forgotPassTemplate.js'  
 class AuthController {
   async register(req:Request,res:Response,next:NextFunction){
     try {

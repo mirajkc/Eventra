@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer';
-import enviroment from '../config/enviroment.config.ts';
+﻿import nodemailer from 'nodemailer';
+import enviroment from '../config/enviroment.config.js';
 
 class EmailService {
   #transport;

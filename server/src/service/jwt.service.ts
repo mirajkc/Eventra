@@ -1,6 +1,6 @@
-import jwt, {  } from "jsonwebtoken";
-import enviroment from "../config/enviroment.config.ts";
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts";
+﻿import jwt, {  } from "jsonwebtoken";
+import enviroment from "../config/enviroment.config.js";
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js";
 
 export  function generateToken({
   payload,

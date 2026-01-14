@@ -1,6 +1,6 @@
-import { prisma } from "../config/prisma.config.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import type { IEvent, IUploadEvent } from "../lib/types/event.types.ts"
+﻿import { prisma } from "../config/prisma.config.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
+import type { IEvent, IUploadEvent } from "../lib/types/event.types.js"
 
 class EventService {
     async getTotalEventsCount(filter : any){

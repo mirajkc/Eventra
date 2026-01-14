@@ -1,8 +1,8 @@
-import express, { Router } from 'express'
-import validator from '../middleware/validator.middleware.ts'
-import { changePasswordDTO, emailDTO, forgotPassDTO, loginDTO, OTPDTO, registerDTO } from '../rules/auth.rules.ts'
-import authController from '../controller/auth.controller.ts'
-import authorize from '../middleware/authorize.middleware.ts'
+﻿import express, { Router } from 'express'
+import validator from '../middleware/validator.middleware.js'
+import { changePasswordDTO, emailDTO, forgotPassDTO, loginDTO, OTPDTO, registerDTO } from '../rules/auth.rules.js'
+import authController from '../controller/auth.controller.js'
+import authorize from '../middleware/authorize.middleware.js'
 const authRouter:Router = express.Router()
 
 authRouter.post('/register', validator(registerDTO), authController.register)

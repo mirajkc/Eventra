@@ -1,13 +1,13 @@
-import type { Request, Response, NextFunction } from "express"
-import authService from "../service/auth.service.ts"
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts"
-import type { IUserDetails, IUserQuery } from "../lib/types/user.types.ts"
-import { uploadImage } from "../service/upload.service.ts"
-import userService from "../service/user.service.ts"
-import eventService from "../service/event.service.ts"
-import organizationService from "../service/organization.service.ts"
-import creditService from "../service/creditpurchase.service.ts"
-import notificationService from "../service/notification.service.ts"
+﻿import type { Request, Response, NextFunction } from "express"
+import authService from "../service/auth.service.js"
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
+import type { IUserDetails, IUserQuery } from "../lib/types/user.types.js"
+import { uploadImage } from "../service/upload.service.js"
+import userService from "../service/user.service.js"
+import eventService from "../service/event.service.js"
+import organizationService from "../service/organization.service.js"
+import creditService from "../service/creditpurchase.service.js"
+import notificationService from "../service/notification.service.js"
 class UserController {
     async getLoggedInUser(req:Request, res:Response , next:NextFunction ){
       try {

@@ -1,10 +1,10 @@
-import express, { Router } from 'express'
-import authRouter from './auth.route.ts'
-import userRouter from './user.route.ts'
-import organizationRouter from './organization.route.ts'
-import eventRouter from './event.route.ts'
-import eventParticipantRouter from './event.registration.route.ts'
-import creditRouter from './credit.route.ts'
+﻿import express, { Router } from 'express'
+import authRouter from './auth.route.js'
+import userRouter from './user.route.js'
+import organizationRouter from './organization.route.js'
+import eventRouter from './event.route.js'
+import eventParticipantRouter from './event.registration.route.js'
+import creditRouter from './credit.route.js'
 const router:Router = express.Router()
 
 router.use('/auth', authRouter)

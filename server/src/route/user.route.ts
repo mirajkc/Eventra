@@ -1,9 +1,9 @@
-import express, { Router } from 'express'
-import authorize from '../middleware/authorize.middleware.ts'
-import userController from '../controller/user.controller.ts'
-import { upload } from '../middleware/uploader.middleware.ts'
-import validator from '../middleware/validator.middleware.ts'
-import { userUpdateDTO } from '../rules/user.rules.ts'
+﻿import express, { Router } from 'express'
+import authorize from '../middleware/authorize.middleware.js'
+import userController from '../controller/user.controller.js'
+import { upload } from '../middleware/uploader.middleware.js'
+import validator from '../middleware/validator.middleware.js'
+import { userUpdateDTO } from '../rules/user.rules.js'
 const userRouter:Router = express.Router()
 // ===== User Profile =====
 userRouter.get('/me', authorize({}), userController.getLoggedInUser)

@@ -1,6 +1,6 @@
-import { Readable } from "node:stream";
+﻿import { Readable } from "node:stream";
 import {v2 as cloudinary} from 'cloudinary'
-import enviroment from "../config/enviroment.config.ts";
+import enviroment from "../config/enviroment.config.js";
 
 
 

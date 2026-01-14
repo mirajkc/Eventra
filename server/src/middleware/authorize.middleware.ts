@@ -1,7 +1,7 @@
-import type { Request, Response, NextFunction } from "express";
-import type { IErrorTypes } from "../lib/types/errorhandler.types.ts";
-import { verifyToken } from "../service/jwt.service.ts";
-import authService from "../service/auth.service.ts";
+﻿import type { Request, Response, NextFunction } from "express";
+import type { IErrorTypes } from "../lib/types/errorhandler.types.js";
+import { verifyToken } from "../service/jwt.service.js";
+import authService from "../service/auth.service.js";
 
 interface IJwtPayload { 
   userId: string; 

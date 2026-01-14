@@ -1,10 +1,10 @@
-
+﻿
 import express, { Router } from 'express'
-import authorize from '../middleware/authorize.middleware.ts'
-import { upload } from '../middleware/uploader.middleware.ts'
-import validator from '../middleware/validator.middleware.ts'
-import {  memberRoleDTO, organizationDTO, updateOrganizationDTO } from '../rules/organization.rules.ts'
-import organizationController from '../controller/organization.controller.ts'
+import authorize from '../middleware/authorize.middleware.js'
+import { upload } from '../middleware/uploader.middleware.js'
+import validator from '../middleware/validator.middleware.js'
+import {  memberRoleDTO, organizationDTO, updateOrganizationDTO } from '../rules/organization.rules.js'
+import organizationController from '../controller/organization.controller.js'
 const organizationRouter:Router = express.Router()
 
 organizationRouter.post('/create-organization', authorize({}),upload.fields([{name : "image" , maxCount : 1}, {name : "thumbnail", maxCount : 1 }]), validator(organizationDTO), organizationController.createOrganization )
