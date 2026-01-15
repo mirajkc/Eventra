@@ -1,23 +1,56 @@
 import Link from "next/link";
-import { ModeToggle } from "../ThemeTrigger";
+import { ModeToggle } from "../ModeSwitch";
+import { MobileMenu } from "./MobileMenu";
 
-export default function NavBar() {
+export const menuLinks = [
+  {
+    href: "/",
+    label: "Home",
+  },
+  {
+    href: "/",
+    label: "Events",
+  },
+  {
+    href: "/",
+    label: "Organizations",
+  },
+  {
+    href: "/",
+    label: "Pricing",
+  },
+]
+
+export default function LandingNavbar() {
   return (
-    <div >
-      <nav className="sticky top-0 z-50 max-w-7xl mx-auto px-4 shadow-lg rounded-full mt-4 dark:shadow-gray-900 shadow-lg dark:text-white sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex-shrink-0">
-            <a href="/" className="text-2xl font-bold ">Eventra</a>
-          </div>
-          <div className="flex items-center space-x-8">
-            <Link href="/" className="hidden md:block  hover:text-gray-500 hover:underline px-3 py-2 text-sm font-semibold transition-colors">Home</Link>
-            <Link href="/events" className="px-3 hover:underline py-2 hover:text-gray-500 text-sm font-semibold transition-colors">Events</Link>
-            <Link href="/organizations" className=" hover:underlinehidden md:block hover:text-gray-500 px-3 py-2 text-sm font-semibold transition-colors">Organizations</Link>
-            <Link href="/organizations" className="hidden md:block hover:text-gray-500 px-3 py-2 hover:underline text-sm font-semibold transition-colors">Pricing</Link>
-            <ModeToggle />
-          </div>
+    <nav className="sticky top-2 z-50">
+      <div className="flex justify-between max-w-7xl mx-auto items-center mt-4 text-black dark:text-white bg-gray-100 dark:bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg shadow-sm" >
+        <div>
+          <h1 className="text-2xl font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer" >Eventra</h1>
         </div>
-      </nav>
-    </div>
-  );
-} 
+        <div className="hidden md:block flex items-center" >
+          <div className="flex items-center gap-4" >
+            {menuLinks.map((link) => (
+              <Link
+                href={link.href}
+                key={link.label}
+                className="relative px-3 py-2 rounded-md font-medium transition-all duration-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-800 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 dark:after:bg-blue-400 after:transition-all after:duration-200 hover:after:w-full"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+        </div>
+        <div className="hidden md:block" >
+          <ModeToggle />
+        </div>
+        {/* mobile menu */}
+        <div className="block md:hidden flex gap-2" >
+          <ModeToggle />
+          <MobileMenu />
+        </div>
+      </div>
+    </nav>
+  )
+}

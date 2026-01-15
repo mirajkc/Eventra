@@ -1,32 +1,41 @@
 import type { Metadata } from "next";
-import RippleGrid from "@/components/RippleGrid.jsx";
-import NavBar from "@/components/landing/NavBar";
+import Antigravity from "@/components/Antigravity";
+
+import LandingNavbar from "@/components/landing/Navbar";
+import Footer from "@/components/ui/Footer";
+
 export const metadata: Metadata = {
-  title: "Eventra | Landing Page",
-  description: "The all in one event management platform",
+  title: "Eventra - Landing Page",
+  description: "Eventra All In One Event Management Platform",
 };
 
-export default function LandingLayout({
+export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <div className="min-h-screen w-full">
-      <NavBar />
-      <div className="absolute h-screen w-full top-0 left-0 overflow-hidden">
-        <RippleGrid
-          enableRainbow={true}
-          gridColor="#ffffff"
-          rippleIntensity={0.05}
-          gridSize={10}
-          gridThickness={15}
-          mouseInteraction={true}
-          mouseInteractionRadius={1.2}
-          opacity={0.8}
-        />
+    <>
+      <div>
+        <div className="w-full h-screen z-[-1] absolute" >
+          <Antigravity
+            count={300}
+            magnetRadius={6}
+            ringRadius={7}
+            waveSpeed={0.5}
+            waveAmplitude={1}
+            particleSize={1}
+            lerpSpeed={0.2}
+            color={'#3343d8'}
+            particleVariance={1}
+            autoAnimate={true} />
+        </div>
+        <div>
+          <LandingNavbar />
+          {children}
+          <Footer />
+        </div>
       </div>
-      {children}
-    </div>
+    </>
   );
-} 
+}
