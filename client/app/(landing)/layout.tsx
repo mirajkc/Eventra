@@ -18,14 +18,14 @@ export default function RootLayout({
     <>
       <div>
         <LandingNavbar />
-        <div className="w-full h-screen z-[-1] absolute" >
+        <div className="w-full h-screen absolute" >
           <Antigravity
             count={300}
-            magnetRadius={6}
+            magnetRadius={10}
             ringRadius={7}
             waveSpeed={0.5}
-            waveAmplitude={1}
-            particleSize={1}
+            waveAmplitude={2}
+            particleSize={2}
             lerpSpeed={0.2}
             color={'#3343d8'}
             particleVariance={1}
