@@ -4,21 +4,17 @@ import { MobileMenu } from "./MobileMenu";
 
 export const menuLinks = [
   {
-    href: "/",
+    href: "/home",
     label: "Home",
   },
   {
-    href: "/",
+    href: "/events",
     label: "Events",
   },
   {
-    href: "/",
+    href: "/organizations",
     label: "Organizations",
-  },
-  {
-    href: "/",
-    label: "Pricing",
-  },
+  }
 ]
 
 export default function LandingNavbar() {

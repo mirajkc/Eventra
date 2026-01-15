@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <>
       <div>
+        <LandingNavbar />
         <div className="w-full h-screen z-[-1] absolute" >
           <Antigravity
             count={300}
@@ -31,7 +32,6 @@ export default function RootLayout({
             autoAnimate={true} />
         </div>
         <div>
-          <LandingNavbar />
           {children}
           <Footer />
         </div>
