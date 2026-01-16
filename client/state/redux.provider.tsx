@@ -9,8 +9,6 @@ import { useAppDispatch } from "./hooks";
 function ReduxInitializer() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("APi hit");
-    
     dispatch(getUserDetails());
   }, [dispatch]);
 

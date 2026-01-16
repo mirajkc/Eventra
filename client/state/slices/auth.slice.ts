@@ -18,9 +18,7 @@ export const getUserDetails = createAsyncThunk(
   'userdetails/getUserDetails',
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Thunk Hit");
       const token = await getAccessToken();
-      console.log(token);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/me`,
         {
@@ -56,7 +54,7 @@ export const authSlice = createSlice({
       })
       .addCase(getUserDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.userDetails = action.payload;
+        state.userDetails = action.payload.data;
       })
       .addCase(getUserDetails.rejected, (state, action) => {
         state.loading = false;

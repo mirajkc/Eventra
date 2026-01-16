@@ -12,12 +12,20 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Cookies from 'js-cookie'
-import { useAppSelector } from "@/state/hooks";
+import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { IUserDetails } from "@/types/user.types";
+import { getUserDetails } from "@/state/slices/auth.slice";
 
 export default function Login() {
-  const userDetials:IUserDetails | null = useAppSelector((state)=>state.authSlice.userDetails)
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const userDetials: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
+  useEffect(() => {
+    if (userDetials?.id) {
+      toast.error("You are already logged in. ")
+      router.push('/home')
+    }
+  }, [userDetials?.id])
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       email: "",
@@ -39,10 +47,11 @@ export default function Login() {
         throw new Error(result.message)
       }
       Cookies.set("accessToken", result.data, {
-       expires: new Date(Date.now() + 3600 * 1000), 
-       secure: process.env.NODE_ENV === "production", 
-       path: "/"
-     });
+        expires: new Date(Date.now() + 3600 * 1000),
+        secure: process.env.NODE_ENV === "production",
+        path: "/"
+      });
+      await dispatch(getUserDetails())
       toast.success("You are logged in successfully. ")
       router.push('/home')
     } catch (error) {
@@ -113,7 +122,7 @@ export default function Login() {
 
           <div className="mt-6 text-center text-sm">
             <span className="text-muted-foreground">Don't have an account? </span>
-            <Link href="/register" className="font-medium text-primary hover:underline">
+            <Link href="/auth/register" className="font-medium text-primary hover:underline">
               Sign up
             </Link>
           </div>
