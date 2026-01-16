@@ -14,12 +14,6 @@ class UserController {
         const userDetails = req.userDetails
         const userData = await authService.getUserDetails({
           id : userDetails.id
-        },{
-               organizationMember : true,
-               createdEvents : true,
-               creditPurchases : true,
-               eventParticipants : true,
-               notifications : true
         })
         if(!userDetails){
           throw {

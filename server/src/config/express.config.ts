@@ -10,7 +10,10 @@ import emailService from "../service/email.service.js";
 
 const app:Application = express()
 
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:3000", 
+  credentials: true 
+}));
 app.use(helmet())
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000, 
