@@ -94,7 +94,7 @@ class AuthController {
 
   async generateAccessToken(req: Request, res: Response, next: NextFunction) {
     try {
-      const refreshToken: string = req.cookies.refreshToken
+      const refreshToken: string = req.body.refreshToken
       if (!refreshToken) {
         throw {
           code: 401,

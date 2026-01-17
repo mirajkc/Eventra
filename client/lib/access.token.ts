@@ -5,12 +5,15 @@ export default async function getAccessToken() {
   const accessToken = Cookies.get("accessToken")
   if (accessToken) return accessToken
 
-  //ask the sever for the new accessToken
+  const refreshToken = Cookies.get("refreshToken")
+  if (!refreshToken) throw new Error("No refresh token found")
+
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
+      body: JSON.stringify({ refreshToken })
     })
 
     if (!response.ok) throw new Error("Failed to refresh token")

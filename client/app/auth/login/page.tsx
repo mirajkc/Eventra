@@ -46,9 +46,14 @@ export default function Login() {
       if (response.status !== 200) {
         throw new Error(result.message)
       }
-      Cookies.set("accessToken", result.data, {
-        expires: new Date(Date.now() + 3600 * 1000),
-        secure: process.env.NODE_ENV === "production",
+      Cookies.set("accessToken", result.data.accessToken, {
+        expires: new Date(Date.now() + 3600),
+        secure: false,
+        path: "/"
+      });
+      Cookies.set("refreshToken", result.data.refreshToken, {
+        expires: new Date(Date.now() + 3600 * 24 * 15),
+        secure: false,
         path: "/"
       });
       await dispatch(getUserDetails())
