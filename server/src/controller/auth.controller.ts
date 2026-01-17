@@ -72,16 +72,20 @@ class AuthController {
       // Cookie configuration based on environment
       const isProduction = enviroment.mode === 'production'
 
-      res.cookie("refreshToken", newSession.refreshToken, {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'none',
-        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
-        path: '/'
-      })
+      // res.cookie("refreshToken", newSession.refreshToken, {
+      //   httpOnly: true,
+      //   secure: false,
+      //   sameSite: 'none',
+      //   expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+      //   path: '/'
+      // })
       res.json({
         message: "User logged in successfully",
-        data: newSession.accessToken
+        data: {
+          accessToken: newSession.accessToken,
+          refreshToken: newSession.refreshToken,
+          userId: newSession.userId
+        }
       })
     } catch (error) {
       next(error)
