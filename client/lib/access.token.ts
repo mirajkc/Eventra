@@ -5,6 +5,7 @@ export default async function getAccessToken() {
   if (accessToken) return accessToken
 
   const refreshToken = Cookies.get("refreshToken")
+  console.log("refresh token", refreshToken);
   if (!refreshToken) throw new Error("Session expired, please log in again.")
 
   try {
@@ -19,9 +20,9 @@ export default async function getAccessToken() {
     const result = await response.json()
     if (!result?.data) throw new Error("No token returned")
 
-   
+
     Cookies.set("accessToken", result.data, {
-      expires: 1 / 24, 
+      expires: 1 / 24,
       path: "/",
       secure: process.env.NODE_ENV === "production",
     })
