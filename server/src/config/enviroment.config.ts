@@ -1,8 +1,9 @@
 import 'dotenv/config'
 class Enviroment {
-  portNumber : number = Number(process.env.PORT) || 9000
-  secretKey : string = process.env.SECRET_KEY || "SECRET" 
-  mode :string = process.env.MODE || "DEVELOPMENT"
+  portNumber: number = Number(process.env.PORT) || 9000
+  secretKey: string = process.env.SECRET_KEY || "SECRET"
+  mode: string = process.env.MODE || "development"
+  clientURL: string = process.env.CLIENT_URL || "http://localhost:3000"
   SMTPConfigs = {
     provider: process.env.SMTP_PROVIDER,
     host: process.env.SMTP_HOST,
@@ -13,8 +14,8 @@ class Enviroment {
   };
 
   cloudinaryKeys = {
-    cloudName :process.env.CLOUDINARY_CLOUD_NAME,
-    apiKey : process.env.CLOUDINARY_API_KEY,
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
     apiSecret: process.env.CLOUDINARY_API_SECRET
   }
 }

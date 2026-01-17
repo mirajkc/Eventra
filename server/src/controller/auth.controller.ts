@@ -68,11 +68,16 @@ class AuthController {
       }
       await sessionService.deleteSession({ userId: userDetails.id })
       const newSession = await sessionService.createSession(sessionDetails)
+
+      // Cookie configuration based on environment
+      const isProduction = enviroment.mode === 'production'
+
       res.cookie("refreshToken", newSession.refreshToken, {
-        httpOnly: false,
-        secure: false,
-        sameSite: 'none',
-        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
+        httpOnly: true,  // Prevents JavaScript access (XSS protection)
+        secure: isProduction,  // true in production (HTTPS), false in development
+        sameSite: isProduction ? 'none' : 'lax',  // 'none' for cross-site in production, 'lax' for development
+        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+        path: '/'  // Cookie available across entire domain
       })
 
       res.json({
