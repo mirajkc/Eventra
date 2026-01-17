@@ -5,7 +5,6 @@ export default async function getAccessToken() {
   if (accessToken) return accessToken
 
   const refreshToken = Cookies.get("refreshToken")
-  console.log("refresh token", refreshToken);
   if (!refreshToken) throw new Error("Session expired, please log in again.")
 
   try {

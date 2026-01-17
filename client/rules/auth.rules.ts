@@ -14,3 +14,12 @@ export const registerDTO = z.object({
   path: ["confirmPassword"],
 })
 
+export const forgotPasswordOtpDTO = z.object({
+  email: z.string().email().nonempty("Email is required"),
+})
+
+export const verifyOtpDTO = z.object({
+  email: z.string().email().nonempty("Email is required"),
+  otp: z.string().length(6, "OTP must be exactly 6 digits").regex(/^\d{6}$/, "OTP must contain only numbers"),
+})
+

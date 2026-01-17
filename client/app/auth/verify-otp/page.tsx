@@ -1,68 +1,54 @@
 "use client";
-import React, { useEffect } from "react";
 import Input from "@/components/form/Input";
 import Label from "@/components/form/Label";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { TypographyH2, TypographyP } from "@/components/ui/Typography";
-import { loginDTO } from "@/rules/auth.rules";
+import { verifyOtpDTO } from "@/rules/auth.rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import Cookies from 'js-cookie'
-import { useAppDispatch, useAppSelector } from "@/state/hooks";
-import { IUserDetails } from "@/types/user.types";
-import { getUserDetails } from "@/state/slices/auth.slice";
 
-export default function Login() {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const userDetials: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
-  useEffect(() => {
-    if (userDetials?.id) {
-      toast.error("You are already logged in. ")
-      router.push('/home')
-    }
-  }, [userDetials?.id])
+export default function VerifyOtp() {
+  const router = useRouter();
+
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       email: "",
-      password: "",
+      otp: "",
     },
-    resolver: zodResolver(loginDTO)
-  })
+    resolver: zodResolver(verifyOtpDTO)
+  });
+
   const onSubmit = async (data: any) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-otp`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
-      })
-      const result = await response.json()
-      if (response.status !== 200) {
-        throw new Error(result.message)
-      }
-      Cookies.set("accessToken", result.data, {
-        expires: new Date(Date.now() + 3600 * 1000),
-        secure: process.env.NODE_ENV === "production",
-        path: "/"
       });
-      await dispatch(getUserDetails())
-      toast.success("You are logged in successfully. ")
-      router.push('/home')
+      const result = await response.json();
+      if (response.status !== 200) {
+        throw new Error(result.message);
+      }
+      toast.success("OTP verified successfully.");
+      console.log(result);
+      // Redirect to reset password page or handle as needed
+      // router.push('/auth/reset-password');
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
-        toast.error(error.message)
+        toast.error(error.message);
       } else {
-        toast.error("Error occured while logging you in please try again. ")
+        toast.error("Error occurred while verifying OTP. Please try again.");
       }
     }
-  }
+  };
+
   if (isSubmitting) {
     return (
       <section className="flex items-center justify-center min-h-screen w-full bg-slate-50 dark:bg-black p-4">
@@ -70,7 +56,7 @@ export default function Login() {
           <Spinner />
         </div>
       </section>
-    )
+    );
   }
 
   return (
@@ -78,8 +64,8 @@ export default function Login() {
       <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
         <div className="p-8">
           <div className="flex flex-col space-y-2 text-center mb-8">
-            <TypographyH2>Welcome Back</TypographyH2>
-            <TypographyP>Enter your credentials to access your account</TypographyP>
+            <TypographyH2>Verify OTP</TypographyH2>
+            <TypographyP>Enter your email and the 6-digit OTP sent to your inbox</TypographyP>
           </div>
 
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -96,38 +82,30 @@ export default function Login() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/auth/get-forgotpass-otp"
-                    className="text-sm font-medium text-primary hover:underline"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+                <Label htmlFor="otp">OTP Code</Label>
                 <Input
-                  type="password"
-                  value="password"
-                  placeholder="Enter your password"
+                  type="text"
+                  value="otp"
+                  placeholder="Enter 6-digit OTP"
+                  errorMsg={errors.otp?.message}
                   control={control}
-                  errorMsg={errors.password?.message}
                 />
               </div>
             </div>
 
             <Button className="w-full" size="lg">
-              Sign In
+              Verify OTP
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Don't have an account? </span>
-            <Link href="/auth/register" className="font-medium text-primary hover:underline">
-              Sign up
+            <span className="text-muted-foreground">Didn't receive the code? </span>
+            <Link href="/auth/get-forgotpass-otp" className="font-medium text-primary hover:underline">
+              Resend OTP
             </Link>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
