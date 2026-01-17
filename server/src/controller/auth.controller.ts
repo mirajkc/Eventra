@@ -73,11 +73,11 @@ class AuthController {
       const isProduction = enviroment.mode === 'production'
 
       res.cookie("refreshToken", newSession.refreshToken, {
-        httpOnly: true,  // Prevents JavaScript access (XSS protection)
-        secure: isProduction,  // true in production (HTTPS), false in development
-        sameSite: isProduction ? 'none' : 'lax',  // 'none' for cross-site in production, 'lax' for development
+        httpOnly: false,
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
         expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
-        path: '/'  // Cookie available across entire domain
+        path: '/'
       })
 
       res.json({
