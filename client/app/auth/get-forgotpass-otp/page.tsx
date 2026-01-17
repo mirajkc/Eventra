@@ -12,6 +12,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function GetForgotPasswordOtp() {
+
+  toast.info("Alert, Eventra as of now does not have a mail server provider. So we are unable to send OTP.");
+
   const router = useRouter();
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({

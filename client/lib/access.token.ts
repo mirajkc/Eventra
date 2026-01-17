@@ -3,7 +3,6 @@ import Cookies from 'js-cookie'
 export default async function getAccessToken() {
   const accessToken = Cookies.get("accessToken")
   if (accessToken) return accessToken
-
   const refreshToken = Cookies.get("refreshToken")
   if (!refreshToken) throw new Error("Session expired, please log in again.")
 

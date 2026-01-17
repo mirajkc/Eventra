@@ -13,7 +13,6 @@ import { toast } from "sonner";
 
 export default function VerifyOtp() {
   const router = useRouter();
-
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       email: "",
@@ -36,9 +35,6 @@ export default function VerifyOtp() {
         throw new Error(result.message);
       }
       toast.success("OTP verified successfully.");
-      console.log(result);
-      // Redirect to reset password page or handle as needed
-      // router.push('/auth/reset-password');
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {

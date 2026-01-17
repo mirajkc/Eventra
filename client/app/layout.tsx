@@ -35,19 +35,20 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${geistMono.variable} antialiased`}
       >
-       <ReduxProvider>
-        <ThemeProvider
+        <ReduxProvider>
+          <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
             {children}
+            <Toaster
+              position='top-center'
+            />
           </ThemeProvider>
-          <Toaster
-            position='top-center'
-          />
-       </ReduxProvider>
+
+        </ReduxProvider>
       </body>
     </html>
   );

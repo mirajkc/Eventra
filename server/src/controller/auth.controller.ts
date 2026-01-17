@@ -69,7 +69,7 @@ class AuthController {
       await sessionService.deleteSession({ userId: userDetails.id })
       const newSession = await sessionService.createSession(sessionDetails)
       res.cookie("refreshToken", newSession.refreshToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: false,
         sameSite: 'none',
         expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
