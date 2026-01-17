@@ -8,11 +8,11 @@ export default async function getAccessToken() {
   const refreshToken = Cookies.get("refreshToken")
   if (!refreshToken) throw new Error("No refresh token found")
 
+
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ refreshToken })
     })
 
