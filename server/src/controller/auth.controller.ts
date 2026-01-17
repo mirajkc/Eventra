@@ -73,13 +73,12 @@ class AuthController {
       const isProduction = enviroment.mode === 'production'
 
       res.cookie("refreshToken", newSession.refreshToken, {
-        httpOnly: false,
-        secure: isProduction,
-        sameSite: isProduction ? 'none' : 'lax',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
         expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
         path: '/'
       })
-
       res.json({
         message: "User logged in successfully",
         data: newSession.accessToken
