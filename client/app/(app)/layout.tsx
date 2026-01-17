@@ -1,3 +1,5 @@
+import NavBar from "@/components/App/NavBar";
+import Footer from "@/components/ui/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,8 +14,16 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div>
-        {children}
+      <div className="flex flex-col max-w-7xl  min-h-screen mx-auto" >
+        <div className="sticky top-4 z-50" >
+          <NavBar />
+        </div>
+        <div className="mt-16">
+          {children}
+        </div>
+        <div className="mt-auto">
+          <Footer />
+        </div>
       </div>
     </>
   );
