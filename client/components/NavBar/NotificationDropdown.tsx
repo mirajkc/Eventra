@@ -7,26 +7,27 @@ import getAccessToken from "@/lib/access.token"
 import { toast } from "sonner"
 import { Spinner } from "../ui/spinner"
 import { INotification, INotificationPaginzation } from "@/types/notifucation.types"
+import { useRouter } from "next/navigation"
 
 export default function NotificationDropdown({ userId }: { userId: string }) {
+  const router = useRouter()
   const [notifications, setNotifications] = useState<Array<INotification>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState<INotificationPaginzation>({
-    hasNext: false,
-    hasPrev: 0,
-    limit: 10,
-    page: 1,
-    prevPage: 2,
-    skip: 0,
-    totalPages: 1
+    currentPage: 1,
+    totalPages: 1,
+    take: 10,
+    totalDocs: 0,
+    hasNextPage: false,
+    hasPreviousPage: false
   })
 
-  const fetchUserNotifications = async (page: number = pagination.page) => {
+  const fetchUserNotifications = async (page: number = pagination.currentPage) => {
     try {
       setLoading(true)
       const token = await getAccessToken()
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/notification/get-notification?page=${page}&limit=${pagination.limit}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/notification/get-notification?page=${page}&limit=${pagination.take}`,
         {
           method: "GET",
           credentials: "include",
@@ -36,14 +37,11 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
       }
       const result = await response.json()
       console.log(result)
-
-      // Handle the actual server response structure
       if (result.data) {
         setNotifications(result.data.notifications || [])
         setPagination(result.data.paginationData || pagination)
@@ -56,20 +54,20 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
   }
 
   const handleNextPage = () => {
-    if (pagination.hasNext) {
+    if (pagination.hasNextPage) {
       setPagination({
         ...pagination,
-        page: pagination.page + 1
+        currentPage: pagination.currentPage++
       })
       fetchUserNotifications()
     }
   }
 
   const handlePrevPage = () => {
-    if (pagination.hasPrev > 0) {
+    if (pagination.hasPreviousPage) {
       setPagination({
         ...pagination,
-        page: pagination.page - 1
+        currentPage: pagination.currentPage--
       })
       fetchUserNotifications()
     }
@@ -81,7 +79,37 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
     }
   }, [userId])
 
-  // Count unread notifications
+  const handleNotificationClick = async (notification: INotification) => {
+    try {
+      const token = await getAccessToken()
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/notification/update-notification/${notification.id}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to mark notification as read");
+      }
+      const result = await response.json()
+
+      if (result.data) {
+        setNotifications(result.data.notifications || [])
+        setPagination(result.data.paginationData || pagination)
+      }
+      router.push(`${notification.entityType.toLowerCase()}/${notification.entityId}`)
+
+    } catch (error: any) {
+      toast.error(error.message || "Failed to load notification")
+    }
+  }
+
   const unreadCount = notifications?.filter(n => !n.isRead).length
 
   return (
@@ -102,7 +130,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
           <span>Notifications</span>
           {pagination.totalPages > 1 && (
             <span className="text-xs text-muted-foreground font-normal">
-              Page {pagination.page} of {pagination.totalPages}
+              Page {pagination.currentPage} of {pagination.totalPages}
             </span>
           )}
         </div>
@@ -110,13 +138,14 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
 
         <div className="flex-1 overflow-y-auto">
           {loading ? (
-            <div className="px-2 py-8 text-center text-sm text-muted-foreground">
+            <div className="px-2 py-8 text-center text-sm text-muted-foreground flex items-center justify-center">
               <Spinner />
             </div>
           ) : notifications?.length > 0 ? (
             notifications.map((notification: INotification) => (
               <DropdownMenuItem
                 key={notification.id}
+                onClick={() => handleNotificationClick(notification)}
                 className={`px-4 py-3 cursor-pointer ${!notification.isRead ? 'bg-accent/50' : ''}`}
               >
                 <div className="flex flex-col gap-1 w-full">
@@ -152,6 +181,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
                 variant="outline"
                 size="sm"
                 onClick={handlePrevPage}
+                disabled={!pagination.hasPreviousPage}
                 className="flex-1"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
@@ -161,6 +191,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
                 variant="outline"
                 size="sm"
                 onClick={handleNextPage}
+                disabled={!pagination.hasNextPage}
                 className="flex-1"
               >
                 Next

@@ -1,23 +1,31 @@
 
+"use client";
+
 import Link from "next/link"
-import { Menu, Calendar } from "lucide-react"
+import { Menu, Calendar, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/ModeSwitch"
 import SearchBar from "./SearchBar"
 import DesktopNavigation from "./DesktopNavigation"
 import AuthSection from "./AuthSection"
+import { useState } from "react"
+import MobileMenu from "./MobileMenu"
 
 
 export default function NavBar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-gray-900 dark:border-gray-800 dark:text-gray-100">
+    <nav className="sticky top-0 rounded-sm z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black dark:border-gray-800 dark:text-gray-100">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
           <Link
-            href="/"
+            href="/home"
             className="flex items-center gap-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
           >
             <Calendar className="h-6 w-6" />
@@ -44,13 +52,20 @@ export default function NavBar() {
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
             <ModeToggle />
-            <Button variant="ghost" size="icon">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Open menu</span>
+            <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+              <span className="sr-only">Toggle menu</span>
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </nav>
   )
 }

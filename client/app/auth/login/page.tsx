@@ -47,13 +47,13 @@ export default function Login() {
         throw new Error(result.message)
       }
       Cookies.set("accessToken", result.data.accessToken, {
-        expires: new Date(Date.now() + 3600),
-        secure: false,
+        expires: 1 / 24,
+        secure: true,
         path: "/"
       });
       Cookies.set("refreshToken", result.data.refreshToken, {
-        expires: new Date(Date.now() + 3600 * 24 * 15),
-        secure: false,
+        expires: 15,
+        secure: true,
         path: "/"
       });
       await dispatch(getUserDetails())
