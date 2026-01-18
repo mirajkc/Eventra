@@ -20,7 +20,6 @@ export default function UpdateUserPage() {
     defaultValues: {
       name: userDetails?.name,
       phone: userDetails?.phone,
-      image: userDetails?.image,
     },
     resolver: zodResolver(IUpdateProfileDTO)
   })
@@ -33,34 +32,27 @@ export default function UpdateUserPage() {
     }
   }, [userDetails, reset]);
   const updateUser = async (data: any) => {
-    try {
-      const formData = new FormData();
-      if (data.name) formData.append("name", data.name);
-      if (data.phone) formData.append("phone", data.phone);
+    const formData = new FormData();
+    if (data.name) formData.append("name", data.name);
+    if (data.phone) formData.append("phone", data.phone);
 
-      if (data.image && data.image[0]) {
-        formData.append("image", data.image[0]);
-      }
-
-      const accessToken = await getAccessToken();
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user/update-user`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${accessToken}`
-        },
-        body: formData
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error) {
-      toast.error("Error occurred while updating the user, please try again");
+    if (data.image && data.image[0]) {
+      formData.append("image", data.image[0]);
     }
+
+    const accessToken = await getAccessToken();
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user/update-user`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`
+      },
+      body: formData
+    });
+
+    const result = await response.json();
+    if (result.success) toast.success(result.message);
+    else toast.error(result.message);
   };
 
   return (

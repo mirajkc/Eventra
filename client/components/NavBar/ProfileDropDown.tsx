@@ -30,10 +30,10 @@ export default function ProfileDropDown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="rounded-full">
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+          <div className="h-8 w-8 rounded-full   flex items-center justify-center">
             {
               userDetails?.image ? (
-                <Image src={userDetails.image} width={20} height={20} alt="Profile" className="h-5 w-5 rounded-full " />
+                <Image src={userDetails.image} width={20} height={20} alt="Profile" className="size-8 rounded-full " />
               ) : (
                 <User className="h-5 w-5 text-primary" />
               )

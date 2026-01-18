@@ -1,5 +1,3 @@
-
-"use client"
 import { Controller } from "react-hook-form"
 
 export interface IInputTypes {
@@ -7,7 +5,6 @@ export interface IInputTypes {
   control?: any,
   errorMsg?: string,
   name: string
-
 }
 
 export default function FileInput({
@@ -24,8 +21,7 @@ export default function FileInput({
         render={({ field }) => (
           <input
             type="file"
-            {...field}
-            value={field.value || ""}
+            onChange={(e) => field.onChange(e.target.files)}
             className={`border border-input bg-background rounded-md px-3 py-2 text-sm ring-offset-background w-full ${className}`}
           />
         )}
@@ -34,4 +30,3 @@ export default function FileInput({
     </div>
   );
 }
-
