@@ -15,26 +15,22 @@ class NotificationController {
       const page: number = Number(req.query.page) || 1
       const limit: number = Number(req.query.limit) || 10
       const skip: number = (page - 1) * limit
+
       const notifications = await notificationService.getNotification({ userId: userDetails.id }, skip, limit)
       const notificationCount = await notificationService.getNotificationCount({ userId: userDetails.id })
-      const totalPages = Math.ceil(notificationCount / limit)
-      const hasNext = page > 1
-      const hasPrev = page - 1
-      const prevPage = page + 1
-      const paginationData = {
-        page,
-        limit,
-        skip,
-        totalPages,
-        hasNext,
-        hasPrev,
-        prevPage,
-      }
+
       res.json({
         message: "Notifications fetched successfully",
         data: {
           notifications,
-          paginationData
+          paginationData : {
+            currentPage : page, 
+            totalPages : Math.ceil(notificationCount/limit),
+            take : limit, 
+            totalDocs : notificationCount,
+            hasNextPage : page < Math.ceil(notificationCount / limit),
+            hasPreviousPage: page > 1,
+          }
         }
       })
 

@@ -1,4 +1,4 @@
-import NavBar from "@/components/App/NavBar";
+import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/ui/Footer";
 import type { Metadata } from "next";
 
