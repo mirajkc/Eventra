@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { Spinner } from "../ui/spinner"
 import { INotification, INotificationPaginzation } from "@/types/notifucation.types"
 import { useRouter } from "next/navigation"
-
+import { format, formatDistanceToNow } from 'date-fns';
 export default function NotificationDropdown({ userId }: { userId: string }) {
   const router = useRouter()
   const [notifications, setNotifications] = useState<Array<INotification>>([])
@@ -41,7 +41,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
         throw new Error("Failed to fetch notifications");
       }
       const result = await response.json()
-      console.log(result)
+
       if (result.data) {
         setNotifications(result.data.notifications || [])
         setPagination(result.data.paginationData || pagination)
@@ -161,6 +161,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
                     {notification.message}
                   </div>
                   <div className="text-xs text-muted-foreground/70 mt-1">
+                    {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
                   </div>
                 </div>
               </DropdownMenuItem>

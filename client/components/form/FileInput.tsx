@@ -4,22 +4,17 @@ import { Controller } from "react-hook-form"
 
 export interface IInputTypes {
   className?: string,
-  type: string,
-  placeholder?: string,
-  name: string,
   control?: any,
-  errorMsg?: string
-  disabled?: boolean
+  errorMsg?: string,
+  name: string
+
 }
 
-export default function Input({
+export default function FileInput({
   className = "",
-  type,
-  placeholder,
-  name,
-  disabled = false,
   control,
   errorMsg,
+  name
 }: IInputTypes) {
   return (
     <div>
@@ -28,13 +23,10 @@ export default function Input({
         name={name}
         render={({ field }) => (
           <input
-            type={type}
-            placeholder={placeholder}
-            id={name}
+            type="file"
             {...field}
             value={field.value || ""}
             className={`border border-input bg-background rounded-md px-3 py-2 text-sm ring-offset-background w-full ${className}`}
-            disabled={disabled}
           />
         )}
       />
