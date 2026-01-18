@@ -22,7 +22,6 @@ export default function Login() {
   const userDetials: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
   useEffect(() => {
     if (userDetials?.id) {
-      toast.error("You are already logged in. ")
       router.push('/home')
     }
   }, [userDetials?.id])
@@ -93,7 +92,7 @@ export default function Login() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   type="email"
-                  value="email"
+                  name="email"
                   placeholder="name@example.com"
                   errorMsg={errors.email?.message}
                   control={control}
@@ -112,7 +111,7 @@ export default function Login() {
                 </div>
                 <Input
                   type="password"
-                  value="password"
+                  name="password"
                   placeholder="Enter your password"
                   control={control}
                   errorMsg={errors.password?.message}

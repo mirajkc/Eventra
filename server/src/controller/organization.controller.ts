@@ -571,6 +571,27 @@ class OrganizationController {
     }
   }
 
+  async getLoggedInUserOrganization(req:Request, res:Response, next:NextFunction){
+    try {
+      const userDetails:IUserDetails = req.userDetails
+      const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id)
+      if(!organizationDetails){
+        return res.json({
+          message : "User has not created the organization yet. ",
+          hasOrganization : false,
+          data : null
+        })
+      }
+      return res.json({
+        message : "User's organization details fetched successfully. ",
+        data : organizationDetails,
+        hasOrganization : true
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
 
 }
 const organizationController = new OrganizationController()

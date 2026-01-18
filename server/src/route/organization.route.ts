@@ -26,6 +26,7 @@ organizationRouter.delete('/kick-member/organization/:organizationId/:memberId',
 
 organizationRouter.get('/join-organization/:organizationId', authorize({}), organizationController.joinOrganization)
 organizationRouter.get('/leave-organization/:organizationId', authorize ({}), organizationController.leaveOrganization)
+organizationRouter.get('/get-loggedin-users-organization' , authorize({}), organizationController.getLoggedInUserOrganization)
 
 
 export default organizationRouter

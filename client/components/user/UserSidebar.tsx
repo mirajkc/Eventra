@@ -5,11 +5,7 @@ import { cn } from "@/lib/utils";
 import {
   User,
   Shield,
-  Bell,
-  CreditCard,
-  Key,
   LogOut,
-  LayoutDashboard,
   Home,
   Calendar,
   Building,
@@ -27,19 +23,9 @@ const sidebarItems = [
     icon: Shield,
   },
   {
-    title: "Organization",
-    href: "/user/organization",
-    icon: Home,
-  },
-  {
     title: "Events",
     href: "/user/events",
     icon: Calendar,
-  },
-  {
-    title: "Joined Organizations",
-    href: "/user/organizations",
-    icon: Building,
   },
 ];
 
@@ -77,11 +63,14 @@ export default function UserSidebar() {
         })}
 
         <div className="h-px bg-border my-1" />
-
-        <button className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors w-full text-left">
+        <Link
+          href={"/user/logout"}
+          className={
+            "flex items-center text-red-500 gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-accent "}
+        >
           <LogOut className="h-4 w-4" />
-          Logout
-        </button>
+          LogOut
+        </Link>
       </div>
     </nav>
   );

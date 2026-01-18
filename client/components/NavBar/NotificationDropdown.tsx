@@ -8,7 +8,8 @@ import { toast } from "sonner"
 import { Spinner } from "../ui/spinner"
 import { INotification, INotificationPaginzation } from "@/types/notifucation.types"
 import { useRouter } from "next/navigation"
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
+
 export default function NotificationDropdown({ userId }: { userId: string }) {
   const router = useRouter()
   const [notifications, setNotifications] = useState<Array<INotification>>([])
@@ -47,7 +48,7 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
         setPagination(result.data.paginationData || pagination)
       }
     } catch (error: any) {
-      toast.error(error.message || "Failed to load notifications")
+      toast.error("Failed to load notifications")
     } finally {
       setLoading(false);
     }
