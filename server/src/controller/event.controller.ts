@@ -13,6 +13,7 @@ import { newEventTemplate } from "../emailtemplates/newEventCreated.js"
 import getSlug from "../utilities/createSlug.js"
 import eventParticipantService from "../service/eventParticipants.service.js"
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js"
+import generateString from "../utilities/randomstring.generator.js"
 
 
 class EventController {
@@ -74,6 +75,7 @@ class EventController {
       const imageFile = req.file.buffer
       imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail")
     }
+    const token:string = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase()
     const newEvent: IEvent = await eventService.createEvent({
       data: {
         organizationId: organizationDetails.id,
@@ -89,7 +91,8 @@ class EventController {
         image: imageUrl,
         slug: slug,
         status: "PUBLISHED"
-      }
+      },
+      checkInToken : token
     })
 
     const groupNotification: Array<ICreateNotificaion> =
@@ -110,7 +113,7 @@ class EventController {
     await notificationService.sendNotificaion({
       userId: userDetails.id,
       title: "Your check in token for the event " + newEvent.title,
-      message: `Hello, your check in token for the event ${newEvent.title} is A-D-M-I-N please keep it safe as this token will be needed during the check in proccess. `,
+      message: `Hello, your check in token for the event ${newEvent.title} is ${token} please keep it safe as this token will be needed during the check in proccess. `,
       entityType: "EVENT",
       entityId: newEvent.id,
       type: 'EVENT_CREATED'

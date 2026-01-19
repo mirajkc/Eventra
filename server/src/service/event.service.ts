@@ -14,7 +14,7 @@ class EventService {
     })
   }
 
-  async createEvent({ data }: { data: IUploadEvent }) {
+  async createEvent({ data, checkInToken }: { data: IUploadEvent, checkInToken:string }) {
     return await prisma.$transaction(async (tx: any) => {
       const updatedOrg = await tx.organization.updateMany({
         where: {
@@ -56,7 +56,7 @@ class EventService {
         data: {
           eventId: event.id,
           userId: data.creatorId,
-          checkInToken: "ADMIN",
+          checkInToken: checkInToken,
         }
       })
       return event

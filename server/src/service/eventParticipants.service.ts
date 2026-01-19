@@ -83,7 +83,7 @@ class EventParticipantService {
 
   async chekIn(token: string, eventId: string) {
     const updatedUser = await prisma.eventParticipants.update({
-      where: { checkInToken: token, attended: false, eventId: eventId },
+      where: { eventId: eventId, checkInToken: token, attended: false },
       data: {
         attended: true,
         checkedInAt: new Date(Date.now())
