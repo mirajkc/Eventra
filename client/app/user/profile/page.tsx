@@ -19,7 +19,7 @@ export default function UpdateUserPage() {
   const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       name: userDetails?.name,
-      phone: userDetails?.phone,
+      phone: userDetails?.phone || "",
     },
     resolver: zodResolver(IUpdateProfileDTO)
   })
@@ -27,7 +27,7 @@ export default function UpdateUserPage() {
     if (userDetails) {
       reset({
         name: userDetails.name,
-        phone: userDetails.phone,
+        phone: userDetails.phone || "",
       });
     }
   }, [userDetails, reset]);

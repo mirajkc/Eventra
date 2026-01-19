@@ -209,7 +209,7 @@ model EventParticipants {
   eventId      String
   userId       String
   registeredAt DateTime @default(now())
-  checkInToken String?  @unique
+  checkInToken String?
 
   //for check in 
   attended    Boolean   @default(false)

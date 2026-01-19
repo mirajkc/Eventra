@@ -1,6 +1,5 @@
 ﻿import nodemailer from 'nodemailer';
 import enviroment from '../config/enviroment.config.js';
-
 class EmailService {
   #transport;
   constructor() {
@@ -23,9 +22,11 @@ class EmailService {
       };
     }
   }
-
-  //method to send the email
-  async sendEmail({ to, subject, message }:{to:string, subject: string, message : any}) {
+  async sendEmail({ to, subject, message }: { to: string, subject: string, message: any }) {
+    if (!enviroment.enableEmail) {
+      console.log("Email sending is disabled.");
+      return;
+    }
     try {
       return await this.#transport.sendMail({
         to: to,
@@ -40,4 +41,4 @@ class EmailService {
   }
 }
 const emailService = new EmailService()
-export default  emailService
+export default emailService

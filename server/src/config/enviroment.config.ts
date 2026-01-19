@@ -4,6 +4,7 @@ class Enviroment {
   secretKey: string = process.env.SECRET_KEY || "SECRET"
   mode: string = process.env.MODE || "development"
   clientURL: string = process.env.CLIENT_URL || "http://localhost:3000"
+  enableEmail: boolean = process.env.ENABLE_EMAIL === "true" || false
   SMTPConfigs = {
     provider: process.env.SMTP_PROVIDER,
     host: process.env.SMTP_HOST,

@@ -9,12 +9,12 @@ import Image from "next/image";
 export const userMenuItems = [
 
   {
-    label: "My Organization",
-    href: "/manage-organization",
+    label: "Organization Settings",
+    href: "/manage-organization/organization",
     icon: Building,
   },
   {
-    label: "Settings & Information",
+    label: "Settings & Events",
     href: "/user/profile",
     icon: Settings,
   },
