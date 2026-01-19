@@ -1,3 +1,5 @@
+import { StringDecoder } from "string_decoder"
+
 export interface IOrganizationResponse {
   message: string,
   data: IOrganizationDetails | null

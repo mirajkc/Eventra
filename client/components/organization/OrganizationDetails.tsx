@@ -4,11 +4,11 @@ import { Badge } from "@/components/ui/badge";
 import {
   Globe,
   Calendar,
-  CreditCard,
   ShieldCheck,
-  PlusCircle,
-  LayoutDashboard
+  LayoutDashboard,
+  CreditCard
 } from "lucide-react";
+
 const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={`rounded-xl border bg-card text-card-foreground shadow ${className}`} {...props} />
 );
@@ -22,8 +22,6 @@ const CardTitle = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>
 const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={`p-6 pt-0 ${className}`} {...props} />
 );
-
-
 
 
 

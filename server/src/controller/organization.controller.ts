@@ -16,6 +16,7 @@ import type { ICreateNotificaion } from "../lib/types/notification.types.js"
 import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js"
 import userService from "../service/user.service.js"
 import { userKickedTemplate } from "../emailtemplates/userKickedTemplate.js"
+import { checkForCredit } from "../utilities/checkforcredit.js"
 
 
 class OrganizationController {
@@ -82,6 +83,7 @@ class OrganizationController {
           status: "ORGANIZATIONIT_NOTFOUND_ERR"
         } as IErrorTypes
       }
+      await checkForCredit(organizationId)
       const page = Number(data.page) || 1
       const take = Math.min(Math.max(Number(data.take) || 10, 1), 50);
       const skip = (page - 1) * take
@@ -186,6 +188,7 @@ class OrganizationController {
     try {
       const userDetails: IUserDetails = req.userDetails
       const organizationId: string = String(req.params.organizationId)
+      await checkForCredit(organizationId)
       const organizationDetails = await organizationService.getOrganizationByFilter({
         filter: { id: organizationId },
         include: {
@@ -254,6 +257,7 @@ class OrganizationController {
     try {
       const userDetails: IUserDetails = req.userDetails
       const organizationId: string = String(req.params.organizationId)
+      await checkForCredit(organizationId)
       const organizationDetails = await organizationService.getOrganizationByFilter({
         filter: { id: organizationId },
         include: {
@@ -392,6 +396,7 @@ class OrganizationController {
           status: "ORGANIZATION_OWNERSHIP_ERR"
         } as IErrorTypes
       }
+      await checkForCredit(organizationDetails.id)
       const files = req.files as {
         image?: Express.Multer.File[],
         thumbnail?: Express.Multer.File[],
@@ -571,21 +576,22 @@ class OrganizationController {
     }
   }
 
-  async getLoggedInUserOrganization(req:Request, res:Response, next:NextFunction){
+  async getLoggedInUserOrganization(req: Request, res: Response, next: NextFunction) {
     try {
-      const userDetails:IUserDetails = req.userDetails
+      const userDetails: IUserDetails = req.userDetails
       const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id)
-      if(!organizationDetails){
+      if (!organizationDetails) {
         return res.json({
-          message : "User has not created the organization yet. ",
-          hasOrganization : false,
-          data : null
+          message: "User has not created the organization yet. ",
+          hasOrganization: false,
+          data: null
         })
       }
+      await checkForCredit(organizationDetails.id)
       return res.json({
-        message : "User's organization details fetched successfully. ",
-        data : organizationDetails,
-        hasOrganization : true
+        message: "User's organization details fetched successfully. ",
+        data: organizationDetails,
+        hasOrganization: true
       })
     } catch (error) {
       next(error)

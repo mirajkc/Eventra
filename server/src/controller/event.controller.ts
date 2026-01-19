@@ -14,6 +14,7 @@ import getSlug from "../utilities/createSlug.js"
 import eventParticipantService from "../service/eventParticipants.service.js"
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js"
 import generateString from "../utilities/randomstring.generator.js"
+import { checkForCredit } from "../utilities/checkforcredit.js"
 
 
 class EventController {
@@ -46,6 +47,7 @@ class EventController {
         status: "ORGANIZATION_NOT_FOUND_ERR"
       } as IErrorTypes
     }
+    await checkForCredit(organizationDetails.id)
     const creatorDetails = await organizationMemberService.getMemberByFilter({
       filter: {
         userId: userDetails.id,
@@ -75,7 +77,7 @@ class EventController {
       const imageFile = req.file.buffer
       imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail")
     }
-    const token:string = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase()
+    const token: string = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase()
     const newEvent: IEvent = await eventService.createEvent({
       data: {
         organizationId: organizationDetails.id,
@@ -92,7 +94,7 @@ class EventController {
         slug: slug,
         status: "PUBLISHED"
       },
-      checkInToken : token
+      checkInToken: token
     })
 
     const groupNotification: Array<ICreateNotificaion> =
@@ -138,6 +140,7 @@ class EventController {
           status: "ORGANIZATION_NOT_FOUND_ERR"
         } as IErrorTypes
       }
+      await checkForCredit(organizationDetails.id)
       const eventDetails = await eventService.getEvent({ filter: { id: data.id } })
       if (!eventDetails) {
         throw {
@@ -286,10 +289,6 @@ class EventController {
       next(error);
     }
   }
-
-
-
-
 }
 const eventController = new EventController()
 export default eventController

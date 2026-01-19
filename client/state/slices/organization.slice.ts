@@ -2,40 +2,49 @@ import getAccessToken from "@/lib/access.token";
 import { IOrganizationResponse } from "@/types/organization.types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getLoggedInUserOrganization = createAsyncThunk(
+interface IOrganizationState {
+  loading: boolean
+  error: string | null
+  organizationDetails: IOrganizationResponse | null
+
+}
+const initialState: IOrganizationState = {
+  loading: false,
+  error: null,
+  organizationDetails: null,
+}
+export const getLoggedInUserOrganization = createAsyncThunk<
+  IOrganizationResponse,
+  void,
+  { rejectValue: string }
+>(
   "organization/getLoggedInUserOrganization",
   async (_, { rejectWithValue }) => {
     try {
-      const accessToken = await getAccessToken()
+      const accessToken = await getAccessToken();
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-loggedin-users-organization`, {
         method: "GET",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`
+          "Authorization": `Bearer ${accessToken}`,
         },
-      })
+      });
+
       if (!response.ok) {
-        return rejectWithValue(response)
+        const errorData = await response.json().catch(() => ({ message: response.statusText }));
+        return rejectWithValue(errorData.message || "Failed to fetch organization details");
       }
-      return await response.json() as IOrganizationResponse
-    } catch (error) {
-      return rejectWithValue(error)
+
+      const data = await response.json();
+      return data as IOrganizationResponse;
+    } catch (error: any) {
+      return rejectWithValue(error?.message || "Failed to fetch organization details");
     }
   }
-)
+);
 
-interface IOrganizationState {
-  loading: boolean
-  error: string | null
-  organizationDetails: IOrganizationResponse | null
-}
 
-const initialState: IOrganizationState = {
-  loading: false,
-  error: null,
-  organizationDetails: null
-}
 
 export const organizationSlice = createSlice({
   name: "organization",
