@@ -43,7 +43,7 @@ export interface IUpdateOrganization {
 
 
 export interface IOrganizationsPagination {
-  cuurentPage: number,
+  currentPage: number,
   take: number,
   totalPages: number,
   totalDocs: number,
@@ -58,6 +58,22 @@ export interface IOrganizationDetails {
   image?: string,
   website?: string,
   description?: string,
+  type: IOrganizationType,
+  credits: number,
+  lastCreditReset: Date,
+  isPremium: boolean,
+  createdAt: Date,
+  updatedAt: Date
+}
+
+
+export interface ISingleOrganization {
+  id: string,
+  name: string,
+  thumbnail?: string,
+  image?: string,
+  website: string,
+  description: string,
   type: IOrganizationType,
   credits: number,
   lastCreditReset: Date,

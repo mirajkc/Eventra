@@ -13,7 +13,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ListOrganizations() {
   const [pagination, setPagination] = useState<IOrganizationsPagination>({
-    cuurentPage: 1,
+    currentPage: 1,
     take: 9,
     totalPages: 0,
     totalDocs: 0,
@@ -28,88 +28,69 @@ export default function ListOrganizations() {
   const searchQuery = searchParams.toString();
 
   useEffect(() => {
+    fetchOrganizations();
+  }, [pagination.currentPage, searchQuery]);
+
+  useEffect(() => {
     setPagination((prev) => ({
       ...prev,
-      cuurentPage: 1,
+      currentPage: 1,
     }));
   }, [searchQuery]);
 
-  const fetchOrganizations = useCallback(
-    async (controller: AbortController) => {
-      try {
-        setLoading(true);
+  const fetchOrganizations = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams({
+        page: pagination.currentPage.toString(),
+        take: pagination.take.toString(),
+      });
 
-        const params = new URLSearchParams({
-          page: pagination.cuurentPage.toString(),
-          take: pagination.take.toString(),
-        });
+      const premium = searchParams.get("isPremium") === "true";
+      if (premium) params.set("premium", "true");
 
-        const premium = searchParams.get("isPremium") === "true";
-        if (premium) params.set("premium", "true");
+      const search = searchParams.get("search");
+      if (search) params.set("name", search);
 
-        const search = searchParams.get("search");
-        if (search) params.set("name", search);
+      const type = searchParams.get("type");
+      if (type) params.set("type", type);
 
-        const type = searchParams.get("type");
-        if (type) params.set("type", type);
+      const createdAt = searchParams.get("createdAt");
+      if (createdAt) params.set("createdAt", createdAt);
 
-        const createdAt = searchParams.get("createdAt");
-        if (createdAt) params.set("createdAt", createdAt);
+      const updatedAt = searchParams.get("updatedAt");
+      if (updatedAt) params.set("updatedAt", updatedAt);
 
-        const updatedAt = searchParams.get("updatedAt");
-        if (updatedAt) params.set("updatedAt", updatedAt);
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-organizations?${params}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            signal: controller.signal,
-          }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          toast.error(result.message || "Failed to fetch organizations");
-          return;
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-organizations?${params}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-
-        setOrganizations(result.data || []);
-
-
-        setPagination((prev) => ({
-          ...prev,
-          ...result.pagination,
-          take: prev.take,
-        }));
-      } catch (error: any) {
-        if (error.name !== "AbortError") {
-          toast.error(
-            "Error occurred while fetching organizations. Please try again later."
-          );
-        }
-      } finally {
-        setLoading(false);
+      );
+      const result = await response.json();
+      if (!response.ok) {
+        toast.error("Failed to fetch organizations");
+        return;
       }
-    },
-    [searchQuery, pagination.cuurentPage, pagination.take]
-  );
-
-  useEffect(() => {
-    const controller = new AbortController();
-    fetchOrganizations(controller);
-    return () => controller.abort();
-  }, [fetchOrganizations]);
+      setOrganizations(result.data || []);
+      setPagination(result.pagination);
+    } catch (error: any) {
+      toast.error("Failed to fetch organizations");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleNextPage = () => {
     if (pagination.hasNextPage) {
       setPagination((prev) => ({
         ...prev,
-        cuurentPage: prev.cuurentPage + 1,
+        currentPage: prev.currentPage + 1,
       }));
+
     }
   };
 
@@ -117,10 +98,10 @@ export default function ListOrganizations() {
     if (pagination.hasPrevPage) {
       setPagination((prev) => ({
         ...prev,
-        cuurentPage: prev.cuurentPage - 1,
+        currentPage: prev.currentPage - 1,
       }));
-    }
 
+    }
   };
 
   if (loading && organizations.length === 0) {
@@ -169,7 +150,7 @@ export default function ListOrganizations() {
               </Button>
 
               <span className="text-sm text-muted-foreground px-2">
-                Page {pagination.cuurentPage} of {pagination.totalPages}
+                Page {pagination.currentPage} of {pagination.totalPages}
               </span>
 
               <Button
