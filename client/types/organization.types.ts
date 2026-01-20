@@ -31,3 +31,37 @@ export interface ICreateOrganization {
   website?: string | null,
   type: IOrganizationType
 }
+
+export interface IUpdateOrganization {
+  image?: File,
+  thumbnail?: File,
+  name?: string,
+  description?: string,
+  website?: string,
+  type?: IOrganizationType
+}
+
+
+export interface IOrganizationsPagination {
+  cuurentPage: number,
+  take: number,
+  totalPages: number,
+  totalDocs: number,
+  hasNextPage: boolean,
+  hasPrevPage: boolean
+}
+
+export interface IOrganizationDetails {
+  id: string,
+  name: string,
+  thumbnail?: string,
+  image?: string,
+  website?: string,
+  description?: string,
+  type: IOrganizationType,
+  credits: number,
+  lastCreditReset: Date,
+  isPremium: boolean,
+  createdAt: Date,
+  updatedAt: Date
+}

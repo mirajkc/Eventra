@@ -8,6 +8,7 @@ import {
   Settings,
   Settings2,
   HandshakeIcon,
+  UserX,
 } from "lucide-react";
 
 const sidebarItems = [
@@ -25,6 +26,11 @@ const sidebarItems = [
     title: "Update Member Role",
     href: "/manage-organization/update-member-role",
     icon: Settings2,
+  },
+  {
+    title: "Kick Member",
+    href: "/manage-organization/kick-member",
+    icon: UserX,
   },
   {
     title: "Joined Organizations",
@@ -68,7 +74,7 @@ export default function ManageOrganizationSidebar() {
 
         <div className="h-px bg-border my-1" />
         <Link
-          href={"/user/logout"}
+          href={"/manage-organization/delete-organization"}
           className={
             "flex items-center text-red-500 gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-accent "}
         >

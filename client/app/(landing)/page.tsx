@@ -1,6 +1,5 @@
 import BlurText from "@/components/BlurText";
 import LandingSearch from "@/components/landing/LandingSearch";
-import WhatIsEventra from "@/components/landing/LandingComponentLeft";
 import { ChevronDown } from "lucide-react";
 import LandingComponentLeft from "@/components/landing/LandingComponentLeft";
 import LandingComponentRight from "@/components/landing/LandingComponentRight";

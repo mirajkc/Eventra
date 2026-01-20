@@ -12,9 +12,9 @@ import OrganizationDetails from "@/components/organization/OrganizationDetails";
 export default function MyOrganization() {
   const dispatch = useAppDispatch();
   const organizationDetails = useAppSelector(
-    (state) => state.organizationSlice.organizationDetails
+    (state) => state.organization.organizationDetails
   );
-  const loading = useAppSelector((state) => state.organizationSlice.loading);
+  const loading = useAppSelector((state) => state.organization.loading);
 
   useEffect(() => {
     dispatch(getLoggedInUserOrganization());

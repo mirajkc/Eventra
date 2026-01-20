@@ -6,7 +6,7 @@ import Input from "../form/Input";
 import SelectInput from "../form/SelectInput";
 import FileInput from "../form/FileInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ICreateOrganizationDTO } from "@/rules/userRules";
+import { ICreateOrganizationDTO } from "@/rules/organization.rules";
 import { Button } from "../ui/button";
 import { RotateCcw, Save } from "lucide-react";
 import getAccessToken from "@/lib/access.token";
@@ -51,12 +51,13 @@ export default function CreateOrganizationForm() {
       } else {
         toast.error(result.message);
       }
+      reset();
     } catch (error) {
       toast.error("Error while creting organization please try again later. ")
     }
   }
   return (
-    <div>
+    <div >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex" >
           <div className="w-1/3" >
@@ -76,7 +77,7 @@ export default function CreateOrganizationForm() {
         </div>
         <div className="flex" >
           <div className="w-1/3" >
-            <Label htmlFor="website">Organization Website : </Label>
+            <Label htmlFor="website">Organization Social Link or Website : </Label>
           </div>
           <div className="w-2/3">
             <Input type="text" name="website" control={control} errorMsg={errors.website?.message} placeholder="Enter your organization website (eg: https://example.com)" />
@@ -115,8 +116,8 @@ export default function CreateOrganizationForm() {
         </div>
         <div className="flex gap-2 items-center mt-12 ">
           <Button className="hover:scale-105" type="submit" variant={"default"} disabled={isSubmitting}>
-            {isSubmitting ? "Updating..." : "Update"} <Save /> </Button>
-          <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => reset()}>{isSubmitting ? "Updating..." : "Reset"} <RotateCcw /> </Button>
+            {isSubmitting ? "Creating..." : "Create"} <Save /> </Button>
+          <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => reset()}>{isSubmitting ? "Creating..." : "Reset"} <RotateCcw /> </Button>
         </div>
 
       </form>
