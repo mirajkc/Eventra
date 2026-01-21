@@ -1,5 +1,6 @@
 "use client"
 
+import OrganizationActivities from "@/components/organization/OrganizationActivities"
 import OrganizationHeroSection from "@/components/organization/OrganizationHerosection"
 import { Spinner } from "@/components/ui/spinner"
 import { ISingleOrganization } from "@/types/organization.types"
@@ -54,8 +55,9 @@ export default function OrganizationPage() {
       <div>
         <OrganizationHeroSection organizationData={organizationData} />
       </div>
-      {/* show the organization credit purchase, joined member */}
-      {/* show the organization events */}
+      <div>
+        <OrganizationActivities organizationId={organizationData.id} />
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/ui/Footer";
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Eventra - Organization",
+  title: "Eventra - Credit purchase",
   description: "Eventra the all in one event management platform",
 };
 

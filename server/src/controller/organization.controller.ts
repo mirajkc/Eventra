@@ -94,6 +94,9 @@ class OrganizationController {
           skip,
           take,
           orderBy: { purchasedAt: 'desc' },
+           include : {
+            user : true
+          }
         }
       }
       if (data.members === 'true') {
@@ -101,6 +104,9 @@ class OrganizationController {
           skip,
           take,
           orderBy: { joinedAt: 'desc' },
+           include : {
+            user : true
+          }
         }
       }
       const organizationData = await organizationService.getOrganizationByFilter({ filter: { id: organizationId }, include: include })

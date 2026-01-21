@@ -47,7 +47,6 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
   }
   const handleJoin = async () => {
     const accessToken = await getAccessToken()
-
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/join-organization/${organizationId}`, {
         method: "GET",
@@ -62,8 +61,30 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
         return
       }
       toast.success(result.message)
+      checkIfJoined()
     } catch (error) {
       toast.error("Error occured while joining organization please try again later. ")
+    }
+  }
+  const handleLeave = async () => {
+    const accessToken = await getAccessToken()
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/leave-organization/${organizationId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+      const result = await response.json()
+      if (!result.message) {
+        toast.error("Error occured while leaving organization please try again later. ")
+        return
+      }
+      toast.success(result.message)
+      checkIfJoined()
+    } catch (error) {
+      toast.error("Error occured while leaving organization please try again later. ")
     }
   }
 
@@ -156,8 +177,9 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                 {
                   isJoined ? (
                     <Button
+                      onClick={handleLeave}
                       size="lg"
-                      className="h-12 w-full rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                      className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
                     >
                       Leave Organization
                     </Button>
@@ -165,7 +187,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                     <Button
                       onClick={handleJoin}
                       size="lg"
-                      className="h-12 w-full rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                      className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
                     >
                       Join Organization
                     </Button>
@@ -207,6 +229,14 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                 <span className="text-sm font-medium text-neutral-500">Last Updated</span>
                 <span className="text-sm text-neutral-900 dark:text-neutral-100">{format(new Date(organizationData.updatedAt), "PP")}</span>
               </div>
+              <Link href={`/credit/purchase/${organizationData.id}`}>
+                <Button
+                  size={'sm'}
+                  className="p-2 hover:cursor-pointer w-full"
+                >
+                  Donate Credits
+                </Button>
+              </Link>
             </div>
           </div>
         </motion.div>

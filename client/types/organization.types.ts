@@ -1,4 +1,5 @@
 import { StringDecoder } from "string_decoder"
+import { IUserDetails } from "./user.types"
 
 export interface IOrganizationResponse {
   message: string,
@@ -80,4 +81,33 @@ export interface ISingleOrganization {
   isPremium: boolean,
   createdAt: Date,
   updatedAt: Date
+}
+
+export interface IUserPurchaseCredit {
+  id: string,
+  organizationId: string,
+  purchasedBy: string,
+  package: string,
+  credits: number,
+  amount: number,
+  purchasedAt: Date,
+  user: IUserDetails
+}
+
+export interface JoinedMember {
+  id: string,
+  userId: string,
+  organizationId: string,
+  role: string,
+  joinedAt: Date,
+  user: IUserDetails
+}
+
+export interface IOrganizationActivitiesPagination {
+  currentPage: number,
+  totalPages: number,
+  take: number,
+  totalDocs: number,
+  hasNextPage: boolean,
+  hasPreviousPage: boolean
 }
