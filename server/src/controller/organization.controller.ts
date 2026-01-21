@@ -600,27 +600,34 @@ class OrganizationController {
   }
 
 
-   checkIfUserIsJoined = async(req:Request, res:Response, next:NextFunction) => {
+  checkIfUserIsJoined = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userDetails:IUserDetails = req.userDetails
+      const userDetails: IUserDetails = req.userDetails
       const organizationId = req.params.organizationId
-      if(!organizationId){
+      if (!organizationId) {
         throw {
-          code : 404, 
-          message : "Error organization Id not found",
-          status : "ORGANIZATION_ID_NOT_FOUND"
+          code: 404,
+          message: "Error organization Id not found",
+          status: "ORGANIZATION_ID_NOT_FOUND"
         } as IErrorTypes
       }
       const organizationDetails = await organizationService.getOrganizationByFilter({
-        filter : {id : organizationId},
-        include : {}
-      }) 
+        filter: { id: organizationId },
+        include: {
+          members: {
+            where: {
+              userId: userDetails.id
+            }
+          }
+        }
+      })
 
-      const hasJoined : boolean = organizationDetails.id ? true : false
+      const hasJoined = organizationDetails.members?.some((member: any) => member.userId === userDetails.id)
+
       return res.json({
-        message : "fetched the joined status of logged in user successfully. ",
-        data : {
-          hasJoined : hasJoined
+        message: "fetched the joined status of logged in user successfully. ",
+        data: {
+          hasJoined: hasJoined
         }
       })
     } catch (error) {

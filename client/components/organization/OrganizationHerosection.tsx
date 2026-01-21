@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ISingleOrganization } from "@/types/organization.types"
-import { Globe, Users, Calendar, ExternalLink, ShieldCheck } from "lucide-react"
+import { Globe, Calendar, ExternalLink, ShieldCheck } from "lucide-react"
 import * as motion from "motion/react-client"
 import Image from "next/image"
 import Link from "next/link"
@@ -11,6 +11,7 @@ import { toast } from "sonner"
 import { format } from "date-fns"
 import getAccessToken from "@/lib/access.token"
 import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 interface OrganizationHeroSectionProps {
   organizationData: ISingleOrganization
@@ -20,6 +21,30 @@ interface OrganizationHeroSectionProps {
 export default function OrganizationHeroSection({ organizationData }: OrganizationHeroSectionProps) {
   const params = useParams()
   const organizationId = params.id
+  const [isJoined, setIsJoined] = useState<boolean>(false)
+  useEffect(() => {
+    checkIfJoined()
+  }, [])
+  const checkIfJoined = async () => {
+    const accessToken = await getAccessToken()
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/is-user-joined/${organizationId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+      const result = await response.json()
+      if (!result.message) {
+        setIsJoined(false)
+        return
+      }
+      setIsJoined(result.data.hasJoined)
+    } catch (error) {
+      setIsJoined(false)
+    }
+  }
   const handleJoin = async () => {
     const accessToken = await getAccessToken()
 
@@ -128,13 +153,24 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                 whileTap={{ scale: 0.95 }}
                 className="w-full md:w-auto"
               >
-                <Button
-                  onClick={handleJoin}
-                  size="lg"
-                  className="h-12 w-full rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
-                >
-                  Join Organization
-                </Button>
+                {
+                  isJoined ? (
+                    <Button
+                      size="lg"
+                      className="h-12 w-full rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                    >
+                      Leave Organization
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleJoin}
+                      size="lg"
+                      className="h-12 w-full rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                    >
+                      Join Organization
+                    </Button>
+                  )
+                }
               </motion.div>
             </div>
           </div>
