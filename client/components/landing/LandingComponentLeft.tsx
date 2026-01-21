@@ -1,6 +1,7 @@
-
+"use client";
 import Image from "next/image";
 import BlurText from "../BlurText";
+import { easeInOut, motion } from "motion/react"
 
 export interface LandingComponentLeftProps {
   title: string
@@ -11,8 +12,13 @@ export interface LandingComponentLeftProps {
 export default function LandingComponentLeft({ title, body, image }: LandingComponentLeftProps) {
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-full max-w-6xl px-4">
-        <div className="w-full md:w-1/2 flex flex-col justify-center items-start text-left" >
+      <div 
+      className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-full max-w-6xl px-4">
+        <motion.div 
+        initial = {{opacity : 0, x : -100}}
+        whileInView ={{opacity : 1, x : 0 }}
+        transition={{ease : "easeInOut", duration:0.6}}
+        className="w-full md:w-1/2 flex flex-col justify-center items-start text-left" >
           <BlurText
             text={title}
             delay={0}
@@ -27,10 +33,14 @@ export default function LandingComponentLeft({ title, body, image }: LandingComp
             direction="top"
             className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed"
           />
-        </div>
-        <div className="w-full md:w-1/2 w-100 h-100 flex justify-center rounded-2xl" >
+        </motion.div>
+        <motion.div 
+        initial = {{opacity : 0, x : 100}}
+        whileInView ={{opacity : 1, x : 0 }}
+        transition={{ease : "easeInOut", duration:0.8}}
+        className="w-full md:w-1/2 h-100 flex justify-center rounded-2xl" >
           <Image src={image} width={270} height={400} alt="question" className="rounded-2xl shadow-2xl object-cover h-auto max-w-md md:max-w-full" />
-        </div>
+        </motion.div>
       </div>
     </>
   )

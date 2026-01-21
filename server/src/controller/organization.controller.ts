@@ -19,6 +19,7 @@ import { userKickedTemplate } from "../emailtemplates/userKickedTemplate.js"
 import { checkForCredit } from "../utilities/checkforcredit.js"
 
 
+
 class OrganizationController {
   async createOrganization(req: Request, res: Response, next: NextFunction) {
     try {
@@ -598,6 +599,34 @@ class OrganizationController {
     }
   }
 
+
+   checkIfUserIsJoined = async(req:Request, res:Response, next:NextFunction) => {
+    try {
+      const userDetails:IUserDetails = req.userDetails
+      const organizationId = req.params.organizationId
+      if(!organizationId){
+        throw {
+          code : 404, 
+          message : "Error organization Id not found",
+          status : "ORGANIZATION_ID_NOT_FOUND"
+        } as IErrorTypes
+      }
+      const organizationDetails = await organizationService.getOrganizationByFilter({
+        filter : {id : organizationId},
+        include : {}
+      }) 
+
+      const hasJoined : boolean = organizationDetails.id ? true : false
+      return res.json({
+        message : "fetched the joined status of logged in user successfully. ",
+        data : {
+          hasJoined : hasJoined
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 
 }
 const organizationController = new OrganizationController()

@@ -1,6 +1,7 @@
-
+"use client"
 import Image from "next/image";
 import BlurText from "../BlurText";
+import { motion } from  'motion/react'
 
 export interface LandingComponentRightProps {
   title: string
@@ -11,11 +12,20 @@ export interface LandingComponentRightProps {
 export default function LandingComponentRight({ title, body, image }: LandingComponentRightProps) {
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-full max-w-6xl px-4">
-        <div className="w-full md:w-1/2 w-100 h-100 flex justify-center rounded-2xl" >
+      <div 
+      className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-full max-w-6xl px-4">
+        <motion.div 
+         initial = {{opacity : 0, x : -100}}
+        whileInView ={{opacity : 1, x : 0 }}
+        transition={{ease : "easeInOut", duration:0.6}}
+        className="w-full md:w-1/2  h-100 flex justify-center rounded-2xl" >
           <Image src={image} width={270} height={400} alt="question" className="rounded-2xl shadow-2xl object-cover h-auto max-w-md md:max-w-full" />
-        </div>
-        <div className="w-full md:w-1/2 flex flex-col justify-center items-start text-left" >
+        </motion.div>
+        <motion.div
+         initial = {{opacity : 0, x : -100}}
+        whileInView ={{opacity : 1, x : 0 }}
+        transition={{ease : "easeInOut", duration:0.6}}
+         className="w-full md:w-1/2 flex flex-col justify-center items-start text-left" >
           <BlurText
             text={title}
             delay={0}
@@ -30,7 +40,7 @@ export default function LandingComponentRight({ title, body, image }: LandingCom
             direction="top"
             className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed"
           />
-        </div>
+        </motion.div>
       </div>
     </>
   )

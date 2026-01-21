@@ -28,6 +28,8 @@ organizationRouter.get('/join-organization/:organizationId', authorize({}), orga
 organizationRouter.get('/leave-organization/:organizationId', authorize ({}), organizationController.leaveOrganization)
 organizationRouter.get('/get-loggedin-users-organization' , authorize({}), organizationController.getLoggedInUserOrganization)
 
+organizationRouter.get('/is-user-joined/:organizationId', authorize({}), organizationController.checkIfUserIsJoined)
+
 
 export default organizationRouter
 

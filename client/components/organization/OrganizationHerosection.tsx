@@ -9,14 +9,37 @@ import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
 import { format } from "date-fns"
+import getAccessToken from "@/lib/access.token"
+import { useParams } from "next/navigation"
 
 interface OrganizationHeroSectionProps {
   organizationData: ISingleOrganization
 }
 
+
 export default function OrganizationHeroSection({ organizationData }: OrganizationHeroSectionProps) {
-  const handleJoin = () => {
-    toast.success(`Request sent to join ${organizationData.name}!`)
+  const params = useParams()
+  const organizationId = params.id
+  const handleJoin = async () => {
+    const accessToken = await getAccessToken()
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/join-organization/${organizationId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+      const result = await response.json()
+      if (!result.message) {
+        toast.error("Error occured while joining organization please try again later. ")
+        return
+      }
+      toast.success(result.message)
+    } catch (error) {
+      toast.error("Error occured while joining organization please try again later. ")
+    }
   }
 
   return (

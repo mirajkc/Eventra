@@ -4,6 +4,7 @@ import { ChevronDown } from "lucide-react";
 import LandingComponentLeft from "@/components/landing/LandingComponentLeft";
 import LandingComponentRight from "@/components/landing/LandingComponentRight";
 import PricingCard from "@/components/ui/PricingCard";
+import LandingPricing from "@/components/landing/LandingPricing";
 
 
 export default function Home() {
@@ -57,7 +58,7 @@ export default function Home() {
 
       {/* pricing */}
       <div className="min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0">
-        <PricingCard />
+        <LandingPricing />
       </div>
     </main>
   )
