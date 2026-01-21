@@ -94,8 +94,8 @@ class OrganizationController {
           skip,
           take,
           orderBy: { purchasedAt: 'desc' },
-           include : {
-            user : true
+          include: {
+            user: true
           }
         }
       }
@@ -104,8 +104,8 @@ class OrganizationController {
           skip,
           take,
           orderBy: { joinedAt: 'desc' },
-           include : {
-            user : true
+          include: {
+            user: true
           }
         }
       }
@@ -633,7 +633,8 @@ class OrganizationController {
       return res.json({
         message: "fetched the joined status of logged in user successfully. ",
         data: {
-          hasJoined: hasJoined
+          hasJoined: hasJoined,
+          loggedInUserDetails: organizationDetails.members
         }
       })
     } catch (error) {
