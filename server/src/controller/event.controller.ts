@@ -209,6 +209,13 @@ class EventController {
           status: "EVENTID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
+      const query : {
+        page? : string,
+        take? : string
+      } = req.query
+      const page :number = Number(query.page) || 1    
+      const take :number = Number(query.take) || 10
+      const skip:number = Math.ceil((page-1) * take)     
       const eventDetails = await eventService.getEvent({
         filter: { id: eventId },
         include: {
@@ -218,9 +225,10 @@ class EventController {
           creator: {
             select: { id: true, name: true, image: true }
           },
-          participants: {
-            select: { userId: true }
-          }
+        participants : {
+          take : take,
+          skip : skip,
+      }
         }
       })
       if (!eventDetails) {
@@ -230,13 +238,21 @@ class EventController {
           status: "EVENT_DATA_FETCH_ERR"
         } as IErrorTypes
       }
-      const totalParticipants = eventDetails.participants?.length
+      const totalParticipants:any = eventDetails.participants?.length
       eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date() ? "COMPLETED" : "PUBLISHED"
       return res.json({
         message: "Event details fetched successfully",
         data: {
           eventDetails: eventDetails,
           totalParticipants: totalParticipants
+        },
+        participantsPagination : {
+          page : page,
+          take : take,
+          totalDoccuments : totalParticipants,
+          totalPages : Math.ceil(totalParticipants/take),
+          hasPreviousPage : page > 1,
+          hasNextPage : page < Math.ceil(totalParticipants/take),
         }
       })
     } catch (error) {

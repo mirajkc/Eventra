@@ -80,7 +80,7 @@ class EventService {
   async getEvent({ filter, include = {} }: { filter: { id?: string, slug?: string }, include?: any }) {
     return await prisma.event.findFirst({
       where: filter,
-      include: include
+      include:  include
     })
   }
 
