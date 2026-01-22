@@ -26,7 +26,7 @@ export default function FileInput({
           />
         )}
       />
-      <span>{errorMsg}</span>
+      {errorMsg && <p className="text-[10px] text-destructive mt-1 ml-1">{errorMsg}</p>}
     </div>
   );
 }

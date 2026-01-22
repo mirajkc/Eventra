@@ -13,22 +13,21 @@ export default function OrganizationActivities({ organizationId }: { organizatio
       </div>
       <div className="flex flex-col md:flex-row gap-6 min-h-[50vh] mt-8">
         <div className="flex flex-col w-full md:w-1/2 border dark:border-gray-800 shadow-sm rounded-2xl p-6 bg-white/30 dark:bg-neutral-900/30 backdrop-blur-sm">
-          <TypographyH4 className="mb-4">Organization Members</TypographyH4>
+          <TypographyH4 className="mb-4">Recent Organization Members</TypographyH4>
           <div className="flex-1 overflow-auto">
             <JoinedMemberList />
           </div>
         </div>
         <div className="flex flex-col w-full md:w-1/2 border dark:border-gray-800 shadow-sm rounded-2xl p-6 bg-white/30 dark:bg-neutral-900/30 backdrop-blur-sm">
-          <TypographyH4 className="mb-4">Credit Purchases</TypographyH4>
+          <TypographyH4 className="mb-4">Recent Credit Purchases</TypographyH4>
           <div className="flex-1 overflow-auto">
             <CreditPurchaseList />
           </div>
         </div>
       </div>
-      <div>
-        Events hosted by the organization
-      </div>
     </div>
 
   )
 }
+
+

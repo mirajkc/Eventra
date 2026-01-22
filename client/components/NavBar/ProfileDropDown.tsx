@@ -1,6 +1,6 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Building, LogOut, Settings, User } from "lucide-react";
+import { Building, Calendar1, Settings, User } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useAppSelector } from "@/state/hooks";
@@ -14,7 +14,12 @@ export const userMenuItems = [
     icon: Building,
   },
   {
-    label: "Settings & Events",
+    label: "Events",
+    href: "/user/profile",
+    icon: Calendar1,
+  },
+  {
+    label: "Settings",
     href: "/user/profile",
     icon: Settings,
   },

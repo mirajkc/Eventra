@@ -72,6 +72,15 @@ export default function JoinedMemberList() {
 
   return (
     <div className="flex flex-col gap-4 mt-4">
+      {
+        pagination?.totalDocs > 0 && (
+          <div className="flex w-full">
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+              Total Members: {pagination.totalDocs}
+            </p>
+          </div>
+        )
+      }
       {joinedMembers.map((member) => (
         <div
           key={member.id}
@@ -102,6 +111,7 @@ export default function JoinedMemberList() {
           </div>
         </div>
       ))}
+
       <div className="flex w-full justify-center items-center mt-6">
         {
           pagination.totalPages > 1 && (

@@ -22,11 +22,6 @@ const sidebarItems = [
     href: "/user/security",
     icon: Shield,
   },
-  {
-    title: "Events",
-    href: "/user/events",
-    icon: Calendar,
-  },
 ];
 
 export default function UserSidebar() {

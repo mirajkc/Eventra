@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ISingleOrganization } from "@/types/organization.types"
-import { Globe, Calendar, ExternalLink, ShieldCheck } from "lucide-react"
+import { Globe, Calendar, ExternalLink, ShieldCheck, Plus } from "lucide-react"
 import * as motion from "motion/react-client"
 import Image from "next/image"
 import Link from "next/link"
@@ -22,6 +22,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
   const params = useParams()
   const organizationId = params.id
   const [isJoined, setIsJoined] = useState<boolean>(false)
+  const [userRole, setUserRole] = useState("MEMBER")
   useEffect(() => {
     checkIfJoined()
   }, [])
@@ -40,7 +41,12 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
         setIsJoined(false)
         return
       }
+      if (!result.data.loggedInUserDetails.role) {
+        setUserRole("MEMBER")
+      }
       setIsJoined(result.data.hasJoined)
+      setUserRole(result.data.loggedInUserDetails[0].role)
+
     } catch (error) {
       setIsJoined(false)
     }
@@ -168,32 +174,57 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   </div>
                 </div>
               </div>
+              <div className="flex gap-2">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full md:w-auto flex gap-2"
+                >
+                  {
+                    userRole === "OWNER" || userRole === "CREATOR" ? (
+                      <>
+                        <Link href={`/organization/${organizationId}/create-event`}>
+                          <Button
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto"
-              >
-                {
-                  isJoined ? (
-                    <Button
-                      onClick={handleLeave}
-                      size="lg"
-                      className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
-                    >
-                      Leave Organization
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleJoin}
-                      size="lg"
-                      className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
-                    >
-                      Join Organization
-                    </Button>
-                  )
-                }
-              </motion.div>
+                            size="lg"
+                            className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                          >
+                            <Plus />
+                            Create Event
+                          </Button></Link>
+                      </>
+                    ) : (<></>)
+                  }
+
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full md:w-auto flex gap-2"
+                >
+
+                  {
+                    isJoined ? (
+                      <Button
+                        onClick={handleLeave}
+                        size="lg"
+                        className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                      >
+                        Leave Organization
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={handleJoin}
+                        size="lg"
+                        className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                      >
+                        Join Organization
+                      </Button>
+                    )
+                  }
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>

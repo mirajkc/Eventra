@@ -68,6 +68,15 @@ export default function CreditPurchaseList() {
 
   return (
     <div className="flex flex-col gap-4 mt-4">
+      {
+        pagination?.totalDocs > 0 && (
+          <div className="flex w-full">
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+              Total Credit Purchases: {pagination.totalDocs}
+            </p>
+          </div>
+        )
+      }
       {creditPurchases.map((purchase) => (
         <div
           key={purchase.id}
