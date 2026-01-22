@@ -72,7 +72,7 @@ export default function OrganizationEventCard({ event }: OrganizationEventCardPr
             </div>
           </div>
 
-          <Link href={`/event/${event.slug}`}>
+          <Link href={`/event/${event.id}`}>
             <TypographyH4 className="line-clamp-1 group-hover:text-primary transition-colors">
               {event.title}
             </TypographyH4>

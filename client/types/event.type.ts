@@ -59,3 +59,42 @@ export interface IEventPagination {
 }
 
 
+export interface ISingleEvent {
+  id: string
+  slug: string
+  organizationId: string
+  creatorId: string
+  title: string
+  description: string
+  location: string
+  startDate: string
+  endDate: string
+  capacity: number
+  registeredCount: number
+  status: string
+  category: IEventCategory
+  tags?: string[]
+  image?: string
+  createdAt: string
+  updatedAt?: string
+  organization: {
+    id: string
+    name: string
+    image?: string
+    isPremium: boolean
+  }
+  creator: {
+    id: string
+    name: string
+    image?: string
+  }
+  participants: {
+    id: string
+    eventId: string
+    userId: string
+    registeredAt: string
+    checkInToken: string
+    attended: boolean
+    checkedInAt: string
+  }[]
+}

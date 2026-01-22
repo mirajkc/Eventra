@@ -22,6 +22,13 @@ class EventController {
     const data: ICreateEvent = req.body
     const userDetails: IUserDetails = req.userDetails
     const slug = getSlug(data.title)
+    if(new Date(data.startDate) < new Date()){
+      throw {
+        code: 400,
+        message: "Event start date cannot be in the past. ",
+        status: "EVENT_START_DATE_ERR"
+      } as IErrorTypes
+    }
     const eventDetials = await eventService.getEvent({
       filter: { slug: slug }
     })
