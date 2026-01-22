@@ -11,6 +11,6 @@ eventRouter.post('/create-new-event', authorize({}), upload.single('image'), val
  eventRouter.put('/update-event-details',authorize({}), upload.single('image'), validator(updateEventDTO), eventController.updateEventDetails )
  eventRouter.get('/get-single-event/:eventId', eventController.getSingleEvent)
  eventRouter.get('/fetchallevents', eventController.getAllEventsByQuery)
-
+ eventRouter.get('/is-logged-in-user-joined/:eventId' , authorize({}), eventController.isLoggedInuserJoined)
 
 export default eventRouter

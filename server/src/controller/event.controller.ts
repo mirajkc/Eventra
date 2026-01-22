@@ -289,6 +289,50 @@ class EventController {
       next(error);
     }
   }
+
+
+  async isLoggedInuserJoined (req:Request, res:Response,next:NextFunction ) {
+    try {
+      const eventId:string = String(req.params.eventId)
+      const userData:IUserDetails = req.userDetails
+      if(!eventId){
+        throw {
+          code : 404, 
+          message : "Please enter a valid event Id. ",
+          status : "EVENT_ID_NOT_FOUND_ERR"
+        } as IErrorTypes
+      }
+      const eventDetails:any = await eventService.getEvent({
+        filter : {id : eventId},
+        include :  {
+        participants : {
+          where : {
+            userId : userData.id
+          }
+        }
+      }
+      })
+      const hasJoinedEvent = eventDetails?.participants?.length > 0 ? true : false
+      return res.json(
+        {
+          message : "User status fetched successfully. ",
+          data : {
+            hasJoinedEvent : hasJoinedEvent,
+          }
+        }
+      )
+      
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
+
 }
+
+
+
+
 const eventController = new EventController()
 export default eventController
