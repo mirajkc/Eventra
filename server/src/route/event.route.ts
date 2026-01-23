@@ -5,6 +5,7 @@ import { upload } from '../middleware/uploader.middleware.js'
 import validator from '../middleware/validator.middleware.js'
 import { createEventDTO, updateEventDTO } from '../rules/event.rules.js'
 import eventController from '../controller/event.controller.js'
+import eventRegistrationController from '../controller/event.registration.controller.js'
 const eventRouter:Router = express.Router()
 
 eventRouter.post('/create-new-event', authorize({}), upload.single('image'), validator(createEventDTO),eventController.createNewEvent)
@@ -12,5 +13,7 @@ eventRouter.post('/create-new-event', authorize({}), upload.single('image'), val
  eventRouter.get('/get-single-event/:eventId', eventController.getSingleEvent)
  eventRouter.get('/fetchallevents', eventController.getAllEventsByQuery)
  eventRouter.get('/is-logged-in-user-joined/:eventId' , authorize({}), eventController.isLoggedInuserJoined)
+
+ eventRouter.get('/get-attended-users/:eventId', eventRegistrationController.getAttendedUsers)
 
 export default eventRouter

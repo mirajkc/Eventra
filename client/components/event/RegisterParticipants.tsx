@@ -26,7 +26,7 @@ export default function RegisterParticipants({ event }: { event: ISingleEvent })
   const validateToken = async (data:any) => {
     const accessToken = await getAccessToken()
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/participant/make-attendance/${event.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/participant/make-attendance/${event.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,8 +35,8 @@ export default function RegisterParticipants({ event }: { event: ISingleEvent })
         body: JSON.stringify(data),
       })
       const result = await response.json()
-      if(!result.message){
-        toast.error("Error occured while registering the participant pleae try again later. ")
+      if(response.status !== 200){
+        toast.error("Invalid ticket please try again. ")
         return
       }
       toast.success(result.message)
@@ -54,7 +54,7 @@ export default function RegisterParticipants({ event }: { event: ISingleEvent })
         <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900">
           <div>
             <TypographyH4> 
-              Register the Events Participants
+              Check In the Events Participants
             </TypographyH4>
           </div>
           <div className="mb-4">

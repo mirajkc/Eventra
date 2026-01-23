@@ -2,10 +2,10 @@
 import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 
 class EventParticipantService {
-  async getEventParticipants({ filter, select, skip, take }: { filter: { eventId: string, }, select: any, skip?: number, take?: number }) {
+  async getEventParticipants({ filter, select, skip, take }: { filter: { eventId: string, attended? : boolean }, select: any, skip?: number, take?: number }) {
     const paticipants = await prisma.eventParticipants.findMany({
       where: filter,
-      select: select,
+      select:select,
       ...(skip !== undefined && { skip }),
       ...(take !== undefined && { take })
     })
@@ -89,7 +89,6 @@ class EventParticipantService {
         checkedInAt: new Date(Date.now())
       }
     })
-
     if (!updatedUser) {
       throw {
         code: 500,
