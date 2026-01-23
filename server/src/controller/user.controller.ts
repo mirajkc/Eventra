@@ -83,9 +83,18 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
     }
     if(query.organizationMember === 'true'){
       include.organizationMember = {
+        include : {
+          organization : {
+            select : {
+              name : true,
+              isPremium : true
+            }
+          },
+        },
         skip, 
         take, 
         orderBy: { joinedAt: 'desc' },
+
       }
     }
     if(query.eventParticipants === 'true'){
@@ -93,6 +102,7 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
         skip, 
         take, 
         orderBy: { registeredAt: 'desc' },
+
       }
     }
     if(query.creditPurchases){

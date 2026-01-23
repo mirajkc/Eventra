@@ -40,3 +40,12 @@ export interface IOrganizationMemberPagination {
             hasNextPage: boolean,
             hasPreviousPage: boolean
 }
+
+
+export interface IJoinedOrganization {
+                id: string,
+                userId: string,
+                organizationId: string,
+                role: "MEMBER",
+                joinedAt: Date
+}
