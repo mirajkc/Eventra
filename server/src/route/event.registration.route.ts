@@ -11,7 +11,6 @@ eventParticipantRouter.get('/get-all-participants/:eventId', eventRegistrationCo
 export default eventParticipantRouter
 
 
-// List all participants of an event
 
 
 

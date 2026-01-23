@@ -305,7 +305,7 @@ class EventRegistrationController {
 
   async getAttendedUsers(req:Request, res:Response, next:NextFunction) {
     try {
-      const eventId = req.query.eventId
+      const eventId = req.params.eventId
       if(!eventId){
         throw {
           code : 404, 
@@ -335,7 +335,7 @@ class EventRegistrationController {
       take : take
       })
       const totalAttendedUsers = await eventParticipantService.getParticipantsCount({
-        eventId : "123",
+        eventId : eventId,
         attended : true
       })
 

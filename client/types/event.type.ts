@@ -124,3 +124,11 @@ registeredAt: string
     image: string
   }
 }
+
+export interface IEventAttendedUser {
+   registeredAt: string
+   user: {
+    name: string
+    image: string
+   }
+}

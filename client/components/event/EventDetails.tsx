@@ -3,6 +3,7 @@ import EventHero from "./EventHero";
 import RegisterdMembers from "./RegisterdMembers";
 import EventChatBox from "./EventChatBox";
 import RegisterParticipants from "./RegisterParticipants";
+import AttendedUsers from "./AttendedUsers";
 
 interface EventDetailsProps {
   event: ISingleEvent ;
@@ -25,13 +26,12 @@ export default function EventDetails({ event }: EventDetailsProps) {
             <div className="flex flex-col gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <RegisterParticipants event={event} />
             </div>
+            <div className="flex flex-col gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <AttendedUsers />
+            </div>
         </div>
     )
 }
 
 
 
-/* 
-then show the grid with 2 cols left is  the joined event details and right is the chat section  
-then show the check in section blurred or lock icon and then when the start date is reached show the check in button and if the logged in user is the creator of the event show then he will be able to check in everyone check in button to be locked after the event ends 
-*/
