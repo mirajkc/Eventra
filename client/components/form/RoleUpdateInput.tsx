@@ -56,7 +56,7 @@ export default function RoleUpdateInput({ member, organizationId }: Props) {
         name="role"
         value={role}
         onChange={(e) => setRole(e.target.value as IOrganizationMember["role"])}
-        className="dark:bg-neutral-900 text-white"
+        className="border dark:bg-neutral-900 dark:text-white"
       >
         <option value="MEMBER">Member</option>
         <option value="ADMIN">Admin</option>

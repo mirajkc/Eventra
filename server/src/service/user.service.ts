@@ -22,7 +22,7 @@ class UserService {
   async getUserDetails(filter: { id: string }, include: any) {
   const user = await prisma.user.findUnique({
     where: filter,
-    include: include,
+    include: include
   });
 
   if (!user) {

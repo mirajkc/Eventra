@@ -100,6 +100,14 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
     }
     if(query.eventParticipants === 'true'){
       include.eventParticipants = {
+        include : {
+          event : {
+            select : {
+              title : true,
+              
+            }
+          }
+        },
         skip, 
         take, 
         orderBy: { registeredAt: 'desc' },

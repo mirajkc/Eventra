@@ -15,7 +15,7 @@ export const userMenuItems = [
   },
   {
     label: "Events",
-    href: "/user/profile",
+    href: "/manage-events/created-events",
     icon: Calendar1,
   },
   {

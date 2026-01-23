@@ -3,36 +3,34 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
-  User,
-  Shield,
-  LogOut,
-  Delete,
-  Trash
+  Calendar1,
+  Calendar
 } from "lucide-react";
 
 const sidebarItems = [
   {
-    title: "Profile",
-    href: "/user/profile",
-    icon: User,
+    title: "Created Events",
+    href: "/manage-events/created-events",
+    icon: Calendar,
   },
   {
-    title: "Security",
-    href: "/user/security",
-    icon: Shield,
-  }
+    title: "Participated Events",
+    href: "/manage-events/participated-events",
+    icon: Calendar1,
+  },
+  
 ];
 
-export default function UserSidebar() {
+export default function ManageEventSidebar() {
   const pathname = usePathname();
 
   return (
     <nav className="flex flex-col space-y-2 w-full">
       <div className="bg-background rounded-lg border shadow-sm p-2 flex flex-col gap-1">
         <div className="hidden md:block mb-4 px-4">
-          <h2 className="text-xl font-bold tracking-tight">Settings</h2>
+          <h2 className="text-xl font-bold tracking-tight">Event Settings</h2>
           <p className="text-muted-foreground text-sm">
-            Manage your account settings and Informations
+            Manage your Event settings and Informations
           </p>
         </div>
         {sidebarItems.map((item) => {
@@ -55,16 +53,6 @@ export default function UserSidebar() {
             </Link>
           );
         })}
-
-        <div className="h-px bg-border my-1" />
-        <Link
-          href={"/user/logout"}
-          className={
-            "flex items-center text-red-500 gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-accent "}
-        >
-          <LogOut className="h-4 w-4" />
-          LogOut
-        </Link>
       </div>
     </nav>
   );

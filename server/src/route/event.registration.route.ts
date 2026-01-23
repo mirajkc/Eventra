@@ -9,9 +9,3 @@ eventParticipantRouter.get('/get-all-participants/:eventId', eventRegistrationCo
  
  
 export default eventParticipantRouter
-
-
-
-
-
-

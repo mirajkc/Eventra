@@ -1,4 +1,4 @@
-
+"use client"
 import Link from "next/link";
 
 export default function NotFound() {
@@ -12,6 +12,10 @@ export default function NotFound() {
         <div className="flex items-center gap-4 mt-6">
           <Link href="/" className="bg-gray-800 hover:bg-black px-7 py-2.5 text-white rounded-md active:scale-95 transition-all">
             Return Home
+          </Link>
+          <Link href="/" onClick={() => window.location.reload()}
+          className="bg-gray-800 hover:bg-black px-7 py-2.5 text-white rounded-md active:scale-95 transition-all">
+            Reload Page
           </Link>
         </div>
       </div>
