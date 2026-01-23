@@ -5,6 +5,7 @@ import EventChatBox from "./EventChatBox";
 import RegisterParticipants from "./RegisterParticipants";
 import AttendedUsers from "./AttendedUsers";
 
+
 interface EventDetailsProps {
   event: ISingleEvent ;
 }
@@ -27,8 +28,9 @@ export default function EventDetails({ event }: EventDetailsProps) {
               <RegisterParticipants event={event} />
             </div>
             <div className="flex flex-col gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <AttendedUsers />
+              <AttendedUsers event={event} />
             </div>
+            
         </div>
     )
 }

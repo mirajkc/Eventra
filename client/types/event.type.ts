@@ -126,7 +126,7 @@ registeredAt: string
 }
 
 export interface IEventAttendedUser {
-   registeredAt: string
+   checkedInAt: string
    user: {
     name: string
     image: string

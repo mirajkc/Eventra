@@ -1,15 +1,15 @@
 "use client"
-import { useParams } from "next/navigation"
 import { TypographyH4, TypographyP } from "../ui/Typography"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { IEventAttendedUser, IEventParticipantsPagination } from "@/types/event.type"
+import { IEventAttendedUser, IEventParticipantsPagination, ISingleEvent } from "@/types/event.type"
 import { Spinner } from "../ui/spinner"
 import { formatDistanceToNow } from "date-fns"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import Link from "next/link"
 
-export default function AttendedUsers() {
+export default function AttendedUsers({event}: {event: ISingleEvent}) {
   const [attendedUsers, setAttendedUsers] = useState<Array<IEventAttendedUser>>([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState<IEventParticipantsPagination>({
@@ -20,8 +20,7 @@ export default function AttendedUsers() {
         hasNextPage: false,
         hasPreviousPage: false
   })
-  const params = useParams()
-  const eventId = params.id
+  const eventId = event.id
 
   useEffect(() => {
     if (eventId) {
@@ -38,7 +37,7 @@ export default function AttendedUsers() {
       setAttendedUsers([])
       return
      }
-     setAttendedUsers(result.data.attendedUser)
+     setAttendedUsers(result.data.attendedUsers)
      setPagination(result.pagination)
     } catch (error) {
       toast.error("Error occured while fetching the attended users data please try again later. ")
@@ -48,27 +47,28 @@ export default function AttendedUsers() {
   }
 
     return (
-        <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900 min-h-[50vh]">
+        <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900 min-h-[35vh]">
            <div>
             <TypographyH4>Attended Users</TypographyH4>
             <TypographyP>See who all attended the event</TypographyP>
            </div>
            
+           
            {loading ? (
              <div className="flex flex-col items-center justify-center flex-1 min-h-[200px]">
                <Spinner />
              </div>
-           ) : attendedUsers.length === 0 ? (
+           ) :     new Date(event.startDate) > new Date()? <div className="flex flex-col items-center justify-center flex-1 min-h-[200px] text-neutral-500 italic">Event is not started yet.</div>: attendedUsers?.length === 0 ? (
              <div className="flex flex-col items-center justify-center flex-1 min-h-[200px] text-neutral-500 italic">
                No attended users found.
              </div>
            ) : (
              <>
                <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {attendedUsers.map((user, index) => (
+                {attendedUsers.map((user) => (
                   <div
-                    key={`${user.user.name}-${index}`}
-                    className="flex flex-col gap-3 p-4 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-2xl shadow-sm hover:border-primary/20 transition-all backdrop-blur-sm"
+                    key={`${user.user.name}`}
+                    className="flex flex-col gap-3 p-2 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-2xl shadow-sm hover:border-primary/20 transition-all backdrop-blur-sm"
                   >
                     <div className="flex items-center gap-4">
                       <img
@@ -86,9 +86,9 @@ export default function AttendedUsers() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between pt-2 border-t border-neutral-100 dark:border-neutral-800">
-                       <span className="text-[10px] text-neutral-400">Registered</span>
+                       <span className="text-[10px] text-neutral-400">Attended at: </span>
                        <span className="text-[10px] text-neutral-600 dark:text-neutral-300 font-medium">
-                        {user.registeredAt ? formatDistanceToNow(new Date(user.registeredAt), { addSuffix: true }) : "N/A"}
+                          {formatDistanceToNow(user.checkedInAt, { addSuffix: true }) }
                        </span>
                     </div>
                   </div>
@@ -121,8 +121,14 @@ export default function AttendedUsers() {
                   </div>
                 )}
               </div>
+              
              </>
            )}
+           <div className="flex flex-col items-center justify-center mt-auto" >
+                <Link href={`/events`}>
+                  <Button variant={'outline'} className="w-full">Go Back</Button>
+                </Link>
+              </div>
         </div>
     )
-}``
+}
