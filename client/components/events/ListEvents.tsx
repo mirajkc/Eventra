@@ -16,7 +16,7 @@ export default function ListEvents() {
   const [pagination, setPagination] = useState<IEventPagination>({
     currentPage: 1,
     totalPages: 0,
-    take: 10,
+    take: 9,
     totalDocs: 0,
     hasNextPage: false,
     hasPreviousPage: false
@@ -45,7 +45,7 @@ export default function ListEvents() {
       setLoading(true);
       const params = new URLSearchParams({
         page: pagination.currentPage.toString(),
-        take: pagination.take.toString(),
+        limit: pagination.take.toString(),
       });
 
       const slug = searchParams.get("slug");

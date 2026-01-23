@@ -26,11 +26,9 @@ import { useState } from "react";
 import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
 import { useAppSelector } from "@/state/hooks";
-import { Spinner } from "../ui/spinner";
 
-
-interface InvitationComponentProps {
-  event: ISingleEvent;
+interface EventHeroProps {
+    event: ISingleEvent  ;
 }
 
 const categoryIcons: Record<string, typeof Trophy> = {
@@ -42,32 +40,23 @@ const categoryIcons: Record<string, typeof Trophy> = {
   WORKSHOP: Trophy,
 };
 
-export default function InvitationComponent({ event }: InvitationComponentProps) {
-  if (!event?.startDate || !event?.endDate) {
-  return (
-    <div className="flex items-center justify-center h-64">
-      <Spinner />
-    </div>
-  );
-}
+export default function EventHero({ event }: EventHeroProps) {
   const loggedInUser = useAppSelector((state)=>state.authSlice.userDetails)
-  const [joining, setJoining] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const startDate = new Date(event.startDate);
+  const endDate = new Date(event.endDate);
   const Icon = categoryIcons[event.category] || Tag;
-  const startDate = event?.startDate ? new Date(event.startDate) : null;
-  const endDate = event?.endDate ? new Date(event.endDate) : null;
-  const isCompleted =endDate && endDate.getTime() < Date.now()
 
-
-  const handleJoinEvent = async () => {
+  const handleLeaveEvent = async () => {
     try {
-      setJoining(true);
+      setLeaving(true);
       if (!loggedInUser?.id) {
-        toast.error("You must be logged in to join an event.");
+        toast.error("You must be logged in to leave an event.");
         return;
       }
       const accessToken = await getAccessToken();
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/participant/register-new-user/${event.id}`, {
-        method: "POST",
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/participant/remove-registration/${event.id}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${accessToken}`
@@ -75,21 +64,20 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
       });
       const result = await response.json();
       if (response.status !== 200) {
-        toast.error(result.message || "Failed to join event");
+        toast.error(result.message || "Failed to leave event");
         return;
       }
-      toast.success("Successfully joined the event!");
+      toast.success("Successfully left the event!");
       window.location.reload();
     } catch (error) {
       toast.error("An error occurred. Please try again later.");
     } finally {
-      setJoining(false);
+      setLeaving(false);
     }
   };
- 
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 pb-20">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 mb-6 rounded-2xl">
       {/* Hero Section */}
       <div className="relative h-[40vh] rounded-2xl md:h-[50vh] w-full overflow-hidden">
         {event.image ? (
@@ -124,30 +112,34 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 mb-4 ">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white dark:bg-neutral-900 rounded-3xl p-6 md:p-8 shadow-sm border border-neutral-200 dark:border-neutral-800"
+              className="bg-white dark:bg-neutral-900 rounded-3xl p-6 md:p-8 shadow-sm border border-neutral-200 dark:border-neutral-800 min-h-[60vh] h-full"
             >
               <div className="flex flex-wrap gap-2 mb-4">
                 <Badge variant="secondary" className="bg-primary/10 text-primary border-none hover:bg-primary/20 px-3 py-1">
                   <Icon className="w-3.5 h-3.5 mr-1.5" />
                   {event.category}
                 </Badge>
-                {isCompleted ? (
-                  <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                    COMPLETED
-                  </Badge>
-                ) : (
-                  <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                    {
-                      event.status === 'PUBLISHED' ? 'ONGOING' : 'CANCELLED'
-                    }
-                  </Badge>
-                )}
+                 {
+            event.endDate < new Date().toISOString() ? (
+              <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
+                COMPLETED
+              </Badge>
+            ) : event.status === "PUBLISHED" ? (
+              <Badge variant="outline" className="border-neutral-200 bg-green-500 dark:bg-green-500 dark:border-neutral-700">
+                ONGOING
+              </Badge>
+            ) : (
+              <Badge variant="destructive" className="border-red-500 bg-red-500 dark:border-red-500">
+                CANCELLED
+              </Badge>
+            )
+           }
               </div>
 
               <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
@@ -196,7 +188,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
           </div>
 
           {/* Sidebar / Info Card */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 mb-4">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -211,14 +203,8 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                       </div>
                       <div>
                         <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Start Date & Time</p>
-                        {startDate && !isNaN(startDate.getTime()) && (
-                            <>
-                              <p className="font-bold">{format(startDate, "d, MMMM, yyyy")}</p>
-                              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                {format(startDate, "h:mm a")} onwards
-                              </p>
-                            </>
-                         )}
+                        <p className="font-bold">{format(startDate, "d, MMMM , yyyy")}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">{format(startDate, "h:mm a")} onwards</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -226,14 +212,9 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                         <Calendar className="w-6 h-6" />
                       </div>
                       <div>
-                        {
-                          endDate && !isNaN(endDate.getTime()) && (
-                            <>
-                              <p className="font-bold">{format(endDate, "d, MMMM , yyyy")}</p>
-                              <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(endDate, "h:mm a")}</p>
-                            </>
-                          )
-                        }
+                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">End Date & Time</p>
+                        <p className="font-bold">{format(endDate, "d, MMMM , yyyy")}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(endDate, "h:mm a")}</p>
                       </div>
                     </div>
 
@@ -266,14 +247,14 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
 
                   <div className="pt-4">
                     <Button
-                      onClick={handleJoinEvent}
-                      disabled={joining || event.registeredCount >= event.capacity}
+                      onClick={handleLeaveEvent}
+                      disabled={leaving || event.registeredCount >= event.capacity}
                       className="w-full py-7 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98]"
                     >
-                      {joining ? "Joining..." : event.registeredCount >= event.capacity ? "Event Full" : "Join Event Now"}
+                      {leaving ? "Joining..." : event.registeredCount >= event.capacity ? "Event Full" : "Leave Event"}
                     </Button>
                     <p className="text-center text-xs text-neutral-500 dark:text-neutral-500 mt-4 px-4">
-                      By joining, you agree to our terms and conditions.
+                      By leaving, you agree to our terms and conditions.
                     </p>
                   </div>
                 </CardContent>

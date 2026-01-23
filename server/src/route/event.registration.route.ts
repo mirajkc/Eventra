@@ -6,8 +6,8 @@ eventParticipantRouter.post('/register-new-user/:eventId', authorize({}),eventRe
 eventParticipantRouter.delete('/remove-registration/:eventId', authorize({}), eventRegistrationController.removeRegistration)
 eventParticipantRouter.post('/make-attendance/:eventId', authorize({}), eventRegistrationController.makeAttendance)
 eventParticipantRouter.get('/get-all-participants/:eventId', eventRegistrationController.getAllParticipants )
-
-
+ 
+ 
 export default eventParticipantRouter
 
 

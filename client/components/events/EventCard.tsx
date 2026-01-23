@@ -74,9 +74,21 @@ export default function EventCard({ event }: EventCardProps) {
           </div>
 
           <div className="absolute top-3 right-3">
-            <Badge variant={event.status === "PUBLISHED" ? "default" : "outline"} className={`${event.status === "PUBLISHED" ? "bg-emerald-500/90 hover:bg-emerald-500 text-white" : ""} backdrop-blur-md border-none`}>
-              {event.status}
-            </Badge>
+           {
+            event.endDate < new Date().toISOString() ? (
+              <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
+                COMPLETED
+              </Badge>
+            ) : event.status === "PUBLISHED" ? (
+              <Badge variant="outline" className="border-neutral-200 bg-green-500 dark:bg-green-500 dark:border-neutral-700">
+                ONGOING
+              </Badge>
+            ) : (
+              <Badge variant="destructive" className="border-red-500 bg-red-500 dark:border-red-500">
+                CANCELLED
+              </Badge>
+            )
+           }
           </div>
 
           {/* Organization Mini Badge */}

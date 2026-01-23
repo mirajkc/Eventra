@@ -151,14 +151,14 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
               >
                 <div className="flex flex-col gap-1 w-full">
                   <div className="flex items-start justify-between gap-2">
-                    <div className="text-sm font-semibold line-clamp-1">
+                    <div className="text-sm font-semibold ">
                       {notification.title}
                     </div>
                     {!notification.isRead && (
-                      <div className="h-2 w-2 rounded-full bg-blue-500 flex-shrink-0 mt-1" />
+                      <div className="h-2 w-2 rounded-full bg-blue-500 shrink-0 mt-1" />
                     )}
                   </div>
-                  <div className="text-xs text-muted-foreground line-clamp-2">
+                  <div className="text-xs text-muted-foreground">
                     {notification.message}
                   </div>
                   <div className="text-xs text-muted-foreground/70 mt-1">

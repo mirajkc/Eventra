@@ -71,7 +71,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-center border-t mt-8 border-gray-300 dark:border-gray-700">
           <p className=" text-center text-gray-600 dark:text-gray-400 text-sm italic mt-4">
-            Copyright 2025 © <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Eventra</Link> All Right Reserved.
+            Copyright 2026 © <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Eventra</Link> All Right Reserved.
           </p>
         </div>
       </div>

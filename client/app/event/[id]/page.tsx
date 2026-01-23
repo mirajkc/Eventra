@@ -1,5 +1,6 @@
 "use client";
 
+import EventDetails from "@/components/event/EventDetails";
 import InvitationComponent from "@/components/event/InvitationComponent";
 import { Spinner } from "@/components/ui/spinner";
 import getAccessToken from "@/lib/access.token";
@@ -19,7 +20,7 @@ export default function Event() {
   useEffect(() => {
     getUserEventStatus()
     getEventData()
-  }, [eventId])
+  }, [eventId]);
   const getUserEventStatus = async () => {
     try {
       setLoading(true)
@@ -66,19 +67,20 @@ export default function Event() {
     }
   }
 
-  if (loading) {
-    return <div className="flex items-center justify-center h-screen">
+if (loading || !eventMetadata) {
+  return (
+    <div className="flex items-center justify-center h-screen">
       <Spinner />
     </div>
-  }
+  );
+}
 
   return (
     <div>
       {
         isUserJoined ? (
           <div>
-            <h1> This will show the entire event details</h1>
-            <p>Participants Count: {paticipantsCount}</p>
+            <EventDetails event={eventMetadata as any} />
           </div>
         ) : (
           <div>

@@ -1,6 +1,5 @@
 import BlurText from "@/components/BlurText";
 import ListEvents from "@/components/events/ListEvents";
-import ListOrganizations from "@/components/organizations/ListOrganizations";
 
 
 export default function EventsPage() {

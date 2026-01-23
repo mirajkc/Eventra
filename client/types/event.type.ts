@@ -88,13 +88,39 @@ export interface ISingleEvent {
     name: string
     image?: string
   }
-  participants: {
+  participants: IEventparticipants[]
+}
+
+
+export interface IEventparticipants {
+  id: string
+  eventId: string
+  userId: string
+  registeredAt: string
+  checkInToken: string
+  attended: boolean
+  checkedInAt: string
+  user: {
     id: string
-    eventId: string
-    userId: string
-    registeredAt: string
-    checkInToken: string
-    attended: boolean
-    checkedInAt: string
-  }[]
+    name: string
+    email: string
+    image?: string
+  }
+}
+
+export interface IEventParticipantsPagination {
+     currentPage: number
+  take: number
+  totalDoccuments: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+}
+
+export interface IEventParticipantsDetails  {
+registeredAt: string
+  user: {
+    name: string
+    image: string
+  }
 }
