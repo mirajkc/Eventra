@@ -41,9 +41,9 @@ export default function ManageOrganizationSidebar() {
     <nav className="flex flex-col space-y-2 w-full">
       <div className="bg-background rounded-lg border shadow-sm p-2 flex flex-col gap-1">
         <div className="hidden md:block mb-4 px-4">
-          <h2 className="text-xl font-bold tracking-tight">Settings</h2>
+          <h2 className="text-xl font-bold tracking-tight">Organizaion Settings</h2>
           <p className="text-muted-foreground text-sm">
-            Manage your account settings and Informations
+            Manage your organizaion settings and Informations
           </p>
         </div>
         {sidebarItems.map((item) => {

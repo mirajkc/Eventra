@@ -2,7 +2,7 @@
 import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 
 class OrganizationMember {
-  async getMemberCount({filter} : {filter : {organizationId? : string}}){
+  async getMemberCount({filter} : {filter : {organizationId? : string , userId? : string}}){
     return prisma.organizationMember.count({
       where : filter
     })

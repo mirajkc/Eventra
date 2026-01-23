@@ -88,7 +88,7 @@ export default function ListOrganizations() {
     if (pagination.hasNextPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage + 1,
+        currentPage: prev.currentPage ++,
       }));
 
     }
@@ -98,7 +98,7 @@ export default function ListOrganizations() {
     if (pagination.hasPrevPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage - 1,
+        currentPage: prev.currentPage --,
       }));
 
     }

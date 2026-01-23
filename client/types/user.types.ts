@@ -47,5 +47,9 @@ export interface IJoinedOrganization {
                 userId: string,
                 organizationId: string,
                 role: "MEMBER",
-                joinedAt: Date
+                joinedAt: Date,
+                organization: {
+                    name: string,
+                    isPremium: boolean
+                }
 }

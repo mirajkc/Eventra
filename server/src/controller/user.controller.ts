@@ -8,6 +8,7 @@ import eventService from "../service/event.service.js"
 import organizationService from "../service/organization.service.js"
 import creditService from "../service/creditpurchase.service.js"
 import notificationService from "../service/notification.service.js"
+import organizationMemberService from "../service/organizationmember.service.js"
 class UserController {
     async getLoggedInUser(req:Request, res:Response , next:NextFunction ){
       try {
@@ -126,7 +127,7 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
       counts.createdEvents = await eventService.getTotalEventsCount({ creatorId: userDetails.id });
     }
     if(query.organizationMember === 'true'){
-      counts.organizationMember = await organizationService.getOrganizationCount({userId : userDetails.id})
+      counts.organizationMember = await organizationMemberService.getMemberCount({filter : {userId : userDetails.id}})
     }
     if(query.eventParticipants === 'true'){
       counts.eventParticipants = await eventService.getEventParticipatedCount({userId : userDetails.id})

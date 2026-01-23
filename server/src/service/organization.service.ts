@@ -4,7 +4,7 @@ import type { ICreateOrganization, IUploadOrganizationData } from "../lib/types/
 
 class OrganizationService {
   async getOrganizationCount(filter: any) {
-    return await prisma.organizationMember.count({
+    return await prisma.organization.count({
       where: filter
     })
   }
