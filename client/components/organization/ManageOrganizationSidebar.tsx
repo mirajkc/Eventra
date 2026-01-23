@@ -9,6 +9,7 @@ import {
   Settings2,
   HandshakeIcon,
   UserX,
+  Coins,
 } from "lucide-react";
 
 const sidebarItems = [
@@ -31,6 +32,11 @@ const sidebarItems = [
     title: "Joined Organizations",
     href: "/manage-organization/joined-organizations",
     icon: HandshakeIcon,
+  },
+  {
+    title: "Credits Donated",
+    href: "/manage-organization/credits-donated",
+    icon: Coins,
   },
 ];
 

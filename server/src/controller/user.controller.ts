@@ -108,6 +108,13 @@ async getUserDetails(req: Request, res: Response, next: NextFunction) {
     }
     if(query.creditPurchases){
       include.creditPurchases= {
+        include : {
+          organization : {
+            select : {
+              name : true
+            }
+          }
+        },
         skip, 
         take, 
         orderBy: { purchasedAt: 'desc' },
