@@ -28,11 +28,6 @@ const sidebarItems = [
     icon: Settings2,
   },
   {
-    title: "Kick Member",
-    href: "/manage-organization/kick-member",
-    icon: UserX,
-  },
-  {
     title: "Joined Organizations",
     href: "/manage-organization/joined-organizations",
     icon: HandshakeIcon,

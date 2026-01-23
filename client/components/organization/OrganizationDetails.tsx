@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   CreditCard
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={`rounded-xl border bg-card text-card-foreground shadow ${className}`} {...props} />
@@ -26,8 +27,11 @@ const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
 
 
 export default function OrganizationDetails({ organizationDetails }: { organizationDetails: any }) {
-  return (
-    <div className="grid gap-6">
+  const router = useRouter();
+    return (
+    <div 
+    onClick={() => router.push(`/organization/${organizationDetails.data?.id}`)}
+    className="grid gap-6 hover:cursor-pointer">
       {/* Header Card with Image and Basic Info */}
       <Card>
         <CardContent className="pt-6">
@@ -49,7 +53,7 @@ export default function OrganizationDetails({ organizationDetails }: { organizat
                       {organizationDetails.data?.type?.toLowerCase().replace('_', ' ')}
                     </Badge>
                     {organizationDetails.data?.isPremium && (
-                      <Badge variant="default" className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white border-none">
+                      <Badge variant="default" className="bg-linear-gradient-to-r from-amber-500 to-yellow-500 text-white border-none">
                         <ShieldCheck className="w-3 h-3 mr-1" /> Premium
                       </Badge>
                     )}

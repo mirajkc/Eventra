@@ -18,3 +18,9 @@ export const IUpdateOrganizationDTO = z.object({
   website: z.string().url("Invalid website URL").optional().nullable().or(z.literal("")).optional(),
   type: z.enum(["INDIVIDUAL", "COMPANY", "EDUCATIONAL", "COMMUNITY", "NON_PROFIT", "GOVERNMENT"]).optional()
 })
+
+export const OrganizationRoleUpdateDTO = z.object({
+  role: z.string(),
+  id: z.string(),
+  organizationId: z.string()
+})
