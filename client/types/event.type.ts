@@ -165,3 +165,18 @@ export interface IJoinedEvents {
                     title: string
                 }
               }
+
+export interface IEventUpdate {
+  id : string,
+  organizationId: string,
+  title: string,
+  description: string,
+  location: string,
+  startDate: Date,
+  endDate: Date,
+  capacity: number | unknown,
+  status?: "CANCELLED",
+  category: IEventCategory,
+  tags?: string | string[],
+  image?: File | string | null
+}

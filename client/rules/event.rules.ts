@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const CreateEventSchema = z.object({
+  id: z.string().optional(),
   organizationId: z.string(),
   title: z.string().min(10, "Title must be at least 10 characters").max(100, "Title must be less than 100 characters"),
   description: z.string().min(10, "Description must be at least 10 characters").max(2000, "Description must be less than 2000 characters"),
@@ -20,4 +21,29 @@ export const CreateEventSchema = z.object({
 export const EventTicketDTO = z.object({
   ticket: z.string().length(5, "Ticket must be 5 characters long"),
 })
+
+
+export const updateEventDTO = z.object({
+  id : z.string(),
+  organizationId: z.string(),
+  title: z.string().min(10).max(100),
+  description: z.string().min(10).max(2000),
+  location: z.string().min(2).max(50),
+  startDate: z.date(),
+  endDate: z.date(),
+  capacity: z.coerce.number().min(1).max(200),
+  status: z.enum(["CANCELLED"]).optional(),
+  category: z.enum([
+    "WORKSHOP",
+    "MEETUP",
+    "CONFERENCE",
+    "WEBINAR",
+    "HACKATHON",
+    "COMPETITION",
+    "OTHER",
+  ]),
+  tags: z.any().optional(),
+  image : z.any().optional(),
+})
+
 

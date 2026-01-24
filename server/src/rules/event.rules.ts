@@ -41,5 +41,6 @@ export const updateEventDTO = Joi.object({
     "OTHER",
   ),
   tags: Joi.array().items(Joi.string()),
+  image : Joi.any().allow(null)
 })
 

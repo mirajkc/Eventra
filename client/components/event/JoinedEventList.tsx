@@ -43,7 +43,6 @@ export default function JoinedEventList() {
         }
       })
       const result = await response.json()
-      console.log(result);
       setEvents(result.data.eventParticipants)
       setPagination(result.pagination.eventParticipants)
     } catch (error) {
