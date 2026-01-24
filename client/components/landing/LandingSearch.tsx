@@ -6,7 +6,7 @@ const LandingSearch = () => {
     <motion.div 
     initial= {{opacity : 0, y:50}}
     animate = {{opacity : 1 , y : 0}}
-    transition={{ease : 'easeIn', duration : 0.8}}
+    transition={{ease : 'easeOut', duration : 0.8}}
     className="w-full max-w-3xl mx-auto px-4 py-6">
 
       <form
