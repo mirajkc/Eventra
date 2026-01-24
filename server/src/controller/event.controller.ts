@@ -156,7 +156,7 @@ class EventController {
           status: "EVENT_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      let imageUrl = null;
+      let imageUrl = eventDetails.image;
       if (req.file) {
         const imageFile = req.file.buffer
         imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail")

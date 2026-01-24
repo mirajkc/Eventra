@@ -48,7 +48,6 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
       capacity: Number(event.capacity) || 0,
       category: event.category,
       tags: event.tags || [""],
-      image: event.image || null
     },
     resolver: zodResolver(updateEventDTO)
   });
@@ -78,10 +77,8 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
         formData.append("status", "CANCELLED");
       }
 
-      if (data.image && data.image[0]) {
-        formData.append("image", data.image[0] );
-      }else{
-        formData.append("image", data.image );
+      if (data.image instanceof FileList && data.image.length > 0) {
+        formData.append("image", data.image[0]);
       }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/update-event-details`, {
