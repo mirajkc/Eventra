@@ -5,8 +5,7 @@ import { IEventPagination, IEventReponse } from "@/types/event.type"
 import OrganizationEventCard from "./OrganizationEventCard"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Spinner } from "../ui/spinner"
-import Link from "next/link"
+
 import { toast } from "sonner"
 import { useParams } from "next/navigation"
 
@@ -58,11 +57,24 @@ export default function OrganizationEvents() {
       }
       <div className="flex-1 overflow-auto">
         <div className="grid grid-cols-1 gap-6 p-1 mt-6">
+
           {loading ? (
-            <div className="flex items-center justify-center py-10">
-              <Spinner />
-            </div>
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex flex-col md:flex-row gap-4 p-4 border rounded-2xl bg-white/40 dark:bg-neutral-900/40">
+                <div className="h-48 w-full md:w-72 bg-neutral-200 dark:bg-neutral-800 rounded-xl animate-pulse" />
+                <div className="flex flex-1 flex-col gap-4">
+                  <div className="h-6 w-3/4 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                  <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                  <div className="h-4 w-2/3 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                  <div className="mt-auto flex gap-4">
+                     <div className="h-8 w-8 rounded-full bg-neutral-200 dark:bg-neutral-800 animate-pulse" />
+                     <div className="h-8 w-24 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                  </div>
+                </div>
+              </div>
+            ))
           ) : events?.length > 0 ? (
+
             events.map((event) => (
               <OrganizationEventCard key={event.id} event={event} />
             ))

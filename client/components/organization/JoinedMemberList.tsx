@@ -10,11 +10,15 @@ import { formatDistanceToNow } from "date-fns"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import HandleKickMember from "./HandleKickMember"
+import getAccessToken from "@/lib/access.token"
 export default function JoinedMemberList() {
   const params = useParams()
   const organizationId = params.id
   const [joinedMembers, setJoinedMembers] = useState<Array<JoinedMember>>([])
-  const [loading, setLoading] = useState(true)
+
+  const [loadingMembers, setLoadingMembers] = useState(true)
+  const [loadingRole, setLoadingRole] = useState(true)
+  const [role, setRole] = useState<string>("")
   const [pagination, setPagination] = useState<IOrganizationActivitiesPagination>({
     currentPage: 1,
     totalPages: 0,
@@ -27,9 +31,13 @@ export default function JoinedMemberList() {
     fethcJoinedMember(pagination.currentPage)
   }, [pagination.currentPage])
 
+  useEffect(() => {
+    fetchUserRole()
+  }, [])
+
 
   const fethcJoinedMember = async (page: number) => {
-    setLoading(true)
+    setLoadingMembers(true)
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-single-organization/${organizationId}?members=true&page=${page}&take=${pagination.take}`
@@ -49,12 +57,37 @@ export default function JoinedMemberList() {
     } catch (error) {
       toast.error("Error occurred while fetching joined members.")
     } finally {
-      setLoading(false)
+      setLoadingMembers(false)
+    }
+  }
+
+  const fetchUserRole = async () =>{
+    try {
+      setLoadingRole(true)
+      const accessToken = await getAccessToken()
+      if (!accessToken) {
+        setRole("GUEST")
+        return
+      }
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-loggedinuser-role/${organizationId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+      const result = await response.json()
+      setRole(result.data.members[0].role)
+
+    } catch (error) {
+      console.log(error)
+    }finally {
+      setLoadingRole(false)
     }
   }
 
 
-  if (loading) {
+  if (loadingMembers) {
     return <div className="flex flex-col items-center justify-center min-h-[40vh]">
       <Spinner />
     </div>
@@ -80,8 +113,8 @@ export default function JoinedMemberList() {
         )
       }
       {joinedMembers.map((member) => (
-        <div
-          key={member.id}
+        <div key={member.id}>
+        <div   
           className="flex items-center  justify-between p-4 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-2xl shadow-sm hover:border-primary/20 transition-all backdrop-blur-sm"
         >
           <div className="flex items-center gap-4">
@@ -100,10 +133,15 @@ export default function JoinedMemberList() {
             </div>
           </div>
           
-          <div className="flex  items-end gap-1.5">
-            <div>
-              <HandleKickMember memberId={member.id} organizationId={String(organizationId)} />
-            </div>
+          <div className="flex items-end gap-1.5">
+            {
+              role === "OWNER" || role === "ADMIN" ? (
+             <div className="hidden md:block" >
+              <HandleKickMember fethcJoinedMember={fethcJoinedMember}  memberId={String(member.id)} organizationId={String(organizationId)} />
+              </div>
+              ) : null
+            }
+
             <div>
               <span className="text-[10px] font-bold px-2.5 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider">
               {member.role}
@@ -112,8 +150,17 @@ export default function JoinedMemberList() {
               Joined {formatDistanceToNow(new Date(member.joinedAt))} ago
             </p>
             </div>
+            
           </div>
         </div>
+        {
+          role === "OWNER" || role === "ADMIN" ? (
+            <div className="md:hidden" >
+             <HandleKickMember fethcJoinedMember={fethcJoinedMember} memberId={String(member.id)} organizationId={String(organizationId)} />
+             </div>
+             ) : null
+        }
+      </div>
       ))}
 
       <div className="flex w-full justify-center items-center mt-6">

@@ -6,7 +6,7 @@ export default async function getAccessToken() {
   if (accessToken) return accessToken
 
   const refreshToken = Cookies.get("refreshToken")
-  if (!refreshToken) throw new Error("No refresh token found")
+  if (!refreshToken) return null
 
 
   try {
