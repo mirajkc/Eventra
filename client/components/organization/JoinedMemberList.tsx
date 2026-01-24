@@ -9,9 +9,7 @@ import { useParams } from "next/navigation"
 import { formatDistanceToNow } from "date-fns"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-
-
-
+import HandleKickMember from "./HandleKickMember"
 export default function JoinedMemberList() {
   const params = useParams()
   const organizationId = params.id
@@ -101,13 +99,19 @@ export default function JoinedMemberList() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1.5">
-            <span className="text-[10px] font-bold px-2.5 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider">
+          
+          <div className="flex  items-end gap-1.5">
+            <div>
+              <HandleKickMember memberId={member.id} organizationId={String(organizationId)} />
+            </div>
+            <div>
+              <span className="text-[10px] font-bold px-2.5 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider">
               {member.role}
             </span>
             <p className="text-[10px] text-neutral-400 dark:text-neutral-500 font-medium">
               Joined {formatDistanceToNow(new Date(member.joinedAt))} ago
             </p>
+            </div>
           </div>
         </div>
       ))}

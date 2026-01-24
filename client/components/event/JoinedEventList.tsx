@@ -1,7 +1,7 @@
 "use client"
 import getAccessToken from "@/lib/access.token"
 import { useAppSelector } from "@/state/hooks"
-import { IHostedEvents } from "@/types/event.type"
+import { IJoinedEvents } from "@/types/event.type"
 import { IOrganizationActivitiesPagination } from "@/types/organization.types"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -11,10 +11,10 @@ import { Button } from "../ui/button"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-export default function ManageEventList() {
+export default function JoinedEventList() {
   const router = useRouter()
   const userDetails = useAppSelector((state) => state.authSlice.userDetails)
-  const [events, setEvents] = useState<Array<IHostedEvents>>([])
+  const [events, setEvents] = useState<Array<IJoinedEvents>>([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState<IOrganizationActivitiesPagination>({
     currentPage: 1,
@@ -35,7 +35,7 @@ export default function ManageEventList() {
     try {
       setLoading(true)
       const accessToken = await getAccessToken()
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user/me/getdetails?page=${pagination.currentPage}&take=${pagination.take}&createdEvents=true`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user/me/getdetails?page=${pagination.currentPage}&take=${pagination.take}&eventParticipants=true`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -43,8 +43,9 @@ export default function ManageEventList() {
         }
       })
       const result = await response.json()
-      setEvents(result.data.createdEvents)
-      setPagination(result.pagination.createdEvents)
+      console.log(result);
+      setEvents(result.data.eventParticipants)
+      setPagination(result.pagination.eventParticipants)
     } catch (error) {
       toast.error("Failed to fetch hosted events please try again later. ")
     }finally {
@@ -90,32 +91,20 @@ export default function ManageEventList() {
                     <TableHeader>
                       <TableRow>
                         <TableHead className="w-[100px]">Event Name</TableHead>
-                        <TableHead>Event Type</TableHead>
-                        <TableHead>Start Date and Time</TableHead>
-                        <TableHead>Event Location</TableHead>
-                        <TableHead>Event Status</TableHead>
-                        <TableHead>Event Actions</TableHead>
+                        <TableHead className="text-center">Event CheckInToken</TableHead>
+                        <TableHead>Registered At</TableHead>
+                        <TableHead>Attended</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {events?.map((event) => (
                         <TableRow key={event.id}
                         className="hover:cursor-pointer"
-                        onClick={() => router.push(`/event/${event.id}`)}>
-                          <TableCell className="font-medium">{event.title}</TableCell>
-                          <TableCell>{event.category}</TableCell>
-                          <TableCell>{format(new Date(event.startDate), "dd/MM/yyyy hh:mm a")}</TableCell>
-                          <TableCell>{event.location}</TableCell>
-                          <TableCell>{event.status === "CANCELLED" ? "Cancelled" : new Date(event.endDate) < new Date() ? "Completed" : "Published"}</TableCell>
-                          <TableCell>
-                            <Button
-                              variant="outline"
-                              className="ml-auto hover:cursor-pointer"
-                              onClick={() => router.push(`/event/${event.slug}`)}
-                            >
-                              Edit
-                            </Button>
-                          </TableCell>
+                        onClick={() => router.push(`/event/${event.eventId}`)}>
+                          <TableCell className="font-medium">{event.event.title}</TableCell>
+                          <TableCell className="text-center">{event.checkInToken}</TableCell>
+                          <TableCell>{format(new Date(event.registeredAt), "dd/MM/yyyy")}</TableCell>
+                          <TableCell>{event.attended ? "Attended" : "Not Attended"}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

@@ -109,7 +109,7 @@ export interface IEventparticipants {
 }
 
 export interface IEventParticipantsPagination {
-     currentPage: number
+  currentPage: number
   take: number
   totalDoccuments: number
   totalPages: number
@@ -132,3 +132,36 @@ export interface IEventAttendedUser {
     image: string
    }
 }
+
+export interface IHostedEvents {
+  id: string
+  slug: string
+  organizationId: string
+  creatorId: string
+  title: string
+  description: string
+  location: string
+  startDate: string
+  endDate: string
+  capacity: number
+  registeredCount: number
+  status: string
+  category: IEventCategory
+  tags?: string[]
+  image?: string
+  createdAt: string
+  updatedAt?: string
+}
+
+export interface IJoinedEvents {
+                id: string,
+                eventId: string,
+                userId: string,
+                registeredAt: string,
+                checkInToken: string,
+                attended: boolean,
+                checkedInAt?: string,
+                event: {
+                    title: string
+                }
+              }

@@ -8,7 +8,6 @@ import organizationController from '../controller/organization.controller.js'
 const organizationRouter:Router = express.Router()
 
 organizationRouter.post('/create-organization', authorize({}),upload.fields([{name : "image" , maxCount : 1}, {name : "thumbnail", maxCount : 1 }]), validator(organizationDTO), organizationController.createOrganization )
-
 organizationRouter.get('/get-single-organization/:organizationId', organizationController.getOrganizationDetailsById)
 organizationRouter.get('/get-organizations', organizationController.getAllOrganization)
 organizationRouter.put('/update-member-role', authorize({}),validator(memberRoleDTO), organizationController.updateMemberRole )
@@ -19,7 +18,7 @@ organizationRouter.get('/join-organization/:organizationId', authorize({}), orga
 organizationRouter.get('/leave-organization/:organizationId', authorize ({}), organizationController.leaveOrganization)
 organizationRouter.get('/get-loggedin-users-organization' , authorize({}), organizationController.getLoggedInUserOrganization)
 organizationRouter.get('/is-user-joined/:organizationId', authorize({}), organizationController.checkIfUserIsJoined)
-
+organizationRouter.get('/get-loggedinuser-role/:organizationId', authorize({}), organizationController.getLoggedInUserOrganizationRole)
 
 export default organizationRouter
 

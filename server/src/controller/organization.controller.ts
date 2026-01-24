@@ -642,6 +642,37 @@ class OrganizationController {
     }
   }
 
+  getLoggedInUserOrganizationRole = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userDetails: IUserDetails = req.userDetails
+      const organizationId = req.params.organizationId
+      if (!organizationId) {
+        throw {
+          code: 404,
+          message: "Error organization Id not found",
+          status: "ORGANIZATION_ID_NOT_FOUND"
+        } as IErrorTypes
+      }
+      const organizationDetails = await organizationService.getOrganizationByFilter({
+        filter: { id: organizationId },
+        include: {
+          members: {
+            where: {
+              userId: userDetails.id
+            }
+          }
+        }
+      })
+
+      return res.json({
+        message: "fetched the role of logged in user successfully. ",
+        data: organizationDetails
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
 }
 const organizationController = new OrganizationController()
 export default organizationController
