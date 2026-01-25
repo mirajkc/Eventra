@@ -1,78 +1,104 @@
+"use client";
 
 import Link from "next/link";
+import { Twitter, Instagram, Github, Linkedin, Mail, Send } from "lucide-react";
+import { Button } from "./button";
+import { Input } from "./input";
+import { Separator } from "./separator";
 
-export const footerLinks = [
-  {
-    href: "/",
-    label: "Home",
-  },
-  {
-    href: "/",
-    label: "Events",
-  },
-  {
-    href: "/",
-    label: "Organizations",
-  },
-  {
-    href: "/",
-    label: "Pricing",
-  },
-]
+export const footerLinks = {
+  company: [
+    { href: "/about", label: "About Us" },
+    { href: "/blog", label: "Blog" },
+    { href: "/careers", label: "Careers" },
+    { href: "/contact", label: "Contact" },
+  ],
+  product: [
+    { href: "/events", label: "Explore Events" },
+    { href: "/organizations", label: "Organizations" },
+    { href: "/about", label: "About" }
+  ]
+};
+
+const socialLinks = [
+  { icon: Github, href: "https://github.com/mirajkc", label: "Github" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/miraj-k-c-2375533a4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", label: "LinkedIn" },
+];
 
 export default function Footer() {
   return (
-    <footer className="max-w-7xl mx-auto px-4 mb-4">
-      <div className="bg-gray-100 dark:bg-gray-900/50 backdrop-blur-sm/50  rounded-lg shadow-sm p-8 text-black dark:text-white">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-block hover:opacity-80 transition-opacity duration-200">
-              <h1 className="text-2xl font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer" >Eventra</h1>
+    <footer className="w-full border-t border-border bg-background pt-16 pb-8">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-16">
+          {/* Brand Column */}
+          <div className="lg:col-span-4 flex flex-col items-start">
+            <Link href="/" className="group flex items-center gap-2 mb-6">
+              <span className="text-2xl font-bold tracking-tight text-foreground">
+                Eventra<span className="text-muted-foreground/50">.</span>
+              </span>
             </Link>
-            <p className="text-sm mt-6 text-gray-600 dark:text-gray-400">
-              Eventra is a platform for event planning and management. With the sophisticated techology and credits system.
+            <p className="text-muted-foreground leading-relaxed max-w-sm mb-8">
+              Empowering organizers to build extraordinary event experiences. 
+              The all-in-one platform for modern event management and collaboration.
             </p>
-          </div>
-
-          <div className="flex flex-col lg:items-center lg:justify-center">
-            <div className="flex flex-col text-sm space-y-2.5">
-              <h2 className="font-semibold mb-5 text-black dark:text-white">Company</h2>
-              {footerLinks.map((link) => (
-                <Link
-                  href={link.href}
-                  key={link.label}
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <Link 
+                  key={social.label} 
+                  href={social.href}
+                  className="p-2.5 rounded-full border border-border bg-muted/30 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+                  aria-label={social.label}
                 >
-                  {link.label}
+                  <social.icon className="h-4 w-4" />
                 </Link>
               ))}
             </div>
           </div>
 
-          <div>
-            <h2 className="font-semibold text-black dark:text-white mb-5">Contact</h2>
-            <div className="text-sm space-y-6 max-w-sm">
-              <p className="text-gray-600 dark:text-gray-400">
-                For any inquiries or support, please contact us at:
-              </p>
-              <div className="flex items-center">
-                <input
-                  className="rounded-l-md bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 outline-none focus:border-blue-600 dark:focus:border-blue-400 transition-colors duration-200 w-full max-w-64 h-11 px-3 text-black dark:text-white"
-                  type="email"
-                  placeholder="Enter your email"
+          {/* Links Columns */}
+          <div className="lg:col-span-4 grid grid-cols-2 gap-8">
+            <div className="flex flex-col gap-4">
+              <h4 className="font-semibold text-foreground tracking-tight">Product</h4>
+              <ul className="flex flex-col gap-3">
+                {footerLinks.product.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Newsletter Column */}
+          <div className="lg:col-span-4">
+            <h4 className="font-semibold text-foreground tracking-tight mb-4">Stay updated</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              Subscribe to our newsletter for the latest updates and event tips.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input 
+                  type="email" 
+                  placeholder="name@company.com" 
+                  className="pl-10 h-11 rounded-xl bg-muted/30 border-border/50 focus:ring-1 focus:ring-ring"
                 />
-                <button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors duration-200 px-4 h-11 text-white rounded-r-md font-medium">
-                  Subscribe
-                </button>
               </div>
+              <Button className="h-11 px-5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-black dark:hover:bg-slate-200 transition-all active:scale-[0.98]">
+                <Send className="h-4 w-4 mr-2" />
+                Join
+              </Button>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center border-t mt-8 border-gray-300 dark:border-gray-700">
-          <p className=" text-center text-gray-600 dark:text-gray-400 text-sm italic mt-4">
-            Copyright 2026 © <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Eventra</Link> All Right Reserved.
-          </p>
+        <Separator className="mb-8 opacity-50" />
+
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted-foreground font-medium">
+          <p>© 2026 Eventra Inc. All rights reserved.</p>
+       
         </div>
       </div>
     </footer>
