@@ -104,8 +104,18 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
         setNotifications(result.data.notifications || [])
         setPagination(result.data.paginationData || pagination)
       }
-      router.push(`${notification.entityType.toLowerCase()}/${notification.entityId}`)
 
+      let targetPath = `/${notification.entityType.toLowerCase()}/${notification.entityId}`;
+
+      // Handle specific overrides if necessary
+      if (
+        notification.title.startsWith("Your check in token for the event") ||
+        notification.title.startsWith("New event has been created")
+      ) {
+        targetPath = `/event/${notification.entityId}`;
+      }
+
+      router.push(targetPath);
     } catch (error: any) {
       toast.error(error.message || "Failed to load notification")
     }

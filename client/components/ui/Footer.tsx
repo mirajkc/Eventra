@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Twitter, Instagram, Github, Linkedin, Mail, Send } from "lucide-react";
+import { Github, Linkedin, Mail, Send } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { Separator } from "./separator";
@@ -11,7 +11,7 @@ export const footerLinks = {
     { href: "/about", label: "About Us" },
     { href: "/blog", label: "Blog" },
     { href: "/careers", label: "Careers" },
-    { href: "/contact", label: "Contact" },
+    { href: "/contact", label: "Contact" }
   ],
   product: [
     { href: "/events", label: "Explore Events" },
