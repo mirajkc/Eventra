@@ -59,12 +59,12 @@ export default function CallToAction() {
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
-              onClick={() => router.push("/contact")}
+              onClick={() => router.push("/events")}
               variant="outline"
               size="lg"
               className="w-full sm:w-auto h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98]"
             >
-              Contact sales
+              Explore events
             </Button>
           </motion.div>
 

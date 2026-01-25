@@ -107,7 +107,6 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
 
       let targetPath = `/${notification.entityType.toLowerCase()}/${notification.entityId}`;
 
-      // Handle specific overrides if necessary
       if (
         notification.title.startsWith("Your check in token for the event") ||
         notification.title.startsWith("New event has been created")

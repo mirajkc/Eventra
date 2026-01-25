@@ -1,6 +1,5 @@
-"use client";
-
-import { useEffect, useState } from "react";
+"use client"
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 import { motion } from "motion/react";
@@ -11,6 +10,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { IEventPagination, IEventReponse } from "@/types/event.type";
 
 import EventCard from "./EventCard";
+import { useAppSelector } from "@/state/hooks";
 
 export default function ListEvents() {
   const [pagination, setPagination] = useState<IEventPagination>({
@@ -23,22 +23,29 @@ export default function ListEvents() {
   }
   );
 
+  const search = useAppSelector((state) => state.search.search)
+
   const [loading, setLoading] = useState<boolean>(false);
   const [event, setEvent] = useState<Array<IEventReponse>>([]);
 
   const searchParams = useSearchParams();
-  const searchQuery = searchParams.toString();
+  const slug = searchParams.get("slug") ?? "";
+  const capacity = searchParams.get("capacity") ?? "";
+  const status = searchParams.get("status") ?? "";
+  const category = searchParams.get("category") ?? "";
+  const createdAt = searchParams.get("createdAt") ?? "";
+  const updatedAt = searchParams.get("updatedAt") ?? "";
 
   useEffect(() => {
     fetchEvents();
-  }, [pagination.currentPage,  searchQuery]);
+  }, [pagination.currentPage, slug, capacity, status, category, createdAt, updatedAt, search  ]);
 
   useEffect(() => {
     setPagination((prev: any) => ({
       ...prev,
       currentPage: 1,
     }));
-  }, [searchQuery]);
+  }, [slug, capacity, status, category, createdAt, updatedAt]);
 
   const fetchEvents = async () => {
     try {
@@ -48,22 +55,20 @@ export default function ListEvents() {
         limit: pagination.take.toString(),
       });
 
-      const slug = searchParams.get("slug");
+      if(search){
+        params.set("slug", search)
+      } 
+
       if (slug) params.set("slug", slug);
 
-      const capacity = searchParams.get("capacity");
       if (capacity) params.set("capacity", capacity);
 
-      const status = searchParams.get("status");
       if (status) params.set("status", status);
 
-      const category = searchParams.get("category");
       if (category) params.set("category", category);
 
-      const createdAt = searchParams.get("createdAt");
       if (createdAt) params.set("createdAt", createdAt);
 
-      const updatedAt = searchParams.get("updatedAt");
       if (updatedAt) params.set("updatedAt", updatedAt);
 
       const response = await fetch(
@@ -81,7 +86,19 @@ export default function ListEvents() {
       }
       const result = await response.json();
       setEvent(result.data || []);
-      setPagination(result.pagination);
+      setPagination((prev) => {
+        if(prev.currentPage === result.pagination.currentPage){
+          return {
+            ...prev,
+            ...result.pagination
+          }
+        }
+        return {
+          ...prev,
+          ...result.pagination,
+          currentPage : prev.currentPage
+        }
+      });
     } catch (error: any) {
       toast.error("Failed to fetch events");
     } finally {
@@ -93,7 +110,7 @@ export default function ListEvents() {
     if (pagination.hasNextPage) {
       setPagination((prev: any) => ({
         ...prev,
-        currentPage: prev.currentPage ++,
+        currentPage: prev.currentPage + 1 ,
       }));
     }
   };
@@ -102,7 +119,7 @@ export default function ListEvents() {
     if (pagination.hasPreviousPage) {
       setPagination((prev: any) => ({
         ...prev,
-        currentPage: prev.currentPage --,
+        currentPage: prev.currentPage - 1,
       }));
     }
   };
