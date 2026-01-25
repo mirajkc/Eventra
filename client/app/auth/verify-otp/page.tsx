@@ -70,7 +70,7 @@ export default function VerifyOtp() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   type="email"
-                  value="email"
+                  name="email"
                   placeholder="name@example.com"
                   errorMsg={errors.email?.message}
                   control={control}
@@ -81,7 +81,7 @@ export default function VerifyOtp() {
                 <Label htmlFor="otp">OTP Code</Label>
                 <Input
                   type="text"
-                  value="otp"
+                  name="otp"
                   placeholder="Enter 6-digit OTP"
                   errorMsg={errors.otp?.message}
                   control={control}

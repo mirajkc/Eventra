@@ -76,7 +76,7 @@ export default function GetForgotPasswordOtp() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   type="email"
-                  value="email"
+                  name="email"
                   placeholder="name@example.com"
                   errorMsg={errors.email?.message}
                   control={control}

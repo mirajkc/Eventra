@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import BlurText from "@/components/BlurText";
 import ListEvents from "@/components/events/ListEvents";
+import { Spinner } from "@/components/ui/spinner";
 
 
 export default function EventsPage() {
@@ -22,7 +24,13 @@ export default function EventsPage() {
         />
       </div>
       <div>
-        <ListEvents />
+        <Suspense fallback={
+          <div className="flex justify-center items-center min-h-[50vh]">
+            <Spinner className="size-8" />
+          </div>
+        }>
+          <ListEvents />
+        </Suspense>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import BlurText from "@/components/BlurText";
 import ListOrganizations from "@/components/organizations/ListOrganizations";
+import { Spinner } from "@/components/ui/spinner";
 
 
 export default function OrganizationsPage() {
@@ -22,7 +24,13 @@ export default function OrganizationsPage() {
         />
       </div>
       <div>
-        <ListOrganizations />
+        <Suspense fallback={
+          <div className="flex justify-center items-center min-h-[50vh]">
+            <Spinner className="size-8" />
+          </div>
+        }>
+          <ListOrganizations />
+        </Suspense>
       </div>
     </div>
   );
