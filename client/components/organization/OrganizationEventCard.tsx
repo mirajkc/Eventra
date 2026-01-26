@@ -127,7 +127,7 @@ export default function OrganizationEventCard({ event }: OrganizationEventCardPr
             </div>
           </div>
 
-          <Link href={`/event/${event.slug}`}>
+          <Link href={`/event/${event.id}`}>
             <Button size="sm" variant="ghost" className="group/btn gap-2 rounded-full">
               View Details
               <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
