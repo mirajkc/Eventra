@@ -43,9 +43,16 @@ const categoryIcons: Record<string, typeof Trophy> = {
 export default function EventHero({ event }: EventHeroProps) {
   const loggedInUser = useAppSelector((state)=>state.authSlice.userDetails)
   const [leaving, setLeaving] = useState(false);
-  const startDate = new Date(event.startDate);
-  const endDate = new Date(event.endDate);
   const Icon = categoryIcons[event.category] || Tag;
+  const now = new Date();
+const start = new Date(event.startDate);
+const end = new Date(event.endDate);
+
+let status = "CANCELLED";
+
+if (end < now) status = "COMPLETED";
+else if (start <= now && end >= now) status = "ONGOING";
+else if (start > now) status = "UPCOMING";
 
   const handleLeaveEvent = async () => {
     try {
@@ -125,21 +132,9 @@ export default function EventHero({ event }: EventHeroProps) {
                   <Icon className="w-3.5 h-3.5 mr-1.5" />
                   {event.category}
                 </Badge>
-                 {
-            event.endDate < new Date().toISOString() ? (
-              <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                COMPLETED
+                <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
+                {status}
               </Badge>
-            ) : event.status === "PUBLISHED" ? (
-              <Badge variant="outline" className="border-neutral-200 bg-green-500 dark:bg-green-500 dark:border-neutral-700">
-                ONGOING
-              </Badge>
-            ) : (
-              <Badge variant="destructive" className="border-red-500 bg-red-500 dark:border-red-500">
-                CANCELLED
-              </Badge>
-            )
-           }
               </div>
 
               <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
@@ -203,8 +198,8 @@ export default function EventHero({ event }: EventHeroProps) {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Start Date & Time</p>
-                        <p className="font-bold">{format(startDate, "d, MMMM , yyyy")}</p>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400">{format(startDate, "h:mm a")} onwards</p>
+                        <p className="font-bold">{format(start, "d, MMMM , yyyy")}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">{format(start, "h:mm a")} onwards</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -213,8 +208,8 @@ export default function EventHero({ event }: EventHeroProps) {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">End Date & Time</p>
-                        <p className="font-bold">{format(endDate, "d, MMMM , yyyy")}</p>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(endDate, "h:mm a")}</p>
+                        <p className="font-bold">{format(end, "d, MMMM , yyyy")}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format( end, "h:mm a")}</p>
                       </div>
                     </div>
 

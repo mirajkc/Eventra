@@ -53,10 +53,15 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
   const loggedInUser = useAppSelector((state)=>state.authSlice.userDetails)
   const [joining, setJoining] = useState(false);
   const Icon = categoryIcons[event.category] || Tag;
-  const startDate = event?.startDate ? new Date(event.startDate) : null;
-  const endDate = event?.endDate ? new Date(event.endDate) : null;
-  const isCompleted =endDate && endDate.getTime() < Date.now()
+  const now = new Date();
+const start = new Date(event.startDate);
+const end = new Date(event.endDate);
 
+let status = "CANCELLED";
+
+if (end < now) status = "COMPLETED";
+else if (start <= now && end >= now) status = "ONGOING";
+else if (start > now) status = "UPCOMING";
 
   const handleJoinEvent = async () => {
     try {
@@ -137,17 +142,10 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                   <Icon className="w-3.5 h-3.5 mr-1.5" />
                   {event.category}
                 </Badge>
-                {isCompleted ? (
-                  <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                    COMPLETED
-                  </Badge>
-                ) : (
-                  <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                    {
-                      event.status === 'PUBLISHED' ? 'ONGOING' : 'CANCELLED'
-                    }
-                  </Badge>
-                )}
+               <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
+  {status}
+</Badge>
+
               </div>
 
               <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
@@ -211,11 +209,11 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                       </div>
                       <div>
                         <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Start Date & Time</p>
-                        {startDate && !isNaN(startDate.getTime()) && (
+                        {start && !isNaN(start.getTime()) && (
                             <>
-                              <p className="font-bold">{format(startDate, "d, MMMM, yyyy")}</p>
+                              <p className="font-bold">{format(start, "d, MMMM, yyyy")}</p>
                               <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                {format(startDate, "h:mm a")} onwards
+                                {format(start, "h:mm a")} onwards
                               </p>
                             </>
                          )}
@@ -227,10 +225,10 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                       </div>
                       <div>
                         {
-                          endDate && !isNaN(endDate.getTime()) && (
+                          end && !isNaN(end.getTime()) && (
                             <>
-                              <p className="font-bold">{format(endDate, "d, MMMM , yyyy")}</p>
-                              <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(endDate, "h:mm a")}</p>
+                              <p className="font-bold">{format(end, "d, MMMM , yyyy")}</p>
+                              <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(end, "h:mm a")}</p>
                             </>
                           )
                         }

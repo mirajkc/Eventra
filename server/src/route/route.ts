@@ -6,6 +6,7 @@ import eventRouter from './event.route.js'
 import eventParticipantRouter from './event.registration.route.js'
 import creditRouter from './credit.route.js'
 import notificationRouter from './notification.route.js'
+import eventChatRouter from './event.chat.route.js'
 const router: Router = express.Router()
 
 router.use('/auth', authRouter)
@@ -15,4 +16,5 @@ router.use('/event', eventRouter)
 router.use('/event/participant', eventParticipantRouter)
 router.use('/credit', creditRouter)
 router.use('/notification', notificationRouter)
+router.use('/event/chat' , eventChatRouter)
 export default router
