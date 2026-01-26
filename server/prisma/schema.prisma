@@ -91,6 +91,7 @@ model User {
   userEmbedding      UserEmbedding?
   notifications      Notification[]
   otpdetails         Otpdetails[]
+  eventMessages      EventMessage[]
 }
 
 model Otpdetails {
@@ -194,6 +195,7 @@ model Event {
   eventEmbedding   EventEmbedding?
   eventMetrics     EventMetrics?
   userInteractions UserInteraction[]
+  eventMessages    EventMessage[]
 
   @@index([organizationId])
   @@index([creatorId])
@@ -260,6 +262,21 @@ model Notification {
 
   @@index([userId, isRead])
   @@index([userId, createdAt])
+}
+
+model EventMessage {
+  id        String   @id @default(cuid())
+  eventId   String
+  senderId  String
+  message   String
+  createdAt DateTime @default(now())
+
+  event  Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  sender User  @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([senderId])
+  @@index([createdAt])
 }
 
 // ========= Tables Machine Learning and Algorithms ===================== //
