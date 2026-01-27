@@ -1,5 +1,5 @@
 ﻿import http from 'http'
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import app from './config/express.config.js'
 import enviroment from './config/enviroment.config.js'
 
@@ -20,20 +20,20 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (socket) => {
+io.on("connection", (socket : Socket) => {
   console.log("Client connected", socket.id);
 
-  socket.on("join-event", (eventId) => {
+  socket.on("join-event", (eventId : string) => {
     socket.join(eventId);
     console.log(`Socket ${socket.id} joined event room: ${eventId}`);
   });
 
-  socket.on("leave-event", (eventId) => {
+  socket.on("leave-event", (eventId : string) => {
     socket.leave(eventId);
     console.log(`Socket ${socket.id} left event room: ${eventId}`);
   });
 
-  socket.on("message-sent", (data) => {
+  socket.on("message-sent", (data : any) => {
     console.log("Message received:", data);
     if (data.eventId) {
       io.to(data.eventId).emit("update-chat");

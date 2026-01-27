@@ -36,7 +36,7 @@ class EventChatController {
             const eventId = String(req.params.eventId);
             const userDetails = req.userDetails;
             const eventParticipant = await eventParticipantService.getEventParticipantDetails({ filter: { eventId: eventId, userId: userDetails.id } });
-            const groupMessage = await eventChatService.getAllMessage({ filter: { eventId: eventId }, include: {
+            let groupMessage = await eventChatService.getAllMessage({ filter: { eventId: eventId }, include: {
                     sender: {
                         select: {
                             name: true,
@@ -45,9 +45,12 @@ class EventChatController {
                     }
                 }
             });
+            const modifiedMessage = groupMessage.map((message) => {
+                return message.senderId === userDetails.id ? { ...message, isMe: true } : { ...message, isMe: false };
+            });
             return res.json({
                 message: "Messages fetched successfully. ",
-                data: groupMessage
+                data: modifiedMessage,
             });
         }
         catch (error) {
