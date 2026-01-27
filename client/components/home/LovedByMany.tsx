@@ -2,53 +2,53 @@
 
 import { motion } from "motion/react";
 import { Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { TypographyH2, TypographyP } from "@/components/ui/Typography";
 
 const testimonials = [
   {
     name: "Sebastiaan Debrouwere",
     handle: "@iamsebdeb",
-    content: "We use @eventra on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI",
+    content: "Eventra made organizing our annual conference effortless. From registrations to live updates, everything was smooth and hassle-free.",
     date: "10:01 PM · Apr 7, 2022",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
   },
   {
     name: "Alon",
     handle: "@alon",
-    content: "As an early stage startup I'm really loving using @eventra - great balance of flexibility and descriptiveness",
+    content: "As a startup hosting multiple workshops, Eventra helped us manage attendees, ticketing, and schedules without breaking a sweat.",
     date: "6:57 PM · Dec 1, 2022",
     avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop"
   },
   {
     name: "Dimitry Gershenson",
     handle: "@d_gershenson",
-    content: "We use our CRM @eventra for sales, fundraising, and recruiting. It's awesome",
+    content: "We used Eventra for our fundraising gala. Tracking RSVPs, sending reminders, and checking in guests was so simple!",
     date: "1:32 PM · Jan 4, 2023",
     avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
   },
   {
     name: "Krishna",
     handle: "@ntkris",
-    content: "Holy shit @eventra is beautiful 😍 I've run my CRM on Notion to date. Hubspot & Salesforce too clunky. Sleek and simple, just what I need",
+    content: "Eventra’s dashboard gave us a clear view of attendees, ticket sales, and event analytics. Organizing webinars has never been easier.",
     date: "1:03 PM · Mar 3, 2023",
     avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop"
   },
   {
     name: "Jono Bacon",
     handle: "@jonobacon",
-    content: "Let's be honest, most CRMs suck. Overcomplicated, expensive, and you have to bend to their will...not the other way around. I am a huge fan of @eventra - their product is rock-solid, customer support is AAA, and it is *very* flexible and simple.",
+    content: "Planning a large meetup felt overwhelming, but Eventra handled everything—from invites to feedback collection—seamlessly.",
     date: "4:05 PM · Jan 9, 2023",
     avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop"
   },
   {
     name: "Sri",
     handle: "@therealsrii",
-    content: "I've been using @eventra to track applicants, manage my deal pipeline and manage the associated notes/tasks. The use-cases are unlimited; it truly feels like the Notion of CRM.",
+    content: "Eventra turned our event management from stressful to smooth. Automated notifications, attendee management, and analytics all in one place!",
     date: "10:17 PM · Jan 3, 2023",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
   }
 ];
+
+
 
 export default function LovedByMany() {
   return (

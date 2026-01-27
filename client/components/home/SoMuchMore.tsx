@@ -16,7 +16,7 @@ import {
 const features = [
   {
     title: "Quick actions",
-    description: "Streamline your event workflow with customizable shortcuts and instant updates.",
+    description: "Streamline your event workflow with easy navigation and quick actions.",
     icon: <Zap className="h-5 w-5 text-blue-500 dark:text-blue-400" />,
     illustration: (
       <div className="relative flex h-24 w-full items-center justify-center">
@@ -32,7 +32,7 @@ const features = [
   },
   {
     title: "Guest enrichment",
-    description: "Automatically update guest profiles with the latest information on autopilot.",
+    description: "Guest are free to visit the event page and organizations page before considering to join us.",
     icon: <Sparkles className="h-5 w-5 text-purple-500 dark:text-purple-400" />,
     illustration: (
       <div className="flex flex-col gap-2 w-full max-w-[140px]">
@@ -47,8 +47,8 @@ const features = [
     )
   },
   {
-    title: "Mobile App",
-    description: "Manage check-ins and registrations from anywhere with our lightweight mobile app.",
+    title: "Mobile responsive",
+    description: "Eventra is fully responsive and can be accessed from any device.",
     icon: <Users className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />,
     illustration: (
       <div className="relative h-24 w-16 rounded-xl border border-border/50 bg-background/50 p-2">
