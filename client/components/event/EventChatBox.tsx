@@ -1,17 +1,16 @@
-import { TypographyH4, TypographyP } from "../ui/Typography";
+import { EventDetailsProps } from "./EventDetails";
+import ChatHeader from "../chat/ChatHeader";
+import ChatField from "../chat/ChatField";
+import ChatBody from "../chat/ChatBody";
 
-export default function EventChatBox() {
+export default function EventChatBox({ event }: EventDetailsProps) {
     return (
-        <div className="flex flex-col h-full">
-            <div>
-              <TypographyH4>Chat</TypographyH4>
-              <TypographyP>Chat with the people who are registerd in the event. </TypographyP>
+        <div className="flex flex-col h-full w-full bg-white dark:bg-neutral-900 overflow-hidden">
+            <ChatHeader />
+            <div className="flex-1 h-0 w-full">
+                <ChatBody />
             </div>
-            <div className="flex flex-col h-full w-full mt-4">
-                <TypographyP className="text-red-600 text-sm">
-                  Note: The chat section is still is development and will be avaliable in the next update.
-                </TypographyP>
-            </div>
+            <ChatField />
         </div>
-    )
+    );
 }

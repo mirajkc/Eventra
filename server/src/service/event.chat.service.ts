@@ -22,7 +22,7 @@ class EventChatService {
       where : filter,
       include : include,
       take : 100,
-      orderBy : {createdAt : 'desc'}
+      orderBy : {createdAt : 'asc'}
   })
   if(messages.length < 1){
     throw { 
