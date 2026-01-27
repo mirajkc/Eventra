@@ -1,5 +1,6 @@
 "use client"
 import getAccessToken from "@/lib/access.token";
+import socket from "@/lib/socket";
 import { IEventChatTypes } from "@/types/chat.types";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
@@ -22,6 +23,19 @@ export default function ChatBody () {
               });
           }
       };
+  useEffect(() => {
+    if (eventId) {
+      socket.emit("join-event", eventId);
+      const handleUpdate = () => {
+        fetchMessages();
+      };
+      socket.on("update-chat", handleUpdate);
+      return () => {
+        socket.emit("leave-event", eventId);
+        socket.off("update-chat", handleUpdate);
+      };
+    }
+  }, [eventId]); 
 
 useEffect(() => {
     fetchMessages();
@@ -30,6 +44,7 @@ useEffect(() => {
 useEffect(() => {
     scrollToBottom();
 }, [messages]);
+
 
       const fetchMessages = async() => {
         try {

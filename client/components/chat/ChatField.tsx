@@ -1,5 +1,6 @@
 "use client"
 import getAccessToken from "@/lib/access.token";
+import socket from "@/lib/socket";
 import { chatMessageDTO } from "@/rules/chat.types.rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send } from "lucide-react";
@@ -33,7 +34,7 @@ export default function ChatField () {
             if(!response.ok){
                 toast.error(result.message || "Error occured while sending the message please try again later. ")
             }
-       
+            socket.emit("message-sent", {eventId})
             reset()
         } catch (error) {
             toast.error("Error occured while sending the message please try again later. ")
