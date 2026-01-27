@@ -1,5 +1,5 @@
 import http from 'http';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import app from './config/express.config.js';
 import enviroment from './config/enviroment.config.js';
 const server = http.createServer(app);
