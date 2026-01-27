@@ -7,8 +7,12 @@ import errorHandler from "../middleware/errorhandler.middleware.js";
 import notFound from "../notfound.js";
 import router from "../route/route.js";
 import emailService from "../service/email.service.js";
+import enviroment from "./enviroment.config.js";
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: enviroment.clientURL || "http://localhost:3000",
+    credentials: true
+}));
 app.use(helmet());
 app.use(rateLimit({
     windowMs: 15 * 60 * 1000,

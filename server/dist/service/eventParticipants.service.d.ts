@@ -2,6 +2,7 @@ declare class EventParticipantService {
     getEventParticipants({ filter, select, skip, take }: {
         filter: {
             eventId: string;
+            attended?: boolean;
         };
         select: any;
         skip?: number;
@@ -21,7 +22,7 @@ declare class EventParticipantService {
         userId: string;
         eventId: string;
         registeredAt: Date;
-        checkInToken: string | null;
+        checkInToken: string;
         attended: boolean;
         checkedInAt: Date | null;
     }>;
@@ -30,11 +31,25 @@ declare class EventParticipantService {
         userId: string;
         eventId: string;
         registeredAt: Date;
-        checkInToken: string | null;
+        checkInToken: string;
         attended: boolean;
         checkedInAt: Date | null;
     }>;
     getParticipantsCount(filter: any): Promise<number>;
+    getEventParticipantDetails: ({ filter }: {
+        filter: {
+            eventId: string;
+            userId: string;
+        };
+    }) => Promise<{
+        id: string;
+        userId: string;
+        eventId: string;
+        registeredAt: Date;
+        checkInToken: string;
+        attended: boolean;
+        checkedInAt: Date | null;
+    }>;
 }
 declare const eventParticipantService: EventParticipantService;
 export default eventParticipantService;

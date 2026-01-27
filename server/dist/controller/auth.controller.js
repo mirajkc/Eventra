@@ -64,15 +64,22 @@ class AuthController {
             };
             await sessionService.deleteSession({ userId: userDetails.id });
             const newSession = await sessionService.createSession(sessionDetails);
-            res.cookie("refreshToken", newSession.refreshToken, {
-                httpOnly: true,
-                secure: enviroment.mode === "PRODUCTION",
-                sameSite: enviroment.mode === "PRODUCTION" ? "none" : "lax",
-                expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
-            });
+            // Cookie configuration based on environment
+            const isProduction = enviroment.mode === 'production';
+            // res.cookie("refreshToken", newSession.refreshToken, {
+            //   httpOnly: true,
+            //   secure: false,
+            //   sameSite: 'none',
+            //   expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+            //   path: '/'
+            // })
             res.json({
                 message: "User logged in successfully",
-                data: newSession.accessToken
+                data: {
+                    accessToken: newSession.accessToken,
+                    refreshToken: newSession.refreshToken,
+                    userId: newSession.userId
+                }
             });
         }
         catch (error) {
@@ -81,7 +88,7 @@ class AuthController {
     }
     async generateAccessToken(req, res, next) {
         try {
-            const refreshToken = req.cookies.refreshToken;
+            const refreshToken = req.body.refreshToken;
             if (!refreshToken) {
                 throw {
                     code: 401,
@@ -120,7 +127,8 @@ class AuthController {
     async logout(req, res, next) {
         try {
             const userDetails = req.userDetails;
-            await sessionService.deleteSession({ userId: userDetails.id
+            await sessionService.deleteSession({
+                userId: userDetails.id
             });
             res.clearCookie('refreshToken');
             res.json({

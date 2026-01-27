@@ -7,6 +7,7 @@ export type * from './models/Event.js';
 export type * from './models/EventParticipants.js';
 export type * from './models/CreditPurchase.js';
 export type * from './models/Notification.js';
+export type * from './models/EventMessage.js';
 export type * from './models/UserEmbedding.js';
 export type * from './models/EventEmbedding.js';
 export type * from './models/UserInteraction.js';

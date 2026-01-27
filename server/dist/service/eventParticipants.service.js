@@ -78,7 +78,7 @@ class EventParticipantService {
     }
     async chekIn(token, eventId) {
         const updatedUser = await prisma.eventParticipants.update({
-            where: { checkInToken: token, attended: false, eventId: eventId },
+            where: { eventId: eventId, checkInToken: token, attended: false },
             data: {
                 attended: true,
                 checkedInAt: new Date(Date.now())
@@ -106,6 +106,19 @@ class EventParticipantService {
         }
         return count;
     }
+    getEventParticipantDetails = async ({ filter }) => {
+        const eventParticipant = await prisma.eventParticipants.findFirst({
+            where: filter
+        });
+        if (!eventParticipant?.id) {
+            throw {
+                code: 404,
+                message: "Unable to find the user make sure you have joined the event. ",
+                status: "USER_NOT_FOUND_ERR"
+            };
+        }
+        return eventParticipant;
+    };
 }
 const eventParticipantService = new EventParticipantService;
 export default eventParticipantService;

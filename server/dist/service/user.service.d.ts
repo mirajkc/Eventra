@@ -111,7 +111,7 @@ declare class UserService {
             userId: string;
             eventId: string;
             registeredAt: Date;
-            checkInToken: string | null;
+            checkInToken: string;
             attended: boolean;
             checkedInAt: Date | null;
         } | {
@@ -119,7 +119,7 @@ declare class UserService {
             userId: string;
             eventId: string;
             registeredAt: Date;
-            checkInToken: string | null;
+            checkInToken: string;
             attended: boolean;
             checkedInAt: Date | null;
         })[] | ({
@@ -158,6 +158,18 @@ declare class UserService {
             purpose: import("../generated/prisma/enums.js").OtpPurpose;
             expiresAt: Date;
             used: boolean;
+        })[] | ({
+            id: string;
+            message: string;
+            createdAt: Date;
+            eventId: string;
+            senderId: string;
+        } | {
+            id: string;
+            message: string;
+            createdAt: Date;
+            eventId: string;
+            senderId: string;
         })[] | {
             id: string;
             createdAt: Date;
@@ -208,7 +220,7 @@ declare class UserService {
             userId: string;
             eventId: string;
             registeredAt: Date;
-            checkInToken: string | null;
+            checkInToken: string;
             attended: boolean;
             checkedInAt: Date | null;
         }[] | {
@@ -229,6 +241,12 @@ declare class UserService {
             purpose: import("../generated/prisma/enums.js").OtpPurpose;
             expiresAt: Date;
             used: boolean;
+        }[] | {
+            id: string;
+            message: string;
+            createdAt: Date;
+            eventId: string;
+            senderId: string;
         }[];
         [x: number]: never;
         [x: symbol]: never;

@@ -4,6 +4,7 @@ declare class EventRegistrationController {
     removeRegistration(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
     makeAttendance(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
     getAllParticipants(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+    getAttendedUsers(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 }
 declare const eventRegistrationController: EventRegistrationController;
 export default eventRegistrationController;

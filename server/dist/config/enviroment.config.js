@@ -2,7 +2,9 @@ import 'dotenv/config';
 class Enviroment {
     portNumber = Number(process.env.PORT) || 9000;
     secretKey = process.env.SECRET_KEY || "SECRET";
-    mode = process.env.MODE || "DEVELOPMENT";
+    mode = process.env.MODE || "development";
+    clientURL = process.env.CLIENT_URL || "http://localhost:3000";
+    enableEmail = process.env.ENABLE_EMAIL === "true" || false;
     SMTPConfigs = {
         provider: process.env.SMTP_PROVIDER,
         host: process.env.SMTP_HOST,

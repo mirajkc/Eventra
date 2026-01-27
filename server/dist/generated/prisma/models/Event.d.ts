@@ -271,6 +271,7 @@ export type EventWhereInput = {
     eventEmbedding?: Prisma.XOR<Prisma.EventEmbeddingNullableScalarRelationFilter, Prisma.EventEmbeddingWhereInput> | null;
     eventMetrics?: Prisma.XOR<Prisma.EventMetricsNullableScalarRelationFilter, Prisma.EventMetricsWhereInput> | null;
     userInteractions?: Prisma.UserInteractionListRelationFilter;
+    eventMessages?: Prisma.EventMessageListRelationFilter;
 };
 export type EventOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -296,6 +297,7 @@ export type EventOrderByWithRelationInput = {
     eventEmbedding?: Prisma.EventEmbeddingOrderByWithRelationInput;
     eventMetrics?: Prisma.EventMetricsOrderByWithRelationInput;
     userInteractions?: Prisma.UserInteractionOrderByRelationAggregateInput;
+    eventMessages?: Prisma.EventMessageOrderByRelationAggregateInput;
 };
 export type EventWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -324,6 +326,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
     eventEmbedding?: Prisma.XOR<Prisma.EventEmbeddingNullableScalarRelationFilter, Prisma.EventEmbeddingWhereInput> | null;
     eventMetrics?: Prisma.XOR<Prisma.EventMetricsNullableScalarRelationFilter, Prisma.EventMetricsWhereInput> | null;
     userInteractions?: Prisma.UserInteractionListRelationFilter;
+    eventMessages?: Prisma.EventMessageListRelationFilter;
 }, "id" | "slug">;
 export type EventOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -393,6 +396,7 @@ export type EventCreateInput = {
     eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateInput = {
     id?: string;
@@ -416,6 +420,7 @@ export type EventUncheckedCreateInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -439,6 +444,7 @@ export type EventUpdateInput = {
     eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -462,6 +468,7 @@ export type EventUncheckedUpdateInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
 };
 export type EventCreateManyInput = {
     id?: string;
@@ -701,6 +708,18 @@ export type EventUpdateOneRequiredWithoutParticipantsNestedInput = {
     connect?: Prisma.EventWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutParticipantsInput, Prisma.EventUpdateWithoutParticipantsInput>, Prisma.EventUncheckedUpdateWithoutParticipantsInput>;
 };
+export type EventCreateNestedOneWithoutEventMessagesInput = {
+    create?: Prisma.XOR<Prisma.EventCreateWithoutEventMessagesInput, Prisma.EventUncheckedCreateWithoutEventMessagesInput>;
+    connectOrCreate?: Prisma.EventCreateOrConnectWithoutEventMessagesInput;
+    connect?: Prisma.EventWhereUniqueInput;
+};
+export type EventUpdateOneRequiredWithoutEventMessagesNestedInput = {
+    create?: Prisma.XOR<Prisma.EventCreateWithoutEventMessagesInput, Prisma.EventUncheckedCreateWithoutEventMessagesInput>;
+    connectOrCreate?: Prisma.EventCreateOrConnectWithoutEventMessagesInput;
+    upsert?: Prisma.EventUpsertWithoutEventMessagesInput;
+    connect?: Prisma.EventWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutEventMessagesInput, Prisma.EventUpdateWithoutEventMessagesInput>, Prisma.EventUncheckedUpdateWithoutEventMessagesInput>;
+};
 export type EventCreateNestedOneWithoutEventEmbeddingInput = {
     create?: Prisma.XOR<Prisma.EventCreateWithoutEventEmbeddingInput, Prisma.EventUncheckedCreateWithoutEventEmbeddingInput>;
     connectOrCreate?: Prisma.EventCreateOrConnectWithoutEventEmbeddingInput;
@@ -758,6 +777,7 @@ export type EventCreateWithoutCreatorInput = {
     eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateWithoutCreatorInput = {
     id?: string;
@@ -780,6 +800,7 @@ export type EventUncheckedCreateWithoutCreatorInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventCreateOrConnectWithoutCreatorInput = {
     where: Prisma.EventWhereUniqueInput;
@@ -845,6 +866,7 @@ export type EventCreateWithoutOrganizationInput = {
     eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateWithoutOrganizationInput = {
     id?: string;
@@ -867,6 +889,7 @@ export type EventUncheckedCreateWithoutOrganizationInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventCreateOrConnectWithoutOrganizationInput = {
     where: Prisma.EventWhereUniqueInput;
@@ -910,6 +933,7 @@ export type EventCreateWithoutParticipantsInput = {
     eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateWithoutParticipantsInput = {
     id?: string;
@@ -932,6 +956,7 @@ export type EventUncheckedCreateWithoutParticipantsInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventCreateOrConnectWithoutParticipantsInput = {
     where: Prisma.EventWhereUniqueInput;
@@ -967,6 +992,7 @@ export type EventUpdateWithoutParticipantsInput = {
     eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateWithoutParticipantsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -986,6 +1012,112 @@ export type EventUncheckedUpdateWithoutParticipantsInput = {
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
+    eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
+    userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
+};
+export type EventCreateWithoutEventMessagesInput = {
+    id?: string;
+    slug: string;
+    title: string;
+    description: string;
+    location: string;
+    startDate: Date | string;
+    endDate: Date | string;
+    capacity: number;
+    registeredCount?: number;
+    status?: $Enums.EventStatus;
+    category?: $Enums.EventType;
+    tags?: Prisma.EventCreatetagsInput | string[];
+    image?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    organization: Prisma.OrganizationCreateNestedOneWithoutEventsInput;
+    creator: Prisma.UserCreateNestedOneWithoutCreatedEventsInput;
+    participants?: Prisma.EventParticipantsCreateNestedManyWithoutEventInput;
+    eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
+    eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
+    userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+};
+export type EventUncheckedCreateWithoutEventMessagesInput = {
+    id?: string;
+    slug: string;
+    organizationId: string;
+    creatorId: string;
+    title: string;
+    description: string;
+    location: string;
+    startDate: Date | string;
+    endDate: Date | string;
+    capacity: number;
+    registeredCount?: number;
+    status?: $Enums.EventStatus;
+    category?: $Enums.EventType;
+    tags?: Prisma.EventCreatetagsInput | string[];
+    image?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
+    eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
+    eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
+    userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+};
+export type EventCreateOrConnectWithoutEventMessagesInput = {
+    where: Prisma.EventWhereUniqueInput;
+    create: Prisma.XOR<Prisma.EventCreateWithoutEventMessagesInput, Prisma.EventUncheckedCreateWithoutEventMessagesInput>;
+};
+export type EventUpsertWithoutEventMessagesInput = {
+    update: Prisma.XOR<Prisma.EventUpdateWithoutEventMessagesInput, Prisma.EventUncheckedUpdateWithoutEventMessagesInput>;
+    create: Prisma.XOR<Prisma.EventCreateWithoutEventMessagesInput, Prisma.EventUncheckedCreateWithoutEventMessagesInput>;
+    where?: Prisma.EventWhereInput;
+};
+export type EventUpdateToOneWithWhereWithoutEventMessagesInput = {
+    where?: Prisma.EventWhereInput;
+    data: Prisma.XOR<Prisma.EventUpdateWithoutEventMessagesInput, Prisma.EventUncheckedUpdateWithoutEventMessagesInput>;
+};
+export type EventUpdateWithoutEventMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    slug?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    location?: Prisma.StringFieldUpdateOperationsInput | string;
+    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    capacity?: Prisma.IntFieldUpdateOperationsInput | number;
+    registeredCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus;
+    category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
+    tags?: Prisma.EventUpdatetagsInput | string[];
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    organization?: Prisma.OrganizationUpdateOneRequiredWithoutEventsNestedInput;
+    creator?: Prisma.UserUpdateOneRequiredWithoutCreatedEventsNestedInput;
+    participants?: Prisma.EventParticipantsUpdateManyWithoutEventNestedInput;
+    eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
+    eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
+    userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+};
+export type EventUncheckedUpdateWithoutEventMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    slug?: Prisma.StringFieldUpdateOperationsInput | string;
+    organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
+    creatorId?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    location?: Prisma.StringFieldUpdateOperationsInput | string;
+    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    capacity?: Prisma.IntFieldUpdateOperationsInput | number;
+    registeredCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus;
+    category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
+    tags?: Prisma.EventUpdatetagsInput | string[];
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
     eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
@@ -1011,6 +1143,7 @@ export type EventCreateWithoutEventEmbeddingInput = {
     participants?: Prisma.EventParticipantsCreateNestedManyWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateWithoutEventEmbeddingInput = {
     id?: string;
@@ -1033,6 +1166,7 @@ export type EventUncheckedCreateWithoutEventEmbeddingInput = {
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventCreateOrConnectWithoutEventEmbeddingInput = {
     where: Prisma.EventWhereUniqueInput;
@@ -1068,6 +1202,7 @@ export type EventUpdateWithoutEventEmbeddingInput = {
     participants?: Prisma.EventParticipantsUpdateManyWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateWithoutEventEmbeddingInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1090,6 +1225,7 @@ export type EventUncheckedUpdateWithoutEventEmbeddingInput = {
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
 };
 export type EventCreateWithoutUserInteractionsInput = {
     id?: string;
@@ -1112,6 +1248,7 @@ export type EventCreateWithoutUserInteractionsInput = {
     participants?: Prisma.EventParticipantsCreateNestedManyWithoutEventInput;
     eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsCreateNestedOneWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateWithoutUserInteractionsInput = {
     id?: string;
@@ -1134,6 +1271,7 @@ export type EventUncheckedCreateWithoutUserInteractionsInput = {
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
     eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
     eventMetrics?: Prisma.EventMetricsUncheckedCreateNestedOneWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventCreateOrConnectWithoutUserInteractionsInput = {
     where: Prisma.EventWhereUniqueInput;
@@ -1169,6 +1307,7 @@ export type EventUpdateWithoutUserInteractionsInput = {
     participants?: Prisma.EventParticipantsUpdateManyWithoutEventNestedInput;
     eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateWithoutUserInteractionsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1191,6 +1330,7 @@ export type EventUncheckedUpdateWithoutUserInteractionsInput = {
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
     eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
 };
 export type EventCreateWithoutEventMetricsInput = {
     id?: string;
@@ -1213,6 +1353,7 @@ export type EventCreateWithoutEventMetricsInput = {
     participants?: Prisma.EventParticipantsCreateNestedManyWithoutEventInput;
     eventEmbedding?: Prisma.EventEmbeddingCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutEventInput;
 };
 export type EventUncheckedCreateWithoutEventMetricsInput = {
     id?: string;
@@ -1235,6 +1376,7 @@ export type EventUncheckedCreateWithoutEventMetricsInput = {
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
     eventEmbedding?: Prisma.EventEmbeddingUncheckedCreateNestedOneWithoutEventInput;
     userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutEventInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
 };
 export type EventCreateOrConnectWithoutEventMetricsInput = {
     where: Prisma.EventWhereUniqueInput;
@@ -1270,6 +1412,7 @@ export type EventUpdateWithoutEventMetricsInput = {
     participants?: Prisma.EventParticipantsUpdateManyWithoutEventNestedInput;
     eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateWithoutEventMetricsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1292,6 +1435,7 @@ export type EventUncheckedUpdateWithoutEventMetricsInput = {
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
     eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
 };
 export type EventCreateManyCreatorInput = {
     id?: string;
@@ -1332,6 +1476,7 @@ export type EventUpdateWithoutCreatorInput = {
     eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateWithoutCreatorInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1354,6 +1499,7 @@ export type EventUncheckedUpdateWithoutCreatorInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateManyWithoutCreatorInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1412,6 +1558,7 @@ export type EventUpdateWithoutOrganizationInput = {
     eventEmbedding?: Prisma.EventEmbeddingUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateWithoutOrganizationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1434,6 +1581,7 @@ export type EventUncheckedUpdateWithoutOrganizationInput = {
     eventEmbedding?: Prisma.EventEmbeddingUncheckedUpdateOneWithoutEventNestedInput;
     eventMetrics?: Prisma.EventMetricsUncheckedUpdateOneWithoutEventNestedInput;
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutEventNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
 };
 export type EventUncheckedUpdateManyWithoutOrganizationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1459,10 +1607,12 @@ export type EventUncheckedUpdateManyWithoutOrganizationInput = {
 export type EventCountOutputType = {
     participants: number;
     userInteractions: number;
+    eventMessages: number;
 };
 export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     participants?: boolean | EventCountOutputTypeCountParticipantsArgs;
     userInteractions?: boolean | EventCountOutputTypeCountUserInteractionsArgs;
+    eventMessages?: boolean | EventCountOutputTypeCountEventMessagesArgs;
 };
 /**
  * EventCountOutputType without action
@@ -1484,6 +1634,12 @@ export type EventCountOutputTypeCountParticipantsArgs<ExtArgs extends runtime.Ty
  */
 export type EventCountOutputTypeCountUserInteractionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.UserInteractionWhereInput;
+};
+/**
+ * EventCountOutputType without action
+ */
+export type EventCountOutputTypeCountEventMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.EventMessageWhereInput;
 };
 export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -1509,6 +1665,7 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     eventEmbedding?: boolean | Prisma.Event$eventEmbeddingArgs<ExtArgs>;
     eventMetrics?: boolean | Prisma.Event$eventMetricsArgs<ExtArgs>;
     userInteractions?: boolean | Prisma.Event$userInteractionsArgs<ExtArgs>;
+    eventMessages?: boolean | Prisma.Event$eventMessagesArgs<ExtArgs>;
     _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["event"]>;
 export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1580,6 +1737,7 @@ export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     eventEmbedding?: boolean | Prisma.Event$eventEmbeddingArgs<ExtArgs>;
     eventMetrics?: boolean | Prisma.Event$eventMetricsArgs<ExtArgs>;
     userInteractions?: boolean | Prisma.Event$userInteractionsArgs<ExtArgs>;
+    eventMessages?: boolean | Prisma.Event$eventMessagesArgs<ExtArgs>;
     _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type EventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1599,6 +1757,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
         eventEmbedding: Prisma.$EventEmbeddingPayload<ExtArgs> | null;
         eventMetrics: Prisma.$EventMetricsPayload<ExtArgs> | null;
         userInteractions: Prisma.$UserInteractionPayload<ExtArgs>[];
+        eventMessages: Prisma.$EventMessagePayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -1953,6 +2112,7 @@ export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Ty
     eventEmbedding<T extends Prisma.Event$eventEmbeddingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$eventEmbeddingArgs<ExtArgs>>): Prisma.Prisma__EventEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$EventEmbeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     eventMetrics<T extends Prisma.Event$eventMetricsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$eventMetricsArgs<ExtArgs>>): Prisma.Prisma__EventMetricsClient<runtime.Types.Result.GetResult<Prisma.$EventMetricsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     userInteractions<T extends Prisma.Event$userInteractionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$userInteractionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    eventMessages<T extends Prisma.Event$eventMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$eventMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2454,6 +2614,29 @@ export type Event$userInteractionsArgs<ExtArgs extends runtime.Types.Extensions.
     take?: number;
     skip?: number;
     distinct?: Prisma.UserInteractionScalarFieldEnum | Prisma.UserInteractionScalarFieldEnum[];
+};
+/**
+ * Event.eventMessages
+ */
+export type Event$eventMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventMessage
+     */
+    select?: Prisma.EventMessageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventMessage
+     */
+    omit?: Prisma.EventMessageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.EventMessageInclude<ExtArgs> | null;
+    where?: Prisma.EventMessageWhereInput;
+    orderBy?: Prisma.EventMessageOrderByWithRelationInput | Prisma.EventMessageOrderByWithRelationInput[];
+    cursor?: Prisma.EventMessageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.EventMessageScalarFieldEnum | Prisma.EventMessageScalarFieldEnum[];
 };
 /**
  * Event without action

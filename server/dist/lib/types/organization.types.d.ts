@@ -18,7 +18,6 @@ export interface IOrganizationQuery {
     page?: number | string;
     members?: 'true';
     credits?: 'true';
-    type?: IOrganizationTypes;
 }
 export interface IOrganizationsQuery {
     page?: string;

@@ -6,7 +6,7 @@ import authorize from '../middleware/authorize.middleware.js';
 const authRouter = express.Router();
 authRouter.post('/register', validator(registerDTO), authController.register);
 authRouter.post('/login', validator(loginDTO), authController.login);
-authRouter.get('/refresh-token', authController.generateAccessToken);
+authRouter.post('/refresh-token', authController.generateAccessToken);
 authRouter.get('/logout', authorize({}), authController.logout);
 authRouter.post('/get-forgot-password-otp', validator(emailDTO), authController.getForgotPassword);
 authRouter.post('/verify-forgotpass-otp', validator(OTPDTO), authController.verifyForgotPass);

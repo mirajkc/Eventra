@@ -23,8 +23,11 @@ class EmailService {
             };
         }
     }
-    //method to send the email
     async sendEmail({ to, subject, message }) {
+        if (!enviroment.enableEmail) {
+            console.log("Email sending is disabled.");
+            return;
+        }
         try {
             return await this.#transport.sendMail({
                 to: to,

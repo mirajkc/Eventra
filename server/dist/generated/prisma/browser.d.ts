@@ -48,6 +48,11 @@ export type CreditPurchase = Prisma.CreditPurchaseModel;
  */
 export type Notification = Prisma.NotificationModel;
 /**
+ * Model EventMessage
+ *
+ */
+export type EventMessage = Prisma.EventMessageModel;
+/**
  * Model UserEmbedding
  *
  */

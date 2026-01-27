@@ -211,6 +211,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
+     * `prisma.eventMessage`: Exposes CRUD operations for the **EventMessage** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more EventMessages
+      * const eventMessages = await prisma.eventMessage.findMany()
+      * ```
+      */
+    get eventMessage(): Prisma.EventMessageDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
      * `prisma.userEmbedding`: Exposes CRUD operations for the **UserEmbedding** model.
       * Example usage:
       * ```ts

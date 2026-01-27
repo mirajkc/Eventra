@@ -14,5 +14,8 @@ organizationRouter.delete('/delete-organization', authorize({}), organizationCon
 organizationRouter.delete('/kick-member/organization/:organizationId/:memberId', authorize({}), organizationController.kickMember);
 organizationRouter.get('/join-organization/:organizationId', authorize({}), organizationController.joinOrganization);
 organizationRouter.get('/leave-organization/:organizationId', authorize({}), organizationController.leaveOrganization);
+organizationRouter.get('/get-loggedin-users-organization', authorize({}), organizationController.getLoggedInUserOrganization);
+organizationRouter.get('/is-user-joined/:organizationId', authorize({}), organizationController.checkIfUserIsJoined);
+organizationRouter.get('/get-loggedinuser-role/:organizationId', authorize({}), organizationController.getLoggedInUserOrganizationRole);
 export default organizationRouter;
 //# sourceMappingURL=organization.route.js.map

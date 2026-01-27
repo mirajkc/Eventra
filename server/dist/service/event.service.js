@@ -10,7 +10,7 @@ class EventService {
             where: filter
         });
     }
-    async createEvent({ data }) {
+    async createEvent({ data, checkInToken }) {
         return await prisma.$transaction(async (tx) => {
             const updatedOrg = await tx.organization.updateMany({
                 where: {
@@ -31,6 +31,14 @@ class EventService {
             const event = await tx.event.create({
                 data: data
             });
+            await tx.eventMetrics.create({
+                data: { eventId: event.id }
+            });
+            await tx.eventEmbedding.create({
+                data: {
+                    eventId: event.id,
+                }
+            });
             if (!event) {
                 throw {
                     code: 500,
@@ -42,7 +50,7 @@ class EventService {
                 data: {
                     eventId: event.id,
                     userId: data.creatorId,
-                    checkInToken: "ADMIN",
+                    checkInToken: checkInToken,
                 }
             });
             return event;

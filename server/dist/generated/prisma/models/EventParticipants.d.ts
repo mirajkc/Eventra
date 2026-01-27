@@ -133,7 +133,7 @@ export type EventParticipantsGroupByOutputType = {
     eventId: string;
     userId: string;
     registeredAt: Date;
-    checkInToken: string | null;
+    checkInToken: string;
     attended: boolean;
     checkedInAt: Date | null;
     _count: EventParticipantsCountAggregateOutputType | null;
@@ -151,7 +151,7 @@ export type EventParticipantsWhereInput = {
     eventId?: Prisma.StringFilter<"EventParticipants"> | string;
     userId?: Prisma.StringFilter<"EventParticipants"> | string;
     registeredAt?: Prisma.DateTimeFilter<"EventParticipants"> | Date | string;
-    checkInToken?: Prisma.StringNullableFilter<"EventParticipants"> | string | null;
+    checkInToken?: Prisma.StringFilter<"EventParticipants"> | string;
     attended?: Prisma.BoolFilter<"EventParticipants"> | boolean;
     checkedInAt?: Prisma.DateTimeNullableFilter<"EventParticipants"> | Date | string | null;
     event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>;
@@ -162,7 +162,7 @@ export type EventParticipantsOrderByWithRelationInput = {
     eventId?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     registeredAt?: Prisma.SortOrder;
-    checkInToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    checkInToken?: Prisma.SortOrder;
     attended?: Prisma.SortOrder;
     checkedInAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     event?: Prisma.EventOrderByWithRelationInput;
@@ -188,7 +188,7 @@ export type EventParticipantsOrderByWithAggregationInput = {
     eventId?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     registeredAt?: Prisma.SortOrder;
-    checkInToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    checkInToken?: Prisma.SortOrder;
     attended?: Prisma.SortOrder;
     checkedInAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     _count?: Prisma.EventParticipantsCountOrderByAggregateInput;
@@ -203,14 +203,14 @@ export type EventParticipantsScalarWhereWithAggregatesInput = {
     eventId?: Prisma.StringWithAggregatesFilter<"EventParticipants"> | string;
     userId?: Prisma.StringWithAggregatesFilter<"EventParticipants"> | string;
     registeredAt?: Prisma.DateTimeWithAggregatesFilter<"EventParticipants"> | Date | string;
-    checkInToken?: Prisma.StringNullableWithAggregatesFilter<"EventParticipants"> | string | null;
+    checkInToken?: Prisma.StringWithAggregatesFilter<"EventParticipants"> | string;
     attended?: Prisma.BoolWithAggregatesFilter<"EventParticipants"> | boolean;
     checkedInAt?: Prisma.DateTimeNullableWithAggregatesFilter<"EventParticipants"> | Date | string | null;
 };
 export type EventParticipantsCreateInput = {
     id?: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
     event: Prisma.EventCreateNestedOneWithoutParticipantsInput;
@@ -221,14 +221,14 @@ export type EventParticipantsUncheckedCreateInput = {
     eventId: string;
     userId: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
 };
 export type EventParticipantsUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     event?: Prisma.EventUpdateOneRequiredWithoutParticipantsNestedInput;
@@ -239,7 +239,7 @@ export type EventParticipantsUncheckedUpdateInput = {
     eventId?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -248,14 +248,14 @@ export type EventParticipantsCreateManyInput = {
     eventId: string;
     userId: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
 };
 export type EventParticipantsUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -264,7 +264,7 @@ export type EventParticipantsUncheckedUpdateManyInput = {
     eventId?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -389,7 +389,7 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 export type EventParticipantsCreateWithoutUserInput = {
     id?: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
     event: Prisma.EventCreateNestedOneWithoutParticipantsInput;
@@ -398,7 +398,7 @@ export type EventParticipantsUncheckedCreateWithoutUserInput = {
     id?: string;
     eventId: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
 };
@@ -431,14 +431,14 @@ export type EventParticipantsScalarWhereInput = {
     eventId?: Prisma.StringFilter<"EventParticipants"> | string;
     userId?: Prisma.StringFilter<"EventParticipants"> | string;
     registeredAt?: Prisma.DateTimeFilter<"EventParticipants"> | Date | string;
-    checkInToken?: Prisma.StringNullableFilter<"EventParticipants"> | string | null;
+    checkInToken?: Prisma.StringFilter<"EventParticipants"> | string;
     attended?: Prisma.BoolFilter<"EventParticipants"> | boolean;
     checkedInAt?: Prisma.DateTimeNullableFilter<"EventParticipants"> | Date | string | null;
 };
 export type EventParticipantsCreateWithoutEventInput = {
     id?: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
     user: Prisma.UserCreateNestedOneWithoutEventParticipantsInput;
@@ -447,7 +447,7 @@ export type EventParticipantsUncheckedCreateWithoutEventInput = {
     id?: string;
     userId: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
 };
@@ -476,14 +476,14 @@ export type EventParticipantsCreateManyUserInput = {
     id?: string;
     eventId: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
 };
 export type EventParticipantsUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     event?: Prisma.EventUpdateOneRequiredWithoutParticipantsNestedInput;
@@ -492,7 +492,7 @@ export type EventParticipantsUncheckedUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     eventId?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -500,7 +500,7 @@ export type EventParticipantsUncheckedUpdateManyWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     eventId?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -508,14 +508,14 @@ export type EventParticipantsCreateManyEventInput = {
     id?: string;
     userId: string;
     registeredAt?: Date | string;
-    checkInToken?: string | null;
+    checkInToken: string;
     attended?: boolean;
     checkedInAt?: Date | string | null;
 };
 export type EventParticipantsUpdateWithoutEventInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     user?: Prisma.UserUpdateOneRequiredWithoutEventParticipantsNestedInput;
@@ -524,7 +524,7 @@ export type EventParticipantsUncheckedUpdateWithoutEventInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -532,7 +532,7 @@ export type EventParticipantsUncheckedUpdateManyWithoutEventInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
     registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    checkInToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    checkInToken?: Prisma.StringFieldUpdateOperationsInput | string;
     attended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
@@ -602,7 +602,7 @@ export type $EventParticipantsPayload<ExtArgs extends runtime.Types.Extensions.I
         eventId: string;
         userId: string;
         registeredAt: Date;
-        checkInToken: string | null;
+        checkInToken: string;
         attended: boolean;
         checkedInAt: Date | null;
     }, ExtArgs["result"]["eventParticipants"]>;

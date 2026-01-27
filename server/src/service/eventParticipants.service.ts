@@ -116,6 +116,22 @@ class EventParticipantService {
     return count
   }
 
+    getEventParticipantDetails = async({filter}:{filter : {eventId : string, userId : string}}) => {
+   const eventParticipant = await prisma.eventParticipants.findFirst({
+      where : filter
+    })
+    if(!eventParticipant?.id){
+      throw {
+        code : 404, 
+        message : "Unable to find the user make sure you have joined the event. ",
+        status : "USER_NOT_FOUND_ERR"
+      } as IErrorTypes
+    }
+    return eventParticipant
+  }
+
+ 
+
 
 }
 const eventParticipantService = new EventParticipantService

@@ -8,11 +8,20 @@ import { newEventTemplate } from "../emailtemplates/newEventCreated.js";
 import getSlug from "../utilities/createSlug.js";
 import eventParticipantService from "../service/eventParticipants.service.js";
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js";
+import generateString from "../utilities/randomstring.generator.js";
+import { checkForCredit } from "../utilities/checkforcredit.js";
 class EventController {
     async createNewEvent(req, res, next) {
         const data = req.body;
         const userDetails = req.userDetails;
         const slug = getSlug(data.title);
+        if (new Date(data.startDate) < new Date()) {
+            throw {
+                code: 400,
+                message: "Event start date cannot be in the past. ",
+                status: "EVENT_START_DATE_ERR"
+            };
+        }
         const eventDetials = await eventService.getEvent({
             filter: { slug: slug }
         });
@@ -38,6 +47,7 @@ class EventController {
                 status: "ORGANIZATION_NOT_FOUND_ERR"
             };
         }
+        await checkForCredit(organizationDetails.id);
         const creatorDetails = await organizationMemberService.getMemberByFilter({
             filter: {
                 userId: userDetails.id,
@@ -67,6 +77,7 @@ class EventController {
             const imageFile = req.file.buffer;
             imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
         }
+        const token = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase();
         const newEvent = await eventService.createEvent({
             data: {
                 organizationId: organizationDetails.id,
@@ -82,7 +93,8 @@ class EventController {
                 image: imageUrl,
                 slug: slug,
                 status: "PUBLISHED"
-            }
+            },
+            checkInToken: token
         });
         const groupNotification = organizationDetails.members?.map((m) => ({
             userId: m.userId,
@@ -101,7 +113,7 @@ class EventController {
         await notificationService.sendNotificaion({
             userId: userDetails.id,
             title: "Your check in token for the event " + newEvent.title,
-            message: `Hello, your check in token for the event ${newEvent.title} is A-D-M-I-N please keep it safe as this token will be needed during the check in proccess. `,
+            message: `Hello, your check in token for the event ${newEvent.title} is ${token} please keep it safe as this token will be needed during the check in proccess. `,
             entityType: "EVENT",
             entityId: newEvent.id,
             type: 'EVENT_CREATED'
@@ -126,6 +138,7 @@ class EventController {
                     status: "ORGANIZATION_NOT_FOUND_ERR"
                 };
             }
+            await checkForCredit(organizationDetails.id);
             const eventDetails = await eventService.getEvent({ filter: { id: data.id } });
             if (!eventDetails) {
                 throw {
@@ -134,7 +147,7 @@ class EventController {
                     status: "EVENT_NOT_FOUND_ERR"
                 };
             }
-            let imageUrl = null;
+            let imageUrl = eventDetails.image;
             if (req.file) {
                 const imageFile = req.file.buffer;
                 imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
@@ -194,6 +207,10 @@ class EventController {
                     status: "EVENTID_NOT_FOUND_ERR"
                 };
             }
+            const query = req.query;
+            const page = Number(query.page) || 1;
+            const take = Number(query.take) || 10;
+            const skip = Math.ceil((page - 1) * take);
             const eventDetails = await eventService.getEvent({
                 filter: { id: eventId },
                 include: {
@@ -204,7 +221,8 @@ class EventController {
                         select: { id: true, name: true, image: true }
                     },
                     participants: {
-                        select: { userId: true }
+                        take: take,
+                        skip: skip,
                     }
                 }
             });
@@ -222,6 +240,14 @@ class EventController {
                 data: {
                     eventDetails: eventDetails,
                     totalParticipants: totalParticipants
+                },
+                participantsPagination: {
+                    page: page,
+                    take: take,
+                    totalDoccuments: totalParticipants,
+                    totalPages: Math.ceil(totalParticipants / take),
+                    hasPreviousPage: page > 1,
+                    hasNextPage: page < Math.ceil(totalParticipants / take),
                 }
             });
         }
@@ -272,6 +298,39 @@ class EventController {
                     hasNextPage: page < Math.ceil(totalDocument / take),
                     hasPreviousPage: page > 1,
                 },
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async isLoggedInuserJoined(req, res, next) {
+        try {
+            const eventId = String(req.params.eventId);
+            const userData = req.userDetails;
+            if (!eventId) {
+                throw {
+                    code: 404,
+                    message: "Please enter a valid event Id. ",
+                    status: "EVENT_ID_NOT_FOUND_ERR"
+                };
+            }
+            const eventDetails = await eventService.getEvent({
+                filter: { id: eventId },
+                include: {
+                    participants: {
+                        where: {
+                            userId: userData.id
+                        }
+                    }
+                }
+            });
+            const hasJoinedEvent = eventDetails?.participants?.length > 0 ? true : false;
+            return res.json({
+                message: "User status fetched successfully. ",
+                data: {
+                    hasJoinedEvent: hasJoinedEvent,
+                }
             });
         }
         catch (error) {

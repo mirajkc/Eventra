@@ -10,6 +10,7 @@ import { leftOrganizationEmail } from "../emailtemplates/leftOrganizationTemplat
 import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js";
 import userService from "../service/user.service.js";
 import { userKickedTemplate } from "../emailtemplates/userKickedTemplate.js";
+import { checkForCredit } from "../utilities/checkforcredit.js";
 class OrganizationController {
     async createOrganization(req, res, next) {
         try {
@@ -72,6 +73,7 @@ class OrganizationController {
                     status: "ORGANIZATIONIT_NOTFOUND_ERR"
                 };
             }
+            await checkForCredit(organizationId);
             const page = Number(data.page) || 1;
             const take = Math.min(Math.max(Number(data.take) || 10, 1), 50);
             const skip = (page - 1) * take;
@@ -81,6 +83,9 @@ class OrganizationController {
                     skip,
                     take,
                     orderBy: { purchasedAt: 'desc' },
+                    include: {
+                        user: true
+                    }
                 };
             }
             if (data.members === 'true') {
@@ -88,6 +93,9 @@ class OrganizationController {
                     skip,
                     take,
                     orderBy: { joinedAt: 'desc' },
+                    include: {
+                        user: true
+                    }
                 };
             }
             const organizationData = await organizationService.getOrganizationByFilter({ filter: { id: organizationId }, include: include });
@@ -174,6 +182,7 @@ class OrganizationController {
         try {
             const userDetails = req.userDetails;
             const organizationId = String(req.params.organizationId);
+            await checkForCredit(organizationId);
             const organizationDetails = await organizationService.getOrganizationByFilter({
                 filter: { id: organizationId },
                 include: {
@@ -242,6 +251,7 @@ class OrganizationController {
         try {
             const userDetails = req.userDetails;
             const organizationId = String(req.params.organizationId);
+            await checkForCredit(organizationId);
             const organizationDetails = await organizationService.getOrganizationByFilter({
                 filter: { id: organizationId },
                 include: {
@@ -381,6 +391,7 @@ class OrganizationController {
                     status: "ORGANIZATION_OWNERSHIP_ERR"
                 };
             }
+            await checkForCredit(organizationDetails.id);
             const files = req.files;
             const imageFile = files.image?.[0];
             const thumbnailFile = files.thumbnail?.[0];
@@ -545,6 +556,92 @@ class OrganizationController {
             next(error);
         }
     }
+    async getLoggedInUserOrganization(req, res, next) {
+        try {
+            const userDetails = req.userDetails;
+            const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id);
+            if (!organizationDetails) {
+                return res.json({
+                    message: "User has not created the organization yet. ",
+                    hasOrganization: false,
+                    data: null
+                });
+            }
+            await checkForCredit(organizationDetails.id);
+            return res.json({
+                message: "User's organization details fetched successfully. ",
+                data: organizationDetails,
+                hasOrganization: true
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    checkIfUserIsJoined = async (req, res, next) => {
+        try {
+            const userDetails = req.userDetails;
+            const organizationId = req.params.organizationId;
+            if (!organizationId) {
+                throw {
+                    code: 404,
+                    message: "Error organization Id not found",
+                    status: "ORGANIZATION_ID_NOT_FOUND"
+                };
+            }
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: { id: organizationId },
+                include: {
+                    members: {
+                        where: {
+                            userId: userDetails.id
+                        }
+                    }
+                }
+            });
+            const hasJoined = organizationDetails.members?.some((member) => member.userId === userDetails.id);
+            return res.json({
+                message: "fetched the joined status of logged in user successfully. ",
+                data: {
+                    hasJoined: hasJoined,
+                    loggedInUserDetails: organizationDetails.members
+                }
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    };
+    getLoggedInUserOrganizationRole = async (req, res, next) => {
+        try {
+            const userDetails = req.userDetails;
+            const organizationId = req.params.organizationId;
+            if (!organizationId) {
+                throw {
+                    code: 404,
+                    message: "Error organization Id not found",
+                    status: "ORGANIZATION_ID_NOT_FOUND"
+                };
+            }
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: { id: organizationId },
+                include: {
+                    members: {
+                        where: {
+                            userId: userDetails.id
+                        }
+                    }
+                }
+            });
+            return res.json({
+                message: "fetched the role of logged in user successfully. ",
+                data: organizationDetails
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    };
 }
 const organizationController = new OrganizationController();
 export default organizationController;

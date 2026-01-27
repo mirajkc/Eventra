@@ -276,6 +276,60 @@ class EventRegistrationController {
             next(error);
         }
     }
+    async getAttendedUsers(req, res, next) {
+        try {
+            const eventId = req.params.eventId;
+            if (!eventId) {
+                throw {
+                    code: 404,
+                    message: "Unable to get the event details. ",
+                    status: "EVENT_ID_NOT_FOUND_ERR"
+                };
+            }
+            const query = req.query;
+            const page = Number(query.page) | 1;
+            const take = Number(query.take) | 10;
+            const skip = Math.floor((page - 1) * take);
+            const attendedUsers = await eventParticipantService.getEventParticipants({
+                filter: {
+                    eventId: String(eventId),
+                    attended: true
+                },
+                select: {
+                    checkedInAt: true,
+                    user: {
+                        select: {
+                            name: true,
+                            image: true
+                        }
+                    }
+                },
+                skip: skip,
+                take: take
+            });
+            const totalAttendedUsers = await eventParticipantService.getParticipantsCount({
+                eventId: eventId,
+                attended: true
+            });
+            return res.json({
+                message: "Participated users fetched successfully. ",
+                data: {
+                    attendedUsers: attendedUsers
+                },
+                pagination: {
+                    currentPage: page,
+                    take: take,
+                    totalDoccuments: totalAttendedUsers,
+                    totalPages: Math.ceil(totalAttendedUsers / take),
+                    hasNextPage: page < Math.ceil(totalAttendedUsers / take),
+                    hasPreviousPage: page > 1,
+                }
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
 }
 const eventRegistrationController = new EventRegistrationController();
 export default eventRegistrationController;

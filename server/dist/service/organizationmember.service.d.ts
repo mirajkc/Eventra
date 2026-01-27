@@ -2,6 +2,7 @@ declare class OrganizationMember {
     getMemberCount({ filter }: {
         filter: {
             organizationId?: string;
+            userId?: string;
         };
     }): Promise<number>;
     getMemberByFilter({ filter }: {

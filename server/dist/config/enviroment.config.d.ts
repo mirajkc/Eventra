@@ -3,6 +3,8 @@ declare class Enviroment {
     portNumber: number;
     secretKey: string;
     mode: string;
+    clientURL: string;
+    enableEmail: boolean;
     SMTPConfigs: {
         provider: string | undefined;
         host: string | undefined;

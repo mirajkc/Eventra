@@ -59,7 +59,7 @@ class OrganizationService {
             throw {
                 code: 404,
                 message: "Organization not found please try again. ",
-                status: "ORGANIZATIOM_NOT_FOUND_ERR"
+                status: "ORGANIZATION_NOT_FOUND_ERR"
             };
         }
         return result;

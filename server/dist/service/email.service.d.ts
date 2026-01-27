@@ -5,7 +5,7 @@ declare class EmailService {
         to: string;
         subject: string;
         message: any;
-    }): Promise<import("nodemailer/lib/smtp-transport/index.js").SentMessageInfo>;
+    }): Promise<import("nodemailer/lib/smtp-transport/index.js").SentMessageInfo | undefined>;
 }
 declare const emailService: EmailService;
 export default emailService;

@@ -28,7 +28,7 @@ export interface IUploadEvent {
 }
 export interface IEvent {
     id: string;
-    slug: string;
+    slug?: string;
     organizationId: string;
     creatorId: string;
     title: string;

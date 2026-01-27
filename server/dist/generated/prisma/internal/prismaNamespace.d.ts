@@ -240,6 +240,7 @@ export declare const ModelName: {
     readonly EventParticipants: "EventParticipants";
     readonly CreditPurchase: "CreditPurchase";
     readonly Notification: "Notification";
+    readonly EventMessage: "EventMessage";
     readonly UserEmbedding: "UserEmbedding";
     readonly EventEmbedding: "EventEmbedding";
     readonly UserInteraction: "UserInteraction";
@@ -258,7 +259,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "otpdetails" | "session" | "organization" | "organizationMember" | "event" | "eventParticipants" | "creditPurchase" | "notification" | "userEmbedding" | "eventEmbedding" | "userInteraction" | "eventMetrics" | "adminPrediction" | "errorLog";
+        modelProps: "user" | "otpdetails" | "session" | "organization" | "organizationMember" | "event" | "eventParticipants" | "creditPurchase" | "notification" | "eventMessage" | "userEmbedding" | "eventEmbedding" | "userInteraction" | "eventMetrics" | "adminPrediction" | "errorLog";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        EventMessage: {
+            payload: Prisma.$EventMessagePayload<ExtArgs>;
+            fields: Prisma.EventMessageFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.EventMessageFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.EventMessageFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>;
+                };
+                findFirst: {
+                    args: Prisma.EventMessageFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.EventMessageFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>;
+                };
+                findMany: {
+                    args: Prisma.EventMessageFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>[];
+                };
+                create: {
+                    args: Prisma.EventMessageCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>;
+                };
+                createMany: {
+                    args: Prisma.EventMessageCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.EventMessageCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>[];
+                };
+                delete: {
+                    args: Prisma.EventMessageDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>;
+                };
+                update: {
+                    args: Prisma.EventMessageUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>;
+                };
+                deleteMany: {
+                    args: Prisma.EventMessageDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.EventMessageUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.EventMessageUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>[];
+                };
+                upsert: {
+                    args: Prisma.EventMessageUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMessagePayload>;
+                };
+                aggregate: {
+                    args: Prisma.EventMessageAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateEventMessage>;
+                };
+                groupBy: {
+                    args: Prisma.EventMessageGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.EventMessageGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.EventMessageCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.EventMessageCountAggregateOutputType> | number;
+                };
+            };
+        };
         UserEmbedding: {
             payload: Prisma.$UserEmbeddingPayload<ExtArgs>;
             fields: Prisma.UserEmbeddingFieldRefs;
@@ -1513,6 +1588,14 @@ export declare const NotificationScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum];
+export declare const EventMessageScalarFieldEnum: {
+    readonly id: "id";
+    readonly eventId: "eventId";
+    readonly senderId: "senderId";
+    readonly message: "message";
+    readonly createdAt: "createdAt";
+};
+export type EventMessageScalarFieldEnum = (typeof EventMessageScalarFieldEnum)[keyof typeof EventMessageScalarFieldEnum];
 export declare const UserEmbeddingScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
@@ -1790,6 +1873,7 @@ export type GlobalOmitConfig = {
     eventParticipants?: Prisma.EventParticipantsOmit;
     creditPurchase?: Prisma.CreditPurchaseOmit;
     notification?: Prisma.NotificationOmit;
+    eventMessage?: Prisma.EventMessageOmit;
     userEmbedding?: Prisma.UserEmbeddingOmit;
     eventEmbedding?: Prisma.EventEmbeddingOmit;
     userInteraction?: Prisma.UserInteractionOmit;

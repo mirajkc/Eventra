@@ -36,6 +36,40 @@ class NotificationService {
         }
         return notifications;
     }
+    async getNotification(filter, skip, limit) {
+        const notifications = await prisma.notification.findMany({
+            where: filter,
+            orderBy: {
+                createdAt: "desc"
+            },
+            skip: skip,
+            take: limit
+        });
+        if (!notifications) {
+            throw {
+                code: 404,
+                message: "No notifications found for the user. ",
+                status: "NOTIFICATION_NOT_FOUND_ERR"
+            };
+        }
+        return notifications;
+    }
+    async updateNotification(filter) {
+        const notification = await prisma.notification.update({
+            where: filter,
+            data: {
+                isRead: true
+            }
+        });
+        if (!notification) {
+            throw {
+                code: 404,
+                message: "Notification not found. ",
+                status: "NOTIFICATION_NOT_FOUND_ERR"
+            };
+        }
+        return notification;
+    }
 }
 const notificationService = new NotificationService();
 export default notificationService;

@@ -35,6 +35,7 @@ export declare const ModelName: {
     readonly EventParticipants: "EventParticipants";
     readonly CreditPurchase: "CreditPurchase";
     readonly Notification: "Notification";
+    readonly EventMessage: "EventMessage";
     readonly UserEmbedding: "UserEmbedding";
     readonly EventEmbedding: "EventEmbedding";
     readonly UserInteraction: "UserInteraction";
@@ -157,6 +158,14 @@ export declare const NotificationScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum];
+export declare const EventMessageScalarFieldEnum: {
+    readonly id: "id";
+    readonly eventId: "eventId";
+    readonly senderId: "senderId";
+    readonly message: "message";
+    readonly createdAt: "createdAt";
+};
+export type EventMessageScalarFieldEnum = (typeof EventMessageScalarFieldEnum)[keyof typeof EventMessageScalarFieldEnum];
 export declare const UserEmbeddingScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";

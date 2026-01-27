@@ -4,8 +4,7 @@ import authorize from "../middleware/authorize.middleware.js";
 import eventRegistrationController from '../controller/event.registration.controller.js';
 eventParticipantRouter.post('/register-new-user/:eventId', authorize({}), eventRegistrationController.registerNewParticipant);
 eventParticipantRouter.delete('/remove-registration/:eventId', authorize({}), eventRegistrationController.removeRegistration);
-eventParticipantRouter.get('/make-attendance/:eventId', authorize({}), eventRegistrationController.makeAttendance);
+eventParticipantRouter.post('/make-attendance/:eventId', authorize({}), eventRegistrationController.makeAttendance);
 eventParticipantRouter.get('/get-all-participants/:eventId', eventRegistrationController.getAllParticipants);
 export default eventParticipantRouter;
-// List all participants of an event
 //# sourceMappingURL=event.registration.route.js.map

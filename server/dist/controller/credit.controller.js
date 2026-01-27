@@ -86,7 +86,7 @@ class CreditController {
             await notificationService.sendNotificaion({
                 type: "PAYMENT_SUCCESS",
                 userId: updateData.userId,
-                title: "You purchased the credits for the organization" + organizationDetails.id,
+                title: "You purchased the credits for the organization" + organizationDetails.name,
                 message: `Hello, ${userDetails.name} you have purchased the credits for the organization ${organizationDetails.id}. The credits purchased was ${credits}. Thanks for your contribution. `,
                 entityType: "ORGANIZATION",
                 entityId: organizationDetails.id

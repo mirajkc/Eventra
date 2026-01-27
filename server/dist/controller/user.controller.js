@@ -5,18 +5,13 @@ import eventService from "../service/event.service.js";
 import organizationService from "../service/organization.service.js";
 import creditService from "../service/creditpurchase.service.js";
 import notificationService from "../service/notification.service.js";
+import organizationMemberService from "../service/organizationmember.service.js";
 class UserController {
     async getLoggedInUser(req, res, next) {
         try {
             const userDetails = req.userDetails;
             const userData = await authService.getUserDetails({
                 id: userDetails.id
-            }, {
-                organizationMember: true,
-                createdEvents: true,
-                creditPurchases: true,
-                eventParticipants: true,
-                notifications: true
             });
             if (!userDetails) {
                 throw {
@@ -85,6 +80,14 @@ class UserController {
             }
             if (query.organizationMember === 'true') {
                 include.organizationMember = {
+                    include: {
+                        organization: {
+                            select: {
+                                name: true,
+                                isPremium: true
+                            }
+                        },
+                    },
                     skip,
                     take,
                     orderBy: { joinedAt: 'desc' },
@@ -92,6 +95,13 @@ class UserController {
             }
             if (query.eventParticipants === 'true') {
                 include.eventParticipants = {
+                    include: {
+                        event: {
+                            select: {
+                                title: true,
+                            }
+                        }
+                    },
                     skip,
                     take,
                     orderBy: { registeredAt: 'desc' },
@@ -99,6 +109,13 @@ class UserController {
             }
             if (query.creditPurchases) {
                 include.creditPurchases = {
+                    include: {
+                        organization: {
+                            select: {
+                                name: true
+                            }
+                        }
+                    },
                     skip,
                     take,
                     orderBy: { purchasedAt: 'desc' },
@@ -117,7 +134,7 @@ class UserController {
                 counts.createdEvents = await eventService.getTotalEventsCount({ creatorId: userDetails.id });
             }
             if (query.organizationMember === 'true') {
-                counts.organizationMember = await organizationService.getOrganizationCount({ userId: userDetails.id });
+                counts.organizationMember = await organizationMemberService.getMemberCount({ filter: { userId: userDetails.id } });
             }
             if (query.eventParticipants === 'true') {
                 counts.eventParticipants = await eventService.getEventParticipatedCount({ userId: userDetails.id });

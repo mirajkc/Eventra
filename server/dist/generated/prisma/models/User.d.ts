@@ -180,6 +180,7 @@ export type UserWhereInput = {
     userEmbedding?: Prisma.XOR<Prisma.UserEmbeddingNullableScalarRelationFilter, Prisma.UserEmbeddingWhereInput> | null;
     notifications?: Prisma.NotificationListRelationFilter;
     otpdetails?: Prisma.OtpdetailsListRelationFilter;
+    eventMessages?: Prisma.EventMessageListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -200,6 +201,7 @@ export type UserOrderByWithRelationInput = {
     userEmbedding?: Prisma.UserEmbeddingOrderByWithRelationInput;
     notifications?: Prisma.NotificationOrderByRelationAggregateInput;
     otpdetails?: Prisma.OtpdetailsOrderByRelationAggregateInput;
+    eventMessages?: Prisma.EventMessageOrderByRelationAggregateInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -223,6 +225,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     userEmbedding?: Prisma.XOR<Prisma.UserEmbeddingNullableScalarRelationFilter, Prisma.UserEmbeddingWhereInput> | null;
     notifications?: Prisma.NotificationListRelationFilter;
     otpdetails?: Prisma.OtpdetailsListRelationFilter;
+    eventMessages?: Prisma.EventMessageListRelationFilter;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -271,6 +274,7 @@ export type UserCreateInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
@@ -291,6 +295,7 @@ export type UserUncheckedCreateInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -311,6 +316,7 @@ export type UserUpdateInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -331,6 +337,7 @@ export type UserUncheckedUpdateInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
@@ -498,6 +505,18 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
 };
+export type UserCreateNestedOneWithoutEventMessagesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutEventMessagesInput, Prisma.UserUncheckedCreateWithoutEventMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutEventMessagesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutEventMessagesInput, Prisma.UserUncheckedCreateWithoutEventMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventMessagesInput;
+    upsert?: Prisma.UserUpsertWithoutEventMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEventMessagesInput, Prisma.UserUpdateWithoutEventMessagesInput>, Prisma.UserUncheckedUpdateWithoutEventMessagesInput>;
+};
 export type UserCreateNestedOneWithoutUserEmbeddingInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutUserEmbeddingInput, Prisma.UserUncheckedCreateWithoutUserEmbeddingInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserEmbeddingInput;
@@ -540,6 +559,7 @@ export type UserCreateWithoutOtpdetailsInput = {
     eventParticipants?: Prisma.EventParticipantsCreateNestedManyWithoutUserInput;
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutOtpdetailsInput = {
     id?: string;
@@ -559,6 +579,7 @@ export type UserUncheckedCreateWithoutOtpdetailsInput = {
     eventParticipants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutUserInput;
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutOtpdetailsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -591,6 +612,7 @@ export type UserUpdateWithoutOtpdetailsInput = {
     eventParticipants?: Prisma.EventParticipantsUpdateManyWithoutUserNestedInput;
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutOtpdetailsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -610,6 +632,7 @@ export type UserUncheckedUpdateWithoutOtpdetailsInput = {
     eventParticipants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutUserNestedInput;
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutSessionInput = {
     id?: string;
@@ -629,6 +652,7 @@ export type UserCreateWithoutSessionInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutSessionInput = {
     id?: string;
@@ -648,6 +672,7 @@ export type UserUncheckedCreateWithoutSessionInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutSessionInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -680,6 +705,7 @@ export type UserUpdateWithoutSessionInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutSessionInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -699,6 +725,7 @@ export type UserUncheckedUpdateWithoutSessionInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutOrganizationMemberInput = {
     id?: string;
@@ -718,6 +745,7 @@ export type UserCreateWithoutOrganizationMemberInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutOrganizationMemberInput = {
     id?: string;
@@ -737,6 +765,7 @@ export type UserUncheckedCreateWithoutOrganizationMemberInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutOrganizationMemberInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -769,6 +798,7 @@ export type UserUpdateWithoutOrganizationMemberInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutOrganizationMemberInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -788,6 +818,7 @@ export type UserUncheckedUpdateWithoutOrganizationMemberInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutCreatedEventsInput = {
     id?: string;
@@ -807,6 +838,7 @@ export type UserCreateWithoutCreatedEventsInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutCreatedEventsInput = {
     id?: string;
@@ -826,6 +858,7 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutCreatedEventsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -858,6 +891,7 @@ export type UserUpdateWithoutCreatedEventsInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutCreatedEventsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -877,6 +911,7 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutEventParticipantsInput = {
     id?: string;
@@ -896,6 +931,7 @@ export type UserCreateWithoutEventParticipantsInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutEventParticipantsInput = {
     id?: string;
@@ -915,6 +951,7 @@ export type UserUncheckedCreateWithoutEventParticipantsInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutEventParticipantsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -947,6 +984,7 @@ export type UserUpdateWithoutEventParticipantsInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutEventParticipantsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -966,6 +1004,7 @@ export type UserUncheckedUpdateWithoutEventParticipantsInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutCreditPurchasesInput = {
     id?: string;
@@ -985,6 +1024,7 @@ export type UserCreateWithoutCreditPurchasesInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutCreditPurchasesInput = {
     id?: string;
@@ -1004,6 +1044,7 @@ export type UserUncheckedCreateWithoutCreditPurchasesInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutCreditPurchasesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1036,6 +1077,7 @@ export type UserUpdateWithoutCreditPurchasesInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutCreditPurchasesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1055,6 +1097,7 @@ export type UserUncheckedUpdateWithoutCreditPurchasesInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutNotificationsInput = {
     id?: string;
@@ -1074,6 +1117,7 @@ export type UserCreateWithoutNotificationsInput = {
     eventParticipants?: Prisma.EventParticipantsCreateNestedManyWithoutUserInput;
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutNotificationsInput = {
     id?: string;
@@ -1093,6 +1137,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
     eventParticipants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutUserInput;
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutNotificationsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1125,6 +1170,7 @@ export type UserUpdateWithoutNotificationsInput = {
     eventParticipants?: Prisma.EventParticipantsUpdateManyWithoutUserNestedInput;
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutNotificationsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1143,6 +1189,100 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
     userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutUserNestedInput;
     eventParticipants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutUserNestedInput;
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
+    otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
+};
+export type UserCreateWithoutEventMessagesInput = {
+    id?: string;
+    email: string;
+    name: string;
+    phone?: string | null;
+    password?: string | null;
+    role?: $Enums.Role;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    image?: string | null;
+    session?: Prisma.SessionCreateNestedManyWithoutUserInput;
+    organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
+    createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
+    creditPurchases?: Prisma.CreditPurchaseCreateNestedManyWithoutUserInput;
+    userInteractions?: Prisma.UserInteractionCreateNestedManyWithoutUserInput;
+    eventParticipants?: Prisma.EventParticipantsCreateNestedManyWithoutUserInput;
+    userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+    otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutEventMessagesInput = {
+    id?: string;
+    email: string;
+    name: string;
+    phone?: string | null;
+    password?: string | null;
+    role?: $Enums.Role;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    image?: string | null;
+    session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
+    organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
+    createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
+    creditPurchases?: Prisma.CreditPurchaseUncheckedCreateNestedManyWithoutUserInput;
+    userInteractions?: Prisma.UserInteractionUncheckedCreateNestedManyWithoutUserInput;
+    eventParticipants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutUserInput;
+    userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+    otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutEventMessagesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutEventMessagesInput, Prisma.UserUncheckedCreateWithoutEventMessagesInput>;
+};
+export type UserUpsertWithoutEventMessagesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutEventMessagesInput, Prisma.UserUncheckedUpdateWithoutEventMessagesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutEventMessagesInput, Prisma.UserUncheckedCreateWithoutEventMessagesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutEventMessagesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutEventMessagesInput, Prisma.UserUncheckedUpdateWithoutEventMessagesInput>;
+};
+export type UserUpdateWithoutEventMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
+    organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
+    createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
+    creditPurchases?: Prisma.CreditPurchaseUpdateManyWithoutUserNestedInput;
+    userInteractions?: Prisma.UserInteractionUpdateManyWithoutUserNestedInput;
+    eventParticipants?: Prisma.EventParticipantsUpdateManyWithoutUserNestedInput;
+    userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+    otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutEventMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
+    organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
+    creditPurchases?: Prisma.CreditPurchaseUncheckedUpdateManyWithoutUserNestedInput;
+    userInteractions?: Prisma.UserInteractionUncheckedUpdateManyWithoutUserNestedInput;
+    eventParticipants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutUserNestedInput;
+    userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutUserEmbeddingInput = {
@@ -1163,6 +1303,7 @@ export type UserCreateWithoutUserEmbeddingInput = {
     eventParticipants?: Prisma.EventParticipantsCreateNestedManyWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutUserEmbeddingInput = {
     id?: string;
@@ -1182,6 +1323,7 @@ export type UserUncheckedCreateWithoutUserEmbeddingInput = {
     eventParticipants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutUserEmbeddingInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1214,6 +1356,7 @@ export type UserUpdateWithoutUserEmbeddingInput = {
     eventParticipants?: Prisma.EventParticipantsUpdateManyWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutUserEmbeddingInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1233,6 +1376,7 @@ export type UserUncheckedUpdateWithoutUserEmbeddingInput = {
     eventParticipants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 export type UserCreateWithoutUserInteractionsInput = {
     id?: string;
@@ -1252,6 +1396,7 @@ export type UserCreateWithoutUserInteractionsInput = {
     userEmbedding?: Prisma.UserEmbeddingCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageCreateNestedManyWithoutSenderInput;
 };
 export type UserUncheckedCreateWithoutUserInteractionsInput = {
     id?: string;
@@ -1271,6 +1416,7 @@ export type UserUncheckedCreateWithoutUserInteractionsInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedCreateNestedOneWithoutUserInput;
     notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     otpdetails?: Prisma.OtpdetailsUncheckedCreateNestedManyWithoutUserInput;
+    eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutSenderInput;
 };
 export type UserCreateOrConnectWithoutUserInteractionsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1303,6 +1449,7 @@ export type UserUpdateWithoutUserInteractionsInput = {
     userEmbedding?: Prisma.UserEmbeddingUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUpdateManyWithoutSenderNestedInput;
 };
 export type UserUncheckedUpdateWithoutUserInteractionsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1322,6 +1469,7 @@ export type UserUncheckedUpdateWithoutUserInteractionsInput = {
     userEmbedding?: Prisma.UserEmbeddingUncheckedUpdateOneWithoutUserNestedInput;
     notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     otpdetails?: Prisma.OtpdetailsUncheckedUpdateManyWithoutUserNestedInput;
+    eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 /**
  * Count Type UserCountOutputType
@@ -1335,6 +1483,7 @@ export type UserCountOutputType = {
     eventParticipants: number;
     notifications: number;
     otpdetails: number;
+    eventMessages: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     session?: boolean | UserCountOutputTypeCountSessionArgs;
@@ -1345,6 +1494,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
     eventParticipants?: boolean | UserCountOutputTypeCountEventParticipantsArgs;
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs;
     otpdetails?: boolean | UserCountOutputTypeCountOtpdetailsArgs;
+    eventMessages?: boolean | UserCountOutputTypeCountEventMessagesArgs;
 };
 /**
  * UserCountOutputType without action
@@ -1403,6 +1553,12 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
 export type UserCountOutputTypeCountOtpdetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.OtpdetailsWhereInput;
 };
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEventMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.EventMessageWhereInput;
+};
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
@@ -1422,6 +1578,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     userEmbedding?: boolean | Prisma.User$userEmbeddingArgs<ExtArgs>;
     notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
     otpdetails?: boolean | Prisma.User$otpdetailsArgs<ExtArgs>;
+    eventMessages?: boolean | Prisma.User$eventMessagesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1468,6 +1625,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     userEmbedding?: boolean | Prisma.User$userEmbeddingArgs<ExtArgs>;
     notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
     otpdetails?: boolean | Prisma.User$otpdetailsArgs<ExtArgs>;
+    eventMessages?: boolean | Prisma.User$eventMessagesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
@@ -1484,6 +1642,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         userEmbedding: Prisma.$UserEmbeddingPayload<ExtArgs> | null;
         notifications: Prisma.$NotificationPayload<ExtArgs>[];
         otpdetails: Prisma.$OtpdetailsPayload<ExtArgs>[];
+        eventMessages: Prisma.$EventMessagePayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -1833,6 +1992,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
     userEmbedding<T extends Prisma.User$userEmbeddingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userEmbeddingArgs<ExtArgs>>): Prisma.Prisma__UserEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$UserEmbeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     otpdetails<T extends Prisma.User$otpdetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpdetailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpdetailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    eventMessages<T extends Prisma.User$eventMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$eventMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2438,6 +2598,29 @@ export type User$otpdetailsArgs<ExtArgs extends runtime.Types.Extensions.Interna
     take?: number;
     skip?: number;
     distinct?: Prisma.OtpdetailsScalarFieldEnum | Prisma.OtpdetailsScalarFieldEnum[];
+};
+/**
+ * User.eventMessages
+ */
+export type User$eventMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventMessage
+     */
+    select?: Prisma.EventMessageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventMessage
+     */
+    omit?: Prisma.EventMessageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.EventMessageInclude<ExtArgs> | null;
+    where?: Prisma.EventMessageWhereInput;
+    orderBy?: Prisma.EventMessageOrderByWithRelationInput | Prisma.EventMessageOrderByWithRelationInput[];
+    cursor?: Prisma.EventMessageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.EventMessageScalarFieldEnum | Prisma.EventMessageScalarFieldEnum[];
 };
 /**
  * User without action
