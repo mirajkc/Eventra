@@ -2,6 +2,7 @@
 import getAccessToken from "@/lib/access.token";
 import socket from "@/lib/socket";
 import { IEventChatTypes } from "@/types/chat.types";
+import { error } from "console";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -59,16 +60,16 @@ useEffect(() => {
             })
             const result = await response.json()
             if(!result.message){
-                toast.error("Error occured while fetching the messages please try again later. ")
+                console.log(error);
                 return
             }
             if(!response.ok){
-                toast.error(result.message)
+                console.log(error);
                 return
             }
             setMessages(result.data)
         } catch (error) {
-            toast.error("Error occured while fetching the messages please try again later. ")
+            console.log(error);
         }finally {
             setLoading(false)
         }
