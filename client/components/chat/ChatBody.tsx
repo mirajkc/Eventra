@@ -2,13 +2,10 @@
 import getAccessToken from "@/lib/access.token";
 import socket from "@/lib/socket";
 import { IEventChatTypes } from "@/types/chat.types";
-import { error } from "console";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
-
 
 export default function ChatBody () {
     const [messages, setMessages ] = useState<Array<IEventChatTypes>>([])
@@ -60,11 +57,12 @@ useEffect(() => {
             })
             const result = await response.json()
             if(!result.message){
-                console.log(error);
+                console.log("Error occured while fetching the messages");
                 return
             }
             if(!response.ok){
-                console.log(error);
+                console.log(result.message || "Error occured while fetching the messages")
+                
                 return
             }
             setMessages(result.data)

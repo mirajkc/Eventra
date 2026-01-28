@@ -40,7 +40,7 @@ export default function AttendedUsers({event}: {event: ISingleEvent}) {
      setAttendedUsers(result.data.attendedUsers)
      setPagination(result.pagination)
     } catch (error) {
-      toast.error("Error occured while fetching the attended users data please try again later. ")
+      console.log("Error occured while fetching the attended users data please try again later. ");
     } finally {
       setLoading(false)
     }
