@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import ReduxProvider from "@/state/redux.provider";
+import { Analytics } from '@vercel/analytics/next';
 
 
 
@@ -43,6 +44,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+               <Analytics />
             <Toaster
               position='top-center'
             />
