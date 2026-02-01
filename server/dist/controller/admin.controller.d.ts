@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 declare class AdminController {
     deleteOrganization(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+    deleteEvent(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+    deleteUser(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 }
 declare const adminController: AdminController;
 export default adminController;

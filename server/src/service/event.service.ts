@@ -124,6 +124,25 @@ class EventService {
   }
 
 
+  async deleteEvent (id :string, include : any ) {
+    const deletedEvent = await prisma.event.delete({
+      where : {
+        id : id
+      },
+      include : include
+    })
+
+    if(!deletedEvent){
+      throw {
+        code : 500,
+        message : "Error occured while deleting the event please try again later. ",
+        status : "EVENT_DELETE_ERROR"
+      } as IErrorTypes
+    }
+    return deletedEvent
+  }
+
+
 }
 const eventService = new EventService()
 export default eventService

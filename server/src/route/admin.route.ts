@@ -5,9 +5,9 @@ import adminController from "../controller/admin.controller.js"
 
 const adminRouter:Router = express.Router()
 
-//delete an organization 
 adminRouter.delete('/deleteorganization/:organizationId', authorize({role : "ADMIN"}), adminController.deleteOrganization)
-// delete an event 
-// delete an user 
+adminRouter.delete('/delete-event/:eventId' , authorize({role : "ADMIN"}), adminController.deleteEvent)
+adminRouter.delete('/delete-user/:userId', authorize({role : "ADMIN"}), adminController.deleteUser)
+
 
 export default adminRouter
