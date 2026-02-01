@@ -110,11 +110,12 @@ class OrganizationService {
     return result
   }
 
-  async deleteOrganization(id: string) {
+  async deleteOrganization(id: string, include : any) {
     const result = await prisma.organization.delete({
       where: {
         id: id
-      }
+      },
+      include : include
     })
     if (!result) {
       throw {

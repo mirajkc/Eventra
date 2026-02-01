@@ -42,6 +42,9 @@ enum NotificationType {
   EVENT_CANCELLED
   ORG_APPROVED
   PAYMENT_SUCCESS
+  ORGANIZATION_DELETED
+  EVENT_DELETED
+  USER_DELETED
 }
 
 enum NotificationEntity {
