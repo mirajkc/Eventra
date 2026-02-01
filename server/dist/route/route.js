@@ -7,6 +7,7 @@ import eventParticipantRouter from './event.registration.route.js';
 import creditRouter from './credit.route.js';
 import notificationRouter from './notification.route.js';
 import eventChatRouter from './event.chat.route.js';
+import adminRouter from './admin.route.js';
 const router = express.Router();
 router.use('/auth', authRouter);
 router.use('/user', userRouter);
@@ -16,5 +17,6 @@ router.use('/event/participant', eventParticipantRouter);
 router.use('/credit', creditRouter);
 router.use('/notification', notificationRouter);
 router.use('/event/chat', eventChatRouter);
+router.use('/admin', adminRouter);
 export default router;
 //# sourceMappingURL=route.js.map

@@ -183,7 +183,107 @@ declare class OrganizationService {
         lastCreditReset: Date;
         isPremium: boolean;
     }>;
-    deleteOrganization(id: string): Promise<{
+    deleteOrganization(id: string, include: any): Promise<{
+        [x: string]: ({
+            id: string;
+            role: import("../generated/prisma/enums.js").OrganizationRole;
+            userId: string;
+            organizationId: string;
+            joinedAt: Date;
+        } | {
+            id: string;
+            role: import("../generated/prisma/enums.js").OrganizationRole;
+            userId: string;
+            organizationId: string;
+            joinedAt: Date;
+        })[] | ({
+            id: string;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            organizationId: string;
+            slug: string;
+            creatorId: string;
+            title: string;
+            description: string;
+            location: string;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+        } | {
+            id: string;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            organizationId: string;
+            slug: string;
+            creatorId: string;
+            title: string;
+            description: string;
+            location: string;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+        })[] | ({
+            id: string;
+            organizationId: string;
+            purchasedBy: string;
+            package: import("../generated/prisma/enums.js").CreditPackage;
+            credits: number;
+            amount: number;
+            purchasedAt: Date;
+        } | {
+            id: string;
+            organizationId: string;
+            purchasedBy: string;
+            package: import("../generated/prisma/enums.js").CreditPackage;
+            credits: number;
+            amount: number;
+            purchasedAt: Date;
+        })[] | {
+            id: string;
+            role: import("../generated/prisma/enums.js").OrganizationRole;
+            userId: string;
+            organizationId: string;
+            joinedAt: Date;
+        }[] | {
+            id: string;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            organizationId: string;
+            slug: string;
+            creatorId: string;
+            title: string;
+            description: string;
+            location: string;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+        }[] | {
+            id: string;
+            organizationId: string;
+            purchasedBy: string;
+            package: import("../generated/prisma/enums.js").CreditPackage;
+            credits: number;
+            amount: number;
+            purchasedAt: Date;
+        }[];
+        [x: number]: never;
+        [x: symbol]: never;
+    } & {
         id: string;
         name: string;
         createdAt: Date;

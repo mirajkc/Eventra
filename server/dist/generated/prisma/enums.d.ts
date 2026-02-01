@@ -33,6 +33,9 @@ export declare const NotificationType: {
     readonly EVENT_CANCELLED: "EVENT_CANCELLED";
     readonly ORG_APPROVED: "ORG_APPROVED";
     readonly PAYMENT_SUCCESS: "PAYMENT_SUCCESS";
+    readonly ORGANIZATION_DELETED: "ORGANIZATION_DELETED";
+    readonly EVENT_DELETED: "EVENT_DELETED";
+    readonly USER_DELETED: "USER_DELETED";
 };
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType];
 export declare const NotificationEntity: {

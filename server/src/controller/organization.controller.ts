@@ -454,7 +454,7 @@ class OrganizationController {
           status: "ORGANIZATION_OWNERSHIP_ERR"
         } as IErrorTypes
       }
-      const deletedOrganization = await organizationService.deleteOrganization(organizationDetails.id)
+      const deletedOrganization = await organizationService.deleteOrganization(organizationDetails.id, {})
       return res.json({
         message: "Organization deleted successfully. ",
         data: deletedOrganization.name

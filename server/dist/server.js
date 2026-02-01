@@ -4,7 +4,6 @@ import app from './config/express.config.js';
 import enviroment from './config/enviroment.config.js';
 const server = http.createServer(app);
 const port = enviroment.portNumber;
-const host = '0.0.0.0';
 const io = new Server(server, {
     cors: {
         origin: [
@@ -39,7 +38,7 @@ io.on("connection", (socket) => {
         console.log("Client disconnected");
     });
 });
-server.listen(port, host, () => {
+server.listen(port, () => {
     console.log(`Server is listening on PORT: ${port}`);
 });
 server.on("error", (error) => {
