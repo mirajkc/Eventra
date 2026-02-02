@@ -39,14 +39,14 @@ export default function EventCard({ event }: EventCardProps) {
   const startDate = new Date(event.startDate)
   const Icon = categoryIcons[event.category] || Tag
   const now = new Date();
-const start = new Date(event.startDate);
-const end = new Date(event.endDate);
+  const start = new Date(event.startDate);
+  const end = new Date(event.endDate);
 
-let status = "CANCELLED";
+  let status = "CANCELLED";
 
-if (end < now) status = "COMPLETED";
-else if (start <= now && end >= now) status = "ONGOING";
-else if (start > now) status = "UPCOMING";
+  if (end < now) status = "COMPLETED";
+  else if (start <= now && end >= now) status = "ONGOING";
+  else if (start > now) status = "UPCOMING";
 
   return (
     <motion.div
@@ -84,7 +84,9 @@ else if (start > now) status = "UPCOMING";
 
           <div className="absolute top-3 right-3">
             <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-              {status}
+              {
+                event.status === "CANCELLED" ? "Cancelled" : status
+              }
             </Badge>
           </div>
 

@@ -44,24 +44,24 @@ const categoryIcons: Record<string, typeof Trophy> = {
 
 export default function InvitationComponent({ event }: InvitationComponentProps) {
   if (!event?.startDate || !event?.endDate) {
-  return (
-    <div className="flex items-center justify-center h-64">
-      <Spinner />
-    </div>
-  );
-}
-  const loggedInUser = useAppSelector((state)=>state.authSlice.userDetails)
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Spinner />
+      </div>
+    );
+  }
+  const loggedInUser = useAppSelector((state) => state.authSlice.userDetails)
   const [joining, setJoining] = useState(false);
   const Icon = categoryIcons[event.category] || Tag;
   const now = new Date();
-const start = new Date(event.startDate);
-const end = new Date(event.endDate);
+  const start = new Date(event.startDate);
+  const end = new Date(event.endDate);
 
-let status = "CANCELLED";
+  let status = "CANCELLED";
 
-if (end < now) status = "COMPLETED";
-else if (start <= now && end >= now) status = "ONGOING";
-else if (start > now) status = "UPCOMING";
+  if (end < now) status = "COMPLETED";
+  else if (start <= now && end >= now) status = "ONGOING";
+  else if (start > now) status = "UPCOMING";
 
   const handleJoinEvent = async () => {
     try {
@@ -91,7 +91,7 @@ else if (start > now) status = "UPCOMING";
       setJoining(false);
     }
   };
- 
+
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 pb-20">
@@ -142,9 +142,9 @@ else if (start > now) status = "UPCOMING";
                   <Icon className="w-3.5 h-3.5 mr-1.5" />
                   {event.category}
                 </Badge>
-               <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-  {status}
-</Badge>
+                <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
+                  {event.status === "CANCELLED" ? "Cancelled" : status}
+                </Badge>
 
               </div>
 
@@ -210,13 +210,13 @@ else if (start > now) status = "UPCOMING";
                       <div>
                         <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Start Date & Time</p>
                         {start && !isNaN(start.getTime()) && (
-                            <>
-                              <p className="font-bold">{format(start, "d, MMMM, yyyy")}</p>
-                              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                {format(start, "h:mm a")} onwards
-                              </p>
-                            </>
-                         )}
+                          <>
+                            <p className="font-bold">{format(start, "d, MMMM, yyyy")}</p>
+                            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                              {format(start, "h:mm a")} onwards
+                            </p>
+                          </>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-start gap-4">

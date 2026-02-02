@@ -28,7 +28,7 @@ import { toast } from "sonner";
 import { useAppSelector } from "@/state/hooks";
 
 interface EventHeroProps {
-    event: ISingleEvent  ;
+  event: ISingleEvent;
 }
 
 const categoryIcons: Record<string, typeof Trophy> = {
@@ -41,18 +41,18 @@ const categoryIcons: Record<string, typeof Trophy> = {
 };
 
 export default function EventHero({ event }: EventHeroProps) {
-  const loggedInUser = useAppSelector((state)=>state.authSlice.userDetails)
+  const loggedInUser = useAppSelector((state) => state.authSlice.userDetails)
   const [leaving, setLeaving] = useState(false);
   const Icon = categoryIcons[event.category] || Tag;
   const now = new Date();
-const start = new Date(event.startDate);
-const end = new Date(event.endDate);
+  const start = new Date(event.startDate);
+  const end = new Date(event.endDate);
 
-let status = "CANCELLED";
+  let status = "CANCELLED";
 
-if (end < now) status = "COMPLETED";
-else if (start <= now && end >= now) status = "ONGOING";
-else if (start > now) status = "UPCOMING";
+  if (end < now) status = "COMPLETED";
+  else if (start <= now && end >= now) status = "ONGOING";
+  else if (start > now) status = "UPCOMING";
 
   const handleLeaveEvent = async () => {
     try {
@@ -133,8 +133,10 @@ else if (start > now) status = "UPCOMING";
                   {event.category}
                 </Badge>
                 <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                {status}
-              </Badge>
+                  {
+                    event.status === "CANCELLED" ? "Cancelled" : status
+                  }
+                </Badge>
               </div>
 
               <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
@@ -209,7 +211,7 @@ else if (start > now) status = "UPCOMING";
                       <div>
                         <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">End Date & Time</p>
                         <p className="font-bold">{format(end, "d, MMMM , yyyy")}</p>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format( end, "h:mm a")}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(end, "h:mm a")}</p>
                       </div>
                     </div>
 

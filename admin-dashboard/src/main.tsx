@@ -1,10 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
+import RouterConfiguration from './configs/router.confg'
+import { Toaster } from 'sonner'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <Toaster position='top-center'  />
+    <RouterConfiguration />
   </StrictMode>,
 )
