@@ -48,7 +48,7 @@ class AuthController {
       if (!userDetails) {
         throw {
           code: 401,
-          message: "Error! invalid user or password",
+          message: "Error! user not found. ",
           staus: "USER_NOT_FOUN_ERR"
         } as IErrorTypes
       }
@@ -271,4 +271,5 @@ class AuthController {
 
 }
 const authController = new AuthController()
+
 export default authController
