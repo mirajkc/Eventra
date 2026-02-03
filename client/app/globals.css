@@ -138,3 +138,7 @@
     background: color-mix(in srgb, var(--border), transparent 20%);
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
