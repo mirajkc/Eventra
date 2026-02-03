@@ -8,11 +8,13 @@ import { loginDTO } from "@/rules/auth.rules";
 import axiosInstance from "@/configs/axios.config";
 import Cookies from 'js-cookie'
 import {toast} from 'sonner'
+import { useAuthStore } from "@/state/auth.state";
+import { useNavigate } from "react-router";
 
 
 export default function Login() {
-  
-
+  const {getLoggedInUserDetails, isUserLoggedIn} = useAuthStore()
+  const navigate = useNavigate()
   const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
     defaultValues: {
       email: "",
@@ -31,8 +33,9 @@ export default function Login() {
         expires : 1,
         path  : ""
       })
-      //feth the admin details one admin is logged in using the zust
+      await getLoggedInUserDetails()
       toast.success("Hello admin, you are logged in successfully. ")
+      navigate("/")
     } catch (error:any) {
       if(error.response){
         toast.error(error.response.data.message)
@@ -40,6 +43,13 @@ export default function Login() {
       }
        toast.error("Error occured while logging in you in please try again later. ")
     }
+  }
+
+
+  if(isUserLoggedIn){
+    toast.error("You are already logged in")
+    navigate("/")
+    return
   }
   return (
     <>
