@@ -64,4 +64,14 @@ export const EventType = {
     COMPETITION: 'COMPETITION',
     OTHER: 'OTHER'
 };
+export const AdminAction = {
+    CREATE: 'CREATE',
+    UPDATE: 'UPDATE',
+    DELETE: 'DELETE'
+};
+export const AdminEntityType = {
+    EVENT: 'EVENT',
+    ORGANIZATION: 'ORGANIZATION',
+    USER: 'USER'
+};
 //# sourceMappingURL=enums.js.map

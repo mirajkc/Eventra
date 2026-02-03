@@ -70,6 +70,11 @@ export type Notification = Prisma.NotificationModel;
  */
 export type EventMessage = Prisma.EventMessageModel;
 /**
+ * Model AdminLogs
+ *
+ */
+export type AdminLogs = Prisma.AdminLogsModel;
+/**
  * Model UserEmbedding
  *
  */

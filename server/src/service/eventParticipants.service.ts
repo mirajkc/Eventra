@@ -1,4 +1,5 @@
 ﻿import { prisma } from "../config/prisma.config.js"
+import type { Prisma } from "../generated/prisma/client.js"
 import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 
 class EventParticipantService {
@@ -11,6 +12,7 @@ class EventParticipantService {
     })
     if (!paticipants || paticipants.length <= 0) {
       throw {
+
         code: 500,
         message: "Error while fetching registerd users detials for this event",
         status: "USER_DATA_FETCH_ERR"
@@ -105,14 +107,6 @@ class EventParticipantService {
     const count = await prisma.eventParticipants.count({
       where: filter
     })
-    if (count <= 0) {
-      throw {
-        code: 500,
-        message: "Error occured while fetching the participants count",
-        status: "PARTICIPANT_COUNT_FETCH_ERR"
-      } as IErrorTypes
-    }
-
     return count
   }
 
@@ -130,8 +124,16 @@ class EventParticipantService {
     return eventParticipant
   }
 
- 
-
+  async  getCountsPerMonth<
+    T extends Prisma.EventParticipantsFindManyArgs
+  >(
+    args: Prisma.SelectSubset<
+      T,
+      Prisma.EventParticipantsFindManyArgs
+    >
+  ) {
+    return prisma.eventParticipants.findMany(args)
+  }
 
 }
 const eventParticipantService = new EventParticipantService

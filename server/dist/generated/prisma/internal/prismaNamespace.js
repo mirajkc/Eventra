@@ -78,6 +78,7 @@ export const ModelName = {
     CreditPurchase: 'CreditPurchase',
     Notification: 'Notification',
     EventMessage: 'EventMessage',
+    AdminLogs: 'AdminLogs',
     UserEmbedding: 'UserEmbedding',
     EventEmbedding: 'EventEmbedding',
     UserInteraction: 'UserInteraction',
@@ -198,6 +199,15 @@ export const EventMessageScalarFieldEnum = {
     senderId: 'senderId',
     message: 'message',
     createdAt: 'createdAt'
+};
+export const AdminLogsScalarFieldEnum = {
+    id: 'id',
+    adminId: 'adminId',
+    action: 'action',
+    entityId: 'entityId',
+    entityType: 'entityType',
+    createdAt: 'createdAt',
+    reason: 'reason'
 };
 export const UserEmbeddingScalarFieldEnum = {
     id: 'id',

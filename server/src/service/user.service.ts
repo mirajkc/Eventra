@@ -34,6 +34,9 @@ class UserService {
   }
   return user;
 }
+  async getTotalUsersCount (){
+    return  await prisma.user.count()
+  }
 
 
 }

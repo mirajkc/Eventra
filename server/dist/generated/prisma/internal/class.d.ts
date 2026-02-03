@@ -222,6 +222,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
+     * `prisma.adminLogs`: Exposes CRUD operations for the **AdminLogs** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more AdminLogs
+      * const adminLogs = await prisma.adminLogs.findMany()
+      * ```
+      */
+    get adminLogs(): Prisma.AdminLogsDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
      * `prisma.userEmbedding`: Exposes CRUD operations for the **UserEmbedding** model.
       * Example usage:
       * ```ts

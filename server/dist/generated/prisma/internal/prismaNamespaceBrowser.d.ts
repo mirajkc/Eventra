@@ -36,6 +36,7 @@ export declare const ModelName: {
     readonly CreditPurchase: "CreditPurchase";
     readonly Notification: "Notification";
     readonly EventMessage: "EventMessage";
+    readonly AdminLogs: "AdminLogs";
     readonly UserEmbedding: "UserEmbedding";
     readonly EventEmbedding: "EventEmbedding";
     readonly UserInteraction: "UserInteraction";
@@ -166,6 +167,16 @@ export declare const EventMessageScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type EventMessageScalarFieldEnum = (typeof EventMessageScalarFieldEnum)[keyof typeof EventMessageScalarFieldEnum];
+export declare const AdminLogsScalarFieldEnum: {
+    readonly id: "id";
+    readonly adminId: "adminId";
+    readonly action: "action";
+    readonly entityId: "entityId";
+    readonly entityType: "entityType";
+    readonly createdAt: "createdAt";
+    readonly reason: "reason";
+};
+export type AdminLogsScalarFieldEnum = (typeof AdminLogsScalarFieldEnum)[keyof typeof AdminLogsScalarFieldEnum];
 export declare const UserEmbeddingScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";

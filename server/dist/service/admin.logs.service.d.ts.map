@@ -1,0 +1,1 @@
+{"version":3,"file":"admin.logs.service.d.ts","sourceRoot":"","sources":["../../src/service/admin.logs.service.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,6BAA6B,CAAA;AAG5D,cAAM,gBAAgB;IACd,cAAc,CAAC,EAAC,UAAU,EAAC,EAAE;QAAC,UAAU,EAAE,SAAS,CAAA;KAAC;;;;;;;;;CAmB3D;AACD,QAAA,MAAM,gBAAgB,kBAAyB,CAAA;AAE/C,eAAe,gBAAgB,CAAA"}

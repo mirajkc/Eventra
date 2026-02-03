@@ -241,6 +241,7 @@ export declare const ModelName: {
     readonly CreditPurchase: "CreditPurchase";
     readonly Notification: "Notification";
     readonly EventMessage: "EventMessage";
+    readonly AdminLogs: "AdminLogs";
     readonly UserEmbedding: "UserEmbedding";
     readonly EventEmbedding: "EventEmbedding";
     readonly UserInteraction: "UserInteraction";
@@ -259,7 +260,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "otpdetails" | "session" | "organization" | "organizationMember" | "event" | "eventParticipants" | "creditPurchase" | "notification" | "eventMessage" | "userEmbedding" | "eventEmbedding" | "userInteraction" | "eventMetrics" | "adminPrediction" | "errorLog";
+        modelProps: "user" | "otpdetails" | "session" | "organization" | "organizationMember" | "event" | "eventParticipants" | "creditPurchase" | "notification" | "eventMessage" | "adminLogs" | "userEmbedding" | "eventEmbedding" | "userInteraction" | "eventMetrics" | "adminPrediction" | "errorLog";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -1003,6 +1004,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        AdminLogs: {
+            payload: Prisma.$AdminLogsPayload<ExtArgs>;
+            fields: Prisma.AdminLogsFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.AdminLogsFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.AdminLogsFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>;
+                };
+                findFirst: {
+                    args: Prisma.AdminLogsFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.AdminLogsFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>;
+                };
+                findMany: {
+                    args: Prisma.AdminLogsFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>[];
+                };
+                create: {
+                    args: Prisma.AdminLogsCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>;
+                };
+                createMany: {
+                    args: Prisma.AdminLogsCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.AdminLogsCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>[];
+                };
+                delete: {
+                    args: Prisma.AdminLogsDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>;
+                };
+                update: {
+                    args: Prisma.AdminLogsUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.AdminLogsDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.AdminLogsUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.AdminLogsUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>[];
+                };
+                upsert: {
+                    args: Prisma.AdminLogsUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminLogsPayload>;
+                };
+                aggregate: {
+                    args: Prisma.AdminLogsAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateAdminLogs>;
+                };
+                groupBy: {
+                    args: Prisma.AdminLogsGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AdminLogsGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.AdminLogsCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AdminLogsCountAggregateOutputType> | number;
+                };
+            };
+        };
         UserEmbedding: {
             payload: Prisma.$UserEmbeddingPayload<ExtArgs>;
             fields: Prisma.UserEmbeddingFieldRefs;
@@ -1596,6 +1671,16 @@ export declare const EventMessageScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type EventMessageScalarFieldEnum = (typeof EventMessageScalarFieldEnum)[keyof typeof EventMessageScalarFieldEnum];
+export declare const AdminLogsScalarFieldEnum: {
+    readonly id: "id";
+    readonly adminId: "adminId";
+    readonly action: "action";
+    readonly entityId: "entityId";
+    readonly entityType: "entityType";
+    readonly createdAt: "createdAt";
+    readonly reason: "reason";
+};
+export type AdminLogsScalarFieldEnum = (typeof AdminLogsScalarFieldEnum)[keyof typeof AdminLogsScalarFieldEnum];
 export declare const UserEmbeddingScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
@@ -1771,6 +1856,22 @@ export type EnumNotificationEntityFieldRefInput<$PrismaModel> = FieldRefInputTyp
  */
 export type ListEnumNotificationEntityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEntity[]'>;
 /**
+ * Reference to a field of type 'AdminAction'
+ */
+export type EnumAdminActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminAction'>;
+/**
+ * Reference to a field of type 'AdminAction[]'
+ */
+export type ListEnumAdminActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminAction[]'>;
+/**
+ * Reference to a field of type 'AdminEntityType'
+ */
+export type EnumAdminEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminEntityType'>;
+/**
+ * Reference to a field of type 'AdminEntityType[]'
+ */
+export type ListEnumAdminEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminEntityType[]'>;
+/**
  * Batch Payload for updateMany & deleteMany & createMany
  */
 export type BatchPayload = {
@@ -1874,6 +1975,7 @@ export type GlobalOmitConfig = {
     creditPurchase?: Prisma.CreditPurchaseOmit;
     notification?: Prisma.NotificationOmit;
     eventMessage?: Prisma.EventMessageOmit;
+    adminLogs?: Prisma.AdminLogsOmit;
     userEmbedding?: Prisma.UserEmbeddingOmit;
     eventEmbedding?: Prisma.EventEmbeddingOmit;
     userInteraction?: Prisma.UserInteractionOmit;

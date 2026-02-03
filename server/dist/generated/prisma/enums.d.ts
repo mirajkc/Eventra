@@ -64,4 +64,16 @@ export declare const EventType: {
     readonly OTHER: "OTHER";
 };
 export type EventType = (typeof EventType)[keyof typeof EventType];
+export declare const AdminAction: {
+    readonly CREATE: "CREATE";
+    readonly UPDATE: "UPDATE";
+    readonly DELETE: "DELETE";
+};
+export type AdminAction = (typeof AdminAction)[keyof typeof AdminAction];
+export declare const AdminEntityType: {
+    readonly EVENT: "EVENT";
+    readonly ORGANIZATION: "ORGANIZATION";
+    readonly USER: "USER";
+};
+export type AdminEntityType = (typeof AdminEntityType)[keyof typeof AdminEntityType];
 //# sourceMappingURL=enums.d.ts.map

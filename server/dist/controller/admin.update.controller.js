@@ -1,0 +1,284 @@
+import userService from "../service/user.service.js";
+import { uploadImage } from "../service/upload.service.js";
+import authService from "../service/auth.service.js";
+import adminLogsService from "../service/admin.logs.service.js";
+import notificationService from "../service/notification.service.js";
+import emailService from "../service/email.service.js";
+import adminUpdateTemplate from "../emailtemplates/adminUpdateTemplate.js";
+import organizationService from "../service/organization.service.js";
+import { checkForCredit } from "../utilities/checkforcredit.js";
+import eventService from "../service/event.service.js";
+import getSlug from "../utilities/createSlug.js";
+import eventParticipantService from "../service/eventParticipants.service.js";
+import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js";
+import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js";
+class AdminUpdateController {
+    async updateUser(req, res, next) {
+        try {
+            const adminDetails = req.userDetails;
+            const params = req.params;
+            const userId = String(params.userId);
+            const reason = String(params.reason);
+            if (!userId) {
+                throw {
+                    code: 404,
+                    message: "User id is required",
+                    status: "USER_ID_NOT_FOUND_ERR"
+                };
+            }
+            if (!reason) {
+                throw {
+                    code: 404,
+                    message: "Reason is required",
+                    status: "REASON_NOT_FOUND_ERR"
+                };
+            }
+            const data = req.body;
+            const userDetails = await userService.getUserDetails({ id: userId }, {});
+            let imageUrl = userDetails.image ?? "";
+            if (req.file?.buffer) {
+                imageUrl = await uploadImage(req.file.buffer, "Eventra/userProfile");
+            }
+            const updateData = {
+                name: data.name ? data.name : userDetails.name,
+                phone: data.phone ? data.phone : userDetails.phone,
+                image: imageUrl
+            };
+            await authService.updateUser({ filter: { id: userDetails.id }, data: updateData });
+            await adminLogsService.createAdminLog({
+                logDetails: {
+                    adminId: adminDetails.id,
+                    action: "UPDATE",
+                    entityId: userDetails.id,
+                    entityType: "USER",
+                    reason: reason
+                }
+            });
+            await notificationService.sendNotificaion({
+                userId: userDetails.id,
+                title: "Your profile has been updated by one of our admin. ",
+                message: `The reason for updating your profile is ${reason}. If you have any concerns, please contact our support team.`,
+                type: "USER_DELETED",
+                entityId: userDetails.id,
+                entityType: "USER"
+            });
+            await emailService.sendEmail({
+                to: userDetails.email,
+                subject: "Your profile has been updated by one of our admin. ",
+                message: adminUpdateTemplate("PROFILE", reason)
+            });
+            res.json({
+                message: "User updated successfully"
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async updateEvent(req, res, next) {
+        try {
+            const params = req.params;
+            const adminDetails = req.userDetails;
+            const data = req.body;
+            const userId = String(params.userId);
+            const reason = String(params.reason);
+            if (!userId) {
+                throw {
+                    code: 404,
+                    message: "User id is required",
+                    status: "USER_ID_NOT_FOUND_ERR"
+                };
+            }
+            if (!reason) {
+                throw {
+                    code: 404,
+                    message: "Reason is required",
+                    status: "REASON_NOT_FOUND_ERR"
+                };
+            }
+            const userDetails = await userService.getUserDetails({ id: userId }, {});
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: { id: data.organizationId },
+                include: {}
+            });
+            if (!organizationDetails) {
+                throw {
+                    code: 404,
+                    message: "Error organization not found make sure organization exists. ",
+                    status: "ORGANIZATION_NOT_FOUND_ERR"
+                };
+            }
+            await checkForCredit(organizationDetails.id);
+            const eventDetails = await eventService.getEvent({ filter: { id: data.id } });
+            if (!eventDetails) {
+                throw {
+                    code: 404,
+                    message: "Error event not found make sure that the event exists. ",
+                    status: "EVENT_NOT_FOUND_ERR"
+                };
+            }
+            let imageUrl = eventDetails.image;
+            if (req.file) {
+                const imageFile = req.file.buffer;
+                imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
+            }
+            const updatedEvent = await eventService.updateEvent({
+                filter: { id: data.id },
+                data: {
+                    slug: data.title ? getSlug(data.title) : eventDetails.slug,
+                    title: data.title ? data.title : eventDetails.title,
+                    description: data.description ? data.description : eventDetails.description,
+                    location: data.location ? data.location : eventDetails.location,
+                    startDate: data.startDate ? data.startDate : eventDetails.startDate,
+                    endDate: data.endDate ? data.endDate : eventDetails.endDate,
+                    capacity: data.capacity ? Number(data.capacity) : eventDetails.capacity,
+                    status: data.status ? data.status : eventDetails.status,
+                    category: data.category ? data.category : eventDetails.category,
+                    tags: data.tags ? data.tags : eventDetails.tags,
+                    image: imageUrl
+                }
+            });
+            await adminLogsService.createAdminLog({
+                logDetails: {
+                    adminId: adminDetails.id,
+                    action: "UPDATE",
+                    entityId: updatedEvent.id,
+                    entityType: "EVENT",
+                    reason: reason
+                }
+            });
+            await emailService.sendEmail({
+                to: userDetails.email,
+                subject: `The event ${updatedEvent.title} has been updated by one of our admin.`,
+                message: adminUpdateTemplate("EVENT", reason)
+            });
+            await notificationService.sendNotificaion({
+                userId: userDetails.id,
+                title: "Your event has been updated by one of our admin. ",
+                message: `The reason for updating your event is ${reason}. If you have any concerns, please contact our support team.`,
+                type: "EVENT_DELETED",
+                entityId: updatedEvent.id,
+                entityType: "EVENT"
+            });
+            const registerdParticipantsId = await eventParticipantService.getEventParticipants({
+                filter: { eventId: updatedEvent.id },
+                select: {
+                    userId: true
+                }
+            });
+            const groupNotifications = registerdParticipantsId.map((user) => ({
+                userId: user.userId,
+                title: "Event update for" + updatedEvent.title,
+                message: `The event that you registerd has been changed please make surea that you are fine with the new changes made. `,
+                type: "EVENT_UPDATED",
+                entityType: "EVENT",
+                entityId: updatedEvent.id
+            }));
+            await notificationService.sendManyNotification(groupNotifications);
+            await emailService.sendEmail({
+                to: userDetails.email,
+                subject: `The event ${updatedEvent.title} has been updated.`,
+                message: updateEventTemplate(updatedEvent.title, userDetails.name)
+            });
+            return res.json({
+                message: "Event updated successfully. ",
+                data: updatedEvent
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async updateOrganization(req, res, next) {
+        try {
+            const adminDetails = req.userDetails;
+            const data = req.body;
+            const params = req.params;
+            const userId = String(params.userId);
+            const reason = String(params.reason);
+            if (!userId) {
+                throw {
+                    code: 404,
+                    message: "User id is required",
+                    status: "USER_ID_NOT_FOUND_ERR"
+                };
+            }
+            if (!reason) {
+                throw {
+                    code: 404,
+                    message: "Reason is required",
+                    status: "REASON_NOT_FOUND_ERR"
+                };
+            }
+            const userDetails = await userService.getUserDetails({ id: userId }, {});
+            const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id);
+            if (!organizationDetails) {
+                throw {
+                    code: 403,
+                    message: "You do not own this organization. ",
+                    status: "ORGANIZATION_OWNERSHIP_ERR"
+                };
+            }
+            await checkForCredit(organizationDetails.id);
+            const files = req.files;
+            const imageFile = files.image?.[0];
+            const thumbnailFile = files.thumbnail?.[0];
+            const profileURL = imageFile ? await uploadImage(imageFile.buffer, "Eventra/Organization/profile") : organizationDetails.image;
+            const thumbnailURL = thumbnailFile ? await uploadImage(thumbnailFile.buffer, "Eventra/Organization/thumbnail") : organizationDetails.thumbnail;
+            const uploadData = {
+                ...data,
+                thumbnail: thumbnailURL,
+                image: profileURL,
+            };
+            const updatedOrganization = await organizationService.updateOrganization({
+                filter: { id: organizationDetails.id },
+                data: uploadData,
+            });
+            await adminLogsService.createAdminLog({
+                logDetails: {
+                    adminId: adminDetails.id,
+                    action: "UPDATE",
+                    entityId: updatedOrganization.id,
+                    entityType: "ORGANIZATION",
+                    reason: reason
+                }
+            });
+            await notificationService.sendNotificaion({
+                userId: userDetails.id,
+                title: "Organization updated",
+                message: `Hello, ${userDetails.name} organization named ${updatedOrganization.name} has been updated by one of our admin due to ${reason}. `,
+                entityType: 'ORGANIZATION',
+                type: "ORG_APPROVED",
+                entityId: updatedOrganization.id
+            });
+            await emailService.sendEmail({
+                to: userDetails.email,
+                subject: "Your organizaation has been updated by one of our admin. ",
+                message: adminUpdateTemplate("ORGANIZATION", reason)
+            });
+            await emailService.sendEmail({
+                to: userDetails.email,
+                subject: "Organization updated successfully",
+                message: organizationUpdateTemplate(organizationDetails.name, userDetails.name)
+            });
+            await notificationService.sendNotificaion({
+                userId: userDetails.id,
+                title: "Organization updated",
+                message: `Hello, ${userDetails.name} you updated  organization named ${updatedOrganization.name}. `,
+                entityType: 'ORGANIZATION',
+                type: "ORG_APPROVED",
+                entityId: updatedOrganization.id
+            });
+            return res.json({
+                message: "organization updated. ",
+                data: updatedOrganization
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+}
+const adminUpdateController = new AdminUpdateController();
+export default adminUpdateController;
+//# sourceMappingURL=admin.update.controller.js.map

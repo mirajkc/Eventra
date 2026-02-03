@@ -73,6 +73,18 @@ enum EventType {
   OTHER
 }
 
+enum AdminAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum AdminEntityType {
+  EVENT
+  ORGANIZATION
+  USER
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -95,6 +107,7 @@ model User {
   notifications      Notification[]
   otpdetails         Otpdetails[]
   eventMessages      EventMessage[]
+  adminLogs          AdminLogs[]
 }
 
 model Otpdetails {
@@ -155,7 +168,7 @@ model OrganizationMember {
   role           OrganizationRole @default(MEMBER)
   joinedAt       DateTime         @default(now())
 
-  user         User         @relation(fields: [userId], references: [id])
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([userId, organizationId])
@@ -279,6 +292,21 @@ model EventMessage {
 
   @@index([eventId])
   @@index([senderId])
+  @@index([createdAt])
+}
+
+model AdminLogs {
+  id         String          @id @default(cuid())
+  adminId    String
+  action     AdminAction
+  entityId   String
+  entityType AdminEntityType
+  createdAt  DateTime        @default(now())
+  reason     String
+
+  admin User @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
   @@index([createdAt])
 }
 

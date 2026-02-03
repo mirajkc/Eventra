@@ -154,6 +154,22 @@ declare class AuthService {
             createdAt: Date;
             eventId: string;
             senderId: string;
+        })[] | ({
+            id: string;
+            createdAt: Date;
+            entityType: import("../generated/prisma/enums.js").AdminEntityType;
+            entityId: string;
+            adminId: string;
+            action: import("../generated/prisma/enums.js").AdminAction;
+            reason: string;
+        } | {
+            id: string;
+            createdAt: Date;
+            entityType: import("../generated/prisma/enums.js").AdminEntityType;
+            entityId: string;
+            adminId: string;
+            action: import("../generated/prisma/enums.js").AdminAction;
+            reason: string;
         })[] | {
             id: string;
             createdAt: Date;
@@ -231,6 +247,14 @@ declare class AuthService {
             createdAt: Date;
             eventId: string;
             senderId: string;
+        }[] | {
+            id: string;
+            createdAt: Date;
+            entityType: import("../generated/prisma/enums.js").AdminEntityType;
+            entityId: string;
+            adminId: string;
+            action: import("../generated/prisma/enums.js").AdminAction;
+            reason: string;
         }[];
         [x: number]: never;
         [x: symbol]: never;

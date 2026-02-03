@@ -12,6 +12,9 @@ Admins can view high-level platform statistics:
 - **Total organizations created** → from `Organization` table
 - **Total users registered** → from `User` table
 - **Event metrics per month** → from `EventMetrics` table (`totalViews`, `totalRegistrations`, `totalAttendees`)
+
+# TODO: (after algo has been implemented)
+
 - **Predicted metrics for next month** → from `AdminPrediction` table
 - **Trending events** → Based on `EventMetrics` or `UserInteraction` (top events by views or participation)
 

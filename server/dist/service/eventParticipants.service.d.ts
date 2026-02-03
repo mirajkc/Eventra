@@ -1,3 +1,4 @@
+import type { Prisma } from "../generated/prisma/client.js";
 declare class EventParticipantService {
     getEventParticipants({ filter, select, skip, take }: {
         filter: {
@@ -50,6 +51,9 @@ declare class EventParticipantService {
         attended: boolean;
         checkedInAt: Date | null;
     }>;
+    getCountsPerMonth<T extends Prisma.EventParticipantsFindManyArgs>(args: Prisma.SelectSubset<T, Prisma.EventParticipantsFindManyArgs>): Promise<import("@prisma/client/runtime/client").GetFindResult<Prisma.$EventParticipantsPayload<import("@prisma/client/runtime/client").DefaultArgs>, T, {
+        omit: Prisma.GlobalOmitConfig | undefined;
+    }>[]>;
 }
 declare const eventParticipantService: EventParticipantService;
 export default eventParticipantService;

@@ -308,6 +308,36 @@ export type EnumNotificationEntityWithAggregatesFilter<$PrismaModel = never> = {
     _min?: Prisma.NestedEnumNotificationEntityFilter<$PrismaModel>;
     _max?: Prisma.NestedEnumNotificationEntityFilter<$PrismaModel>;
 };
+export type EnumAdminActionFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminAction | Prisma.EnumAdminActionFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminActionFilter<$PrismaModel> | $Enums.AdminAction;
+};
+export type EnumAdminEntityTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminEntityType | Prisma.EnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminEntityTypeFilter<$PrismaModel> | $Enums.AdminEntityType;
+};
+export type EnumAdminActionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminAction | Prisma.EnumAdminActionFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminActionWithAggregatesFilter<$PrismaModel> | $Enums.AdminAction;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumAdminActionFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumAdminActionFilter<$PrismaModel>;
+};
+export type EnumAdminEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminEntityType | Prisma.EnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.AdminEntityType;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumAdminEntityTypeFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumAdminEntityTypeFilter<$PrismaModel>;
+};
 export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | Prisma.StringFieldRefInput<$PrismaModel>;
     in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>;
@@ -617,5 +647,35 @@ export type NestedEnumNotificationEntityWithAggregatesFilter<$PrismaModel = neve
     _count?: Prisma.NestedIntFilter<$PrismaModel>;
     _min?: Prisma.NestedEnumNotificationEntityFilter<$PrismaModel>;
     _max?: Prisma.NestedEnumNotificationEntityFilter<$PrismaModel>;
+};
+export type NestedEnumAdminActionFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminAction | Prisma.EnumAdminActionFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminActionFilter<$PrismaModel> | $Enums.AdminAction;
+};
+export type NestedEnumAdminEntityTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminEntityType | Prisma.EnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminEntityTypeFilter<$PrismaModel> | $Enums.AdminEntityType;
+};
+export type NestedEnumAdminActionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminAction | Prisma.EnumAdminActionFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminAction[] | Prisma.ListEnumAdminActionFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminActionWithAggregatesFilter<$PrismaModel> | $Enums.AdminAction;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumAdminActionFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumAdminActionFilter<$PrismaModel>;
+};
+export type NestedEnumAdminEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminEntityType | Prisma.EnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    in?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.AdminEntityType[] | Prisma.ListEnumAdminEntityTypeFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumAdminEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.AdminEntityType;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumAdminEntityTypeFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumAdminEntityTypeFilter<$PrismaModel>;
 };
 //# sourceMappingURL=commonInputTypes.d.ts.map

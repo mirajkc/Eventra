@@ -31,6 +31,9 @@ class UserService {
         }
         return user;
     }
+    async getTotalUsersCount() {
+        return await prisma.user.count();
+    }
 }
 const userService = new UserService();
 export default userService;

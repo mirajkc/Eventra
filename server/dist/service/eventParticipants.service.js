@@ -97,13 +97,6 @@ class EventParticipantService {
         const count = await prisma.eventParticipants.count({
             where: filter
         });
-        if (count <= 0) {
-            throw {
-                code: 500,
-                message: "Error occured while fetching the participants count",
-                status: "PARTICIPANT_COUNT_FETCH_ERR"
-            };
-        }
         return count;
     }
     getEventParticipantDetails = async ({ filter }) => {
@@ -119,6 +112,9 @@ class EventParticipantService {
         }
         return eventParticipant;
     };
+    async getCountsPerMonth(args) {
+        return prisma.eventParticipants.findMany(args);
+    }
 }
 const eventParticipantService = new EventParticipantService;
 export default eventParticipantService;
