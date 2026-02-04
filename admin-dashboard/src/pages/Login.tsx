@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from "@/components/ui/button";
 import { loginDTO } from "@/rules/auth.rules";
-import axiosInstance from "@/configs/axios.config";
+import axiosInstance from "@/configs/axios.config"; 
 import Cookies from 'js-cookie'
 import {toast} from 'sonner'
 import { useAuthStore } from "@/state/auth.state";

@@ -5,6 +5,8 @@ import Login from '@/pages/Login'
 import { useAuthStore } from '@/state/auth.state'
 import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
+import Dashboard from '@/pages/Dashboard'
+import DashboardLayout from '@/layouts/dashboard.layout'
 
 
 
@@ -43,8 +45,10 @@ export default function RouterConfiguration() {
   }, [userDetails])
 
   const router = createBrowserRouter([
-    { path: '/', Component: (isUserLoggedIn ? () => <>Logged In</> : Login) },
-    { path: '*', Component: NotFound }
+    { path: '/', element: (!isUserLoggedIn ? <Login /> : <DashboardLayout  />), children : [
+      { index : true, element : <Dashboard />}
+    ] },
+    { path: '*', element: <NotFound /> }
   ])
 
   if(loading) {
