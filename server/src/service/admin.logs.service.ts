@@ -22,7 +22,40 @@ class AdminLogsService {
     }
     return adminLog
   }
+
+
+  async getAdminLogs(skip : number, take : number, filter : any){
+    const adminLogs = await prisma.adminLogs.findMany({
+       where : filter,
+       skip : skip,
+       take : take,
+       include : {
+        admin : {
+          select : {
+            id : true,
+            name : true,
+            email : true
+          }
+        }
+       }
+
+     })
+     if(adminLogs.length < 1){
+      throw {
+          code : 404,
+          message : "No admin logs found. ",
+          status : "ADMIN_LOG_NOT_FOUND_ERR"
+      } as IErrorTypes
+     }
+     return adminLogs
+  }
+  async getAdminLogsCount(filter : any){
+    return prisma.adminLogs.count({
+      where : filter
+    })
+  }
 }
+
 const adminLogsService = new AdminLogsService()
 
 export default adminLogsService

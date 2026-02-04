@@ -10,6 +10,8 @@ import eventParticipantService from "../service/eventParticipants.service.js"
 import { totalRegistrationsPerMonth } from "../utilities/webdata.js"
 import adminLogsService from "../service/admin.logs.service.js"
 import type { IUserDetails } from "../lib/types/user.types.js"
+import errorLogService from "../service/errorlog.service.js"
+import creditService from "../service/creditpurchase.service.js"
 
 class AdminController {
   async deleteOrganization(req : Request, res:Response, next:NextFunction){
@@ -224,6 +226,146 @@ class AdminController {
           }
         }
       })
+
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getAllNotifications(req:Request, res:Response, next:NextFunction){
+    try {
+      const query = req.query
+      const page = Number(query.page) || 1
+      const take = Number(query.limit) || 10
+      const title = String(query.title) || ""
+      const skip = (page - 1) * take
+      
+      const notifications = await notificationService.getNotification({title : {contains : title}}, skip, take)
+      const totalNotifications = await notificationService.getNotificationCount({title : {contains : title}})
+      return res.json({
+        message : "Notifications has been fetched successfully",
+        data : notifications,
+        paginations : {
+          page : page,
+          limit : take,
+          total : totalNotifications,
+          hasNextPage : page * take < totalNotifications,
+          hasPreviousPage : page > 1
+        }
+      })
+      
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getAllErrorLogs(req:Request, res:Response, next:NextFunction){
+    try {
+      const query = req.query
+      const page = Number(query.page) || 1
+      const take = Number(query.limit) || 10
+      const skip = (page - 1) * take
+      const message = String(query.message) || ""
+
+      const errorLogs = await errorLogService.getErrorLogs(skip, take, {message : {contains : message}})
+      const totalErrorLogs = await errorLogService.getErrorLogsCount({message : {contains : message}})
+      return res.json({
+        message : "Error logs has been fetched successfully",
+        data : errorLogs,
+        paginations : {
+          page : page,
+          limit : take,
+          total : totalErrorLogs,
+          hasNextPage : page * take < totalErrorLogs,
+          hasPreviousPage : page > 1
+        }
+      })
+      
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getAllAdminLogs(req:Request, res:Response, next:NextFunction){
+    try {
+      const query = req.query
+      const page = Number(query.page) || 1
+      const take = Number(query.limit) || 10
+      const skip = (page - 1) * take
+      const name = query.name 
+      let filter = {}
+      if(name && String(name).length > 2){
+        const userDetails = await userService.getUserDetailsByName({name : {contains : String(name), mode: 'insensitive',}}, {})
+        filter = userDetails.id.length > 3 ? {adminId : userDetails.id} : {}
+      }
+      const adminLogs = await adminLogsService.getAdminLogs(skip, take, filter)
+      const totalAdminLogs = await adminLogsService.getAdminLogsCount(filter)
+      return res.json({
+        message : "Admin logs has been fetched successfully",
+        data : adminLogs,
+        paginations : {
+          page : page,
+          limit : take,
+          total : totalAdminLogs,
+          hasNextPage : page * take < totalAdminLogs,
+          hasPreviousPage : page > 1
+        }
+      })      
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getCreditAndRevenue(req:Request, res:Response, next:NextFunction){
+    try {
+      const query = req.query
+      const page = Number(query.page) || 1
+      const take = Number(query.limit) || 10
+      const skip = (page - 1) * take
+      const name = query.name 
+      const revenue = await creditService.getCreditPurchases()
+      const credits = await creditService.getCreditPurchases()
+      const filter = {
+        organization : {
+          name : {contains : name, mode : "insensitive"}
+        }
+      }
+      const include = {
+        user : {
+          select : {
+            name : true,
+            id : true,
+            email : true
+          }
+        },
+        organization : {
+          select : {
+            name : true,
+            id : true,
+            credits : true,
+            lastCreditReset : true
+          }
+        }
+      }
+      const creditPurchases = await creditService.getCreditPurchase(filter, skip, take, include)
+      const totalCreditPurchases = await creditService.getCreditPurchaseCount(filter)
+      return res.json({
+        message : "Credit purchases has been fetched successfully",
+        data : {
+          creditPurchases,
+          totalRevenue : revenue.totalCreditPurchases,
+          totalCredits : credits.totalCreditPurchases,
+          monthlyRevenue : revenue.monthlyCreditPurchases,
+          monthlyCredits : credits.monthlyCreditPurchases
+        },
+        paginations : {
+          page : page,
+          limit : take,
+          total : totalCreditPurchases,
+          hasNextPage : page * take < totalCreditPurchases,
+          hasPreviousPage : page > 1
+        }
+      })
+
 
     } catch (error) {
       next(error)

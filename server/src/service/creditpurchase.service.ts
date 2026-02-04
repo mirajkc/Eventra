@@ -2,7 +2,7 @@
 import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 
 class CreditPurchaseService {
-  async getCreditPurchaseCount(filter: { purchasedBy?: string, organizationId?: string }) {
+  async getCreditPurchaseCount(filter: any) {
     return prisma.creditPurchase.count({
       where: filter
     })
@@ -56,6 +56,58 @@ class CreditPurchaseService {
         creditPurchase: newCreditEntry,
       }
     })
+  }
+
+  async getRevenue() {
+    const month = new Date().getMonth() + 1
+    const monthlyRevenue = await prisma.creditPurchase.aggregate({
+      _sum: {
+        amount: true
+      },
+      where: {
+        purchasedAt: {
+          gte: new Date(new Date().getFullYear(), month - 1, 1),
+          lt: new Date(new Date().getFullYear(), month, 1)
+        }
+      }
+    })
+    const totalRevenue = await prisma.creditPurchase.aggregate({
+      _sum : {
+        amount : true
+      }
+    })
+    return {monthlyRevenue : monthlyRevenue._sum.amount, totalRevenue : totalRevenue._sum.amount}
+  }
+
+  async getCreditPurchases(){
+    const month = new Date().getMonth() + 1
+    const monthlyCreditPurchases = await prisma.creditPurchase.aggregate({
+      _sum: {
+        credits : true
+      },
+      where: {
+        purchasedAt: {
+          gte: new Date(new Date().getFullYear(), month - 1, 1),
+          lt: new Date(new Date().getFullYear(), month, 1)
+        }
+      }
+    })
+    const totalCreditPurchases = await prisma.creditPurchase.aggregate({
+      _sum : {
+        credits : true
+      }
+    })
+    return {monthlyCreditPurchases : monthlyCreditPurchases._sum.credits, totalCreditPurchases : totalCreditPurchases._sum.credits}
+  }
+
+  async getCreditPurchase(filter :any, skip:number, take:number, include : any){
+    const creditPurchases = await prisma.creditPurchase.findMany({
+      where : filter,
+      skip : skip,
+      take : take,
+      include : include
+    })
+    return creditPurchases
   }
 
 }

@@ -8,12 +8,24 @@ import validator from "../middleware/validator.middleware.js"
 
 const adminRouter:Router = express.Router()
 
+
+//admin crud and content management systm
 adminRouter.patch('/deleteorganization/:organizationId',validator(adminReasonDTO), authorize({role : "ADMIN"}), adminController.deleteOrganization)
 adminRouter.patch('/delete-event/:eventId',validator(adminReasonDTO) ,authorize({role : "ADMIN"}), adminController.deleteEvent)
 adminRouter.patch('/delete-user/:userId',validator(adminReasonDTO), authorize({role : "ADMIN"}), adminController.deleteUser)
-
-adminRouter.get('/website-metadata',authorize({role : 'ADMIN'}), adminController.getMetadata)
 adminRouter.use("/update",authorize({role : "ADMIN"}),  adminUpdateRoute)
+
+//admin read and website data 
+adminRouter.get('/website-metadata',authorize({role : 'ADMIN'}), adminController.getMetadata)
+adminRouter.get('/get-all-notifications', authorize({role : "ADMIN"}), adminController.getAllNotifications)
+adminRouter.get('/get-all-error-logs', authorize({role : "ADMIN"}), adminController.getAllErrorLogs)
+adminRouter.get('/get-credit-and-revenue', authorize({role : "ADMIN"}), adminController.getCreditAndRevenue)
+adminRouter.get('/get-all-admin-logs', authorize({role : "ADMIN"}), adminController.getAllAdminLogs)
+
+
+
+
+
 
 
 

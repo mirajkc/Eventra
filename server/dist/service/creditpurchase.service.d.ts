@@ -1,8 +1,5 @@
 declare class CreditPurchaseService {
-    getCreditPurchaseCount(filter: {
-        purchasedBy?: string;
-        organizationId?: string;
-    }): Promise<number>;
+    getCreditPurchaseCount(filter: any): Promise<number>;
     updateCredit({ filter, data }: {
         filter: {
             id: string;
@@ -38,6 +35,27 @@ declare class CreditPurchaseService {
         organization: any;
         creditPurchase: any;
     }>;
+    getRevenue(): Promise<{
+        monthlyRevenue: number | null;
+        totalRevenue: number | null;
+    }>;
+    getCreditPurchases(): Promise<{
+        monthlyCreditPurchases: number | null;
+        totalCreditPurchases: number | null;
+    }>;
+    getCreditPurchase(filter: any, skip: number, take: number, include: any): Promise<({
+        [x: string]: never;
+        [x: number]: never;
+        [x: symbol]: never;
+    } & {
+        id: string;
+        organizationId: string;
+        purchasedBy: string;
+        package: import("../generated/prisma/enums.js").CreditPackage;
+        credits: number;
+        amount: number;
+        purchasedAt: Date;
+    })[]>;
 }
 declare const creditService: CreditPurchaseService;
 export default creditService;

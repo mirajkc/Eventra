@@ -43,7 +43,7 @@ class NotificationService {
                 createdAt: "desc"
             },
             skip: skip,
-            take: limit
+            take: limit,
         });
         if (!notifications) {
             throw {

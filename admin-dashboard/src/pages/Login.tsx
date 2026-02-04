@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Controller, useForm } from 'react-hook-form'
@@ -34,7 +34,6 @@ export default function Login() {
         path  : ""
       })
       await getLoggedInUserDetails()
-      toast.success("Hello admin, you are logged in successfully. ")
       navigate("/")
     } catch (error:any) {
       if(error.response){

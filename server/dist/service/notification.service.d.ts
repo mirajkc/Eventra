@@ -1,7 +1,10 @@
 import type { ICreateNotificaion } from "../lib/types/notification.types.js";
 declare class NotificationService {
     getNotificationCount(filter: {
-        userId: string;
+        userId?: string;
+        title?: {
+            contains: string;
+        };
     }): Promise<number>;
     sendNotificaion({ userId, title, message, type, entityId, entityType }: ICreateNotificaion): Promise<{
         id: string;
@@ -16,7 +19,10 @@ declare class NotificationService {
     }>;
     sendManyNotification(data: Array<ICreateNotificaion>): Promise<import("../generated/prisma/internal/prismaNamespace.js").BatchPayload>;
     getNotification(filter: {
-        userId: string;
+        userId?: string;
+        title?: {
+            contains: string;
+        };
     }, skip: number, limit: number): Promise<{
         id: string;
         message: string;

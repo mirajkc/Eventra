@@ -11,6 +11,22 @@ declare class AdminLogsService {
         action: import("../generated/prisma/enums.js").AdminAction;
         reason: string;
     }>;
+    getAdminLogs(skip: number, take: number, filter: any): Promise<({
+        admin: {
+            id: string;
+            name: string;
+            email: string;
+        };
+    } & {
+        id: string;
+        createdAt: Date;
+        entityType: import("../generated/prisma/enums.js").AdminEntityType;
+        entityId: string;
+        adminId: string;
+        action: import("../generated/prisma/enums.js").AdminAction;
+        reason: string;
+    })[]>;
+    getAdminLogsCount(filter: any): Promise<number>;
 }
 declare const adminLogsService: AdminLogsService;
 export default adminLogsService;

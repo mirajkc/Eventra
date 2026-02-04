@@ -31,6 +31,20 @@ class UserService {
         }
         return user;
     }
+    async getUserDetailsByName(filter, include) {
+        const user = await prisma.user.findFirst({
+            where: filter,
+            include: include
+        });
+        if (!user?.id) {
+            throw {
+                code: 404,
+                message: "User not found",
+                status: "USER_NOT_FOUND_ERR",
+            };
+        }
+        return user;
+    }
     async getTotalUsersCount() {
         return await prisma.user.count();
     }

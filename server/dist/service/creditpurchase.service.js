@@ -44,6 +44,55 @@ class CreditPurchaseService {
             };
         });
     }
+    async getRevenue() {
+        const month = new Date().getMonth() + 1;
+        const monthlyRevenue = await prisma.creditPurchase.aggregate({
+            _sum: {
+                amount: true
+            },
+            where: {
+                purchasedAt: {
+                    gte: new Date(new Date().getFullYear(), month - 1, 1),
+                    lt: new Date(new Date().getFullYear(), month, 1)
+                }
+            }
+        });
+        const totalRevenue = await prisma.creditPurchase.aggregate({
+            _sum: {
+                amount: true
+            }
+        });
+        return { monthlyRevenue: monthlyRevenue._sum.amount, totalRevenue: totalRevenue._sum.amount };
+    }
+    async getCreditPurchases() {
+        const month = new Date().getMonth() + 1;
+        const monthlyCreditPurchases = await prisma.creditPurchase.aggregate({
+            _sum: {
+                credits: true
+            },
+            where: {
+                purchasedAt: {
+                    gte: new Date(new Date().getFullYear(), month - 1, 1),
+                    lt: new Date(new Date().getFullYear(), month, 1)
+                }
+            }
+        });
+        const totalCreditPurchases = await prisma.creditPurchase.aggregate({
+            _sum: {
+                credits: true
+            }
+        });
+        return { monthlyCreditPurchases: monthlyCreditPurchases._sum.credits, totalCreditPurchases: totalCreditPurchases._sum.credits };
+    }
+    async getCreditPurchase(filter, skip, take, include) {
+        const creditPurchases = await prisma.creditPurchase.findMany({
+            where: filter,
+            skip: skip,
+            take: take,
+            include: include
+        });
+        return creditPurchases;
+    }
 }
 const creditService = new CreditPurchaseService();
 export default creditService;

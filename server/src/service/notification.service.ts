@@ -4,7 +4,7 @@ import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 import type { ICreateNotificaion } from "../lib/types/notification.types.js"
 
 class NotificationService {
-  async getNotificationCount(filter: { userId: string }) {
+  async getNotificationCount(filter: { userId?: string , title?: {contains : string}}) {
     return prisma.notification.count({
       where: filter
     })
@@ -42,14 +42,14 @@ class NotificationService {
     return notifications
   }
 
-  async getNotification(filter: { userId: string }, skip: number, limit: number) {
+  async getNotification(filter: { userId?: string , title?: {contains : string}}, skip: number, limit: number) {
     const notifications = await prisma.notification.findMany({
       where: filter,
       orderBy: {
         createdAt: "desc"
       },
       skip: skip,
-      take: limit
+      take: limit,
     })
     if (!notifications) {
       throw {

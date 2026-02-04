@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Login from '@/pages/Login'
 import { useAuthStore } from '@/state/auth.state'
 import { Spinner } from '@/components/ui/spinner'
+import { toast } from 'sonner'
 
 
 
@@ -24,6 +25,11 @@ export default function RouterConfiguration() {
 
   const updateLoginStatus = () => {
     if(userDetails.id.length > 1){
+      if(userDetails.role !== "ADMIN"){
+        toast.error("Admin can only access admin panel")
+        setIsUserLoggedIn(false)
+        return
+      }
       setIsUserLoggedIn(true)
     }
   }
