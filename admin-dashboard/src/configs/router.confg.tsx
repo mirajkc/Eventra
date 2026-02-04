@@ -7,6 +7,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
 import Dashboard from '@/pages/Dashboard'
 import DashboardLayout from '@/layouts/dashboard.layout'
+import { contentManagementRoutes } from './content.managment.route'
 
 
 
@@ -46,7 +47,9 @@ export default function RouterConfiguration() {
 
   const router = createBrowserRouter([
     { path: '/', element: (!isUserLoggedIn ? <Login /> : <DashboardLayout  />), children : [
-      { index : true, element : <Dashboard />}
+      { index : true, element : <Dashboard />},
+      // Conentent Managment routes
+      ...contentManagementRoutes,
     ] },
     { path: '*', element: <NotFound /> }
   ])

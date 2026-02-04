@@ -10,5 +10,7 @@ userRouter.get('/me', authorize({}), userController.getLoggedInUser);
 userRouter.post('/update-user', authorize({}), upload.single('image'), validator(userUpdateDTO), userController.updateUser);
 userRouter.delete('/delete-user', authorize({}), userController.deleteUser);
 userRouter.get('/me/getdetails', authorize({}), userController.getUserDetails);
+//get all users by admin
+userRouter.get('/get-all-users', authorize({ role: 'ADMIN' }), userController.getAllUsers);
 export default userRouter;
 //# sourceMappingURL=user.route.js.map

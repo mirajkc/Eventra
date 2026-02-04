@@ -560,7 +560,18 @@ declare class UserService {
         updatedAt: Date;
         image: string | null;
     }>;
-    getTotalUsersCount(): Promise<number>;
+    getAllUsers(skip: number, take: number, filter: any): Promise<{
+        id: string;
+        name: string;
+        email: string;
+        password: string | null;
+        role: import("../generated/prisma/enums.js").Role;
+        phone: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        image: string | null;
+    }[]>;
+    getTotalUsersCount(filter?: any): Promise<number>;
 }
 declare const userService: UserService;
 export default userService;

@@ -166,6 +166,33 @@ class UserController {
             next(error);
         }
     }
+    async getAllUsers(req, res, next) {
+        try {
+            const query = req.query;
+            const page = Number(query.page) || 1;
+            const take = Number(query.limit) || 10;
+            const skip = (page - 1) * take;
+            const filter = query.name ? { name: { contains: query.name, mode: 'insensitive' } } : {};
+            const userDetails = await userService.getAllUsers(skip, take, filter);
+            const totalUsers = await userService.getTotalUsersCount(filter);
+            const pagination = {
+                currentPage: page,
+                totalPages: Math.ceil(totalUsers / take),
+                take,
+                totalDocs: totalUsers,
+                hasNextPage: page < Math.ceil(totalUsers / take),
+                hasPreviousPage: page > 1
+            };
+            return res.json({
+                message: "Users fetched successfully",
+                data: userDetails,
+                pagination
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
 }
 const userController = new UserController();
 export default userController;

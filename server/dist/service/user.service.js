@@ -45,7 +45,22 @@ class UserService {
         }
         return user;
     }
-    async getTotalUsersCount() {
+    async getAllUsers(skip, take, filter) {
+        const userDetails = await prisma.user.findMany({
+            where: filter,
+            skip: skip,
+            take: take
+        });
+        if (!userDetails[0]?.id) {
+            throw {
+                code: 404,
+                message: "User not found",
+                status: "USER_NOT_FOUND_ERR",
+            };
+        }
+        return userDetails;
+    }
+    async getTotalUsersCount(filter) {
         return await prisma.user.count();
     }
 }

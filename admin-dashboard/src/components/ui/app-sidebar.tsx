@@ -72,10 +72,10 @@ export function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Dashboard">
-                  <a href="#">
+                  <Link to="/">
                     <LayoutDashboard />
                     <span>Dashboard</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -103,26 +103,26 @@ export function AppSidebar() {
                    <SidebarMenuSub>
                      <SidebarMenuSubItem>
                        <SidebarMenuSubButton asChild>
-                         <a href="/content/event">
+                         <Link to="/content/event">
                            <CalendarDays />
                            <span>Event</span>
-                         </a>
+                         </Link>
                        </SidebarMenuSubButton>
                      </SidebarMenuSubItem>
                      <SidebarMenuSubItem>
                        <SidebarMenuSubButton asChild>
-                         <a href="/content/user">
+                         <Link to="/content/user">
                            <Users />
                            <span>User</span>
-                         </a>
+                         </Link>
                        </SidebarMenuSubButton>
                      </SidebarMenuSubItem>
                       <SidebarMenuSubItem>
                        <SidebarMenuSubButton asChild>
-                         <a href="/content/organization">
+                         <Link to="/content/organization">
                            <Building />
                            <span> Organization</span>
-                         </a>
+                         </Link>
                        </SidebarMenuSubButton>
                      </SidebarMenuSubItem>
                    </SidebarMenuSub>
@@ -139,26 +139,26 @@ export function AppSidebar() {
              <SidebarMenu>
                <SidebarMenuItem>
                  <SidebarMenuButton asChild tooltip="Notifications">
-                   <a href="/notifications">
+                   <Link to="/notifications">
                      <Bell />
                      <span>Notifications</span>
-                   </a>
+                   </Link>
                  </SidebarMenuButton>
                </SidebarMenuItem>
                 <SidebarMenuItem>
                  <SidebarMenuButton asChild tooltip="Errors">
-                   <a href="/errors">
+                   <Link to="/errors">
                      <AlertCircle />
                      <span>Errors</span>
-                   </a>
+                   </Link>
                  </SidebarMenuButton>
                </SidebarMenuItem>
                  <SidebarMenuItem>
                  <SidebarMenuButton asChild tooltip="Admin Log">
-                   <a href="/admin-log">
+                   <Link to="/admin-log">
                      <ScrollText />
                      <span>Admin Log</span>
-                   </a>
+                   </Link>
                  </SidebarMenuButton>
                </SidebarMenuItem>
              </SidebarMenu>
