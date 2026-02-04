@@ -1,9 +1,10 @@
 /// this will contain all the pages route related to content managemnt 
-import EventManagementLayout from "@/layouts/eventmanagement.layout"
-import EventManagement from "@/pages/EventManagement"
+
+import UserManagementLayout from "@/layouts/usermanagemen.layout"
+import UserManagement from "@/pages/UserManagement"
 
 export const contentManagementRoutes= [
-  { path: 'content/event', Component : EventManagementLayout, children : [
-    { index : true, Component : EventManagement}
+  { path: 'content/user', Component : UserManagementLayout, children : [
+    { index : true, Component : UserManagement}
   ]}
 ]
