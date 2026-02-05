@@ -18,6 +18,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import axiosInstance from "@/configs/axios.config"
+import { useState } from "react"
+import { toast } from "sonner"
+import { Spinner } from "./spinner"
+import Cookies from 'js-cookie'
 
 export function NavUser({
   user,
@@ -29,6 +34,31 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const [loading, setLoading] = useState(false)
+  const handleLogout = async() => {
+    try {
+      setLoading(true)
+      await axiosInstance.get('/auth/logout')
+      Cookies.remove('accessToken')
+      window.location.href = '/'
+    } catch (error : any) {
+      if(error.response && error.response.message ) {
+        toast.error(error.response.message)
+        return
+      }
+      toast.error('Error occurred while logging out please try again. ')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if(loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen w-full" >
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <SidebarMenu>
@@ -72,7 +102,7 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
              
               Log out
             </DropdownMenuItem>

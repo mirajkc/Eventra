@@ -11,7 +11,8 @@ import {
   AlertCircle,
   ChevronRight,
   ChevronDown,
-  Building
+  Building,
+  CreditCard
 } from "lucide-react"
 
 import {
@@ -75,6 +76,18 @@ export function AppSidebar() {
                   <Link to="/">
                     <LayoutDashboard />
                     <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Dashboard">
+                  <Link to="/credits">
+                    <CreditCard />
+                    <span>Credits</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

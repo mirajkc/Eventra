@@ -9,6 +9,9 @@ import Dashboard from '@/pages/Dashboard'
 import DashboardLayout from '@/layouts/dashboard.layout'
 import { contentManagementRoutes } from './content.managment.route'
 import Notifications from '@/pages/Notifications'
+import ErrorDetails from '@/pages/ErrorDetails'
+import AdminLog from '@/pages/AdminLog'
+import Credits from '@/pages/Credits'
 
 
 
@@ -49,9 +52,11 @@ export default function RouterConfiguration() {
   const router = createBrowserRouter([
     { path: '/', element: (!isUserLoggedIn ? <Login /> : <DashboardLayout  />), children : [
       { index : true, element : <Dashboard />},
-      // Conentent Managment routes
       ...contentManagementRoutes,
-      {path: '/notifications', element: <Notifications />}
+      {path: '/notifications', element: <Notifications />},
+      {path: '/errors', element: <ErrorDetails />},
+      {path: '/admin-log', element: <AdminLog />},
+      {path: '/credits', element: <Credits />}
     ] },
     { path: '*', element: <NotFound /> }
   ])

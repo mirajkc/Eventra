@@ -18,7 +18,7 @@ import { AddUser } from "@/components/user component/add-user";
 import { UserDetails } from "@/components/user component/user-details";
 import { DeleteUser } from "@/components/user component/delete-user";
 import { EditUser } from "@/components/user component/edit-user";
-import { toast } from "sonner";
+
 
 export default function UserManagement() { 
   const [loading, setLoading] = useState(false);
