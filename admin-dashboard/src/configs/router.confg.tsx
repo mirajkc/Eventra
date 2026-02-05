@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import Dashboard from '@/pages/Dashboard'
 import DashboardLayout from '@/layouts/dashboard.layout'
 import { contentManagementRoutes } from './content.managment.route'
+import Notifications from '@/pages/Notifications'
 
 
 
@@ -50,6 +51,7 @@ export default function RouterConfiguration() {
       { index : true, element : <Dashboard />},
       // Conentent Managment routes
       ...contentManagementRoutes,
+      {path: '/notifications', element: <Notifications />}
     ] },
     { path: '*', element: <NotFound /> }
   ])
