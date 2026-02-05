@@ -105,7 +105,6 @@ class AdminUpdateController {
       }
       const eventDetails : any  = await eventService.getEvent({ filter: { id: eventId } , include : {
         creator : true,
-        organization : true,
         _count : {
           select : {
             participants : true
@@ -120,7 +119,6 @@ class AdminUpdateController {
         } as IErrorTypes
       }
       const creatorDetails = eventDetails.creator
-      const organizationDetails = eventDetails.organization
       let imageUrl = eventDetails.image;
       if (req.file) {
         const imageFile = req.file.buffer
