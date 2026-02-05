@@ -114,6 +114,9 @@ Eventra/
 
 [Live Preview](https://eventra-tawny.vercel.app/)
 
+[Admin Dashboard](https://eventra-admin-dashboard.vercel.app/)
+
 ---
 
 Built with ❤️ by the Eventra Team.
+
