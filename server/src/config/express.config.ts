@@ -12,7 +12,7 @@ import enviroment from "./enviroment.config.js";
 const app: Application = express()
 
 app.use(cors({
-  origin: [enviroment.clientURL, "http://localhost:3000", "http://localhost:5173"],
+  origin: [enviroment.clientURL, "http://localhost:3000", "http://localhost:5173","https://eventra-admin-dashboard.vercel.app"],
   credentials: true
 }));
 app.use(helmet())
