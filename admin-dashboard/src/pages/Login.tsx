@@ -34,7 +34,7 @@ export default function Login() {
         path  : ""
       })
       await getLoggedInUserDetails()
-      navigate("/")
+      window.location.href = "/"
     } catch (error:any) {
       if(error.response){
         toast.error(error.response.data.message)

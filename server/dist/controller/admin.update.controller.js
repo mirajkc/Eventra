@@ -80,12 +80,12 @@ class AdminUpdateController {
             const params = req.params;
             const adminDetails = req.userDetails;
             const data = req.body;
-            const userId = String(params.userId);
+            const eventId = String(params.eventId);
             const reason = String(params.reason);
-            if (!userId) {
+            if (!eventId) {
                 throw {
                     code: 404,
-                    message: "User id is required",
+                    message: "Event id is required",
                     status: "USER_ID_NOT_FOUND_ERR"
                 };
             }
@@ -96,20 +96,15 @@ class AdminUpdateController {
                     status: "REASON_NOT_FOUND_ERR"
                 };
             }
-            const userDetails = await userService.getUserDetails({ id: userId }, {});
-            const organizationDetails = await organizationService.getOrganizationByFilter({
-                filter: { id: data.organizationId },
-                include: {}
-            });
-            if (!organizationDetails) {
-                throw {
-                    code: 404,
-                    message: "Error organization not found make sure organization exists. ",
-                    status: "ORGANIZATION_NOT_FOUND_ERR"
-                };
-            }
-            await checkForCredit(organizationDetails.id);
-            const eventDetails = await eventService.getEvent({ filter: { id: data.id } });
+            const eventDetails = await eventService.getEvent({ filter: { id: eventId }, include: {
+                    creator: true,
+                    organization: true,
+                    _count: {
+                        select: {
+                            participants: true
+                        }
+                    }
+                } });
             if (!eventDetails) {
                 throw {
                     code: 404,
@@ -117,6 +112,8 @@ class AdminUpdateController {
                     status: "EVENT_NOT_FOUND_ERR"
                 };
             }
+            const creatorDetails = eventDetails.creator;
+            const organizationDetails = eventDetails.organization;
             let imageUrl = eventDetails.image;
             if (req.file) {
                 const imageFile = req.file.buffer;
@@ -148,12 +145,12 @@ class AdminUpdateController {
                 }
             });
             await emailService.sendEmail({
-                to: userDetails.email,
+                to: creatorDetails.email,
                 subject: `The event ${updatedEvent.title} has been updated by one of our admin.`,
                 message: adminUpdateTemplate("EVENT", reason)
             });
             await notificationService.sendNotificaion({
-                userId: userDetails.id,
+                userId: creatorDetails.id,
                 title: "Your event has been updated by one of our admin. ",
                 message: `The reason for updating your event is ${reason}. If you have any concerns, please contact our support team.`,
                 type: "EVENT_DELETED",
@@ -176,9 +173,9 @@ class AdminUpdateController {
             }));
             await notificationService.sendManyNotification(groupNotifications);
             await emailService.sendEmail({
-                to: userDetails.email,
+                to: creatorDetails.email,
                 subject: `The event ${updatedEvent.title} has been updated.`,
-                message: updateEventTemplate(updatedEvent.title, userDetails.name)
+                message: updateEventTemplate(updatedEvent.title, creatorDetails.name)
             });
             return res.json({
                 message: "Event updated successfully. ",
@@ -194,13 +191,13 @@ class AdminUpdateController {
             const adminDetails = req.userDetails;
             const data = req.body;
             const params = req.params;
-            const userId = String(params.userId);
+            const organizationId = String(params.organizationId);
             const reason = String(params.reason);
-            if (!userId) {
+            if (!organizationId) {
                 throw {
                     code: 404,
-                    message: "User id is required",
-                    status: "USER_ID_NOT_FOUND_ERR"
+                    message: "Organization id is required",
+                    status: "ORGANIZATION_ID_NOT_FOUND_ERR"
                 };
             }
             if (!reason) {
@@ -210,8 +207,26 @@ class AdminUpdateController {
                     status: "REASON_NOT_FOUND_ERR"
                 };
             }
-            const userDetails = await userService.getUserDetails({ id: userId }, {});
-            const organizationDetails = await organizationService.getOrganizationByOwner(userDetails.id);
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: { id: organizationId },
+                include: {
+                    members: {
+                        where: {
+                            role: "OWNER"
+                        },
+                        include: {
+                            user: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    email: true,
+                                    image: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
             if (!organizationDetails) {
                 throw {
                     code: 403,
@@ -219,6 +234,7 @@ class AdminUpdateController {
                     status: "ORGANIZATION_OWNERSHIP_ERR"
                 };
             }
+            const ownerDetails = organizationDetails.members[0].user;
             await checkForCredit(organizationDetails.id);
             const files = req.files;
             const imageFile = files.image?.[0];
@@ -244,27 +260,27 @@ class AdminUpdateController {
                 }
             });
             await notificationService.sendNotificaion({
-                userId: userDetails.id,
+                userId: ownerDetails.id,
                 title: "Organization updated",
-                message: `Hello, ${userDetails.name} organization named ${updatedOrganization.name} has been updated by one of our admin due to ${reason}. `,
+                message: `Hello, ${ownerDetails.name} organization named ${updatedOrganization.name} has been updated by one of our admin due to ${reason}. `,
                 entityType: 'ORGANIZATION',
                 type: "ORG_APPROVED",
                 entityId: updatedOrganization.id
             });
             await emailService.sendEmail({
-                to: userDetails.email,
+                to: ownerDetails.email,
                 subject: "Your organizaation has been updated by one of our admin. ",
                 message: adminUpdateTemplate("ORGANIZATION", reason)
             });
             await emailService.sendEmail({
-                to: userDetails.email,
+                to: ownerDetails.email,
                 subject: "Organization updated successfully",
-                message: organizationUpdateTemplate(organizationDetails.name, userDetails.name)
+                message: organizationUpdateTemplate(organizationDetails.name, ownerDetails.name)
             });
             await notificationService.sendNotificaion({
-                userId: userDetails.id,
+                userId: ownerDetails.id,
                 title: "Organization updated",
-                message: `Hello, ${userDetails.name} you updated  organization named ${updatedOrganization.name}. `,
+                message: `Hello, ${ownerDetails.name} you updated  organization named ${updatedOrganization.name}. `,
                 entityType: 'ORGANIZATION',
                 type: "ORG_APPROVED",
                 entityId: updatedOrganization.id
