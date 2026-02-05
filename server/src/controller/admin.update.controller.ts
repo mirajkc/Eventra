@@ -243,14 +243,8 @@ class AdminUpdateController {
           }
           const ownerDetails = organizationDetails.members[0].user
           await checkForCredit(organizationDetails.id)
-          const files = req.files as {
-            image?: Express.Multer.File[],
-            thumbnail?: Express.Multer.File[],
-          }
-          const imageFile = files.image?.[0]
-          const thumbnailFile = files.thumbnail?.[0]
-          const profileURL = imageFile ? await uploadImage(imageFile.buffer, "Eventra/Organization/profile") : organizationDetails.image
-          const thumbnailURL = thumbnailFile ? await uploadImage(thumbnailFile.buffer, "Eventra/Organization/thumbnail") : organizationDetails.thumbnail
+          const profileURL =  organizationDetails.image
+          const thumbnailURL =  organizationDetails.thumbnail
           const uploadData: IUploadOrganizationData = {
             ...data,
             thumbnail: thumbnailURL,
