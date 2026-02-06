@@ -82,16 +82,6 @@ declare class AuthService {
             purchasedAt: Date;
         })[] | ({
             id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        } | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        })[] | ({
-            id: string;
             userId: string;
             eventId: string;
             registeredAt: Date;
@@ -210,11 +200,6 @@ declare class AuthService {
             credits: number;
             amount: number;
             purchasedAt: Date;
-        }[] | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
         }[] | {
             id: string;
             userId: string;

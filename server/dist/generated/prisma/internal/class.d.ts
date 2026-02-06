@@ -233,61 +233,6 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
-     * `prisma.userEmbedding`: Exposes CRUD operations for the **UserEmbedding** model.
-      * Example usage:
-      * ```ts
-      * // Fetch zero or more UserEmbeddings
-      * const userEmbeddings = await prisma.userEmbedding.findMany()
-      * ```
-      */
-    get userEmbedding(): Prisma.UserEmbeddingDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
-    /**
-     * `prisma.eventEmbedding`: Exposes CRUD operations for the **EventEmbedding** model.
-      * Example usage:
-      * ```ts
-      * // Fetch zero or more EventEmbeddings
-      * const eventEmbeddings = await prisma.eventEmbedding.findMany()
-      * ```
-      */
-    get eventEmbedding(): Prisma.EventEmbeddingDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
-    /**
-     * `prisma.userInteraction`: Exposes CRUD operations for the **UserInteraction** model.
-      * Example usage:
-      * ```ts
-      * // Fetch zero or more UserInteractions
-      * const userInteractions = await prisma.userInteraction.findMany()
-      * ```
-      */
-    get userInteraction(): Prisma.UserInteractionDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
-    /**
-     * `prisma.eventMetrics`: Exposes CRUD operations for the **EventMetrics** model.
-      * Example usage:
-      * ```ts
-      * // Fetch zero or more EventMetrics
-      * const eventMetrics = await prisma.eventMetrics.findMany()
-      * ```
-      */
-    get eventMetrics(): Prisma.EventMetricsDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
-    /**
-     * `prisma.adminPrediction`: Exposes CRUD operations for the **AdminPrediction** model.
-      * Example usage:
-      * ```ts
-      * // Fetch zero or more AdminPredictions
-      * const adminPredictions = await prisma.adminPrediction.findMany()
-      * ```
-      */
-    get adminPrediction(): Prisma.AdminPredictionDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
-    /**
      * `prisma.errorLog`: Exposes CRUD operations for the **ErrorLog** model.
       * Example usage:
       * ```ts

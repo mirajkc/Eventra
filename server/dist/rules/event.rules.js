@@ -35,6 +35,5 @@ export const updateEventByAdminDTO = Joi.object({
     status: Joi.string().valid("CANCELLED"),
     category: Joi.string().valid("WORKSHOP", "MEETUP", "CONFERENCE", "WEBINAR", "HACKATHON", "COMPETITION", "OTHER"),
     tags: Joi.array().items(Joi.string()),
-    image: Joi.any().allow(null)
 });
 //# sourceMappingURL=event.rules.js.map

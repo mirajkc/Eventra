@@ -98,7 +98,6 @@ class AdminUpdateController {
             }
             const eventDetails = await eventService.getEvent({ filter: { id: eventId }, include: {
                     creator: true,
-                    organization: true,
                     _count: {
                         select: {
                             participants: true
@@ -113,7 +112,6 @@ class AdminUpdateController {
                 };
             }
             const creatorDetails = eventDetails.creator;
-            const organizationDetails = eventDetails.organization;
             let imageUrl = eventDetails.image;
             if (req.file) {
                 const imageFile = req.file.buffer;
@@ -236,11 +234,8 @@ class AdminUpdateController {
             }
             const ownerDetails = organizationDetails.members[0].user;
             await checkForCredit(organizationDetails.id);
-            const files = req.files;
-            const imageFile = files.image?.[0];
-            const thumbnailFile = files.thumbnail?.[0];
-            const profileURL = imageFile ? await uploadImage(imageFile.buffer, "Eventra/Organization/profile") : organizationDetails.image;
-            const thumbnailURL = thumbnailFile ? await uploadImage(thumbnailFile.buffer, "Eventra/Organization/thumbnail") : organizationDetails.thumbnail;
+            const profileURL = organizationDetails.image;
+            const thumbnailURL = organizationDetails.thumbnail;
             const uploadData = {
                 ...data,
                 thumbnail: thumbnailURL,
