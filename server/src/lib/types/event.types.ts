@@ -74,3 +74,13 @@ export interface IEventQuery {
   updatedAt?: "desc" | 'asc',  // filter by last update
   status?: IEventStatus
 }
+
+
+export interface IEventScore {
+  title: string
+  description: string
+  category: IEventTypes
+  tags: Array<any>
+  image?: string | null | undefined
+  premium : boolean
+}

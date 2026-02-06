@@ -18,6 +18,7 @@ import type { ICreateNotificaion } from "../lib/types/notification.types.js"
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js"
 import type { ICreateOrganization, IUploadOrganizationData } from "../lib/types/organization.types.js"
 import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js"
+import getEventScore from "../Algorithms/getEventScore.js"
 
 class AdminUpdateController {
   async updateUser(req:Request, res:Response, next:NextFunction){
@@ -140,6 +141,26 @@ class AdminUpdateController {
           image: imageUrl
         }
       })
+      const organizationDetails = await organizationService.getOrganizationByFilter({
+        filter : {
+          id : updatedEvent.organizationId
+        },
+        include : {}
+      })
+      const eventScore:number = getEventScore({
+       title: updatedEvent.title,
+        description: updatedEvent.description,
+        category: updatedEvent.category,
+        tags: updatedEvent.tags,
+        image: updatedEvent.image,
+        premium : organizationDetails.isPremium
+    })
+    await eventService.updateEvent({
+      filter : {id : updatedEvent.id},
+      data : {
+        eventScore : eventScore
+      }
+    })
       await adminLogsService.createAdminLog({
         logDetails : {
           adminId : adminDetails.id,

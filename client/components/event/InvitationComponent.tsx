@@ -177,9 +177,8 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                     <Info className="w-5 h-5 text-primary" />
                     About this Event
                   </h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg">
-                    {event.description}
-                  </p>
+                  <textarea defaultValue={event.description} className="w-full h-full text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg" readOnly>
+                  </textarea>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-4">

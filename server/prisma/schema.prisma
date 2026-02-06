@@ -198,6 +198,8 @@ model Event {
   tags     String[]
   image    String?
 
+  eventScore Float?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

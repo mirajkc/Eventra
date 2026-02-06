@@ -12,6 +12,7 @@ import getSlug from "../utilities/createSlug.js";
 import eventParticipantService from "../service/eventParticipants.service.js";
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js";
 import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js";
+import getEventScore from "../Algorithms/getEventScore.js";
 class AdminUpdateController {
     async updateUser(req, res, next) {
         try {
@@ -131,6 +132,26 @@ class AdminUpdateController {
                     category: data.category ? data.category : eventDetails.category,
                     tags: data.tags ? data.tags : eventDetails.tags,
                     image: imageUrl
+                }
+            });
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: {
+                    id: updatedEvent.organizationId
+                },
+                include: {}
+            });
+            const eventScore = getEventScore({
+                title: updatedEvent.title,
+                description: updatedEvent.description,
+                category: updatedEvent.category,
+                tags: updatedEvent.tags,
+                image: updatedEvent.image,
+                premium: organizationDetails.isPremium
+            });
+            await eventService.updateEvent({
+                filter: { id: updatedEvent.id },
+                data: {
+                    eventScore: eventScore
                 }
             });
             await adminLogsService.createAdminLog({

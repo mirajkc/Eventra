@@ -118,6 +118,7 @@ export declare const EventScalarFieldEnum: {
     readonly category: "category";
     readonly tags: "tags";
     readonly image: "image";
+    readonly eventScore: "eventScore";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };

@@ -70,4 +70,12 @@ export interface IEventQuery {
     updatedAt?: "desc" | 'asc';
     status?: IEventStatus;
 }
+export interface IEventScore {
+    title: string;
+    description: string;
+    category: IEventTypes;
+    tags: Array<any>;
+    image?: string | null | undefined;
+    premium: boolean;
+}
 //# sourceMappingURL=event.types.d.ts.map

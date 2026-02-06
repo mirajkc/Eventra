@@ -15,6 +15,7 @@ import eventParticipantService from "../service/eventParticipants.service.js"
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js"
 import generateString from "../utilities/randomstring.generator.js"
 import { checkForCredit } from "../utilities/checkforcredit.js"
+import getEventScore from "../Algorithms/getEventScore.js"
 
 
 class EventController {
@@ -104,6 +105,22 @@ class EventController {
       checkInToken: token
     })
 
+    // generate the event score for newly created event
+    const eventScore:number = getEventScore({
+       title: newEvent.title,
+        description: newEvent.description,
+        category: newEvent.category,
+        tags: newEvent.tags,
+        image: newEvent.image,
+        premium : organizationDetails.isPremium
+    })
+    await eventService.updateEvent({
+      filter : {id : newEvent.id},
+      data : {
+        eventScore : eventScore
+      }
+    })
+
     const groupNotification: Array<ICreateNotificaion> =
       organizationDetails.members?.map((m: any) => ({
         userId: (m as { userId: string }).userId,
@@ -177,6 +194,20 @@ class EventController {
           image: imageUrl
         }
       })
+       const eventScore:number = getEventScore({
+       title: updatedEvent.title,
+        description: updatedEvent.description,
+        category: updatedEvent.category,
+        tags: updatedEvent.tags,
+        image: updatedEvent.image,
+        premium : organizationDetails.isPremium
+    })
+    await eventService.updateEvent({
+      filter : {id : updatedEvent.id},
+      data : {
+        eventScore : eventScore
+      }
+    })
       const registerdParticipantsId: Array<any> = await eventParticipantService.getEventParticipants({
         filter: { eventId: updatedEvent.id },
         select: {

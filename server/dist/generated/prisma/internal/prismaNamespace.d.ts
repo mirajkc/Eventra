@@ -1252,6 +1252,7 @@ export declare const EventScalarFieldEnum: {
     readonly category: "category";
     readonly tags: "tags";
     readonly image: "image";
+    readonly eventScore: "eventScore";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
@@ -1408,14 +1409,6 @@ export type EnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  */
 export type ListEnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventType[]'>;
 /**
- * Reference to a field of type 'CreditPackage'
- */
-export type EnumCreditPackageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreditPackage'>;
-/**
- * Reference to a field of type 'CreditPackage[]'
- */
-export type ListEnumCreditPackageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreditPackage[]'>;
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>;
@@ -1423,6 +1416,14 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>;
+/**
+ * Reference to a field of type 'CreditPackage'
+ */
+export type EnumCreditPackageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreditPackage'>;
+/**
+ * Reference to a field of type 'CreditPackage[]'
+ */
+export type ListEnumCreditPackageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreditPackage[]'>;
 /**
  * Reference to a field of type 'NotificationType'
  */

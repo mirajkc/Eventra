@@ -10,6 +10,7 @@ import eventParticipantService from "../service/eventParticipants.service.js";
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js";
 import generateString from "../utilities/randomstring.generator.js";
 import { checkForCredit } from "../utilities/checkforcredit.js";
+import getEventScore from "../Algorithms/getEventScore.js";
 class EventController {
     async createNewEvent(req, res, next) {
         const data = req.body;
@@ -96,6 +97,21 @@ class EventController {
             },
             checkInToken: token
         });
+        // generate the event score for newly created event
+        const eventScore = getEventScore({
+            title: newEvent.title,
+            description: newEvent.description,
+            category: newEvent.category,
+            tags: newEvent.tags,
+            image: newEvent.image,
+            premium: organizationDetails.isPremium
+        });
+        await eventService.updateEvent({
+            filter: { id: newEvent.id },
+            data: {
+                eventScore: eventScore
+            }
+        });
         const groupNotification = organizationDetails.members?.map((m) => ({
             userId: m.userId,
             title: "New event has been created.",
@@ -166,6 +182,20 @@ class EventController {
                     category: data.category ? data.category : eventDetails.category,
                     tags: data.tags ? data.tags : eventDetails.tags,
                     image: imageUrl
+                }
+            });
+            const eventScore = getEventScore({
+                title: updatedEvent.title,
+                description: updatedEvent.description,
+                category: updatedEvent.category,
+                tags: updatedEvent.tags,
+                image: updatedEvent.image,
+                premium: organizationDetails.isPremium
+            });
+            await eventService.updateEvent({
+                filter: { id: updatedEvent.id },
+                data: {
+                    eventScore: eventScore
                 }
             });
             const registerdParticipantsId = await eventParticipantService.getEventParticipants({

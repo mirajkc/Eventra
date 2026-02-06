@@ -36,15 +36,7 @@ class EventService {
       const event = await tx.event.create({
         data: data
       })
-      await tx.eventMetrics.create({
-        data: { eventId: event.id }
-      });
-      await tx.eventEmbedding.create({
-        data: {
-          eventId: event.id,
-        }
-      });
-
+  
       if (!event) {
         throw {
           code: 500,

@@ -31,6 +31,7 @@ declare class EventService {
         registeredCount: number;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
+        eventScore: number | null;
     }>;
     getEvent({ filter, include }: {
         filter: {
@@ -102,6 +103,7 @@ declare class EventService {
         registeredCount: number;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
+        eventScore: number | null;
     }) | null>;
     getManyEvents(skip: number, take: number, filter: any, orderBy: any): Promise<({
         _count: {
@@ -136,6 +138,7 @@ declare class EventService {
         registeredCount: number;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
+        eventScore: number | null;
     })[]>;
     deleteEvent(id: string, include: any): Promise<{
         [x: string]: ({
@@ -201,6 +204,7 @@ declare class EventService {
         registeredCount: number;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
+        eventScore: number | null;
     }>;
 }
 declare const eventService: EventService;

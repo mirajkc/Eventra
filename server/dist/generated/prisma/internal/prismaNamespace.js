@@ -156,6 +156,7 @@ export const EventScalarFieldEnum = {
     category: 'category',
     tags: 'tags',
     image: 'image',
+    eventScore: 'eventScore',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

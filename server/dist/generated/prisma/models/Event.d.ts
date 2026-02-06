@@ -16,10 +16,12 @@ export type AggregateEvent = {
 export type EventAvgAggregateOutputType = {
     capacity: number | null;
     registeredCount: number | null;
+    eventScore: number | null;
 };
 export type EventSumAggregateOutputType = {
     capacity: number | null;
     registeredCount: number | null;
+    eventScore: number | null;
 };
 export type EventMinAggregateOutputType = {
     id: string | null;
@@ -36,6 +38,7 @@ export type EventMinAggregateOutputType = {
     status: $Enums.EventStatus | null;
     category: $Enums.EventType | null;
     image: string | null;
+    eventScore: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -54,6 +57,7 @@ export type EventMaxAggregateOutputType = {
     status: $Enums.EventStatus | null;
     category: $Enums.EventType | null;
     image: string | null;
+    eventScore: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -73,6 +77,7 @@ export type EventCountAggregateOutputType = {
     category: number;
     tags: number;
     image: number;
+    eventScore: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -80,10 +85,12 @@ export type EventCountAggregateOutputType = {
 export type EventAvgAggregateInputType = {
     capacity?: true;
     registeredCount?: true;
+    eventScore?: true;
 };
 export type EventSumAggregateInputType = {
     capacity?: true;
     registeredCount?: true;
+    eventScore?: true;
 };
 export type EventMinAggregateInputType = {
     id?: true;
@@ -100,6 +107,7 @@ export type EventMinAggregateInputType = {
     status?: true;
     category?: true;
     image?: true;
+    eventScore?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -118,6 +126,7 @@ export type EventMaxAggregateInputType = {
     status?: true;
     category?: true;
     image?: true;
+    eventScore?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -137,6 +146,7 @@ export type EventCountAggregateInputType = {
     category?: true;
     tags?: true;
     image?: true;
+    eventScore?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -233,6 +243,7 @@ export type EventGroupByOutputType = {
     category: $Enums.EventType;
     tags: string[];
     image: string | null;
+    eventScore: number | null;
     createdAt: Date;
     updatedAt: Date;
     _count: EventCountAggregateOutputType | null;
@@ -263,6 +274,7 @@ export type EventWhereInput = {
     category?: Prisma.EnumEventTypeFilter<"Event"> | $Enums.EventType;
     tags?: Prisma.StringNullableListFilter<"Event">;
     image?: Prisma.StringNullableFilter<"Event"> | string | null;
+    eventScore?: Prisma.FloatNullableFilter<"Event"> | number | null;
     createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string;
     organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
@@ -286,6 +298,7 @@ export type EventOrderByWithRelationInput = {
     category?: Prisma.SortOrder;
     tags?: Prisma.SortOrder;
     image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    eventScore?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     organization?: Prisma.OrganizationOrderByWithRelationInput;
@@ -312,6 +325,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
     category?: Prisma.EnumEventTypeFilter<"Event"> | $Enums.EventType;
     tags?: Prisma.StringNullableListFilter<"Event">;
     image?: Prisma.StringNullableFilter<"Event"> | string | null;
+    eventScore?: Prisma.FloatNullableFilter<"Event"> | number | null;
     createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string;
     organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
@@ -335,6 +349,7 @@ export type EventOrderByWithAggregationInput = {
     category?: Prisma.SortOrder;
     tags?: Prisma.SortOrder;
     image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    eventScore?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.EventCountOrderByAggregateInput;
@@ -362,6 +377,7 @@ export type EventScalarWhereWithAggregatesInput = {
     category?: Prisma.EnumEventTypeWithAggregatesFilter<"Event"> | $Enums.EventType;
     tags?: Prisma.StringNullableListFilter<"Event">;
     image?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null;
+    eventScore?: Prisma.FloatNullableWithAggregatesFilter<"Event"> | number | null;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string;
 };
@@ -379,6 +395,7 @@ export type EventCreateInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     organization: Prisma.OrganizationCreateNestedOneWithoutEventsInput;
@@ -402,6 +419,7 @@ export type EventUncheckedCreateInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
@@ -421,6 +439,7 @@ export type EventUpdateInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     organization?: Prisma.OrganizationUpdateOneRequiredWithoutEventsNestedInput;
@@ -444,6 +463,7 @@ export type EventUncheckedUpdateInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
@@ -465,6 +485,7 @@ export type EventCreateManyInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -482,6 +503,7 @@ export type EventUpdateManyMutationInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -501,6 +523,7 @@ export type EventUncheckedUpdateManyInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -535,12 +558,14 @@ export type EventCountOrderByAggregateInput = {
     category?: Prisma.SortOrder;
     tags?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    eventScore?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
 export type EventAvgOrderByAggregateInput = {
     capacity?: Prisma.SortOrder;
     registeredCount?: Prisma.SortOrder;
+    eventScore?: Prisma.SortOrder;
 };
 export type EventMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -557,6 +582,7 @@ export type EventMaxOrderByAggregateInput = {
     status?: Prisma.SortOrder;
     category?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    eventScore?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -575,12 +601,14 @@ export type EventMinOrderByAggregateInput = {
     status?: Prisma.SortOrder;
     category?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    eventScore?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
 export type EventSumOrderByAggregateInput = {
     capacity?: Prisma.SortOrder;
     registeredCount?: Prisma.SortOrder;
+    eventScore?: Prisma.SortOrder;
 };
 export type EventScalarRelationFilter = {
     is?: Prisma.EventWhereInput;
@@ -675,6 +703,13 @@ export type EventUpdatetagsInput = {
     set?: string[];
     push?: string | string[];
 };
+export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
 export type EventCreateNestedOneWithoutParticipantsInput = {
     create?: Prisma.XOR<Prisma.EventCreateWithoutParticipantsInput, Prisma.EventUncheckedCreateWithoutParticipantsInput>;
     connectOrCreate?: Prisma.EventCreateOrConnectWithoutParticipantsInput;
@@ -713,6 +748,7 @@ export type EventCreateWithoutCreatorInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     organization: Prisma.OrganizationCreateNestedOneWithoutEventsInput;
@@ -734,6 +770,7 @@ export type EventUncheckedCreateWithoutCreatorInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
@@ -779,6 +816,7 @@ export type EventScalarWhereInput = {
     category?: Prisma.EnumEventTypeFilter<"Event"> | $Enums.EventType;
     tags?: Prisma.StringNullableListFilter<"Event">;
     image?: Prisma.StringNullableFilter<"Event"> | string | null;
+    eventScore?: Prisma.FloatNullableFilter<"Event"> | number | null;
     createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string;
 };
@@ -796,6 +834,7 @@ export type EventCreateWithoutOrganizationInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     creator: Prisma.UserCreateNestedOneWithoutCreatedEventsInput;
@@ -817,6 +856,7 @@ export type EventUncheckedCreateWithoutOrganizationInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
@@ -857,6 +897,7 @@ export type EventCreateWithoutParticipantsInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     organization: Prisma.OrganizationCreateNestedOneWithoutEventsInput;
@@ -879,6 +920,7 @@ export type EventUncheckedCreateWithoutParticipantsInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     eventMessages?: Prisma.EventMessageUncheckedCreateNestedManyWithoutEventInput;
@@ -910,6 +952,7 @@ export type EventUpdateWithoutParticipantsInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     organization?: Prisma.OrganizationUpdateOneRequiredWithoutEventsNestedInput;
@@ -932,6 +975,7 @@ export type EventUncheckedUpdateWithoutParticipantsInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     eventMessages?: Prisma.EventMessageUncheckedUpdateManyWithoutEventNestedInput;
@@ -950,6 +994,7 @@ export type EventCreateWithoutEventMessagesInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     organization: Prisma.OrganizationCreateNestedOneWithoutEventsInput;
@@ -972,6 +1017,7 @@ export type EventUncheckedCreateWithoutEventMessagesInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     participants?: Prisma.EventParticipantsUncheckedCreateNestedManyWithoutEventInput;
@@ -1003,6 +1049,7 @@ export type EventUpdateWithoutEventMessagesInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     organization?: Prisma.OrganizationUpdateOneRequiredWithoutEventsNestedInput;
@@ -1025,6 +1072,7 @@ export type EventUncheckedUpdateWithoutEventMessagesInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
@@ -1044,6 +1092,7 @@ export type EventCreateManyCreatorInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -1061,6 +1110,7 @@ export type EventUpdateWithoutCreatorInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     organization?: Prisma.OrganizationUpdateOneRequiredWithoutEventsNestedInput;
@@ -1082,6 +1132,7 @@ export type EventUncheckedUpdateWithoutCreatorInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
@@ -1102,6 +1153,7 @@ export type EventUncheckedUpdateManyWithoutCreatorInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1120,6 +1172,7 @@ export type EventCreateManyOrganizationInput = {
     category?: $Enums.EventType;
     tags?: Prisma.EventCreatetagsInput | string[];
     image?: string | null;
+    eventScore?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -1137,6 +1190,7 @@ export type EventUpdateWithoutOrganizationInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     creator?: Prisma.UserUpdateOneRequiredWithoutCreatedEventsNestedInput;
@@ -1158,6 +1212,7 @@ export type EventUncheckedUpdateWithoutOrganizationInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     participants?: Prisma.EventParticipantsUncheckedUpdateManyWithoutEventNestedInput;
@@ -1178,6 +1233,7 @@ export type EventUncheckedUpdateManyWithoutOrganizationInput = {
     category?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType;
     tags?: Prisma.EventUpdatetagsInput | string[];
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    eventScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1229,6 +1285,7 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     category?: boolean;
     tags?: boolean;
     image?: boolean;
+    eventScore?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
@@ -1253,6 +1310,7 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
     category?: boolean;
     tags?: boolean;
     image?: boolean;
+    eventScore?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
@@ -1274,6 +1332,7 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
     category?: boolean;
     tags?: boolean;
     image?: boolean;
+    eventScore?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
@@ -1295,10 +1354,11 @@ export type EventSelectScalar = {
     category?: boolean;
     tags?: boolean;
     image?: boolean;
+    eventScore?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "organizationId" | "creatorId" | "title" | "description" | "location" | "startDate" | "endDate" | "capacity" | "registeredCount" | "status" | "category" | "tags" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>;
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "organizationId" | "creatorId" | "title" | "description" | "location" | "startDate" | "endDate" | "capacity" | "registeredCount" | "status" | "category" | "tags" | "image" | "eventScore" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>;
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
     creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -1338,6 +1398,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
         category: $Enums.EventType;
         tags: string[];
         image: string | null;
+        eventScore: number | null;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["event"]>;
@@ -1713,6 +1774,7 @@ export interface EventFieldRefs {
     readonly category: Prisma.FieldRef<"Event", 'EventType'>;
     readonly tags: Prisma.FieldRef<"Event", 'String[]'>;
     readonly image: Prisma.FieldRef<"Event", 'String'>;
+    readonly eventScore: Prisma.FieldRef<"Event", 'Float'>;
     readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Event", 'DateTime'>;
 }

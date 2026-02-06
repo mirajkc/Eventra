@@ -62,6 +62,7 @@ declare class OrganizationService {
             registeredCount: number;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
+            eventScore: number | null;
         } | {
             id: string;
             status: import("../generated/prisma/enums.js").EventStatus;
@@ -80,6 +81,7 @@ declare class OrganizationService {
             registeredCount: number;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
+            eventScore: number | null;
         })[] | ({
             id: string;
             organizationId: string;
@@ -120,6 +122,7 @@ declare class OrganizationService {
             registeredCount: number;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
+            eventScore: number | null;
         }[] | {
             id: string;
             organizationId: string;
@@ -214,6 +217,7 @@ declare class OrganizationService {
             registeredCount: number;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
+            eventScore: number | null;
         } | {
             id: string;
             status: import("../generated/prisma/enums.js").EventStatus;
@@ -232,6 +236,7 @@ declare class OrganizationService {
             registeredCount: number;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
+            eventScore: number | null;
         })[] | ({
             id: string;
             organizationId: string;
@@ -272,6 +277,7 @@ declare class OrganizationService {
             registeredCount: number;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
+            eventScore: number | null;
         }[] | {
             id: string;
             organizationId: string;

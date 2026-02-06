@@ -168,9 +168,8 @@ export default function EventHero({ event }: EventHeroProps) {
                     <Info className="w-5 h-5 text-primary" />
                     About this Event
                   </h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg">
-                    {event.description}
-                  </p>
+                  <textarea defaultValue={event.description} name={event.title} id={event.id} className="w-full h-[200px] overflow-y-auto custom-scrollbar text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg" readOnly>
+                  </textarea>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-4">
