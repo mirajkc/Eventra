@@ -58,31 +58,6 @@ export type EventMessage = Prisma.EventMessageModel;
  */
 export type AdminLogs = Prisma.AdminLogsModel;
 /**
- * Model UserEmbedding
- *
- */
-export type UserEmbedding = Prisma.UserEmbeddingModel;
-/**
- * Model EventEmbedding
- *
- */
-export type EventEmbedding = Prisma.EventEmbeddingModel;
-/**
- * Model UserInteraction
- *
- */
-export type UserInteraction = Prisma.UserInteractionModel;
-/**
- * Model EventMetrics
- *
- */
-export type EventMetrics = Prisma.EventMetricsModel;
-/**
- * Model AdminPrediction
- *
- */
-export type AdminPrediction = Prisma.AdminPredictionModel;
-/**
  * Model ErrorLog
  *
  */

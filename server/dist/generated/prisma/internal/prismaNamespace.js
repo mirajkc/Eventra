@@ -79,11 +79,6 @@ export const ModelName = {
     Notification: 'Notification',
     EventMessage: 'EventMessage',
     AdminLogs: 'AdminLogs',
-    UserEmbedding: 'UserEmbedding',
-    EventEmbedding: 'EventEmbedding',
-    UserInteraction: 'UserInteraction',
-    EventMetrics: 'EventMetrics',
-    AdminPrediction: 'AdminPrediction',
     ErrorLog: 'ErrorLog'
 };
 /**
@@ -208,42 +203,6 @@ export const AdminLogsScalarFieldEnum = {
     entityType: 'entityType',
     createdAt: 'createdAt',
     reason: 'reason'
-};
-export const UserEmbeddingScalarFieldEnum = {
-    id: 'id',
-    userId: 'userId',
-    embedding: 'embedding',
-    updatedAt: 'updatedAt'
-};
-export const EventEmbeddingScalarFieldEnum = {
-    id: 'id',
-    eventId: 'eventId',
-    embedding: 'embedding',
-    updatedAt: 'updatedAt'
-};
-export const UserInteractionScalarFieldEnum = {
-    id: 'id',
-    userId: 'userId',
-    eventId: 'eventId',
-    createdAt: 'createdAt'
-};
-export const EventMetricsScalarFieldEnum = {
-    id: 'id',
-    eventId: 'eventId',
-    totalViews: 'totalViews',
-    totalRegistrations: 'totalRegistrations',
-    totalAttendees: 'totalAttendees',
-    updatedAt: 'updatedAt'
-};
-export const AdminPredictionScalarFieldEnum = {
-    id: 'id',
-    predictedEventCount: 'predictedEventCount',
-    predictedTotalParticipants: 'predictedTotalParticipants',
-    predictedAverageAttendance: 'predictedAverageAttendance',
-    predictedPopularCategory: 'predictedPopularCategory',
-    predictionMonth: 'predictionMonth',
-    confidence: 'confidence',
-    generatedAt: 'generatedAt'
 };
 export const ErrorLogScalarFieldEnum = {
     id: 'id',

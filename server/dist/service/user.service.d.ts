@@ -98,16 +98,6 @@ declare class UserService {
             purchasedAt: Date;
         })[] | ({
             id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        } | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        })[] | ({
-            id: string;
             userId: string;
             eventId: string;
             registeredAt: Date;
@@ -226,11 +216,6 @@ declare class UserService {
             credits: number;
             amount: number;
             purchasedAt: Date;
-        }[] | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
         }[] | {
             id: string;
             userId: string;
@@ -373,16 +358,6 @@ declare class UserService {
             purchasedAt: Date;
         })[] | ({
             id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        } | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        })[] | ({
-            id: string;
             userId: string;
             eventId: string;
             registeredAt: Date;
@@ -501,11 +476,6 @@ declare class UserService {
             credits: number;
             amount: number;
             purchasedAt: Date;
-        }[] | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
         }[] | {
             id: string;
             userId: string;

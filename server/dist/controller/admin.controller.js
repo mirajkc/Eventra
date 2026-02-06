@@ -217,10 +217,10 @@ class AdminController {
             const query = req.query;
             const page = Number(query.page) || 1;
             const take = Number(query.limit) || 10;
-            const title = String(query.title) || "";
             const skip = (page - 1) * take;
-            const notifications = await notificationService.getNotification({ title: { contains: title } }, skip, take);
-            const totalNotifications = await notificationService.getNotificationCount({ title: { contains: title } });
+            const filter = query.title ? { title: { contains: String(query.title) } } : {};
+            const notifications = await notificationService.getNotification(filter, skip, take);
+            const totalNotifications = await notificationService.getNotificationCount(filter);
             return res.json({
                 message: "Notifications has been fetched successfully",
                 data: notifications,

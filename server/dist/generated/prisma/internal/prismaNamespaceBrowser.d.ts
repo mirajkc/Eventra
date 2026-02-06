@@ -37,11 +37,6 @@ export declare const ModelName: {
     readonly Notification: "Notification";
     readonly EventMessage: "EventMessage";
     readonly AdminLogs: "AdminLogs";
-    readonly UserEmbedding: "UserEmbedding";
-    readonly EventEmbedding: "EventEmbedding";
-    readonly UserInteraction: "UserInteraction";
-    readonly EventMetrics: "EventMetrics";
-    readonly AdminPrediction: "AdminPrediction";
     readonly ErrorLog: "ErrorLog";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -177,47 +172,6 @@ export declare const AdminLogsScalarFieldEnum: {
     readonly reason: "reason";
 };
 export type AdminLogsScalarFieldEnum = (typeof AdminLogsScalarFieldEnum)[keyof typeof AdminLogsScalarFieldEnum];
-export declare const UserEmbeddingScalarFieldEnum: {
-    readonly id: "id";
-    readonly userId: "userId";
-    readonly embedding: "embedding";
-    readonly updatedAt: "updatedAt";
-};
-export type UserEmbeddingScalarFieldEnum = (typeof UserEmbeddingScalarFieldEnum)[keyof typeof UserEmbeddingScalarFieldEnum];
-export declare const EventEmbeddingScalarFieldEnum: {
-    readonly id: "id";
-    readonly eventId: "eventId";
-    readonly embedding: "embedding";
-    readonly updatedAt: "updatedAt";
-};
-export type EventEmbeddingScalarFieldEnum = (typeof EventEmbeddingScalarFieldEnum)[keyof typeof EventEmbeddingScalarFieldEnum];
-export declare const UserInteractionScalarFieldEnum: {
-    readonly id: "id";
-    readonly userId: "userId";
-    readonly eventId: "eventId";
-    readonly createdAt: "createdAt";
-};
-export type UserInteractionScalarFieldEnum = (typeof UserInteractionScalarFieldEnum)[keyof typeof UserInteractionScalarFieldEnum];
-export declare const EventMetricsScalarFieldEnum: {
-    readonly id: "id";
-    readonly eventId: "eventId";
-    readonly totalViews: "totalViews";
-    readonly totalRegistrations: "totalRegistrations";
-    readonly totalAttendees: "totalAttendees";
-    readonly updatedAt: "updatedAt";
-};
-export type EventMetricsScalarFieldEnum = (typeof EventMetricsScalarFieldEnum)[keyof typeof EventMetricsScalarFieldEnum];
-export declare const AdminPredictionScalarFieldEnum: {
-    readonly id: "id";
-    readonly predictedEventCount: "predictedEventCount";
-    readonly predictedTotalParticipants: "predictedTotalParticipants";
-    readonly predictedAverageAttendance: "predictedAverageAttendance";
-    readonly predictedPopularCategory: "predictedPopularCategory";
-    readonly predictionMonth: "predictionMonth";
-    readonly confidence: "confidence";
-    readonly generatedAt: "generatedAt";
-};
-export type AdminPredictionScalarFieldEnum = (typeof AdminPredictionScalarFieldEnum)[keyof typeof AdminPredictionScalarFieldEnum];
 export declare const ErrorLogScalarFieldEnum: {
     readonly id: "id";
     readonly code: "code";

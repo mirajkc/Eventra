@@ -41,16 +41,6 @@ declare class EventService {
     }): Promise<({
         [x: string]: ({
             id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        } | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        })[] | ({
-            id: string;
             userId: string;
             eventId: string;
             registeredAt: Date;
@@ -78,11 +68,6 @@ declare class EventService {
             eventId: string;
             senderId: string;
         })[] | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        }[] | {
             id: string;
             userId: string;
             eventId: string;
@@ -155,16 +140,6 @@ declare class EventService {
     deleteEvent(id: string, include: any): Promise<{
         [x: string]: ({
             id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        } | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        })[] | ({
-            id: string;
             userId: string;
             eventId: string;
             registeredAt: Date;
@@ -192,11 +167,6 @@ declare class EventService {
             eventId: string;
             senderId: string;
         })[] | {
-            id: string;
-            createdAt: Date;
-            userId: string;
-            eventId: string;
-        }[] | {
             id: string;
             userId: string;
             eventId: string;
