@@ -373,6 +373,7 @@ class EventController {
       eventId : eventDetails.id,
       hasClicked : true,
       hasJoined : false,
+    }, {
       previousScore : userData.userScore,
       previosClickedEventsCount : userData.clickedEventsCount,
       currentClickedEventScore : eventDetails.eventScore

@@ -1,10 +1,10 @@
 
 import averageUserScore from "../Algorithms/averageScore.js"
 import { prisma } from "../config/prisma.config.js"
-import type { ICreateEventeMetrics } from "../lib/types/eventmetrics.types.js"
+import type { ICreateEventeMetrics, IUserMetrics } from "../lib/types/eventmetrics.types.js"
 
 class EventMetricsService {
-  async createNewMetrics(data :ICreateEventeMetrics){
+  async createNewMetrics(data :ICreateEventeMetrics, userMetrics : IUserMetrics){
     const metricsExists = await prisma.eventMetric.findFirst({
       where : {
         userId : data.userId,
@@ -20,9 +20,9 @@ class EventMetricsService {
     if(newMetrics){
       await averageUserScore({
         userId : newMetrics.userId,
-        previousScore : data.previousScore,
-        previosClickedEventsCount : data.previosClickedEventsCount,
-        currentClickedEventScore : data.currentClickedEventScore
+        previousScore : userMetrics.previousScore,
+        previosClickedEventsCount : userMetrics.previosClickedEventsCount,
+        currentClickedEventScore : userMetrics.currentClickedEventScore
       })
     }
 
