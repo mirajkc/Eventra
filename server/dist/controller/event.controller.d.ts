@@ -4,6 +4,7 @@ declare class EventController {
     updateEventDetails(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
     getSingleEvent(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
     getAllEventsByQuery(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+    getRecommendedEvents(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
     isLoggedInuserJoined(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 }
 declare const eventController: EventController;

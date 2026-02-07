@@ -1,6 +1,6 @@
-import type { ICreateEventeMetrics } from "../lib/types/eventmetrics.types.js";
+import type { ICreateEventeMetrics, IUserMetrics } from "../lib/types/eventmetrics.types.js";
 declare class EventMetricsService {
-    createNewMetrics(data: ICreateEventeMetrics): Promise<void>;
+    createNewMetrics(data: ICreateEventeMetrics, userMetrics: IUserMetrics): Promise<void>;
     updateEventMetrics({ filter }: {
         filter: {
             eventId: string;

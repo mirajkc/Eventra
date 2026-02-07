@@ -17,6 +17,7 @@ import generateString from "../utilities/randomstring.generator.js"
 import { checkForCredit } from "../utilities/checkforcredit.js"
 import getEventScore from "../Algorithms/getEventScore.js"
 import eventMetricsService from "../service/eventmetrics.service.js"
+import averageRecomendationScore from "../Algorithms/averageRecomendationScore.js"
 
 
 class EventController {
@@ -345,6 +346,21 @@ class EventController {
     }
   }
 
+
+  async getRecommendedEvents(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userDetails: IUserDetails = req.userDetails
+      
+      const recommendedEvents = await averageRecomendationScore(userDetails.id)
+
+      return res.status(200).json({
+        message: "Recommended events fetched successfully.",
+        data: recommendedEvents
+      })
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async isLoggedInuserJoined (req:Request, res:Response,next:NextFunction ) {
     try {
