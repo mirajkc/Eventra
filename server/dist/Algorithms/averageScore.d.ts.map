@@ -1,0 +1,1 @@
+{"version":3,"file":"averageScore.d.ts","sourceRoot":"","sources":["../../src/Algorithms/averageScore.ts"],"names":[],"mappings":"AAEA,UAAU,UAAU;IAClB,MAAM,EAAE,MAAM,CAAC;IACf,aAAa,EAAE,MAAM,CAAC;IACtB,yBAAyB,EAAE,MAAM,CAAC;IAClC,wBAAwB,EAAE,MAAM,CAAA;CACjC;AAED,wBAA8B,gBAAgB,CAAC,IAAI,EAAE,UAAU,iBAa9D"}

@@ -8,8 +8,18 @@ import type * as Prisma from "../internal/prismaNamespace.js";
 export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayload>;
 export type AggregateUser = {
     _count: UserCountAggregateOutputType | null;
+    _avg: UserAvgAggregateOutputType | null;
+    _sum: UserSumAggregateOutputType | null;
     _min: UserMinAggregateOutputType | null;
     _max: UserMaxAggregateOutputType | null;
+};
+export type UserAvgAggregateOutputType = {
+    userScore: number | null;
+    clickedEventsCount: number | null;
+};
+export type UserSumAggregateOutputType = {
+    userScore: number | null;
+    clickedEventsCount: number | null;
 };
 export type UserMinAggregateOutputType = {
     id: string | null;
@@ -21,6 +31,8 @@ export type UserMinAggregateOutputType = {
     createdAt: Date | null;
     updatedAt: Date | null;
     image: string | null;
+    userScore: number | null;
+    clickedEventsCount: number | null;
 };
 export type UserMaxAggregateOutputType = {
     id: string | null;
@@ -32,6 +44,8 @@ export type UserMaxAggregateOutputType = {
     createdAt: Date | null;
     updatedAt: Date | null;
     image: string | null;
+    userScore: number | null;
+    clickedEventsCount: number | null;
 };
 export type UserCountAggregateOutputType = {
     id: number;
@@ -43,7 +57,17 @@ export type UserCountAggregateOutputType = {
     createdAt: number;
     updatedAt: number;
     image: number;
+    userScore: number;
+    clickedEventsCount: number;
     _all: number;
+};
+export type UserAvgAggregateInputType = {
+    userScore?: true;
+    clickedEventsCount?: true;
+};
+export type UserSumAggregateInputType = {
+    userScore?: true;
+    clickedEventsCount?: true;
 };
 export type UserMinAggregateInputType = {
     id?: true;
@@ -55,6 +79,8 @@ export type UserMinAggregateInputType = {
     createdAt?: true;
     updatedAt?: true;
     image?: true;
+    userScore?: true;
+    clickedEventsCount?: true;
 };
 export type UserMaxAggregateInputType = {
     id?: true;
@@ -66,6 +92,8 @@ export type UserMaxAggregateInputType = {
     createdAt?: true;
     updatedAt?: true;
     image?: true;
+    userScore?: true;
+    clickedEventsCount?: true;
 };
 export type UserCountAggregateInputType = {
     id?: true;
@@ -77,6 +105,8 @@ export type UserCountAggregateInputType = {
     createdAt?: true;
     updatedAt?: true;
     image?: true;
+    userScore?: true;
+    clickedEventsCount?: true;
     _all?: true;
 };
 export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -117,6 +147,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      *
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType;
@@ -138,6 +180,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
     take?: number;
     skip?: number;
     _count?: UserCountAggregateInputType | true;
+    _avg?: UserAvgAggregateInputType;
+    _sum?: UserSumAggregateInputType;
     _min?: UserMinAggregateInputType;
     _max?: UserMaxAggregateInputType;
 };
@@ -151,7 +195,11 @@ export type UserGroupByOutputType = {
     createdAt: Date;
     updatedAt: Date;
     image: string | null;
+    userScore: number;
+    clickedEventsCount: number;
     _count: UserCountAggregateOutputType | null;
+    _avg: UserAvgAggregateOutputType | null;
+    _sum: UserSumAggregateOutputType | null;
     _min: UserMinAggregateOutputType | null;
     _max: UserMaxAggregateOutputType | null;
 };
@@ -171,6 +219,8 @@ export type UserWhereInput = {
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     image?: Prisma.StringNullableFilter<"User"> | string | null;
+    userScore?: Prisma.FloatFilter<"User"> | number;
+    clickedEventsCount?: Prisma.IntFilter<"User"> | number;
     session?: Prisma.SessionListRelationFilter;
     organizationMember?: Prisma.OrganizationMemberListRelationFilter;
     createdEvents?: Prisma.EventListRelationFilter;
@@ -192,6 +242,8 @@ export type UserOrderByWithRelationInput = {
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
     session?: Prisma.SessionOrderByRelationAggregateInput;
     organizationMember?: Prisma.OrganizationMemberOrderByRelationAggregateInput;
     createdEvents?: Prisma.EventOrderByRelationAggregateInput;
@@ -216,6 +268,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     image?: Prisma.StringNullableFilter<"User"> | string | null;
+    userScore?: Prisma.FloatFilter<"User"> | number;
+    clickedEventsCount?: Prisma.IntFilter<"User"> | number;
     session?: Prisma.SessionListRelationFilter;
     organizationMember?: Prisma.OrganizationMemberListRelationFilter;
     createdEvents?: Prisma.EventListRelationFilter;
@@ -237,9 +291,13 @@ export type UserOrderByWithAggregationInput = {
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
+    _avg?: Prisma.UserAvgOrderByAggregateInput;
     _max?: Prisma.UserMaxOrderByAggregateInput;
     _min?: Prisma.UserMinOrderByAggregateInput;
+    _sum?: Prisma.UserSumOrderByAggregateInput;
 };
 export type UserScalarWhereWithAggregatesInput = {
     AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
@@ -254,6 +312,8 @@ export type UserScalarWhereWithAggregatesInput = {
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    userScore?: Prisma.FloatWithAggregatesFilter<"User"> | number;
+    clickedEventsCount?: Prisma.IntWithAggregatesFilter<"User"> | number;
 };
 export type UserCreateInput = {
     id?: string;
@@ -265,6 +325,8 @@ export type UserCreateInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -286,6 +348,8 @@ export type UserUncheckedCreateInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -307,6 +371,8 @@ export type UserUpdateInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -328,6 +394,8 @@ export type UserUncheckedUpdateInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -349,6 +417,8 @@ export type UserCreateManyInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
 };
 export type UserUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -360,6 +430,8 @@ export type UserUpdateManyMutationInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type UserUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -371,6 +443,8 @@ export type UserUncheckedUpdateManyInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type UserCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -382,6 +456,12 @@ export type UserCountOrderByAggregateInput = {
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
+};
+export type UserAvgOrderByAggregateInput = {
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
 };
 export type UserMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -393,6 +473,8 @@ export type UserMaxOrderByAggregateInput = {
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
 };
 export type UserMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -404,6 +486,12 @@ export type UserMinOrderByAggregateInput = {
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
+};
+export type UserSumOrderByAggregateInput = {
+    userScore?: Prisma.SortOrder;
+    clickedEventsCount?: Prisma.SortOrder;
 };
 export type UserScalarRelationFilter = {
     is?: Prisma.UserWhereInput;
@@ -420,6 +508,20 @@ export type EnumRoleFieldUpdateOperationsInput = {
 };
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
+};
+export type FloatFieldUpdateOperationsInput = {
+    set?: number;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
+export type IntFieldUpdateOperationsInput = {
+    set?: number;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
 };
 export type UserCreateNestedOneWithoutOtpdetailsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutOtpdetailsInput, Prisma.UserUncheckedCreateWithoutOtpdetailsInput>;
@@ -551,6 +653,8 @@ export type UserCreateWithoutOtpdetailsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -571,6 +675,8 @@ export type UserUncheckedCreateWithoutOtpdetailsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -604,6 +710,8 @@ export type UserUpdateWithoutOtpdetailsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -624,6 +732,8 @@ export type UserUncheckedUpdateWithoutOtpdetailsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -644,6 +754,8 @@ export type UserCreateWithoutSessionInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
     creditPurchases?: Prisma.CreditPurchaseCreateNestedManyWithoutUserInput;
@@ -664,6 +776,8 @@ export type UserUncheckedCreateWithoutSessionInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
     creditPurchases?: Prisma.CreditPurchaseUncheckedCreateNestedManyWithoutUserInput;
@@ -697,6 +811,8 @@ export type UserUpdateWithoutSessionInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
     creditPurchases?: Prisma.CreditPurchaseUpdateManyWithoutUserNestedInput;
@@ -717,6 +833,8 @@ export type UserUncheckedUpdateWithoutSessionInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
     creditPurchases?: Prisma.CreditPurchaseUncheckedUpdateManyWithoutUserNestedInput;
@@ -737,6 +855,8 @@ export type UserCreateWithoutOrganizationMemberInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
     creditPurchases?: Prisma.CreditPurchaseCreateNestedManyWithoutUserInput;
@@ -757,6 +877,8 @@ export type UserUncheckedCreateWithoutOrganizationMemberInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
     creditPurchases?: Prisma.CreditPurchaseUncheckedCreateNestedManyWithoutUserInput;
@@ -790,6 +912,8 @@ export type UserUpdateWithoutOrganizationMemberInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
     creditPurchases?: Prisma.CreditPurchaseUpdateManyWithoutUserNestedInput;
@@ -810,6 +934,8 @@ export type UserUncheckedUpdateWithoutOrganizationMemberInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
     creditPurchases?: Prisma.CreditPurchaseUncheckedUpdateManyWithoutUserNestedInput;
@@ -830,6 +956,8 @@ export type UserCreateWithoutCreatedEventsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     creditPurchases?: Prisma.CreditPurchaseCreateNestedManyWithoutUserInput;
@@ -850,6 +978,8 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     creditPurchases?: Prisma.CreditPurchaseUncheckedCreateNestedManyWithoutUserInput;
@@ -883,6 +1013,8 @@ export type UserUpdateWithoutCreatedEventsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     creditPurchases?: Prisma.CreditPurchaseUpdateManyWithoutUserNestedInput;
@@ -903,6 +1035,8 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     creditPurchases?: Prisma.CreditPurchaseUncheckedUpdateManyWithoutUserNestedInput;
@@ -923,6 +1057,8 @@ export type UserCreateWithoutEventParticipantsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -943,6 +1079,8 @@ export type UserUncheckedCreateWithoutEventParticipantsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -976,6 +1114,8 @@ export type UserUpdateWithoutEventParticipantsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -996,6 +1136,8 @@ export type UserUncheckedUpdateWithoutEventParticipantsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -1016,6 +1158,8 @@ export type UserCreateWithoutCreditPurchasesInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -1036,6 +1180,8 @@ export type UserUncheckedCreateWithoutCreditPurchasesInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -1069,6 +1215,8 @@ export type UserUpdateWithoutCreditPurchasesInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -1089,6 +1237,8 @@ export type UserUncheckedUpdateWithoutCreditPurchasesInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -1109,6 +1259,8 @@ export type UserCreateWithoutNotificationsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -1129,6 +1281,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -1162,6 +1316,8 @@ export type UserUpdateWithoutNotificationsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -1182,6 +1338,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -1202,6 +1360,8 @@ export type UserCreateWithoutEventMessagesInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -1222,6 +1382,8 @@ export type UserUncheckedCreateWithoutEventMessagesInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -1255,6 +1417,8 @@ export type UserUpdateWithoutEventMessagesInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -1275,6 +1439,8 @@ export type UserUncheckedUpdateWithoutEventMessagesInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -1295,6 +1461,8 @@ export type UserCreateWithoutAdminLogsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -1315,6 +1483,8 @@ export type UserUncheckedCreateWithoutAdminLogsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -1348,6 +1518,8 @@ export type UserUpdateWithoutAdminLogsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -1368,6 +1540,8 @@ export type UserUncheckedUpdateWithoutAdminLogsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -1388,6 +1562,8 @@ export type UserCreateWithoutEventMetricsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventCreateNestedManyWithoutCreatorInput;
@@ -1408,6 +1584,8 @@ export type UserUncheckedCreateWithoutEventMetricsInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     image?: string | null;
+    userScore?: number;
+    clickedEventsCount?: number;
     session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput;
     createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatorInput;
@@ -1441,6 +1619,8 @@ export type UserUpdateWithoutEventMetricsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUpdateManyWithoutCreatorNestedInput;
@@ -1461,6 +1641,8 @@ export type UserUncheckedUpdateWithoutEventMetricsInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userScore?: Prisma.FloatFieldUpdateOperationsInput | number;
+    clickedEventsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
     organizationMember?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput;
     createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatorNestedInput;
@@ -1577,6 +1759,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     createdAt?: boolean;
     updatedAt?: boolean;
     image?: boolean;
+    userScore?: boolean;
+    clickedEventsCount?: boolean;
     session?: boolean | Prisma.User$sessionArgs<ExtArgs>;
     organizationMember?: boolean | Prisma.User$organizationMemberArgs<ExtArgs>;
     createdEvents?: boolean | Prisma.User$createdEventsArgs<ExtArgs>;
@@ -1599,6 +1783,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     createdAt?: boolean;
     updatedAt?: boolean;
     image?: boolean;
+    userScore?: boolean;
+    clickedEventsCount?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -1610,6 +1796,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     createdAt?: boolean;
     updatedAt?: boolean;
     image?: boolean;
+    userScore?: boolean;
+    clickedEventsCount?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectScalar = {
     id?: boolean;
@@ -1621,8 +1809,10 @@ export type UserSelectScalar = {
     createdAt?: boolean;
     updatedAt?: boolean;
     image?: boolean;
+    userScore?: boolean;
+    clickedEventsCount?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "phone" | "password" | "role" | "createdAt" | "updatedAt" | "image", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "phone" | "password" | "role" | "createdAt" | "updatedAt" | "image" | "userScore" | "clickedEventsCount", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     session?: boolean | Prisma.User$sessionArgs<ExtArgs>;
     organizationMember?: boolean | Prisma.User$organizationMemberArgs<ExtArgs>;
@@ -1662,6 +1852,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }, ExtArgs["result"]["user"]>;
     composites: {};
 };
@@ -2035,6 +2227,8 @@ export interface UserFieldRefs {
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly image: Prisma.FieldRef<"User", 'String'>;
+    readonly userScore: Prisma.FieldRef<"User", 'Float'>;
+    readonly clickedEventsCount: Prisma.FieldRef<"User", 'Int'>;
 }
 /**
  * User findUnique

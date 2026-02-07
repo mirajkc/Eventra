@@ -467,13 +467,6 @@ export type OrganizationScalarRelationFilter = {
 export type EnumOrganizationTypeFieldUpdateOperationsInput = {
     set?: $Enums.OrganizationType;
 };
-export type IntFieldUpdateOperationsInput = {
-    set?: number;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
-};
 export type OrganizationCreateNestedOneWithoutMembersInput = {
     create?: Prisma.XOR<Prisma.OrganizationCreateWithoutMembersInput, Prisma.OrganizationUncheckedCreateWithoutMembersInput>;
     connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutMembersInput;

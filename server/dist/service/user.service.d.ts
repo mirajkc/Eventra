@@ -12,6 +12,8 @@ declare class UserService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }>;
     getUserDetails(filter: {
         id: string;
@@ -296,6 +298,8 @@ declare class UserService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }>;
     getUserDetailsByName(filter: {
         name?: {
@@ -583,6 +587,8 @@ declare class UserService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }>;
     getAllUsers(skip: number, take: number, filter: any): Promise<{
         id: string;
@@ -594,6 +600,8 @@ declare class UserService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }[]>;
     getTotalUsersCount(filter?: any): Promise<number>;
 }

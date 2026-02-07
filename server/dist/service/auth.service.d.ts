@@ -280,6 +280,8 @@ declare class AuthService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }) | null>;
     createNewUser(data: any): Promise<{
         id: string;
@@ -291,6 +293,8 @@ declare class AuthService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }>;
     updateUser({ filter, data }: {
         filter: {
@@ -307,6 +311,8 @@ declare class AuthService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        userScore: number;
+        clickedEventsCount: number;
     }>;
 }
 declare const authService: AuthService;

@@ -58,6 +58,8 @@ export declare const UserScalarFieldEnum: {
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly image: "image";
+    readonly userScore: "userScore";
+    readonly clickedEventsCount: "clickedEventsCount";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const OtpdetailsScalarFieldEnum: {

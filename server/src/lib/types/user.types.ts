@@ -21,7 +21,9 @@ export interface IUserDetails {
     createdAt: Date;
     updatedAt?: Date;
     image?: string  ;
-}
+    userScore : number
+    clickedEventsCount : number
+ }
 export interface IUserQuery {
            page?: string;
            limit?: string;

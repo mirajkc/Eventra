@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "clickedEventsCount" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "userScore" DOUBLE PRECISION NOT NULL DEFAULT 0;

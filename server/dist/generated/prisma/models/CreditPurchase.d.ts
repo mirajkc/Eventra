@@ -426,13 +426,6 @@ export type CreditPurchaseUncheckedUpdateManyWithoutOrganizationNestedInput = {
 export type EnumCreditPackageFieldUpdateOperationsInput = {
     set?: $Enums.CreditPackage;
 };
-export type FloatFieldUpdateOperationsInput = {
-    set?: number;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
-};
 export type CreditPurchaseCreateWithoutUserInput = {
     id?: string;
     package: $Enums.CreditPackage;

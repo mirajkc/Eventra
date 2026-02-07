@@ -100,7 +100,9 @@ export const UserScalarFieldEnum = {
     role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    image: 'image'
+    image: 'image',
+    userScore: 'userScore',
+    clickedEventsCount: 'clickedEventsCount'
 };
 export const OtpdetailsScalarFieldEnum = {
     id: 'id',

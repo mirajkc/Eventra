@@ -86,15 +86,17 @@ enum AdminEntityType {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  phone     String?
-  password  String?
-  role      Role     @default(CUSTOMER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  image     String?
+  id                 String   @id @default(cuid())
+  email              String   @unique
+  name               String
+  phone              String?
+  password           String?
+  role               Role     @default(CUSTOMER)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  image              String?
+  userScore          Float    @default(0)
+  clickedEventsCount Int      @default(0)
 
   //relation of the user table to the other table 
   session            Session[]

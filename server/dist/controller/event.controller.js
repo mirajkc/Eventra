@@ -360,7 +360,10 @@ class EventController {
                 userId: userData.id,
                 eventId: eventDetails.id,
                 hasClicked: true,
-                hasJoined: false
+                hasJoined: false,
+                previousScore: userData.userScore,
+                previosClickedEventsCount: userData.clickedEventsCount,
+                currentClickedEventScore: eventDetails.eventScore
             });
             const hasJoinedEvent = eventDetails?.participants?.length > 0 ? true : false;
             return res.json({

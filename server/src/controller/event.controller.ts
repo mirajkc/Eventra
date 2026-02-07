@@ -367,12 +367,16 @@ class EventController {
         }
       }
       })
-              await eventMetricsService.createNewMetrics({
-          userId : userData.id,
-          eventId : eventDetails.id,
-          hasClicked : true,
-          hasJoined : false
-        })
+      
+      await eventMetricsService.createNewMetrics({
+      userId : userData.id,
+      eventId : eventDetails.id,
+      hasClicked : true,
+      hasJoined : false,
+      previousScore : userData.userScore,
+      previosClickedEventsCount : userData.clickedEventsCount,
+      currentClickedEventScore : eventDetails.eventScore
+    })
       const hasJoinedEvent = eventDetails?.participants?.length > 0 ? true : false
       return res.json(
         {
