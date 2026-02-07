@@ -243,6 +243,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get errorLog(): Prisma.ErrorLogDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.eventMetric`: Exposes CRUD operations for the **EventMetric** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more EventMetrics
+      * const eventMetrics = await prisma.eventMetric.findMany()
+      * ```
+      */
+    get eventMetric(): Prisma.EventMetricDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

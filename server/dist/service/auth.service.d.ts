@@ -162,6 +162,22 @@ declare class AuthService {
             adminId: string;
             action: import("../generated/prisma/enums.js").AdminAction;
             reason: string;
+        })[] | ({
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
+        } | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
         })[] | {
             id: string;
             createdAt: Date;
@@ -243,6 +259,14 @@ declare class AuthService {
             adminId: string;
             action: import("../generated/prisma/enums.js").AdminAction;
             reason: string;
+        }[] | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
         }[];
         [x: number]: never;
         [x: symbol]: never;

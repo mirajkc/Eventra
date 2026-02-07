@@ -6,6 +6,7 @@ import emailService from "../service/email.service.js";
 import { newMemberRegistrationTemplate } from "../emailtemplates/newMemberRegistrationTemplate.js";
 import { leftEventTemplate } from "../emailtemplates/leaveEventTemplate.js";
 import { userCheckIn } from "../emailtemplates/userCheckedIn.js";
+import eventMetricsService from "../service/eventmetrics.service.js";
 class EventRegistrationController {
     async registerNewParticipant(req, res, next) {
         try {
@@ -61,8 +62,14 @@ class EventRegistrationController {
                 eventId: eventDetails.id,
                 userId: userDetails.id,
                 checkInToken: token
-            }; // this will trigger a tranasction that also increases the registeredCount
+            };
             const newRegistration = await eventParticipantService.createEvent(eventDetails.id, eventData);
+            await eventMetricsService.updateEventMetrics({
+                filter: {
+                    userId: userDetails.id,
+                    eventId: eventDetails.id
+                }
+            });
             await notificationService.sendNotificaion({
                 userId: userDetails.id,
                 title: "You registerd for a new event. ",

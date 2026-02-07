@@ -68,6 +68,22 @@ declare class EventService {
             createdAt: Date;
             eventId: string;
             senderId: string;
+        })[] | ({
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
+        } | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
         })[] | {
             id: string;
             userId: string;
@@ -82,6 +98,14 @@ declare class EventService {
             createdAt: Date;
             eventId: string;
             senderId: string;
+        }[] | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
         }[];
         [x: number]: never;
         [x: symbol]: never;
@@ -169,6 +193,22 @@ declare class EventService {
             createdAt: Date;
             eventId: string;
             senderId: string;
+        })[] | ({
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
+        } | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
         })[] | {
             id: string;
             userId: string;
@@ -183,6 +223,14 @@ declare class EventService {
             createdAt: Date;
             eventId: string;
             senderId: string;
+        }[] | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            eventId: string;
+            hasClicked: boolean;
+            hasJoined: boolean;
         }[];
         [x: number]: never;
         [x: symbol]: never;

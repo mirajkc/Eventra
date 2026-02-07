@@ -243,6 +243,7 @@ export declare const ModelName: {
     readonly EventMessage: "EventMessage";
     readonly AdminLogs: "AdminLogs";
     readonly ErrorLog: "ErrorLog";
+    readonly EventMetric: "EventMetric";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{
@@ -255,7 +256,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "otpdetails" | "session" | "organization" | "organizationMember" | "event" | "eventParticipants" | "creditPurchase" | "notification" | "eventMessage" | "adminLogs" | "errorLog";
+        modelProps: "user" | "otpdetails" | "session" | "organization" | "organizationMember" | "event" | "eventParticipants" | "creditPurchase" | "notification" | "eventMessage" | "adminLogs" | "errorLog" | "eventMetric";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -1147,6 +1148,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        EventMetric: {
+            payload: Prisma.$EventMetricPayload<ExtArgs>;
+            fields: Prisma.EventMetricFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.EventMetricFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.EventMetricFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>;
+                };
+                findFirst: {
+                    args: Prisma.EventMetricFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.EventMetricFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>;
+                };
+                findMany: {
+                    args: Prisma.EventMetricFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>[];
+                };
+                create: {
+                    args: Prisma.EventMetricCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>;
+                };
+                createMany: {
+                    args: Prisma.EventMetricCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.EventMetricCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>[];
+                };
+                delete: {
+                    args: Prisma.EventMetricDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>;
+                };
+                update: {
+                    args: Prisma.EventMetricUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.EventMetricDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.EventMetricUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.EventMetricUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>[];
+                };
+                upsert: {
+                    args: Prisma.EventMetricUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$EventMetricPayload>;
+                };
+                aggregate: {
+                    args: Prisma.EventMetricAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateEventMetric>;
+                };
+                groupBy: {
+                    args: Prisma.EventMetricGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.EventMetricGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.EventMetricCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.EventMetricCountAggregateOutputType> | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -1314,6 +1389,16 @@ export declare const ErrorLogScalarFieldEnum: {
     readonly status: "status";
 };
 export type ErrorLogScalarFieldEnum = (typeof ErrorLogScalarFieldEnum)[keyof typeof ErrorLogScalarFieldEnum];
+export declare const EventMetricScalarFieldEnum: {
+    readonly id: "id";
+    readonly userId: "userId";
+    readonly eventId: "eventId";
+    readonly hasClicked: "hasClicked";
+    readonly hasJoined: "hasJoined";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type EventMetricScalarFieldEnum = (typeof EventMetricScalarFieldEnum)[keyof typeof EventMetricScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";
@@ -1562,6 +1647,7 @@ export type GlobalOmitConfig = {
     eventMessage?: Prisma.EventMessageOmit;
     adminLogs?: Prisma.AdminLogsOmit;
     errorLog?: Prisma.ErrorLogOmit;
+    eventMetric?: Prisma.EventMetricOmit;
 };
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {

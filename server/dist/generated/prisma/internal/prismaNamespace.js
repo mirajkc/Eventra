@@ -79,7 +79,8 @@ export const ModelName = {
     Notification: 'Notification',
     EventMessage: 'EventMessage',
     AdminLogs: 'AdminLogs',
-    ErrorLog: 'ErrorLog'
+    ErrorLog: 'ErrorLog',
+    EventMetric: 'EventMetric'
 };
 /**
  * Enums
@@ -210,6 +211,15 @@ export const ErrorLogScalarFieldEnum = {
     code: 'code',
     message: 'message',
     status: 'status'
+};
+export const EventMetricScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    eventId: 'eventId',
+    hasClicked: 'hasClicked',
+    hasJoined: 'hasJoined',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const SortOrder = {
     asc: 'asc',

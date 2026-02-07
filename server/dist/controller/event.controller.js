@@ -11,6 +11,7 @@ import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js";
 import generateString from "../utilities/randomstring.generator.js";
 import { checkForCredit } from "../utilities/checkforcredit.js";
 import getEventScore from "../Algorithms/getEventScore.js";
+import eventMetricsService from "../service/eventmetrics.service.js";
 class EventController {
     async createNewEvent(req, res, next) {
         const data = req.body;
@@ -354,6 +355,12 @@ class EventController {
                         }
                     }
                 }
+            });
+            await eventMetricsService.createNewMetrics({
+                userId: userData.id,
+                eventId: eventDetails.id,
+                hasClicked: true,
+                hasJoined: false
             });
             const hasJoinedEvent = eventDetails?.participants?.length > 0 ? true : false;
             return res.json({

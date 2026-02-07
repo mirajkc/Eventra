@@ -10,5 +10,6 @@ export type * from './models/Notification.js';
 export type * from './models/EventMessage.js';
 export type * from './models/AdminLogs.js';
 export type * from './models/ErrorLog.js';
+export type * from './models/EventMetric.js';
 export type * from './commonInputTypes.js';
 //# sourceMappingURL=models.d.ts.map

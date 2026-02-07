@@ -38,6 +38,7 @@ export declare const ModelName: {
     readonly EventMessage: "EventMessage";
     readonly AdminLogs: "AdminLogs";
     readonly ErrorLog: "ErrorLog";
+    readonly EventMetric: "EventMetric";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -180,6 +181,16 @@ export declare const ErrorLogScalarFieldEnum: {
     readonly status: "status";
 };
 export type ErrorLogScalarFieldEnum = (typeof ErrorLogScalarFieldEnum)[keyof typeof ErrorLogScalarFieldEnum];
+export declare const EventMetricScalarFieldEnum: {
+    readonly id: "id";
+    readonly userId: "userId";
+    readonly eventId: "eventId";
+    readonly hasClicked: "hasClicked";
+    readonly hasJoined: "hasJoined";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type EventMetricScalarFieldEnum = (typeof EventMetricScalarFieldEnum)[keyof typeof EventMetricScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

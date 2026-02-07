@@ -62,4 +62,9 @@ export type AdminLogs = Prisma.AdminLogsModel;
  *
  */
 export type ErrorLog = Prisma.ErrorLogModel;
+/**
+ * Model EventMetric
+ *
+ */
+export type EventMetric = Prisma.EventMetricModel;
 //# sourceMappingURL=browser.d.ts.map
