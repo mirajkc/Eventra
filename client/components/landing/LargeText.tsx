@@ -5,14 +5,14 @@ import { motion } from "motion/react";
 
 export default function LargeText() {
     return (
-        <section className="min-h-screen w-full flex items-center justify-center overflow-hidden select-none bg-white dark:bg-black">
+        <section className="min-h-screen w-full flex items-center justify-center overflow-hidden select-none bg-white dark:bg-neutral-950">
             <div className="flex flex-col items-center justify-center w-full px-4">
                 <BlurText
                     text="Eventra"
                     delay={150}
                     animateBy="letters"
                     direction="top"
-                    className="text-[18vw] md:text-[18vw] font-[1000] tracking-[-0.08em] leading-[0.8] text-zinc-900 dark:text-zinc-100 uppercase"
+                    className="text-[18vw] md:text-[18vw] font-[1000] xl:text-[14vw] tracking-[-0.08em] leading-[0.8] text-zinc-900 dark:text-zinc-100 uppercase"
                 />
 
                 <motion.div
