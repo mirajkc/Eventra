@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ModeToggle } from "../ModeSwitch";
 import { MobileMenu } from "./MobileMenu";
+import { Button } from "../ui/button";
 
 export const menuLinks = [
   {
@@ -43,7 +44,9 @@ export default function LandingNavbar() {
             <ModeToggle />
           </div>
           <div>
-            <Link href="/auth/login" className="bg-blue-400  dark:bg-blue-600 px-4 py-2 rounded-md font-medium transition-all duration-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-800 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 dark:after:bg-blue-400 after:transition-all after:duration-200 hover:after:w-full" >Get Started</Link>
+            <Link href="/auth/login"> <Button className="hover:cursor-pointer" variant={"default"}>
+              Get Started
+            </Button></Link>
           </div>
         </div>
 

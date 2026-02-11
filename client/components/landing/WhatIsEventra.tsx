@@ -1,0 +1,41 @@
+import TextType from "../TextType";
+
+export default function WhatIsEventra() {
+    return (
+        <>
+            {/* Desktop */}
+            <div className="hidden md:flex justify-start w-full items-center min-h-screen">
+                <TextType
+                    text={["Eventra is a platform to discover, create, and manage events, making it easy for organizers to list events and for users to browse and visit them."]}
+                    typingSpeed={15}
+                    pauseDuration={500}
+                    showCursor
+                    cursorCharacter="▎"
+                    deletingSpeed={100}
+                    cursorBlinkDuration={0.5}
+                    loop={false}
+                    startOnVisible={true}
+                    className="text-2xl md:text-4xl mb-6 tracking-tight"
+                    style={{ maxWidth: "70%" }}
+                />
+            </div>
+
+            {/* Mobile */}
+            <div className="flex md:hidden justify-center w-full items-center min-h-screen">
+                <TextType
+                    text={["Eventra is a platform to discover, create, and manage events, making it easy for organizers to list events and for users to browse and visit them."]}
+                    typingSpeed={15}
+                    pauseDuration={500}
+                    showCursor
+                    cursorCharacter="▎"
+                    deletingSpeed={100}
+                    cursorBlinkDuration={0.5}
+                    loop={false}
+                    startOnVisible={true}
+                    className="text-2xl text-center tracking-tight"
+                    style={{ maxWidth: "90%" }}
+                />
+            </div>
+        </>
+    );
+}
