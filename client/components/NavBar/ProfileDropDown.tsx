@@ -34,8 +34,8 @@ export default function ProfileDropDown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <div className="h-8 w-8 rounded-full   flex items-center justify-center">
+        <Button variant="ghost" size="icon" className="rounded-full hover:cursor-pointer">
+          <div className="h-8 w-8 rounded-full flex items-center justify-center">
             {
               userDetails?.image ? (
                 <Image src={userDetails.image} width={20} height={20} alt="Profile" className="size-8 rounded-full " />

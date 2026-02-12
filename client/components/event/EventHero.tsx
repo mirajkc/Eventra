@@ -155,10 +155,10 @@ export default function EventHero({ event }: EventHeroProps) {
                 <div>
                   <div className="flex items-center gap-1.5">
                     <span className="font-bold text-lg">{event.organization.name}</span>
-                    {event.organization.isPremium && <BadgeCheck className="w-4 h-4 text-primary fill-primary/10" />}
-                    <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">Premium organization</span>
+                    {event.organization.isPremium && <BadgeCheck className=" hidden md:block w-4 h-4 text-primary fill-primary/10" />}
+                    <span className="hidden md:block text-sm text-neutral-500 dark:text-neutral-400 font-medium">Premium organization</span>
                   </div>
-                  <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">Event Organizer</span>
+                  <span className=" hidden  md:block text-sm text-neutral-500 dark:text-neutral-400 font-medium">Event Organizer</span>
                 </div>
               </div>
 

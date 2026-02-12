@@ -37,7 +37,7 @@ export default function CallToAction() {
             viewport={{ once: true }}
           >
             <TypographyP className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-10">
-              Join thousands of organizers building incredible events with Eventra. 
+              Join thousands of organizers building incredible events with Eventra.
               Start for free and see how easily you can scale your vision.
             </TypographyP>
           </motion.div>
@@ -53,7 +53,7 @@ export default function CallToAction() {
             <Button
               onClick={() => router.push("/auth/register")}
               size="lg"
-              className="w-full sm:w-auto h-14 rounded-xl bg-slate-900 px-10 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-200 shadow-xl shadow-slate-900/10 dark:shadow-none"
+              className="w-full sm:w-auto h-14 rounded-xl bg-slate-900 px-10 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-200 shadow-xl shadow-slate-900/10 dark:shadow-none hover:cursor-pointer"
             >
               Get started for free
               <ChevronRight className="ml-2 h-4 w-4" />
@@ -62,7 +62,7 @@ export default function CallToAction() {
               onClick={() => router.push("/events")}
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full sm:w-auto h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98] hover:cursor-pointer"
             >
               Explore events
             </Button>

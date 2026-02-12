@@ -55,7 +55,7 @@ export function OrganizationsSidebar() {
         <Button
           variant="ghost"
           size="sm"
-          className="ml-auto text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+          className="ml-auto text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 hover:cursor-pointer"
           onClick={handleReset}
         >
           Reset
@@ -71,7 +71,7 @@ export function OrganizationsSidebar() {
           Type
         </label>
         <select
-          className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300"
+          className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 hover:cursor-pointer"
           value={type}
           onChange={(e) => setType(e.target.value)}
         >
@@ -93,7 +93,7 @@ export function OrganizationsSidebar() {
         <input
           id="premium-filter"
           type="checkbox"
-          className="h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:ring-offset-neutral-950"
+          className="h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:ring-offset-neutral-950 hover:cursor-pointer"
           onChange={(e) => setIsPremium(e.target.checked)}
         />
       </div>
@@ -104,7 +104,7 @@ export function OrganizationsSidebar() {
           Created At
         </label>
         <select
-          className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300"
+          className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 hover:cursor-pointer"
           value={createdAt}
           onChange={(e) => setCreatedAt(e.target.value)}
         >
@@ -119,7 +119,7 @@ export function OrganizationsSidebar() {
           Updated At
         </label>
         <select
-          className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300"
+          className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 hover:cursor-pointer"
           value={updatedAt}
           onChange={(e) => setUpdatedAt(e.target.value)}
         >

@@ -28,7 +28,7 @@ export default function DesktopNavigation() {
           <Button
             variant="ghost"
             size="default"
-            className="gap-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-primary/10 hover:text-primary dark:hover:text-white dark:hover:bg-primary/20 active:scale-95"
+            className="gap-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-primary/10 hover:text-primary dark:hover:text-white dark:hover:bg-primary/20 active:scale-95 hover:cursor-pointer"
           >
             {link.icon}
             {link.label}

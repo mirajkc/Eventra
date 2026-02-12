@@ -174,7 +174,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   </div>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col w-full md:flex-row gap-2">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -183,11 +183,12 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   {
                     userRole === "OWNER" || userRole === "CREATOR" ? (
                       <>
-                        <Link href={`/organization/${organizationId}/create-event`}>
+                        <Link
+                          className="w-full md:w-auto"
+                          href={`/organization/${organizationId}/create-event`}>
                           <Button
-
                             size="lg"
-                            className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
+                            className="w-full md:w-auto h-12 hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 "
                           >
                             <Plus />
                             Create Event

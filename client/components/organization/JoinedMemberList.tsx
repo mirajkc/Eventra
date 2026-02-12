@@ -61,7 +61,7 @@ export default function JoinedMemberList() {
     }
   }
 
-  const fetchUserRole = async () =>{
+  const fetchUserRole = async () => {
     try {
       setLoadingRole(true)
       const accessToken = await getAccessToken()
@@ -81,7 +81,7 @@ export default function JoinedMemberList() {
 
     } catch (error) {
       console.log(error)
-    }finally {
+    } finally {
       setLoadingRole(false)
     }
   }
@@ -113,54 +113,49 @@ export default function JoinedMemberList() {
         )
       }
       {joinedMembers.map((member) => (
-        <div key={member.id}>
-        <div   
-          className="flex items-center  justify-between p-4 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-2xl shadow-sm hover:border-primary/20 transition-all backdrop-blur-sm"
+        <div
+          key={member.id}
+          className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-3xl shadow-sm hover:ring-1 hover:ring-primary/20 hover:border-primary/20 transition-all backdrop-blur-sm gap-4"
         >
-          <div className="flex items-center gap-4">
-            <img
-              src={member.user.image || "https://github.com/shadcn.png"}
-              alt={member.user.name}
-              className="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-neutral-800 shadow-sm"
-            />
-            <div className="flex flex-col">
-              <h4 className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+          <div className="flex items-center gap-4 min-w-0">
+            <div className="relative shrink-0">
+              <img
+                src={member.user.image || "https://github.com/shadcn.png"}
+                alt={member.user.name}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white dark:border-neutral-800 shadow-sm"
+              />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <h4 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 truncate group-hover:text-primary transition-colors">
                 {member.user.name}
               </h4>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
                 {member.user.email}
               </p>
             </div>
           </div>
-          
-          <div className="flex items-end gap-1.5">
-            {
-              role === "OWNER" || role === "ADMIN" ? (
-             <div className="hidden md:block" >
-              <HandleKickMember fethcJoinedMember={fethcJoinedMember}  memberId={String(member.id)} organizationId={String(organizationId)} />
-              </div>
-              ) : null
-            }
 
-            <div>
-              <span className="text-[10px] font-bold px-2.5 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider">
-              {member.role}
-            </span>
-            <p className="text-[10px] text-neutral-400 dark:text-neutral-500 font-medium">
-              Joined {formatDistanceToNow(new Date(member.joinedAt))} ago
-            </p>
+          <div className="flex flex-row items-center justify-between sm:justify-end gap-3 sm:gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-neutral-100 dark:border-neutral-800">
+            <div className="flex flex-col items-start sm:items-end">
+              <span className="text-[10px] font-bold px-2.5 py-1 bg-blue-50/50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider border border-blue-100/50 dark:border-blue-800/30">
+                {member.role}
+              </span>
+              <p className="hidden sm:block text-[10px] text-neutral-400 dark:text-neutral-500 font-medium mt-1">
+                Joined {formatDistanceToNow(new Date(member.joinedAt))} ago
+              </p>
             </div>
-            
+
+            {(role === "OWNER" || role === "ADMIN") && (
+              <div className="shrink-0">
+                <HandleKickMember
+                  fethcJoinedMember={fethcJoinedMember}
+                  memberId={String(member.id)}
+                  organizationId={String(organizationId)}
+                />
+              </div>
+            )}
           </div>
         </div>
-        {
-          role === "OWNER" || role === "ADMIN" ? (
-            <div className="md:hidden" >
-             <HandleKickMember fethcJoinedMember={fethcJoinedMember} memberId={String(member.id)} organizationId={String(organizationId)} />
-             </div>
-             ) : null
-        }
-      </div>
       ))}
 
       <div className="flex w-full justify-center items-center mt-6">

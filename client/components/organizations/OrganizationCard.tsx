@@ -19,7 +19,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
       transition={{ duration: 0.4 }}
 
     >
-      <Card className="w-full h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 dark:bg-neutral-950 cursor-pointer hover:scale-105 transition-transform duration-300">
+      <Card className="w-full h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 dark:bg-neutral-950  hover:scale-105 transition-transform duration-300">
 
         {/* Banner Image */}
         <div className="relative w-full h-32 md:h-40 bg-neutral-100 dark:bg-neutral-900 ">
@@ -81,7 +81,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
         </CardContent>
         <CardFooter>
           <Link className="w-full" href={`/organization/${organization.id}`}>
-            <Button className="w-full " >
+            <Button className="w-full hover:cursor-pointer " >
               View Organization
               <ArrowRight />
             </Button></Link>

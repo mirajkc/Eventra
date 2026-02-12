@@ -64,13 +64,13 @@ export default function HeroSection() {
           className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:gap-6"
         >
           <Button
-          onClick={() => router.push("/events")}
-           size="lg" className="h-14 rounded-xl bg-slate-900 px-10 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-200">
+            onClick={() => router.push("/events")}
+            size="lg" className="h-14 rounded-xl bg-slate-900 px-10 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-200 hover:cursor-pointer">
             Explore Events
           </Button>
-          <Button 
-          onClick={() => router.push("/organizations")}
-          variant="outline" size="lg" className="h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98]">
+          <Button
+            onClick={() => router.push("/organizations")}
+            variant="outline" size="lg" className="h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98] hover:cursor-pointer">
             Join Organizations
           </Button>
         </motion.div>

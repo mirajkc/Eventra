@@ -125,8 +125,8 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="size-5" />
+        <Button variant="ghost" size="icon" className="relative hover:cursor-pointer">
+          <Bell className="size-5 " />
           {/* Notification badge - only show if there are unread notifications */}
           {unreadCount > 0 && (
             <span className="absolute top-1 right-1 flex size-3 items-center justify-center rounded-full bg-destructive text-[10px] text-white font-semibold">

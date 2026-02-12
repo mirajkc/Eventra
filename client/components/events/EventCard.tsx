@@ -171,7 +171,7 @@ export default function EventCard({ event }: EventCardProps) {
           </div>
 
           <Link href={`/event/${event.id}`}>
-            <Button size="sm" className="rounded-full px-4 h-9 font-semibold group/btn">
+            <Button size="sm" className="rounded-full px-4 h-9 font-semibold group/btn hover:cursor-pointer">
               Details
               <ArrowRight className="ml-1.5 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
             </Button>
