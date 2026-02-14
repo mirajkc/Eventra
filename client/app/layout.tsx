@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import ReduxProvider from "@/state/redux.provider";
+import { Analytics } from '@vercel/analytics/next';
 
 
 
@@ -49,6 +50,7 @@ export default function RootLayout({
           </ThemeProvider>
 
         </ReduxProvider>
+        <Analytics />
       </body>
     </html>
   );
