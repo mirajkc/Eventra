@@ -10,143 +10,119 @@ export function leftOrganizationEmail(organizationName: string, userName: string
         body {
           margin: 0;
           padding: 0;
-          background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+          background-color: #f4f4f5;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          color: #18181b;
         }
         .container {
           max-width: 560px;
           margin: 40px auto;
           background-color: #ffffff;
-          border-radius: 16px;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
           overflow: hidden;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .header {
-          background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-          padding: 48px 24px;
+          background-color: #000000;
+          padding: 32px 24px;
           text-align: center;
         }
         .header-icon {
-          font-size: 64px;
+          font-size: 48px;
           margin-bottom: 16px;
         }
         .header h1 {
           color: #ffffff;
           margin: 0;
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
         }
         .header p {
-          color: rgba(255, 255, 255, 0.95);
-          margin: 12px 0 0 0;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 8px 0 0 0;
           font-size: 16px;
         }
         .content {
-          padding: 40px 32px;
-          color: #374151;
-          font-size: 15px;
-          line-height: 1.7;
+          padding: 32px 24px;
+          font-size: 16px;
+          line-height: 1.6;
         }
         .greeting {
           font-size: 18px;
           font-weight: 600;
-          color: #1f2937;
+          color: #000000;
           margin-bottom: 16px;
         }
         .org-name-box {
-          margin: 32px 0;
-          padding: 24px;
-          background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-          border-radius: 12px;
+          margin: 24px 0;
+          padding: 20px;
+          background-color: #fafafa;
+          border: 1px solid #e4e4e7;
+          border-radius: 8px;
           text-align: center;
-          border: 2px solid #9ca3af;
         }
         .org-name-label {
           font-size: 12px;
-          color: #6b7280;
+          color: #71717a;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-bottom: 8px;
           font-weight: 600;
         }
         .org-name {
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
-          color: #4b5563;
+          color: #000000;
         }
         .info-list {
-          margin: 32px 0;
+          margin: 24px 0;
         }
         .info-item {
           display: flex;
           align-items: flex-start;
           margin-bottom: 16px;
           padding: 16px;
-          background-color: #f9fafb;
+          background-color: #fafafa;
           border-radius: 8px;
-        }
-        .info-icon {
-          font-size: 24px;
-          margin-right: 16px;
-          flex-shrink: 0;
-        }
-        .info-text {
-          flex: 1;
+          border: 1px solid #e4e4e7;
         }
         .info-title {
-          font-weight: 600;
-          color: #1f2937;
+          font-weight: 700;
+          color: #000000;
           margin-bottom: 4px;
         }
         .info-description {
           font-size: 14px;
-          color: #6b7280;
+          color: #52525b;
         }
         .cta-button {
           display: inline-block;
-          margin: 32px 0;
-          padding: 16px 32px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          margin: 24px 0;
+          padding: 14px 28px;
+          background-color: #000000;
           color: #ffffff;
           text-decoration: none;
-          border-radius: 8px;
+          border-radius: 6px;
           font-weight: 600;
           font-size: 16px;
           text-align: center;
-          box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-        }
-        .warning-section {
-          margin-top: 32px;
-          padding: 20px;
-          background-color: #fef3c7;
-          border-left: 4px solid #f59e0b;
-          border-radius: 8px;
-          font-size: 14px;
-          color: #92400e;
-        }
-        .help-section {
-          margin-top: 24px;
-          padding: 20px;
-          background-color: #eff6ff;
-          border-left: 4px solid #3b82f6;
-          border-radius: 8px;
-          font-size: 14px;
-          color: #1e40af;
         }
         .footer {
-          padding: 32px;
+          padding: 24px;
           text-align: center;
-          background-color: #f9fafb;
-          border-top: 1px solid #e5e7eb;
+          background-color: #fafafa;
+          border-top: 1px solid #e4e4e7;
+          font-size: 14px;
+          color: #71717a;
         }
         .footer p {
           margin: 8px 0;
           font-size: 13px;
-          color: #6b7280;
         }
         .footer a {
-          color: #667eea;
-          text-decoration: none;
+          color: #000000;
+          text-decoration: underline;
         }
       </style>
     </head>
@@ -177,7 +153,6 @@ export function leftOrganizationEmail(organizationName: string, userName: string
 
           <div class="info-list">
             <div class="info-item">
-              <div class="info-icon">🚫</div>
               <div class="info-text">
                 <div class="info-title">Access Removed</div>
                 <div class="info-description">
@@ -187,7 +162,6 @@ export function leftOrganizationEmail(organizationName: string, userName: string
             </div>
 
             <div class="info-item">
-              <div class="info-icon">📧</div>
               <div class="info-text">
                 <div class="info-title">Notifications Stopped</div>
                 <div class="info-description">
@@ -197,7 +171,6 @@ export function leftOrganizationEmail(organizationName: string, userName: string
             </div>
 
             <div class="info-item">
-              <div class="info-icon">✅</div>
               <div class="info-text">
                 <div class="info-title">Account Active</div>
                 <div class="info-description">
@@ -207,7 +180,6 @@ export function leftOrganizationEmail(organizationName: string, userName: string
             </div>
 
             <div class="info-item">
-              <div class="info-icon">🔄</div>
               <div class="info-text">
                 <div class="info-title">Rejoin Possible</div>
                 <div class="info-description">
@@ -215,18 +187,6 @@ export function leftOrganizationEmail(organizationName: string, userName: string
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="warning-section">
-            ⚠️ <strong>Important Notice</strong><br>
-            If you believe this was done in error or you did not initiate this action, 
-            please contact the organization administrator or our support team immediately.
-          </div>
-
-          <div class="help-section">
-            💡 <strong>What's Next?</strong><br>
-            You can continue using Eventra by creating a new organization or joining 
-            an existing one. Visit your dashboard to explore your options.
           </div>
 
           <center>

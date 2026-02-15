@@ -11,7 +11,7 @@ class Enviroment {
         port: process.env.SMTP_PORT || "587",
         user: process.env.SMTP_USER || "",
         password: process.env.SMTP_PASSWORD || "",
-        from: process.env.SMTP_FROM || "miraj@eventraa.com",
+        from: process.env.SMTP_FROM || "miraj@eventraa.tech",
         resendApiKey: process.env.RESEND_API || "",
     };
     cloudinaryKeys = {

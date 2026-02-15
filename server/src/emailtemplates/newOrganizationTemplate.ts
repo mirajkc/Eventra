@@ -1,164 +1,156 @@
-export function newOrganizationCreation(organizationName: string, userName: string) {
+export function newOrganizationTemplate(organizationName: string, userName: string) {
   return `
   <!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Welcome to Your New Organization</title>
+      <title>Organization Created Successfully</title>
       <style>
         body {
           margin: 0;
           padding: 0;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background-color: #f4f4f5;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          color: #18181b;
         }
         .container {
           max-width: 560px;
           margin: 40px auto;
           background-color: #ffffff;
-          border-radius: 16px;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
           overflow: hidden;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .header {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          padding: 48px 24px;
+          background-color: #000000;
+          padding: 32px 24px;
           text-align: center;
         }
         .header-icon {
-          font-size: 64px;
+          font-size: 48px;
           margin-bottom: 16px;
         }
         .header h1 {
           color: #ffffff;
           margin: 0;
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
         }
         .header p {
-          color: rgba(255, 255, 255, 0.95);
-          margin: 12px 0 0 0;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 8px 0 0 0;
           font-size: 16px;
         }
         .content {
-          padding: 40px 32px;
-          color: #374151;
-          font-size: 15px;
-          line-height: 1.7;
+          padding: 32px 24px;
+          font-size: 16px;
+          line-height: 1.6;
         }
         .greeting {
           font-size: 18px;
           font-weight: 600;
-          color: #1f2937;
+          color: #000000;
           margin-bottom: 16px;
         }
         .org-name-box {
-          margin: 32px 0;
-          padding: 24px;
-          background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-          border-radius: 12px;
+          margin: 24px 0;
+          padding: 20px;
+          background-color: #fafafa;
+          border: 1px solid #e4e4e7;
+          border-radius: 8px;
           text-align: center;
-          border: 2px solid #667eea;
         }
         .org-name-label {
           font-size: 12px;
-          color: #6b7280;
+          color: #71717a;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-bottom: 8px;
           font-weight: 600;
         }
         .org-name {
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: #000000;
         }
-        .features {
-          margin: 32px 0;
+        .next-steps {
+          margin: 24px 0;
         }
-        .feature-item {
+        .step-item {
           display: flex;
           align-items: flex-start;
           margin-bottom: 16px;
           padding: 16px;
-          background-color: #f9fafb;
+          background-color: #fafafa;
           border-radius: 8px;
-          transition: transform 0.2s;
+          border: 1px solid #e4e4e7;
         }
-        .feature-icon {
-          font-size: 24px;
-          margin-right: 16px;
-          flex-shrink: 0;
-        }
-        .feature-text {
-          flex: 1;
-        }
-        .feature-title {
-          font-weight: 600;
-          color: #1f2937;
+        .step-title {
+          font-weight: 700;
+          color: #000000;
           margin-bottom: 4px;
         }
-        .feature-description {
+        .step-description {
           font-size: 14px;
-          color: #6b7280;
+          color: #52525b;
         }
         .cta-button {
           display: inline-block;
-          margin: 32px 0;
-          padding: 16px 32px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          margin: 24px 0;
+          padding: 14px 28px;
+          background-color: #000000;
           color: #ffffff;
           text-decoration: none;
-          border-radius: 8px;
+          border-radius: 6px;
           font-weight: 600;
           font-size: 16px;
           text-align: center;
-          box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
         }
-        .help-section {
-          margin-top: 32px;
-          padding: 20px;
-          background-color: #eff6ff;
-          border-left: 4px solid #3b82f6;
-          border-radius: 8px;
+        .success-badge {
+          display: inline-block;
+          margin: 16px 0;
+          padding: 8px 16px;
+          background-color: #18181b;
+          color: #ffffff;
+          border-radius: 50px;
+          font-weight: 600;
           font-size: 14px;
-          color: #1e40af;
+          text-align: center;
         }
         .footer {
-          padding: 32px;
+          padding: 24px;
           text-align: center;
-          background-color: #f9fafb;
-          border-top: 1px solid #e5e7eb;
+          background-color: #fafafa;
+          border-top: 1px solid #e4e4e7;
+          font-size: 14px;
+          color: #71717a;
         }
         .footer p {
           margin: 8px 0;
           font-size: 13px;
-          color: #6b7280;
         }
         .footer a {
-          color: #667eea;
-          text-decoration: none;
+          color: #000000;
+          text-decoration: underline;
         }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <div class="header-icon">🎉</div>
+          <div class="header-icon">🏢</div>
           <h1>Organization Created!</h1>
-          <p>Your journey with Eventra begins now</p>
+          <p>Your new workspace is ready</p>
         </div>
 
         <div class="content">
           <p class="greeting">Hi ${userName},</p>
 
           <p>
-            Congratulations! Your organization has been successfully created on Eventra. 
-            You're now ready to start planning, managing, and hosting amazing events.
+            Congratulations! You've successfully created a new organization on Eventra. 
+            This will be your central hub for managing events, team members, and resources.
           </p>
 
           <div class="org-name-box">
@@ -166,48 +158,47 @@ export function newOrganizationCreation(organizationName: string, userName: stri
             <div class="org-name">${organizationName}</div>
           </div>
 
+          <center>
+            <div class="success-badge">✓ Workspace Ready</div>
+          </center>
+
           <p>
-            As the organization owner, you have full control over your workspace. 
-            Here's what you can do now:
+            Here's what you can do next to get started:
           </p>
 
-          <div class="features">
-            <div class="feature-item">
-              <div class="feature-icon">👥</div>
-              <div class="feature-text">
-                <div class="feature-title">Invite Team Members</div>
-                <div class="feature-description">
-                  Collaborate with your team by inviting members to join your organization
+          <div class="next-steps">
+            <div class="step-item">
+              <div class="step-text">
+                <div class="step-title">Complete Profile</div>
+                <div class="step-description">
+                  Add a logo, description, and contact details to make your organization stand out
                 </div>
               </div>
             </div>
 
-            <div class="feature-item">
-              <div class="feature-icon">📅</div>
-              <div class="feature-text">
-                <div class="feature-title">Create Events</div>
-                <div class="feature-description">
-                  Start planning your first event with our intuitive event management tools
+            <div class="step-item">
+              <div class="step-text">
+                <div class="step-title">Invite Your Team</div>
+                <div class="step-description">
+                  Add team members and assign roles to help manage your organization and events
                 </div>
               </div>
             </div>
 
-            <div class="feature-item">
-              <div class="feature-icon">⚙️</div>
-              <div class="feature-text">
-                <div class="feature-title">Customize Settings</div>
-                <div class="feature-description">
-                  Configure your organization preferences, branding, and permissions
+            <div class="step-item">
+              <div class="step-text">
+                <div class="step-title">Create First Event</div>
+                <div class="step-description">
+                  Launch your first event and start selling tickets immediately
                 </div>
               </div>
             </div>
 
-            <div class="feature-item">
-              <div class="feature-icon">📊</div>
-              <div class="feature-text">
-                <div class="feature-title">Track Analytics</div>
-                <div class="feature-description">
-                  Monitor event performance and attendance with detailed insights
+            <div class="step-item">
+              <div class="step-text">
+                <div class="step-title">Explore Analytics</div>
+                <div class="step-description">
+                  Check out the dashboard to see your organization's performance metrics
                 </div>
               </div>
             </div>
@@ -219,14 +210,9 @@ export function newOrganizationCreation(organizationName: string, userName: stri
             </a>
           </center>
 
-          <div class="help-section">
-            💡 <strong>Need help getting started?</strong><br>
-            Check out our <a href="https://eventra.com/docs">documentation</a> or 
-            reach out to our support team. We're here to help you succeed!
-          </div>
-
           <p style="margin-top: 32px;">
-            We're excited to see what you'll create with Eventra!
+            We're excited to see what you'll build with Eventra! If you need any assistance getting set up, 
+            our support team is just a click away.
           </p>
 
           <p style="margin-top: 24px;">

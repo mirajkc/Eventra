@@ -1,4 +1,4 @@
-export default function adminUpdateTemplate (type : "EVENT" | "PROFILE" |  "ORGANIZATION", reason : string){
+export default function adminUpdateTemplate(type: "EVENT" | "PROFILE" | "ORGANIZATION", reason: string) {
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -10,68 +10,76 @@ export default function adminUpdateTemplate (type : "EVENT" | "PROFILE" |  "ORGA
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f9;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f4f4f5;
+      color: #18181b;
     }
     .container {
       max-width: 600px;
-      margin: 0 auto;
+      margin: 40px auto;
       background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e4e4e7;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     .header {
-      background-color: #6366f1;
-      padding: 40px 20px;
+      background-color: #000000;
+      padding: 32px 20px;
       text-align: center;
     }
     .header h1 {
       color: #ffffff;
       margin: 0;
       font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
     .content {
-      padding: 40px 30px;
-      color: #333333;
+      padding: 32px 24px;
       line-height: 1.6;
     }
     .content h2 {
-      color: #1e293b;
-      font-size: 24px;
+      color: #000000;
+      font-size: 22px;
+      margin-top: 0;
       margin-bottom: 20px;
+      font-weight: 600;
     }
     .content p {
-      margin: 15px 0;
+      margin: 16px 0;
       font-size: 16px;
+      color: #18181b;
     }
     .reason-box {
-      background-color: #f8fafc;
-      border-left: 4px solid #6366f1;
+      background-color: #fafafa;
+      border: 1px solid #e4e4e7;
+      border-left: 4px solid #000000;
       padding: 20px;
-      margin: 20px 0;
+      margin: 24px 0;
+      border-radius: 4px;
     }
     .reason-box p {
       margin: 0;
       font-size: 16px;
       font-weight: 500;
-      color: #334155;
+      color: #18181b;
     }
     .footer {
-      background-color: #f1f5f9;
-      padding: 30px 20px;
+      background-color: #fafafa;
+      padding: 24px;
       text-align: center;
-      border-top: 1px solid #e2e8f0;
+      border-top: 1px solid #e4e4e7;
     }
     .footer p {
-      margin: 5px 0;
+      margin: 8px 0;
       font-size: 14px;
-      color: #64748b;
+      color: #71717a;
     }
     .support-link {
-      color: #6366f1;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .support-link:hover {
+      color: #000000;
       text-decoration: underline;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -96,7 +104,7 @@ export default function adminUpdateTemplate (type : "EVENT" | "PROFILE" |  "ORGA
     </div>
     <div class="footer">
       <p>If you need assistance, please contact our support team:</p>
-      <p><a href="mailto:[EMAIL_ADDRESS]" class="support-link">[EMAIL_ADDRESS]</a></p>
+      <p><a href="mailto:support@eventra.com" class="support-link">support@eventra.com</a></p>
       <p>© ${new Date().getFullYear()} Eventra. All rights reserved.</p>
     </div>
   </div>

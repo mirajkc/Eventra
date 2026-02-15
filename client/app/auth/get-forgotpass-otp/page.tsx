@@ -12,18 +12,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function GetForgotPasswordOtp() {
-
-  toast.info("Alert, Eventra as of now does not have a mail server provider. So we are unable to send OTP.");
-
   const router = useRouter();
-
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       email: "",
     },
     resolver: zodResolver(forgotPasswordOtpDTO)
   });
-
   const onSubmit = async (data: any) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/get-forgot-password-otp`, {
@@ -38,9 +33,7 @@ export default function GetForgotPasswordOtp() {
         throw new Error(result.message);
       }
       toast.success("OTP sent to your email successfully.");
-      console.log(result);
-      // You can redirect to verify OTP page or handle as needed
-      // router.push('/auth/verify-otp');
+      router.push(`/auth/verify-forgotpass-otp/${data.email}`);
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
