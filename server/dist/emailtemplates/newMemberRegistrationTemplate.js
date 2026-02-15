@@ -10,84 +10,82 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
         body {
           margin: 0;
           padding: 0;
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+          background-color: #f4f4f5;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          color: #18181b;
         }
         .container {
           max-width: 560px;
           margin: 40px auto;
           background-color: #ffffff;
-          border-radius: 16px;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
           overflow: hidden;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .header {
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-          padding: 48px 24px;
+          background-color: #000000;
+          padding: 32px 24px;
           text-align: center;
         }
         .header-icon {
-          font-size: 64px;
+          font-size: 48px;
           margin-bottom: 16px;
         }
         .header h1 {
           color: #ffffff;
           margin: 0;
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
         }
         .header p {
-          color: rgba(255, 255, 255, 0.95);
-          margin: 12px 0 0 0;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 8px 0 0 0;
           font-size: 16px;
         }
         .content {
-          padding: 40px 32px;
-          color: #374151;
-          font-size: 15px;
-          line-height: 1.7;
+          padding: 32px 24px;
+          font-size: 16px;
+          line-height: 1.6;
         }
         .greeting {
           font-size: 18px;
           font-weight: 600;
-          color: #1f2937;
+          color: #000000;
           margin-bottom: 16px;
         }
         .event-name-box {
-          margin: 32px 0;
-          padding: 24px;
-          background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-          border-radius: 12px;
+          margin: 24px 0;
+          padding: 20px;
+          background-color: #fafafa;
+          border: 1px solid #e4e4e7;
+          border-radius: 8px;
           text-align: center;
-          border: 2px solid #3b82f6;
         }
         .event-name-label {
           font-size: 12px;
-          color: #1e40af;
+          color: #71717a;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-bottom: 8px;
           font-weight: 600;
         }
         .event-name {
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: #000000;
         }
         .ticket-box {
           margin: 32px 0;
           padding: 32px;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border-radius: 16px;
-          border: 3px dashed #3b82f6;
+          background-color: #ffffff;
+          border-radius: 8px;
+          border: 2px dashed #000000;
           text-align: center;
         }
         .ticket-label {
           font-size: 14px;
-          color: #64748b;
+          color: #52525b;
           text-transform: uppercase;
           letter-spacing: 1.5px;
           margin-bottom: 16px;
@@ -96,97 +94,80 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
         .ticket-token {
           font-size: 32px;
           font-weight: 800;
-          color: #1e293b;
+          color: #000000;
           font-family: 'Courier New', monospace;
           letter-spacing: 4px;
           margin: 16px 0;
           padding: 20px;
-          background-color: #ffffff;
-          border-radius: 12px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          background-color: #f4f4f5;
+          border-radius: 4px;
           word-break: break-all;
         }
         .ticket-instruction {
           font-size: 13px;
-          color: #64748b;
+          color: #71717a;
           margin-top: 16px;
           font-style: italic;
         }
         .info-list {
-          margin: 32px 0;
+          margin: 24px 0;
         }
         .info-item {
           display: flex;
           align-items: flex-start;
           margin-bottom: 16px;
           padding: 16px;
-          background-color: #f9fafb;
+          background-color: #fafafa;
           border-radius: 8px;
-        }
-        .info-icon {
-          font-size: 24px;
-          margin-right: 16px;
-          flex-shrink: 0;
-        }
-        .info-text {
-          flex: 1;
+          border: 1px solid #e4e4e7;
         }
         .info-title {
-          font-weight: 600;
-          color: #1f2937;
+          font-weight: 700;
+          color: #000000;
           margin-bottom: 4px;
         }
         .info-description {
           font-size: 14px;
-          color: #6b7280;
+          color: #52525b;
         }
         .cta-button {
           display: inline-block;
-          margin: 32px 0;
-          padding: 16px 32px;
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+          margin: 24px 0;
+          padding: 14px 28px;
+          background-color: #000000;
           color: #ffffff;
           text-decoration: none;
-          border-radius: 8px;
+          border-radius: 6px;
           font-weight: 600;
           font-size: 16px;
           text-align: center;
-          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
-        }
-        .important-section {
-          margin-top: 32px;
-          padding: 20px;
-          background-color: #fef3c7;
-          border-left: 4px solid #f59e0b;
-          border-radius: 8px;
-          font-size: 14px;
-          color: #92400e;
         }
         .success-badge {
           display: inline-block;
-          margin: 24px 0;
-          padding: 12px 24px;
-          background-color: #d1fae5;
-          color: #065f46;
+          margin: 16px 0;
+          padding: 8px 16px;
+          background-color: #18181b;
+          color: #ffffff;
           border-radius: 50px;
           font-weight: 600;
           font-size: 14px;
           text-align: center;
         }
         .footer {
-          padding: 32px;
+          padding: 24px;
           text-align: center;
-          background-color: #f9fafb;
-          border-top: 1px solid #e5e7eb;
+          background-color: #fafafa;
+          border-top: 1px solid #e4e4e7;
+          font-size: 14px;
+          color: #71717a;
         }
         .footer p {
           margin: 8px 0;
           font-size: 13px;
-          color: #6b7280;
         }
         .footer a {
-          color: #3b82f6;
-          text-decoration: none;
+          color: #000000;
+          text-decoration: underline;
         }
       </style>
     </head>
@@ -229,7 +210,6 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
 
           <div class="info-list">
             <div class="info-item">
-              <div class="info-icon">🎫</div>
               <div class="info-text">
                 <div class="info-title">Your Entry Token</div>
                 <div class="info-description">
@@ -239,7 +219,6 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
             </div>
 
             <div class="info-item">
-              <div class="info-icon">📱</div>
               <div class="info-text">
                 <div class="info-title">Digital Access</div>
                 <div class="info-description">
@@ -249,7 +228,6 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
             </div>
 
             <div class="info-item">
-              <div class="info-icon">📧</div>
               <div class="info-text">
                 <div class="info-title">Event Updates</div>
                 <div class="info-description">
@@ -259,7 +237,6 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
             </div>
 
             <div class="info-item">
-              <div class="info-icon">📅</div>
               <div class="info-text">
                 <div class="info-title">Add to Calendar</div>
                 <div class="info-description">
@@ -269,7 +246,6 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
             </div>
 
             <div class="info-item">
-              <div class="info-icon">❓</div>
               <div class="info-text">
                 <div class="info-title">Questions?</div>
                 <div class="info-description">
@@ -284,11 +260,6 @@ export function newMemberRegistrationTemplate(userName, eventName, token) {
               View Event Details →
             </a>
           </center>
-
-          <div class="important-section">
-            ⚠️ <strong>Important:</strong> Your entry token is unique to you. Do not share it with others. 
-            If you lose this token, contact the event organizer or our support team for assistance.
-          </div>
 
           <p style="margin-top: 32px;">
             We look forward to seeing you at the event! If you have any questions, 

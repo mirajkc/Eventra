@@ -1,4 +1,4 @@
-export function checkInConfirmationTemplate(
+export function userCheckIn(
   userName: string,
   eventName: string,
   timestamp: string

@@ -74,9 +74,9 @@ class EventRegistrationController {
       const newRegistration = await eventParticipantService.createEvent(eventDetails.id, eventData)
 
       await eventMetricsService.updateEventMetrics({
-        filter : {
-          userId : userDetails.id,
-          eventId : eventDetails.id
+        filter: {
+          userId: userDetails.id,
+          eventId: eventDetails.id
         }
       })
 
@@ -237,7 +237,7 @@ class EventRegistrationController {
         } as IErrorTypes
       }
 
-      const checkedInUser = await eventParticipantService.chekIn(ticket, eventDetails.id)
+      const checkedInUser: any = await eventParticipantService.chekIn(ticket, eventDetails.id)
 
       await notificationService.sendNotificaion({
         userId: checkedInUser.userId,
@@ -251,7 +251,7 @@ class EventRegistrationController {
       await emailService.sendEmail({
         to: userDetails.email,
         subject: "Successfully, cheched in. ",
-        message: userCheckIn("User", eventDetails.title)
+        message: userCheckIn("User", eventDetails.title, checkedInUser.checkedInAt.toISOString())
       })
 
       return res.json({
@@ -311,48 +311,48 @@ class EventRegistrationController {
   }
 
 
-  async getAttendedUsers(req:Request, res:Response, next:NextFunction) {
+  async getAttendedUsers(req: Request, res: Response, next: NextFunction) {
     try {
       const eventId = req.params.eventId
-      if(!eventId){
+      if (!eventId) {
         throw {
-          code : 404, 
-          message : "Unable to get the event details. ",
-          status :"EVENT_ID_NOT_FOUND_ERR"
+          code: 404,
+          message: "Unable to get the event details. ",
+          status: "EVENT_ID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const query  = req.query
+      const query = req.query
       const page = Number(query.page) | 1
-      const take = Number (query.take) | 10
-      const skip = Math.floor((page-1)*take)
+      const take = Number(query.take) | 10
+      const skip = Math.floor((page - 1) * take)
       const attendedUsers = await eventParticipantService.getEventParticipants({
-        filter :  {
-        eventId : String(eventId),
-        attended : true
-      },
-      select :  {
-       checkedInAt : true,
-       user : {
-        select : {
-          name : true,
-          image : true
-        }
-       } 
-      },
-      skip : skip,
-      take : take
+        filter: {
+          eventId: String(eventId),
+          attended: true
+        },
+        select: {
+          checkedInAt: true,
+          user: {
+            select: {
+              name: true,
+              image: true
+            }
+          }
+        },
+        skip: skip,
+        take: take
       })
       const totalAttendedUsers = await eventParticipantService.getParticipantsCount({
-        eventId : eventId,
-        attended : true
+        eventId: eventId,
+        attended: true
       })
 
       return res.json({
-        message : "Participated users fetched successfully. ",
-        data : {
-          attendedUsers : attendedUsers
+        message: "Participated users fetched successfully. ",
+        data: {
+          attendedUsers: attendedUsers
         },
-        pagination : {
+        pagination: {
           currentPage: page,
           take: take,
           totalDoccuments: totalAttendedUsers,

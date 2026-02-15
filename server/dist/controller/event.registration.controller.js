@@ -226,7 +226,7 @@ class EventRegistrationController {
             await emailService.sendEmail({
                 to: userDetails.email,
                 subject: "Successfully, cheched in. ",
-                message: userCheckIn("User", eventDetails.title)
+                message: userCheckIn("User", eventDetails.title, checkedInUser.checkedInAt.toISOString())
             });
             return res.json({
                 message: "User successfully checked in. ",

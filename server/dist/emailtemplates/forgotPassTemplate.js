@@ -10,44 +10,45 @@ export function forgotPasswordTemplate(otp) {
         body {
           margin: 0;
           padding: 0;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background-color: #f4f4f5;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          color: #18181b;
         }
         .container {
           max-width: 560px;
           margin: 40px auto;
           background-color: #ffffff;
-          border-radius: 16px;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
           overflow: hidden;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .header {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          padding: 40px 24px;
+          background-color: #000000;
+          padding: 32px 24px;
           text-align: center;
         }
         .header h1 {
           color: #ffffff;
           margin: 0;
-          font-size: 32px;
+          font-size: 28px;
           font-weight: 700;
           letter-spacing: 1px;
         }
         .header p {
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(255, 255, 255, 0.8);
           margin: 8px 0 0 0;
           font-size: 16px;
         }
         .content {
-          padding: 40px 32px;
-          color: #374151;
-          font-size: 15px;
-          line-height: 1.7;
+          padding: 32px 24px;
+          font-size: 16px;
+          line-height: 1.6;
         }
         .greeting {
           font-size: 18px;
           font-weight: 600;
-          color: #1f2937;
+          color: #000000;
           margin-bottom: 16px;
         }
         .otp-container {
@@ -56,7 +57,7 @@ export function forgotPasswordTemplate(otp) {
         }
         .otp-label {
           font-size: 13px;
-          color: #6b7280;
+          color: #71717a;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-bottom: 12px;
@@ -64,56 +65,58 @@ export function forgotPasswordTemplate(otp) {
         }
         .otp-box {
           display: inline-block;
-          padding: 20px 40px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          border-radius: 12px;
-          font-size: 36px;
+          padding: 24px 48px;
+          background-color: #fafafa;
+          border: 2px solid #000000;
+          border-radius: 8px;
+          font-size: 40px;
           letter-spacing: 8px;
           font-weight: 700;
-          color: #ffffff;
-          box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+          color: #000000;
         }
         .info-box {
           margin: 24px 0;
-          padding: 16px 20px;
-          background-color: #fef3c7;
-          border-left: 4px solid #f59e0b;
+          padding: 20px;
+          background-color: #fafafa;
+          border: 1px solid #e4e4e7;
           border-radius: 8px;
           font-size: 14px;
-          color: #92400e;
+          color: #52525b;
+          text-align: center;
         }
         .info-box strong {
-          color: #78350f;
+          color: #000000;
         }
         .security-note {
-          margin-top: 32px;
+          margin-top: 24px;
           padding: 20px;
-          background-color: #f3f4f6;
+          background-color: #f4f4f5;
           border-radius: 8px;
           font-size: 14px;
-          color: #4b5563;
+          color: #52525b;
         }
         .footer {
-          padding: 32px;
+          padding: 24px;
           text-align: center;
-          background-color: #f9fafb;
-          border-top: 1px solid #e5e7eb;
+          background-color: #fafafa;
+          border-top: 1px solid #e4e4e7;
+          font-size: 14px;
+          color: #71717a;
         }
         .footer p {
           margin: 8px 0;
           font-size: 13px;
-          color: #6b7280;
         }
         .footer a {
-          color: #667eea;
-          text-decoration: none;
+          color: #000000;
+          text-decoration: underline;
         }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>🎭 Eventra</h1>
+          <h1>Eventra</h1>
           <p>Password Reset Request</p>
         </div>
 
@@ -131,11 +134,11 @@ export function forgotPasswordTemplate(otp) {
           </div>
 
           <div class="info-box">
-            ⏱️ This code will <strong>expire in 6 minutes</strong>. Please use it promptly to reset your password.
+             This code will <strong>expire in 6 minutes</strong>. Please use it promptly to reset your password.
           </div>
 
           <div class="security-note">
-            🔒 <strong>Security Reminder:</strong> Never share this code with anyone. 
+             <strong>Security Reminder:</strong> Never share this code with anyone. 
             The Eventra team will never ask you for this code via email, phone, or any other method.
           </div>
 

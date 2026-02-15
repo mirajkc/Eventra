@@ -1,1 +1,1 @@
-{"version":3,"file":"adminDeleteTemplate.d.ts","sourceRoot":"","sources":["../../src/emailtemplates/adminDeleteTemplate.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,UAAU,mBAAmB,CACzC,IAAI,EAAE,MAAM,EACZ,UAAU,EAAE,OAAO,GAAG,cAAc,GAAG,SAAS,UAoEjD"}
+{"version":3,"file":"adminDeleteTemplate.d.ts","sourceRoot":"","sources":["../../src/emailtemplates/adminDeleteTemplate.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,UAAU,mBAAmB,CACzC,IAAI,EAAE,MAAM,EACZ,UAAU,EAAE,OAAO,GAAG,cAAc,GAAG,SAAS,UA8EjD"}

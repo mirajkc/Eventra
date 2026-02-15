@@ -25,7 +25,7 @@ class EventController {
     const data: ICreateEvent = req.body
     const userDetails: IUserDetails = req.userDetails
     const slug = getSlug(data.title)
-    if(new Date(data.startDate) < new Date()){
+    if (new Date(data.startDate) < new Date()) {
       throw {
         code: 400,
         message: "Event start date cannot be in the past. ",
@@ -108,18 +108,18 @@ class EventController {
     })
 
     // generate the event score for newly created event
-    const eventScore:number = getEventScore({
-       title: newEvent.title,
-        description: newEvent.description,
-        category: newEvent.category,
-        tags: newEvent.tags,
-        image: newEvent.image,
-        premium : organizationDetails.isPremium
+    const eventScore: number = getEventScore({
+      title: newEvent.title,
+      description: newEvent.description,
+      category: newEvent.category,
+      tags: newEvent.tags,
+      image: newEvent.image,
+      premium: organizationDetails.isPremium
     })
     await eventService.updateEvent({
-      filter : {id : newEvent.id},
-      data : {
-        eventScore : eventScore
+      filter: { id: newEvent.id },
+      data: {
+        eventScore: eventScore
       }
     })
 
@@ -196,20 +196,20 @@ class EventController {
           image: imageUrl
         }
       })
-       const eventScore:number = getEventScore({
-       title: updatedEvent.title,
+      const eventScore: number = getEventScore({
+        title: updatedEvent.title,
         description: updatedEvent.description,
         category: updatedEvent.category,
         tags: updatedEvent.tags,
         image: updatedEvent.image,
-        premium : organizationDetails.isPremium
-    })
-    await eventService.updateEvent({
-      filter : {id : updatedEvent.id},
-      data : {
-        eventScore : eventScore
-      }
-    })
+        premium: organizationDetails.isPremium
+      })
+      await eventService.updateEvent({
+        filter: { id: updatedEvent.id },
+        data: {
+          eventScore: eventScore
+        }
+      })
       const registerdParticipantsId: Array<any> = await eventParticipantService.getEventParticipants({
         filter: { eventId: updatedEvent.id },
         select: {
@@ -249,13 +249,13 @@ class EventController {
           status: "EVENTID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const query : {
-        page? : string,
-        take? : string
+      const query: {
+        page?: string,
+        take?: string
       } = req.query
-      const page :number = Number(query.page) || 1    
-      const take :number = Number(query.take) || 10
-      const skip:number = Math.ceil((page-1) * take)     
+      const page: number = Number(query.page) || 1
+      const take: number = Number(query.take) || 10
+      const skip: number = Math.ceil((page - 1) * take)
       const eventDetails = await eventService.getEvent({
         filter: { id: eventId },
         include: {
@@ -265,10 +265,10 @@ class EventController {
           creator: {
             select: { id: true, name: true, image: true }
           },
-        participants : {
-          take : take,
-          skip : skip,
-      }
+          participants: {
+            take: take,
+            skip: skip,
+          }
         }
       })
       if (!eventDetails) {
@@ -278,7 +278,7 @@ class EventController {
           status: "EVENT_DATA_FETCH_ERR"
         } as IErrorTypes
       }
-      const totalParticipants:any = eventDetails.participants?.length
+      const totalParticipants: any = eventDetails.participants?.length
       eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date() ? "COMPLETED" : "PUBLISHED"
       return res.json({
         message: "Event details fetched successfully",
@@ -286,13 +286,13 @@ class EventController {
           eventDetails: eventDetails,
           totalParticipants: totalParticipants
         },
-        participantsPagination : {
-          page : page,
-          take : take,
-          totalDoccuments : totalParticipants,
-          totalPages : Math.ceil(totalParticipants/take),
-          hasPreviousPage : page > 1,
-          hasNextPage : page < Math.ceil(totalParticipants/take),
+        participantsPagination: {
+          page: page,
+          take: take,
+          totalDoccuments: totalParticipants,
+          totalPages: Math.ceil(totalParticipants / take),
+          hasPreviousPage: page > 1,
+          hasNextPage: page < Math.ceil(totalParticipants / take),
         }
       })
     } catch (error) {
@@ -350,7 +350,7 @@ class EventController {
   async getRecommendedEvents(req: Request, res: Response, next: NextFunction) {
     try {
       const userDetails: IUserDetails = req.userDetails
-      
+
       const recommendedEvents = await averageRecomendationScore(userDetails.id)
 
       return res.status(200).json({
@@ -362,48 +362,48 @@ class EventController {
     }
   }
 
-  async isLoggedInuserJoined (req:Request, res:Response,next:NextFunction ) {
+  async isLoggedInuserJoined(req: Request, res: Response, next: NextFunction) {
     try {
-      const eventId:string = String(req.params.eventId)
-      const userData:IUserDetails = req.userDetails
-      if(!eventId){
+      const eventId: string = String(req.params.eventId)
+      const userData: IUserDetails = req.userDetails
+      if (!eventId) {
         throw {
-          code : 404, 
-          message : "Please enter a valid event Id. ",
-          status : "EVENT_ID_NOT_FOUND_ERR"
+          code: 404,
+          message: "Please enter a valid event Id. ",
+          status: "EVENT_ID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const eventDetails:any = await eventService.getEvent({
-        filter : {id : eventId},
-        include :  {
-        participants : {
-          where : {
-            userId : userData.id
+      const eventDetails: any = await eventService.getEvent({
+        filter: { id: eventId },
+        include: {
+          participants: {
+            where: {
+              userId: userData.id
+            }
           }
         }
-      }
       })
-      
+
       await eventMetricsService.createNewMetrics({
-      userId : userData.id,
-      eventId : eventDetails.id,
-      hasClicked : true,
-      hasJoined : false,
-    }, {
-      previousScore : userData.userScore,
-      previosClickedEventsCount : userData.clickedEventsCount,
-      currentClickedEventScore : eventDetails.eventScore
-    })
+        userId: userData.id,
+        eventId: eventDetails.id,
+        hasClicked: true,
+        hasJoined: false,
+      }, {
+        previousScore: userData.userScore,
+        previosClickedEventsCount: userData.clickedEventsCount,
+        currentClickedEventScore: eventDetails.eventScore
+      })
       const hasJoinedEvent = eventDetails?.participants?.length > 0 ? true : false
       return res.json(
         {
-          message : "User status fetched successfully. ",
-          data : {
-            hasJoinedEvent : hasJoinedEvent,
+          message: "User status fetched successfully. ",
+          data: {
+            hasJoinedEvent: hasJoinedEvent,
           }
         }
       )
-      
+
     } catch (error) {
       next(error)
     }

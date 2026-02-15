@@ -1,4 +1,4 @@
-export function eventUpdateTemplate(eventName: string, updatedBy: string) {
+export function updateEventTemplate(eventName: string, updatedBy: string) {
   return `
   <!DOCTYPE html>
   <html lang="en">

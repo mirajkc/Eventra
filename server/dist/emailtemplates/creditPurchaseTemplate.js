@@ -10,211 +10,177 @@ export function thanksForCreditPurchase(userName, organizationName, creditNumber
         body {
           margin: 0;
           padding: 0;
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+          background-color: #f4f4f5;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          color: #18181b;
         }
         .container {
           max-width: 560px;
           margin: 40px auto;
           background-color: #ffffff;
-          border-radius: 16px;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
           overflow: hidden;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .header {
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-          padding: 48px 24px;
+          background-color: #000000;
+          padding: 32px 24px;
           text-align: center;
         }
         .header-icon {
-          font-size: 64px;
+          font-size: 48px;
           margin-bottom: 16px;
         }
         .header h1 {
           color: #ffffff;
           margin: 0;
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
         }
         .header p {
-          color: rgba(255, 255, 255, 0.95);
-          margin: 12px 0 0 0;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 8px 0 0 0;
           font-size: 16px;
         }
         .content {
-          padding: 40px 32px;
-          color: #374151;
-          font-size: 15px;
-          line-height: 1.7;
+          padding: 32px 24px;
+          font-size: 16px;
+          line-height: 1.6;
         }
         .greeting {
           font-size: 18px;
           font-weight: 600;
-          color: #1f2937;
+          color: #000000;
           margin-bottom: 16px;
         }
         .org-name-box {
-          margin: 32px 0;
-          padding: 24px;
-          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-          border-radius: 12px;
+          margin: 24px 0;
+          padding: 20px;
+          background-color: #fafafa;
+          border: 1px solid #e4e4e7;
+          border-radius: 8px;
           text-align: center;
-          border: 2px solid #f59e0b;
         }
         .org-name-label {
           font-size: 12px;
-          color: #92400e;
+          color: #71717a;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-bottom: 8px;
           font-weight: 600;
         }
         .org-name {
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: #000000;
         }
         .credit-display-box {
-          margin: 32px 0;
+          margin: 24px 0;
           padding: 32px;
-          background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-          border-radius: 16px;
-          border: 3px solid #f59e0b;
+          background-color: #ffffff;
+          border-radius: 8px;
+          border: 2px solid #000000;
           text-align: center;
         }
         .credit-icon {
-          font-size: 48px;
-          margin-bottom: 16px;
+          font-size: 40px;
+          margin-bottom: 12px;
         }
         .credit-amount {
-          font-size: 56px;
-          font-weight: 900;
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          font-size: 48px;
+          font-weight: 800;
+          color: #000000;
           line-height: 1;
-          margin: 16px 0;
+          margin: 12px 0;
         }
         .credit-label {
           font-size: 14px;
-          color: #92400e;
+          color: #52525b;
           text-transform: uppercase;
           letter-spacing: 1.5px;
           font-weight: 600;
         }
         .purchase-details {
-          margin: 32px 0;
-          padding: 24px;
-          background-color: #f9fafb;
-          border-radius: 12px;
+          margin: 24px 0;
+          padding: 20px;
+          background-color: #fafafa;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
         }
         .detail-row {
           display: flex;
           justify-content: space-between;
-          padding: 12px 0;
-          border-bottom: 1px solid #e5e7eb;
+          padding: 10px 0;
+          border-bottom: 1px solid #e4e4e7;
         }
         .detail-row:last-child {
           border-bottom: none;
         }
         .detail-label {
-          font-weight: 600;
-          color: #6b7280;
+          font-weight: 500;
+          color: #71717a;
           font-size: 14px;
         }
         .detail-value {
-          font-weight: 700;
-          color: #1f2937;
-          font-size: 14px;
-        }
-        .benefits {
-          margin: 32px 0;
-        }
-        .benefit-item {
-          display: flex;
-          align-items: flex-start;
-          margin-bottom: 16px;
-          padding: 16px;
-          background-color: #f9fafb;
-          border-radius: 8px;
-        }
-        .benefit-icon {
-          font-size: 24px;
-          margin-right: 16px;
-          flex-shrink: 0;
-        }
-        .benefit-text {
-          flex: 1;
-        }
-        .benefit-title {
           font-weight: 600;
-          color: #1f2937;
-          margin-bottom: 4px;
-        }
-        .benefit-description {
+          color: #18181b;
           font-size: 14px;
-          color: #6b7280;
         }
         .cta-button {
           display: inline-block;
-          margin: 32px 0;
-          padding: 16px 32px;
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+          margin: 24px 0;
+          padding: 14px 28px;
+          background-color: #000000;
           color: #ffffff;
           text-decoration: none;
-          border-radius: 8px;
+          border-radius: 6px;
           font-weight: 600;
           font-size: 16px;
           text-align: center;
-          box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
-        }
-        .success-section {
-          margin-top: 32px;
-          padding: 20px;
-          background-color: #d1fae5;
-          border-left: 4px solid #10b981;
-          border-radius: 8px;
-          font-size: 14px;
-          color: #065f46;
-        }
-        .info-section {
-          margin-top: 24px;
-          padding: 20px;
-          background-color: #eff6ff;
-          border-left: 4px solid #3b82f6;
-          border-radius: 8px;
-          font-size: 14px;
-          color: #1e40af;
         }
         .success-badge {
           display: inline-block;
-          margin: 24px 0;
-          padding: 12px 24px;
-          background-color: #d1fae5;
-          color: #065f46;
+          margin: 16px 0;
+          padding: 8px 16px;
+          background-color: #18181b;
+          color: #ffffff;
           border-radius: 50px;
           font-weight: 600;
           font-size: 14px;
           text-align: center;
         }
         .footer {
-          padding: 32px;
+          padding: 24px;
           text-align: center;
-          background-color: #f9fafb;
-          border-top: 1px solid #e5e7eb;
-        }
-        .footer p {
-          margin: 8px 0;
-          font-size: 13px;
-          color: #6b7280;
+          background-color: #fafafa;
+          border-top: 1px solid #e4e4e7;
+          font-size: 14px;
+          color: #71717a;
         }
         .footer a {
-          color: #f59e0b;
-          text-decoration: none;
+          color: #000000;
+          text-decoration: underline;
+        }
+        .benefits {
+           margin: 24px 0;
+        }
+        .benefit-item {
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 16px;
+          padding: 16px;
+          background-color: #fafafa;
+          border-radius: 8px;
+          border: 1px solid #e4e4e7;
+        }
+        .benefit-title {
+           font-weight: 700;
+           margin-bottom: 4px;
+        }
+        .benefit-description {
+           font-size: 14px;
+           color: #52525b;
         }
       </style>
     </head>
@@ -268,23 +234,16 @@ export function thanksForCreditPurchase(userName, organizationName, creditNumber
             </div>
             <div class="detail-row">
               <span class="detail-label">Status</span>
-              <span class="detail-value" style="color: #10b981;">Completed</span>
+              <span class="detail-value">Completed</span>
             </div>
-          </div>
-
-          <div class="success-section">
-            ✅ <strong>Credits Now Available!</strong><br>
-            Your credits are now active and ready to use. You can start using them immediately 
-            for events, features, and premium services within your organization.
           </div>
 
           <p>
             Here's what you can do with your credits:
           </p>
-
-          <div class="benefits">
+          
+           <div class="benefits">
             <div class="benefit-item">
-              <div class="benefit-icon">🎫</div>
               <div class="benefit-text">
                 <div class="benefit-title">Create Premium Events</div>
                 <div class="benefit-description">
@@ -294,7 +253,6 @@ export function thanksForCreditPurchase(userName, organizationName, creditNumber
             </div>
 
             <div class="benefit-item">
-              <div class="benefit-icon">📊</div>
               <div class="benefit-text">
                 <div class="benefit-title">Access Analytics</div>
                 <div class="benefit-description">
@@ -302,51 +260,13 @@ export function thanksForCreditPurchase(userName, organizationName, creditNumber
                 </div>
               </div>
             </div>
-
-            <div class="benefit-item">
-              <div class="benefit-icon">🚀</div>
-              <div class="benefit-text">
-                <div class="benefit-title">Unlock Premium Features</div>
-                <div class="benefit-description">
-                  Access advanced tools, integrations, and priority support for your organization
-                </div>
-              </div>
             </div>
-
-            <div class="benefit-item">
-              <div class="benefit-icon">📧</div>
-              <div class="benefit-text">
-                <div class="benefit-title">Enhanced Communications</div>
-                <div class="benefit-description">
-                  Send custom email campaigns and automated notifications to your attendees
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-item">
-              <div class="benefit-icon">💰</div>
-              <div class="benefit-text">
-                <div class="benefit-title">Track Your Balance</div>
-                <div class="benefit-description">
-                  Monitor your credit usage and remaining balance in your organization dashboard
-                </div>
-              </div>
-            </div>
-          </div>
 
           <center>
             <a href="https://eventra.com/dashboard" class="cta-button">
               Go to Dashboard →
             </a>
           </center>
-
-          <div class="info-section">
-            💡 <strong>Need Help?</strong><br>
-            Visit your organization dashboard to view your credit balance, usage history, and available 
-            features. If you have questions about using credits, check our 
-            <a href="https://eventra.com/docs/credits" style="color: #1e40af; text-decoration: underline;">credits guide</a> 
-            or contact our support team.
-          </div>
 
           <p style="margin-top: 32px;">
             A detailed receipt has been sent to your email for your records. Thank you for 

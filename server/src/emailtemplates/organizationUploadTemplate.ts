@@ -1,4 +1,4 @@
-export function organizationUpdatedTemplate(organizationName: string, userName: string) {
+export function organizationUpdateTemplate(organizationName: string, userName: string) {
   return `
   <!DOCTYPE html>
   <html lang="en">

@@ -1,2 +1,2 @@
-export declare function updateEventTemplate(eventName: string, updatorName: string): string;
+export declare function updateEventTemplate(eventName: string, updatedBy: string): string;
 //# sourceMappingURL=updateEventTemplate.d.ts.map

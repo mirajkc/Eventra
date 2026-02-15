@@ -1,4 +1,4 @@
-export function newOrganizationTemplate(organizationName: string, userName: string) {
+export function newOrganizationCreation(organizationName: string, userName: string) {
   return `
   <!DOCTYPE html>
   <html lang="en">
