@@ -10,6 +10,8 @@ const io = new Server(server, {
             "http://localhost:3000",
             "http://localhost:5173",
             "https://eventra-tawny.vercel.app",
+            "https://eventraa.tech",
+            "https://www.eventraa.tech"
         ],
         methods: ["GET", "POST"],
         credentials: true

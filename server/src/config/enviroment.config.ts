@@ -4,14 +4,15 @@ class Enviroment {
   secretKey: string = process.env.SECRET_KEY || "SECRET"
   mode: string = process.env.MODE || "development"
   clientURL: string = process.env.CLIENT_URL || "http://localhost:3000"
-  enableEmail: boolean = process.env.ENABLE_EMAIL === "true" || false
+  enableEmail: boolean = true
   SMTPConfigs = {
-    provider: process.env.SMTP_PROVIDER,
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    user: process.env.SMTP_USER,
-    password: process.env.SMTP_PASSWORD,
-    from: process.env.SMTP_FROM,
+    provider: process.env.SMTP_PROVIDER || "gmail",
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: process.env.SMTP_PORT || "587",
+    user: process.env.SMTP_USER || "",
+    password: process.env.SMTP_PASSWORD || "",
+    from: process.env.SMTP_FROM || "miraj@eventraa.com",
+    resendApiKey: process.env.RESEND_API || "",
   };
 
   cloudinaryKeys = {

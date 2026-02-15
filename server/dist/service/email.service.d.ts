@@ -1,11 +1,9 @@
 declare class EmailService {
-    #private;
-    constructor();
     sendEmail({ to, subject, message }: {
         to: string;
         subject: string;
         message: any;
-    }): Promise<import("nodemailer/lib/smtp-transport/index.js").SentMessageInfo | undefined>;
+    }): Promise<import("resend").CreateEmailResponseSuccess | undefined>;
 }
 declare const emailService: EmailService;
 export default emailService;

@@ -6,12 +6,13 @@ declare class Enviroment {
     clientURL: string;
     enableEmail: boolean;
     SMTPConfigs: {
-        provider: string | undefined;
-        host: string | undefined;
-        port: string | undefined;
-        user: string | undefined;
-        password: string | undefined;
-        from: string | undefined;
+        provider: string;
+        host: string;
+        port: string;
+        user: string;
+        password: string;
+        from: string;
+        resendApiKey: string;
     };
     cloudinaryKeys: {
         cloudName: string | undefined;
