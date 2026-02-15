@@ -1,89 +1,71 @@
-# Eventra Frontend Unit Testing Plan
+# Eventra Unit Testing Plan
 
-This document outlines the manual unit testing cases for the Eventra frontend. These tests focus on core functionalities including Authentication, Organization Management, Event Management, and User Profile.
-
----
-
-## 1. Authentication Module
-
-### 1.1 Login Page
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| AUTH_L_01 | Valid Login | Correct email, Correct password (8+ chars, UC, LC, Num, Special) | Successful redirect to `/home`, success toast shown. |
-| AUTH_L_02 | Invalid Password | Correct email, Incorrect password | Error toast: "Invalid credentials" (or similar from server). |
-| AUTH_L_03 | Invalid Email Format | "invalid-email", Valid password | Validation error: "Invalid email". |
-| AUTH_L_04 | Missing Fields | Empty Email, Empty Password | Validation errors: "Email is required", "Password must contain...". |
-| AUTH_L_05 | Weak Password | Valid email, "12345" | Validation error: "Password must contain at least 8 characters...". |
-
-### 1.2 Registration Page
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| AUTH_R_01 | Valid Registration | Unique email, matching valid passwords | Redirect to login, success toast shown. |
-| AUTH_R_02 | Password Mismatch | Valid passwords that do not match | Validation error: "Passwords do not match". |
-| AUTH_R_03 | Existing Email | Already registered email | Error toast from server: "User already exists". |
-| AUTH_R_04 | Password Complexity | Password without special char/number | Validation error indicating complexity requirements. |
+This document outlines the manual unit testing cases for the Eventra platform, organized by core functional modules as defined in `module.md`. These tests focus on individual component logic and specific service functionalities.
 
 ---
 
-## 2. Organization Management
+## 1. User Management Module
+**Purpose**: Manages user lifecycles, authentication, and profile security.
 
-### 2.1 Create Organization
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| ORG_C_01 | Valid Creation | Name (3-50 chars), Desc (50-500 chars), Type selected | Success toast, organization created. |
-| ORG_C_02 | Short Description | Description < 50 characters | Validation error: "Description must be at least 50 characters". |
-| ORG_C_03 | Invalid Website | "not-a-url" in website field | Validation error: "Invalid website URL". |
-| ORG_C_04 | Missing Type | No type selected | Validation error: "Required". |
-
-### 2.2 Join / Leave Organization
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| ORG_J_01 | Join Organization | Click "Join" on organization page | Button text changes to "Leave", success toast. |
-| ORG_J_02 | Leave Organization | Click "Leave" on organization page | Button text changes to "Join", success toast. |
+| Test Case | Test Scenario | Test Steps | Test Data | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| AUTH_L_01 | Valid Login | 1. Enter Email<br>2. Enter Password<br>3. Click "Login" | email: test@example.com<br>password: ValidPass123! | Redirect to /home, success toast shown. | | |
+| AUTH_L_02 | Invalid Password | 1. Enter Email<br>2. Enter Wrong Password<br>3. Click "Login" | email: test@example.com<br>password: wrong123 | Error toast: "Invalid credentials". | | |
+| AUTH_R_01 | User Registration | 1. Fill all fields<br>2. Click "Sign Up" | email: new@ex.com<br>pass: Secure123!<br>name: John Doe | Redirect to login, success toast. | | |
+| AUTH_OTP_01 | OTP Verification | 1. Request password reset<br>2. Enter 6-digit OTP | email: test@example.com<br>otp: 123456 | OTP accepted, redirect to password reset. | | |
+| USER_P_01 | Profile Update | 1. Change name/bio<br>2. Click "Save" | name: John Updated<br>bio: Event Enthusiast | Profile reflects changes globally. | | |
 
 ---
 
-## 3. Event Management
+## 2. Admin Management Module
+**Purpose**: Supervisory module for platform health and moderation.
 
-### 3.1 Create Event
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| EVNT_C_01 | Valid Creation | Title (10+), Desc (10+), Loc, Valid Dates, Capacity (1-200) | Success toast, redirect to events list. |
-| EVNT_C_02 | Invalid Date Range | End Date before Start Date | Validation error: "End date must be greater than start date". |
-| EVNT_C_03 | Over Capacity | Capacity = 250 | Validation error: "Capacity must be less than 200". |
-| EVNT_C_04 | Short Title | Title < 10 characters | Validation error: "Title must be at least 10 characters". |
-| EVNT_C_05 | Empty Location | Location left blank | Validation error: "Location is required". |
-
-### 3.2 Update Event
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| EVNT_U_01 | Valid Update | Change title/description correctly | Success toast, data updated. |
-| EVNT_U_02 | Status Change | Set status to "CANCELLED" | Event status updates, reflective on UI. |
+| Test Case | Test Scenario | Test Steps | Test Data | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| ADM_MET_01 | Global Metrics | 1. Access Admin Dashboard<br>2. View Metrics section | N/A | Total Users, Events, and Registrations displayed correctly. | | |
+| ADM_MOD_01 | Entity Moderation | 1. Search for Event<br>2. Click "Delete/Moderate" | Event ID: EVT-001 | Event is removed from database and public view. | | |
+| ADM_LOG_01 | Audit Logging | 1. Admin deletes an Org<br>2. Check Admin Logs | Admin Action: Delete Org | Log entry created with timestamp and Admin ID. | | |
 
 ---
 
-## 4. User Profile
+## 3. Recommendation System Management Module
+**Purpose**: Intelligent scoring and sorting for personalized discovery.
 
-### 4.1 Update Profile Details
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| USER_P_01 | Valid Profile Update | New Name (3-50 chars), valid phone | Success toast, profile reflects changes. |
-| USER_P_02 | Short Name | Name < 3 characters | Validation error: "Name must be at least 3 characters". |
-| USER_P_03 | Invalid Phone | "123" (too short) | Validation error: "Phone must be at least 10 characters". |
-
-### 4.2 Change Password
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| USER_W_01 | Password Change | New password, matching confirm password | Success toast, password updated. |
-| USER_W_02 | Mismatch | Non-matching passwords | Validation error: "Passwords do not match". |
-| USER_W_03 | Too Short | Password < 8 characters | Validation error: "Password must be at least 8 characters". |
+| Test Case | Test Scenario | Test Steps | Test Data | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| REC_SCR_01 | Hybrid Scoring | 1. Trigger recommendation engine<br>2. Calculate scores | Content Score: 0.8<br>Collab Score: 0.6 | Hybrid score calculated as 0.7. | | |
+| REC_SRT_01 | QuickSort Efficiency | 1. Provide unsorted event list<br>2. Apply QuickSort | [S-2, S-5, S-1, S-4] | Events sorted by score in descending order. | | |
+| REC_MET_01 | Metric Tracking | 1. User clicks an event<br>2. Check Metric Tracker | UserID, EventID, Click | Click-through behavior recorded in EventMetric. | | |
 
 ---
 
-## 5. Credit Purchase (Donation)
+## 4. Event and Organization Management Module
+**Purpose**: Orchestrates organizational structures and event lifecycles.
 
-### 5.1 Pricing & Purchase
-| Test Case ID | Description | Input / Scenario | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| CRED_P_01 | Purchase Credit (Small) | Click "Donate Credits" for SMALL package | Success toast, credits added to organization. |
-| CRED_P_02 | API Error Handling | Server down / API error during purchase | Error toast: "Error occurred while purchasing...". |
+| Test Case | Test Scenario | Test Steps | Test Data | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| ORG_GOV_01 | RBAC Validation | 1. Login as Member<br>2. Try to delete Org | User Role: MEMBER | Action denied; error: "Insufficient permissions". | | |
+| EVNT_LC_01 | Create Event | 1. Fill event details<br>2. Click "Publish" | title: Annual Gala<br>date: 2026-05-20 | Event appears in organization list. | | |
+| EVNT_CHK_01 | Attendee Check-in | 1. Provide check-in token<br>2. Verify attendance | token: QR-998877<br>eventId: EVT-101 | `attended` set to true; `checkedInAt` updated. | | |
+
+---
+
+## 5. API Integration Module
+**Purpose**: External service bridges for media, mail, and real-time features.
+
+| Test Case | Test Scenario | Test Steps | Test Data | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| API_CLD_01 | Image Upload | 1. Upload Buffer to Cloudinary<br>2. Generate URL | buffer: image_data<br>folder: events | Secure URL returned from Cloudinary. | | |
+| API_ML_01 | OTP Email Delivery | 1. Send OTP via Nodemailer<br>2. Verify inbox | email: user@ex.com<br>otp: 654321 | User receives email with correct OTP. | | |
+| API_SKT_01 | Real-time Chat | 1. Join chat room<br>2. Send message | Room: EVT-101<br>msg: "Hello!" | Message broadcast to all connected users in room. | | |
+
+---
+
+## 6. Web Application Module
+**Purpose**: Core UI/UX for organizers and attendees.
+
+| Test Case | Test Scenario | Test Steps | Test Data | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| WEB_RDX_01 | Global State Sync | 1. Update user info in profile<br>2. Check NavBar name | New Name: Alex | NavBar displays "Alex" immediately via Redux. | | |
+| WEB_THM_01 | Dark Mode Synergy | 1. Toggle Theme to Dark<br>2. Visit multiple pages | Theme: Dark | Consistent dark theme applied to all components. | | |
+| WEB_RSP_01 | Responsive Design | 1. Resize to 375px<br>2. Check burger menu | Width: 375px | Navbar collapses; menu is accessible. | | |
