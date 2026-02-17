@@ -13,6 +13,7 @@ import { checkForCredit } from "../utilities/checkforcredit.js";
 import getEventScore from "../Algorithms/getEventScore.js";
 import eventMetricsService from "../service/eventmetrics.service.js";
 import averageRecomendationScore from "../Algorithms/averageRecomendationScore.js";
+import geoCode from "../service/geocode.service.js";
 class EventController {
     async createNewEvent(req, res, next) {
         const data = req.body;
@@ -81,6 +82,7 @@ class EventController {
             imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
         }
         const token = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase();
+        const { lat, lon } = await geoCode.getLatitudeLongitude(data.location);
         const newEvent = await eventService.createEvent({
             data: {
                 organizationId: organizationDetails.id,
@@ -95,7 +97,9 @@ class EventController {
                 creatorId: userDetails.id,
                 image: imageUrl,
                 slug: slug,
-                status: "PUBLISHED"
+                status: "PUBLISHED",
+                latitude: Number(lat),
+                longitude: Number(lon)
             },
             checkInToken: token
         });
@@ -170,6 +174,12 @@ class EventController {
                 const imageFile = req.file.buffer;
                 imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
             }
+            let lat, lon;
+            if (data.location) {
+                const latAndLong = await geoCode.getLatitudeLongitude(data.location);
+                lat = latAndLong.lat;
+                lon = latAndLong.lon;
+            }
             const updatedEvent = await eventService.updateEvent({
                 filter: { id: data.id },
                 data: {
@@ -183,7 +193,9 @@ class EventController {
                     status: data.status ? data.status : eventDetails.status,
                     category: data.category ? data.category : eventDetails.category,
                     tags: data.tags ? data.tags : eventDetails.tags,
-                    image: imageUrl
+                    image: imageUrl,
+                    latitude: data.location ? Number(lat) : eventDetails.latitude,
+                    longitude: data.location ? Number(lon) : eventDetails.longitude
                 }
             });
             const eventScore = getEventScore({

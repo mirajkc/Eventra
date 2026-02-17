@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import { TypographyH4 } from "../ui/Typography";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {  IEventParticipantsDetails, IEventParticipantsPagination } from "@/types/event.type";
+import { IEventParticipantsDetails, IEventParticipantsPagination } from "@/types/event.type";
 import { Spinner } from "../ui/spinner";
 import { formatDistanceToNow } from "date-fns";
 import { Button } from "../ui/button";

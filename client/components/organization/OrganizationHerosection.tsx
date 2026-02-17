@@ -174,7 +174,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col w-full md:flex-row gap-2">
+              <div className="flex flex-col justify-end w-full md:flex-row gap-2">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

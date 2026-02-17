@@ -19,6 +19,9 @@ class Enviroment {
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET
     };
+    geocodeKeys = {
+        locationIq: process.env.LOCATION_IQ_ACCESSTOKEN
+    };
 }
 const enviroment = new Enviroment();
 export default enviroment;

@@ -26,6 +26,8 @@ import { useState } from "react";
 import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
 import { useAppSelector } from "@/state/hooks";
+import GoogleMaps from "./GoogleMap";
+import { useRouter } from "next/navigation";
 
 interface EventHeroProps {
   event: ISingleEvent;
@@ -47,6 +49,8 @@ export default function EventHero({ event }: EventHeroProps) {
   const now = new Date();
   const start = new Date(event.startDate);
   const end = new Date(event.endDate);
+
+  const router = useRouter()
 
   let status = "CANCELLED";
 
@@ -143,7 +147,10 @@ export default function EventHero({ event }: EventHeroProps) {
                 {event.title}
               </h1>
 
-              <div className="flex items-center gap-4 mb-8 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50">
+              <div
+                onClick={() => router.push(`/organization/${event.organization.id}`)}
+                className="flex items-center gap-4 mb-8 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 hover:cursor-pointer"
+              >
                 <div className="relative size-12 rounded-full overflow-hidden ring-2 ring-white dark:ring-neutral-900">
                   <Image
                     src={event.organization.image || "https://res.cloudinary.com/dl1hofvgi/image/upload/v1768807648/Eventra/Organization/profile/t50wbbneltzkrxtl3jdm.png"}
@@ -152,11 +159,12 @@ export default function EventHero({ event }: EventHeroProps) {
                     className="object-cover"
                   />
                 </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
+                <div
+                >
+                  <div
+                    className="flex items-center gap-1.5">
                     <span className="font-bold text-lg">{event.organization.name}</span>
                     {event.organization.isPremium && <BadgeCheck className=" hidden md:block w-4 h-4 text-primary fill-primary/10" />}
-                    <span className="hidden md:block text-sm text-neutral-500 dark:text-neutral-400 font-medium">Premium organization</span>
                   </div>
                   <span className=" hidden  md:block text-sm text-neutral-500 dark:text-neutral-400 font-medium">Event Organizer</span>
                 </div>
@@ -170,6 +178,13 @@ export default function EventHero({ event }: EventHeroProps) {
                   </h3>
                   <textarea defaultValue={event.description} name={event.title} id={event.id} className="w-full h-[200px] overflow-y-auto custom-scrollbar text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg" readOnly>
                   </textarea>
+                </div>
+                <div className="border-t border-neutral-100 dark:border-neutral-800 pt-8 mt-4">
+                  <GoogleMaps
+                    latitude={event.latitude}
+                    longitude={event.longitude}
+                    address={event.location}
+                  />
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-4">

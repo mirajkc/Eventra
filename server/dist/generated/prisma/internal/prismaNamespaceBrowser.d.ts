@@ -113,6 +113,8 @@ export declare const EventScalarFieldEnum: {
     readonly title: "title";
     readonly description: "description";
     readonly location: "location";
+    readonly latitude: "latitude";
+    readonly longitude: "longitude";
     readonly startDate: "startDate";
     readonly endDate: "endDate";
     readonly capacity: "capacity";

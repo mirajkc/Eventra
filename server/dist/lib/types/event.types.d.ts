@@ -25,6 +25,8 @@ export interface IUploadEvent {
     category: IEventTypes;
     tags: Array<any>;
     image: string | null;
+    latitude: number;
+    longitude: number;
 }
 export interface IEvent {
     id: string;
@@ -44,6 +46,8 @@ export interface IEvent {
     image?: string | null;
     createdAt: Date;
     updatedAt?: Date;
+    latitude?: number;
+    longitude?: number;
 }
 export interface IUpdateEvent {
     id: string;

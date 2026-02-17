@@ -19,99 +19,102 @@ import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js"
 import type { ICreateOrganization, IUploadOrganizationData } from "../lib/types/organization.types.js"
 import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js"
 import getEventScore from "../Algorithms/getEventScore.js"
+import geoCode from "../service/geocode.service.js"
 
 class AdminUpdateController {
-  async updateUser(req:Request, res:Response, next:NextFunction){
-     try {
-      const adminDetails:IUserDetails = req.userDetails
+  async updateUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const adminDetails: IUserDetails = req.userDetails
       const params = req.params
       const userId = String(params.userId)
       const reason = String(params.reason)
-      if(!userId){
+      if (!userId) {
         throw {
-          code : 404,
-          message : "User id is required",
-          status : "USER_ID_NOT_FOUND_ERR"
+          code: 404,
+          message: "User id is required",
+          status: "USER_ID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      if(!reason){
+      if (!reason) {
         throw {
-          code : 404,
-          message : "Reason is required",
-          status : "REASON_NOT_FOUND_ERR"
+          code: 404,
+          message: "Reason is required",
+          status: "REASON_NOT_FOUND_ERR"
         } as IErrorTypes
       }
       const data = req.body
-      const userDetails = await userService.getUserDetails({id : userId}, {})
+      const userDetails = await userService.getUserDetails({ id: userId }, {})
       let imageUrl: string = userDetails.image ?? ""
       if (req.file?.buffer) {
         imageUrl = await uploadImage(req.file.buffer, "Eventra/userProfile")
       }
-      const updateData : {name : string, phone : string, image :  string} = {
-        name : data.name? data.name : userDetails.name,
-        phone : data.phone? data.phone : userDetails.phone,
-        image : imageUrl
+      const updateData: { name: string, phone: string, image: string } = {
+        name: data.name ? data.name : userDetails.name,
+        phone: data.phone ? data.phone : userDetails.phone,
+        image: imageUrl
       }
-      await authService.updateUser({filter : {id : userDetails.id}, data : updateData})
+      await authService.updateUser({ filter: { id: userDetails.id }, data: updateData })
       await adminLogsService.createAdminLog({
-        logDetails : {
-          adminId : adminDetails.id,
-          action : "UPDATE",
-          entityId : userDetails.id,
-          entityType : "USER",
-          reason : reason
+        logDetails: {
+          adminId: adminDetails.id,
+          action: "UPDATE",
+          entityId: userDetails.id,
+          entityType: "USER",
+          reason: reason
         }
       })
       await notificationService.sendNotificaion({
-        userId : userDetails.id,
-        title : "Your profile has been updated by one of our admin. ",
-        message : `The reason for updating your profile is ${reason}. If you have any concerns, please contact our support team.`,
-        type : "USER_DELETED",
-        entityId : userDetails.id,
-        entityType : "USER"
+        userId: userDetails.id,
+        title: "Your profile has been updated by one of our admin. ",
+        message: `The reason for updating your profile is ${reason}. If you have any concerns, please contact our support team.`,
+        type: "USER_DELETED",
+        entityId: userDetails.id,
+        entityType: "USER"
       })
       await emailService.sendEmail({
-        to : userDetails.email,
-        subject : "Your profile has been updated by one of our admin. ",
-        message : adminUpdateTemplate("PROFILE", reason)
+        to: userDetails.email,
+        subject: "Your profile has been updated by one of our admin. ",
+        message: adminUpdateTemplate("PROFILE", reason)
       })
-       res.json({
-        message : "User updated successfully"
+      res.json({
+        message: "User updated successfully"
       })
     } catch (error) {
       next(error)
     }
   }
 
-  async updateEvent(req:Request, res:Response, next:NextFunction){
+  async updateEvent(req: Request, res: Response, next: NextFunction) {
     try {
       const params = req.params
-      const adminDetails:IUserDetails = req.userDetails
+      const adminDetails: IUserDetails = req.userDetails
       const data: IUpdateEvent = req.body
       const eventId = String(params.eventId)
       const reason = String(params.reason)
-      if(!eventId){
+      if (!eventId) {
         throw {
-          code : 404,
-          message : "Event id is required",
-          status : "USER_ID_NOT_FOUND_ERR"
+          code: 404,
+          message: "Event id is required",
+          status: "USER_ID_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      if(!reason){
+      if (!reason) {
         throw {
-          code : 404,
-          message : "Reason is required",
-          status : "REASON_NOT_FOUND_ERR"
+          code: 404,
+          message: "Reason is required",
+          status: "REASON_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const eventDetails : any  = await eventService.getEvent({ filter: { id: eventId } , include : {
-        creator : true,
-        _count : {
-          select : {
-            participants : true
+      const eventDetails: any = await eventService.getEvent({
+        filter: { id: eventId }, include: {
+          creator: true,
+          _count: {
+            select: {
+              participants: true
+            }
           }
         }
-      }})
+      })
       if (!eventDetails) {
         throw {
           code: 404,
@@ -125,7 +128,18 @@ class AdminUpdateController {
         const imageFile = req.file.buffer
         imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail")
       }
-      const updatedEvent: IEvent = await eventService.updateEvent({
+      //! TODO: doesnot enter the of block.
+      if(data.location){
+        console.log("we have new location", data.location);
+      }
+
+      let latitude, longitude 
+      if(data.location){
+        const {lat, lon} = await geoCode.getLatitudeLongitude(data.location)
+        latitude = lat
+        longitude = lon
+      }
+      const updatedEvent: any = await eventService.updateEvent({
         filter: { id: data.id },
         data: {
           slug: data.title ? getSlug(data.title) : eventDetails.slug,
@@ -138,52 +152,54 @@ class AdminUpdateController {
           status: data.status ? data.status : eventDetails.status,
           category: data.category ? data.category : eventDetails.category,
           tags: data.tags ? data.tags : eventDetails.tags,
-          image: imageUrl
+          image: imageUrl,
+          latitude: data.location? latitude : eventDetails.latitude,
+          longitude: data.location? longitude : eventDetails.longitude,
         }
       })
       const organizationDetails = await organizationService.getOrganizationByFilter({
-        filter : {
-          id : updatedEvent.organizationId
+        filter: {
+          id: updatedEvent.organizationId
         },
-        include : {}
+        include: {}
       })
-      const eventScore:number = getEventScore({
-       title: updatedEvent.title,
+      const eventScore: number = getEventScore({
+        title: updatedEvent.title,
         description: updatedEvent.description,
         category: updatedEvent.category,
         tags: updatedEvent.tags,
         image: updatedEvent.image,
-        premium : organizationDetails.isPremium
-    })
-    await eventService.updateEvent({
-      filter : {id : updatedEvent.id},
-      data : {
-        eventScore : eventScore
-      }
-    })
+        premium: organizationDetails.isPremium
+      })
+      await eventService.updateEvent({
+        filter: { id: updatedEvent.id },
+        data: {
+          eventScore: eventScore
+        }
+      })
       await adminLogsService.createAdminLog({
-        logDetails : {
-          adminId : adminDetails.id,
-          action : "UPDATE",
-          entityId : updatedEvent.id,
-          entityType : "EVENT",
-          reason : reason
+        logDetails: {
+          adminId: adminDetails.id,
+          action: "UPDATE",
+          entityId: updatedEvent.id,
+          entityType: "EVENT",
+          reason: reason
         }
       })
 
       await emailService.sendEmail({
-        to : creatorDetails.email,
-        subject : `The event ${updatedEvent.title} has been updated by one of our admin.`,
-        message : adminUpdateTemplate("EVENT", reason)
+        to: creatorDetails.email,
+        subject: `The event ${updatedEvent.title} has been updated by one of our admin.`,
+        message: adminUpdateTemplate("EVENT", reason)
       })
 
       await notificationService.sendNotificaion({
-        userId : creatorDetails.id,
-        title : "Your event has been updated by one of our admin. ",
-        message : `The reason for updating your event is ${reason}. If you have any concerns, please contact our support team.`,
-        type : "EVENT_DELETED",
-        entityId : updatedEvent.id,
-        entityType : "EVENT"
+        userId: creatorDetails.id,
+        title: "Your event has been updated by one of our admin. ",
+        message: `The reason for updating your event is ${reason}. If you have any concerns, please contact our support team.`,
+        type: "EVENT_DELETED",
+        entityId: updatedEvent.id,
+        entityType: "EVENT"
       })
       const registerdParticipantsId: Array<any> = await eventParticipantService.getEventParticipants({
         filter: { eventId: updatedEvent.id },
@@ -214,110 +230,110 @@ class AdminUpdateController {
     }
   }
 
-  async updateOrganization(req:Request, res:Response, next:NextFunction){
-        try {
-          const adminDetails:IUserDetails = req.userDetails
-          const data: ICreateOrganization = req.body
-          const params = req.params
-          const organizationId = String(params.organizationId)
-          const reason = String(params.reason)
-          if(!organizationId){
-            throw {
-              code : 404,
-              message : "Organization id is required",
-              status : "ORGANIZATION_ID_NOT_FOUND_ERR"
-            } as IErrorTypes
-          }
-          if(!reason){
-            throw {
-              code : 404,
-              message : "Reason is required",
-              status : "REASON_NOT_FOUND_ERR"
-            } as IErrorTypes
-          }
-          const organizationDetails : any = await organizationService.getOrganizationByFilter({
-            filter : {id : organizationId},
-            include : {
-              members : {
-                where : {
-                  role : "OWNER"
-                },
-                include : {
-                  user : {
-                    select : {
-                      id : true,
-                      name : true,
-                      email : true,
-                      image : true
-                    }
-                  }
+  async updateOrganization(req: Request, res: Response, next: NextFunction) {
+    try {
+      const adminDetails: IUserDetails = req.userDetails
+      const data: ICreateOrganization = req.body
+      const params = req.params
+      const organizationId = String(params.organizationId)
+      const reason = String(params.reason)
+      if (!organizationId) {
+        throw {
+          code: 404,
+          message: "Organization id is required",
+          status: "ORGANIZATION_ID_NOT_FOUND_ERR"
+        } as IErrorTypes
+      }
+      if (!reason) {
+        throw {
+          code: 404,
+          message: "Reason is required",
+          status: "REASON_NOT_FOUND_ERR"
+        } as IErrorTypes
+      }
+      const organizationDetails: any = await organizationService.getOrganizationByFilter({
+        filter: { id: organizationId },
+        include: {
+          members: {
+            where: {
+              role: "OWNER"
+            },
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  image: true
                 }
               }
             }
-          })
-          if (!organizationDetails) {
-            throw {
-              code: 403,
-              message: "You do not own this organization. ",
-              status: "ORGANIZATION_OWNERSHIP_ERR"
-            } as IErrorTypes
           }
-          const ownerDetails = organizationDetails.members[0].user
-          await checkForCredit(organizationDetails.id)
-          const profileURL =  organizationDetails.image
-          const thumbnailURL =  organizationDetails.thumbnail
-          const uploadData: IUploadOrganizationData = {
-            ...data,
-            thumbnail: thumbnailURL,
-            image: profileURL,
-          }
-          const updatedOrganization = await organizationService.updateOrganization({
-            filter: { id: organizationDetails.id },
-            data: uploadData,
-          })
-          await adminLogsService.createAdminLog({
-            logDetails : {
-              adminId : adminDetails.id,
-              action : "UPDATE",
-              entityId : updatedOrganization.id,
-              entityType : "ORGANIZATION",
-              reason : reason
-            }
-          })
-          await notificationService.sendNotificaion({
-            userId: ownerDetails.id,
-            title: "Organization updated",
-            message: `Hello, ${ownerDetails.name} organization named ${updatedOrganization.name} has been updated by one of our admin due to ${reason}. `,
-            entityType: 'ORGANIZATION',
-            type: "ORG_APPROVED",
-            entityId: updatedOrganization.id
-          })
-
-          await emailService.sendEmail({
-            to : ownerDetails.email,
-            subject : "Your organizaation has been updated by one of our admin. ",
-            message : adminUpdateTemplate("ORGANIZATION", reason)
-          })
-          await emailService.sendEmail({
-            to: ownerDetails.email,
-            subject: "Organization updated successfully",
-            message: organizationUpdateTemplate(organizationDetails.name, ownerDetails.name)
-          })
-          await notificationService.sendNotificaion({
-            userId: ownerDetails.id,
-            title: "Organization updated",
-            message: `Hello, ${ownerDetails.name} you updated  organization named ${updatedOrganization.name}. `,
-            entityType: 'ORGANIZATION',
-            type: "ORG_APPROVED",
-            entityId: updatedOrganization.id
-          })
-          return res.json({
-            message: "organization updated. ",
-            data: updatedOrganization
-          })
-        } catch (error) {
-          next(error)
         }
+      })
+      if (!organizationDetails) {
+        throw {
+          code: 403,
+          message: "You do not own this organization. ",
+          status: "ORGANIZATION_OWNERSHIP_ERR"
+        } as IErrorTypes
+      }
+      const ownerDetails = organizationDetails.members[0].user
+      await checkForCredit(organizationDetails.id)
+      const profileURL = organizationDetails.image
+      const thumbnailURL = organizationDetails.thumbnail
+      const uploadData: IUploadOrganizationData = {
+        ...data,
+        thumbnail: thumbnailURL,
+        image: profileURL,
+      }
+      const updatedOrganization = await organizationService.updateOrganization({
+        filter: { id: organizationDetails.id },
+        data: uploadData,
+      })
+      await adminLogsService.createAdminLog({
+        logDetails: {
+          adminId: adminDetails.id,
+          action: "UPDATE",
+          entityId: updatedOrganization.id,
+          entityType: "ORGANIZATION",
+          reason: reason
+        }
+      })
+      await notificationService.sendNotificaion({
+        userId: ownerDetails.id,
+        title: "Organization updated",
+        message: `Hello, ${ownerDetails.name} organization named ${updatedOrganization.name} has been updated by one of our admin due to ${reason}. `,
+        entityType: 'ORGANIZATION',
+        type: "ORG_APPROVED",
+        entityId: updatedOrganization.id
+      })
+
+      await emailService.sendEmail({
+        to: ownerDetails.email,
+        subject: "Your organizaation has been updated by one of our admin. ",
+        message: adminUpdateTemplate("ORGANIZATION", reason)
+      })
+      await emailService.sendEmail({
+        to: ownerDetails.email,
+        subject: "Organization updated successfully",
+        message: organizationUpdateTemplate(organizationDetails.name, ownerDetails.name)
+      })
+      await notificationService.sendNotificaion({
+        userId: ownerDetails.id,
+        title: "Organization updated",
+        message: `Hello, ${ownerDetails.name} you updated  organization named ${updatedOrganization.name}. `,
+        entityType: 'ORGANIZATION',
+        type: "ORG_APPROVED",
+        entityId: updatedOrganization.id
+      })
+      return res.json({
+        message: "organization updated. ",
+        data: updatedOrganization
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 const adminUpdateController = new AdminUpdateController()

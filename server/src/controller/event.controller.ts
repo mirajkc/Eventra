@@ -18,6 +18,7 @@ import { checkForCredit } from "../utilities/checkforcredit.js"
 import getEventScore from "../Algorithms/getEventScore.js"
 import eventMetricsService from "../service/eventmetrics.service.js"
 import averageRecomendationScore from "../Algorithms/averageRecomendationScore.js"
+import geoCode from "../service/geocode.service.js"
 
 
 class EventController {
@@ -88,6 +89,7 @@ class EventController {
       imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail")
     }
     const token: string = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase()
+    const { lat, lon } = await geoCode.getLatitudeLongitude(data.location)
     const newEvent: IEvent = await eventService.createEvent({
       data: {
         organizationId: organizationDetails.id,
@@ -102,7 +104,9 @@ class EventController {
         creatorId: userDetails.id,
         image: imageUrl,
         slug: slug,
-        status: "PUBLISHED"
+        status: "PUBLISHED",
+        latitude: Number(lat),
+        longitude: Number(lon)
       },
       checkInToken: token
     })
@@ -180,7 +184,13 @@ class EventController {
         const imageFile = req.file.buffer
         imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail")
       }
-      const updatedEvent: IEvent = await eventService.updateEvent({
+      let lat, lon;
+      if (data.location) {
+        const latAndLong = await geoCode.getLatitudeLongitude(data.location)
+        lat = latAndLong.lat
+        lon = latAndLong.lon
+      }
+      const updatedEvent: any = await eventService.updateEvent({
         filter: { id: data.id },
         data: {
           slug: data.title ? getSlug(data.title) : eventDetails.slug,
@@ -193,7 +203,9 @@ class EventController {
           status: data.status ? data.status : eventDetails.status,
           category: data.category ? data.category : eventDetails.category,
           tags: data.tags ? data.tags : eventDetails.tags,
-          image: imageUrl
+          image: imageUrl,
+          latitude: data.location ? Number(lat) : eventDetails.latitude,
+          longitude: data.location ? Number(lon) : eventDetails.longitude
         }
       })
       const eventScore: number = getEventScore({
@@ -408,9 +420,6 @@ class EventController {
       next(error)
     }
   }
-
-
-
 }
 
 

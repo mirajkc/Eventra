@@ -19,6 +19,9 @@ declare class Enviroment {
         apiKey: string | undefined;
         apiSecret: string | undefined;
     };
+    geocodeKeys: {
+        locationIq: string | undefined;
+    };
 }
 declare const enviroment: Enviroment;
 export default enviroment;

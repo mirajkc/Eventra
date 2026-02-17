@@ -26,6 +26,8 @@ export interface IUploadEvent {
   category: IEventTypes
   tags: Array<any>
   image: string | null
+  latitude: number
+  longitude: number
 }
 
 export interface IEvent {
@@ -46,6 +48,8 @@ export interface IEvent {
   image?: string | null
   createdAt: Date
   updatedAt?: Date
+  latitude?: number
+  longitude?: number
 }
 
 export interface IUpdateEvent {
@@ -82,5 +86,5 @@ export interface IEventScore {
   category: IEventTypes
   tags: Array<any>
   image?: string | null | undefined
-  premium : boolean
+  premium: boolean
 }

@@ -25,6 +25,8 @@ declare class EventService {
         title: string;
         description: string;
         location: string;
+        latitude: number | null;
+        longitude: number | null;
         startDate: Date;
         endDate: Date;
         capacity: number;
@@ -121,6 +123,8 @@ declare class EventService {
         title: string;
         description: string;
         location: string;
+        latitude: number | null;
+        longitude: number | null;
         startDate: Date;
         endDate: Date;
         capacity: number;
@@ -156,6 +160,8 @@ declare class EventService {
         title: string;
         description: string;
         location: string;
+        latitude: number | null;
+        longitude: number | null;
         startDate: Date;
         endDate: Date;
         capacity: number;
@@ -246,6 +252,8 @@ declare class EventService {
         title: string;
         description: string;
         location: string;
+        latitude: number | null;
+        longitude: number | null;
         startDate: Date;
         endDate: Date;
         capacity: number;

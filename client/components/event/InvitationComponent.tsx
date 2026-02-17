@@ -27,6 +27,8 @@ import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
 import { useAppSelector } from "@/state/hooks";
 import { Spinner } from "../ui/spinner";
+import GoogleMaps from "./GoogleMap";
+import { useRouter } from "next/navigation";
 
 
 interface InvitationComponentProps {
@@ -56,6 +58,8 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
   const now = new Date();
   const start = new Date(event.startDate);
   const end = new Date(event.endDate);
+
+  const router = useRouter()
 
   let status = "CANCELLED";
 
@@ -152,8 +156,11 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                 {event.title}
               </h1>
 
-              <div className="flex items-center gap-4 mb-8 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50">
-                <div className="relative size-12 rounded-full overflow-hidden ring-2 ring-white dark:ring-neutral-900">
+              <div
+                onClick={() => router.push(`/organization/${event.organization.id}`)}
+                className="flex items-center gap-4 mb-8 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 transition hover:cursor-pointer hover:scale-105">
+                <div
+                  className="relative size-12 rounded-full overflow-hidden ring-2 ring-white dark:ring-neutral-900">
                   <Image
                     src={event.organization.image || "https://res.cloudinary.com/dl1hofvgi/image/upload/v1768807648/Eventra/Organization/profile/t50wbbneltzkrxtl3jdm.png"}
                     alt={event.organization.name}
@@ -165,7 +172,6 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                   <div className="flex items-center gap-1.5">
                     <span className="font-bold text-lg">{event.organization.name}</span>
                     {event.organization.isPremium && <BadgeCheck className="w-4 h-4 text-primary fill-primary/10" />}
-                    <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">Premium organization</span>
                   </div>
                   <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">Event Organizer</span>
                 </div>
@@ -177,10 +183,19 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                     <Info className="w-5 h-5 text-primary" />
                     About this Event
                   </h3>
-                  <textarea defaultValue={event.description} className="w-full h-full text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg" readOnly>
-                  </textarea>
+                  <div className="prose dark:prose-invert max-w-none">
+                    <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg whitespace-pre-wrap">
+                      {event.description}
+                    </p>
+                  </div>
                 </div>
-
+                <div className="border-t border-neutral-100 dark:border-neutral-800 pt-8 mt-4">
+                  <GoogleMaps
+                    latitude={event.latitude}
+                    longitude={event.longitude}
+                    address={event.location}
+                  />
+                </div>
                 <div className="flex flex-wrap gap-2 pt-4">
                   {event.tags?.map((tag, idx) => (
                     <span key={idx} className="px-4 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 text-sm font-semibold">

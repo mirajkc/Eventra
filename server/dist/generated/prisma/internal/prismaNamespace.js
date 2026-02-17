@@ -151,6 +151,8 @@ export const EventScalarFieldEnum = {
     title: 'title',
     description: 'description',
     location: 'location',
+    latitude: 'latitude',
+    longitude: 'longitude',
     startDate: 'startDate',
     endDate: 'endDate',
     capacity: 'capacity',

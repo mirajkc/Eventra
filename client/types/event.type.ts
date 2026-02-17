@@ -89,6 +89,8 @@ export interface ISingleEvent {
     image?: string
   }
   participants: IEventparticipants[]
+  latitude? : number
+  longitude? : number
 }
 
 

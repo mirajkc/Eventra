@@ -13,6 +13,7 @@ import eventParticipantService from "../service/eventParticipants.service.js";
 import { updateEventTemplate } from "../emailtemplates/updateEventTemplate.js";
 import { organizationUpdateTemplate } from "../emailtemplates/organizationUploadTemplate.js";
 import getEventScore from "../Algorithms/getEventScore.js";
+import geoCode from "../service/geocode.service.js";
 class AdminUpdateController {
     async updateUser(req, res, next) {
         try {
@@ -97,14 +98,16 @@ class AdminUpdateController {
                     status: "REASON_NOT_FOUND_ERR"
                 };
             }
-            const eventDetails = await eventService.getEvent({ filter: { id: eventId }, include: {
+            const eventDetails = await eventService.getEvent({
+                filter: { id: eventId }, include: {
                     creator: true,
                     _count: {
                         select: {
                             participants: true
                         }
                     }
-                } });
+                }
+            });
             if (!eventDetails) {
                 throw {
                     code: 404,
@@ -117,6 +120,16 @@ class AdminUpdateController {
             if (req.file) {
                 const imageFile = req.file.buffer;
                 imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
+            }
+            //! TODO: doesnot enter the of block.
+            if (data.location) {
+                console.log("we have new location", data.location);
+            }
+            let latitude, longitude;
+            if (data.location) {
+                const { lat, lon } = await geoCode.getLatitudeLongitude(data.location);
+                latitude = lat;
+                longitude = lon;
             }
             const updatedEvent = await eventService.updateEvent({
                 filter: { id: data.id },
@@ -131,7 +144,9 @@ class AdminUpdateController {
                     status: data.status ? data.status : eventDetails.status,
                     category: data.category ? data.category : eventDetails.category,
                     tags: data.tags ? data.tags : eventDetails.tags,
-                    image: imageUrl
+                    image: imageUrl,
+                    latitude: data.location ? latitude : eventDetails.latitude,
+                    longitude: data.location ? longitude : eventDetails.longitude,
                 }
             });
             const organizationDetails = await organizationService.getOrganizationByFilter({
