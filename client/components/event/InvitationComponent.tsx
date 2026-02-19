@@ -29,6 +29,8 @@ import { useAppSelector } from "@/state/hooks";
 import { Spinner } from "../ui/spinner";
 import GoogleMaps from "./GoogleMap";
 import { useRouter } from "next/navigation";
+import ShareButton from "./ShareButton";
+import { div } from "motion/react-client";
 
 
 interface InvitationComponentProps {
@@ -307,6 +309,9 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                     <p className="text-sm font-bold">{event.creator.name}</p>
                   </div>
                 </div>
+              </div>
+              <div className="mt-6 p-4 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                <ShareButton />
               </div>
             </motion.div>
           </div>

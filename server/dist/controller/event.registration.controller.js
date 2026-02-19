@@ -214,7 +214,9 @@ class EventRegistrationController {
                     status: "EVENT_ENDED_ERR"
                 };
             }
-            const checkedInUser = await eventParticipantService.chekIn(ticket, eventDetails.id);
+            const checkedInUser = await eventParticipantService.chekIn(ticket, eventDetails.id, {
+                user: true
+            });
             await notificationService.sendNotificaion({
                 userId: checkedInUser.userId,
                 title: "Successfully checked in for the event. ",
@@ -224,7 +226,7 @@ class EventRegistrationController {
                 entityType: 'EVENT'
             });
             await emailService.sendEmail({
-                to: userDetails.email,
+                to: checkedInUser.user.email,
                 subject: "Successfully, cheched in. ",
                 message: userCheckIn("User", eventDetails.title, checkedInUser.checkedInAt.toISOString())
             });

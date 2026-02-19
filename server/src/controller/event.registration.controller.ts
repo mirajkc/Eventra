@@ -237,7 +237,9 @@ class EventRegistrationController {
         } as IErrorTypes
       }
 
-      const checkedInUser: any = await eventParticipantService.chekIn(ticket, eventDetails.id)
+      const checkedInUser: any = await eventParticipantService.chekIn(ticket, eventDetails.id, {
+        user : true
+      })
 
       await notificationService.sendNotificaion({
         userId: checkedInUser.userId,
@@ -249,7 +251,7 @@ class EventRegistrationController {
       })
 
       await emailService.sendEmail({
-        to: userDetails.email,
+        to: checkedInUser.user.email,
         subject: "Successfully, cheched in. ",
         message: userCheckIn("User", eventDetails.title, checkedInUser.checkedInAt.toISOString())
       })

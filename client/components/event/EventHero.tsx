@@ -28,6 +28,8 @@ import { toast } from "sonner";
 import { useAppSelector } from "@/state/hooks";
 import GoogleMaps from "./GoogleMap";
 import { useRouter } from "next/navigation";
+import { Popover } from "radix-ui";
+import ShareButton from "./ShareButton";
 
 interface EventHeroProps {
   event: ISingleEvent;
@@ -287,6 +289,10 @@ export default function EventHero({ event }: EventHeroProps) {
                     <p className="text-sm font-bold">{event.creator.name}</p>
                   </div>
                 </div>
+              </div>
+
+              <div className="w-full mt-4 p-4 rounded-2xl bg-white dark:bg-neutral-900 ">
+                <ShareButton />
               </div>
             </motion.div>
           </div>

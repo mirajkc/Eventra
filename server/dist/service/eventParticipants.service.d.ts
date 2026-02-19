@@ -27,7 +27,11 @@ declare class EventParticipantService {
         attended: boolean;
         checkedInAt: Date | null;
     }>;
-    chekIn(token: string, eventId: string): Promise<{
+    chekIn(token: string, eventId: string, include: any): Promise<{
+        [x: string]: never;
+        [x: number]: never;
+        [x: symbol]: never;
+    } & {
         id: string;
         userId: string;
         eventId: string;

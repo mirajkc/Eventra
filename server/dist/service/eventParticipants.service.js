@@ -76,13 +76,14 @@ class EventParticipantService {
             return removedUser;
         });
     }
-    async chekIn(token, eventId) {
+    async chekIn(token, eventId, include) {
         const updatedUser = await prisma.eventParticipants.update({
             where: { eventId: eventId, checkInToken: token, attended: false },
             data: {
                 attended: true,
                 checkedInAt: new Date(Date.now())
-            }
+            },
+            include: include
         });
         if (!updatedUser) {
             throw {

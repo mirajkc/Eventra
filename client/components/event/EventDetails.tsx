@@ -30,10 +30,10 @@ export default function EventDetails({ event }: EventDetailsProps) {
         <RegisterParticipants event={event} />
       </div>
       <div className="flex flex-col gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <RecommendedEvents />
+        <AttendedUsers event={event} />
       </div>
       <div className="flex flex-col gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AttendedUsers event={event} />
+        <RecommendedEvents />
       </div>
       <div
         onClick={() => window.history.back()}
