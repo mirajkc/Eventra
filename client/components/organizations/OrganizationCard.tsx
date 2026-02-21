@@ -1,3 +1,4 @@
+"use client"
 import { IOrganizationDetails } from "@/types/organization.types";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import Image from "next/image";
@@ -7,11 +8,10 @@ import { format } from "date-fns";
 import * as motion from "motion/react-client";
 import { Button } from "../ui/button";
 import Link from "next/link";
-
-
+import { useTranslation } from "react-i18next";
 
 export default function OrganizationCard({ organization }: { organization: IOrganizationDetails }) {
-
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -19,7 +19,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
       transition={{ duration: 0.4 }}
 
     >
-      <Card className="w-full h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 dark:bg-neutral-950  hover:scale-105 transition-transform duration-300">
+      <Card className="w-full h-full flex flex-col overflow-hidden transition-all duration-300 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 hover:scale-105 hover:shadow-lg">
 
         {/* Banner Image */}
         <div className="relative w-full h-32 md:h-40 bg-neutral-100 dark:bg-neutral-900 ">
@@ -32,9 +32,9 @@ export default function OrganizationCard({ organization }: { organization: IOrga
             loading="eager"
           />
           {organization.isPremium && (
-            <div className="absolute top-2 right-2 z-[10]">
+            <div className="absolute top-2 right-2 z-10">
               <Badge variant="default" className="bg-amber-500 hover:bg-amber-600 text-white border-none gap-1">
-                <BadgeCheck className="w-3 h-3" /> Premium
+                <BadgeCheck className="w-3 h-3" /> {t("organizations.card.premium")}
               </Badge>
             </div>
           )}
@@ -64,17 +64,17 @@ export default function OrganizationCard({ organization }: { organization: IOrga
             <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
               <div className="flex items-center gap-1">
                 <Coins className="w-3.5 h-3.5 text-yellow-600 dark:text-yellow-500" />
-                <span className="font-medium">{organization.credits} Credits</span>
+                <span className="font-medium">{organization.credits} {t("organizations.card.credits")}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5" />
-                <span>Joined {format(new Date(organization.createdAt), "MMM d, yyyy")}</span>
+                <span>{t("organizations.card.joined")} {format(new Date(organization.createdAt), "MMM d, yyyy")}</span>
               </div>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="flex-grow">
+        <CardContent className="grow">
           <p className="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-3 leading-relaxed">
             {organization.description}
           </p>
@@ -82,7 +82,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
         <CardFooter>
           <Link className="w-full" href={`/organization/${organization.id}`}>
             <Button className="w-full hover:cursor-pointer " >
-              View Organization
+              {t("organizations.card.viewOrganization")}
               <ArrowRight />
             </Button></Link>
         </CardFooter>

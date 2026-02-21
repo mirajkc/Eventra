@@ -5,28 +5,30 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { useAppSelector } from "@/state/hooks";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
-export const userMenuItems = [
-
+export const getUserMenuItems = (t: any) => [
   {
-    label: "Organization Settings",
+    label: t("profile.organizationSettings"),
     href: "/manage-organization/organization",
     icon: Building,
   },
   {
-    label: "Events",
+    label: t("profile.events"),
     href: "/manage-events/created-events",
     icon: Calendar1,
   },
   {
-    label: "Settings",
+    label: t("profile.settings"),
     href: "/user/profile",
     icon: Settings,
   },
 ]
 
 export default function ProfileDropDown() {
+  const { t } = useTranslation();
   const userDetails = useAppSelector((state) => state.authSlice.userDetails)
+  const userMenuItems = getUserMenuItems(t);
   const handleLogout = () => {
     console.log("Logout clicked");
   };
@@ -44,7 +46,7 @@ export default function ProfileDropDown() {
               )
             }
           </div>
-          <span className="sr-only">Profile menu</span>
+          <span className="sr-only">{t("profile.profileMenu")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">

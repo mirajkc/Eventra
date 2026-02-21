@@ -1,13 +1,13 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import {  IEventUpdate, IHostedEvents } from "@/types/event.type";
+import { IEventUpdate, IHostedEvents } from "@/types/event.type";
 import Label from "../form/Label";
 import Input, { DateTimeInput } from "../form/Input";
 import SelectInput from "../form/SelectInput";
 import FileInput from "../form/FileInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  updateEventDTO } from "@/rules/event.rules";
+import { updateEventDTO } from "@/rules/event.rules";
 import { Button } from "../ui/button";
 import {
   Calendar,
@@ -23,6 +23,7 @@ import {
 import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 interface UpdateEventFormProps {
   event: IHostedEvents;
@@ -31,6 +32,7 @@ interface UpdateEventFormProps {
 }
 
 export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEventFormProps) {
+  const { t } = useTranslation();
   const {
     control,
     handleSubmit,
@@ -73,7 +75,7 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
         data.tags.split(",").map((t: any) => t.trim()).forEach((tag: string) => formData.append("tags[]", tag));
       }
 
-      if(data.status === "CANCELLED") {
+      if (data.status === "CANCELLED") {
         formData.append("status", "CANCELLED");
       }
 
@@ -92,14 +94,14 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
       const result = await response.json();
 
       if (result.success) {
-        toast.success(result.message || "Event updated successfully!");
+        toast.success(t("manageEvents.created.table.form.messages.success"));
         onSuccess();
         onClose();
       } else {
-        toast.error(result.message || "Failed to update event");
+        toast.error(result.message || t("manageEvents.created.table.form.messages.error"));
       }
     } catch (error) {
-      toast.error("An error occurred while updating the event. Please try again.");
+      toast.error(t("manageEvents.created.table.form.messages.genericError"));
     }
   };
 
@@ -110,13 +112,13 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Type className="w-4 h-4 text-primary" />
-            <Label htmlFor="title" className="font-medium">Event Title</Label>
+            <Label htmlFor="title" className="font-medium">{t("manageEvents.created.table.form.title")}</Label>
           </div>
           <Input
             type="text"
             name="title"
             control={control}
-            placeholder="e.g. Annual Tech Conference 2026"
+            placeholder={t("manageEvents.created.table.form.placeholders.title")}
             errorMsg={errors.title?.message}
             className="transition-all focus:ring-2 focus:ring-primary/20"
           />
@@ -126,13 +128,13 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <AlignLeft className="w-4 h-4 text-primary" />
-            <Label htmlFor="description" className="font-medium">Description</Label>
+            <Label htmlFor="description" className="font-medium">{t("manageEvents.created.table.form.description")}</Label>
           </div>
           <Input
             type="text"
             name="description"
             control={control}
-            placeholder="Tell people what your event is about..."
+            placeholder={t("manageEvents.created.table.form.placeholders.description")}
             errorMsg={errors.description?.message}
             className="transition-all focus:ring-2 focus:ring-primary/20"
           />
@@ -140,122 +142,122 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
 
         {/* Location */}
         <div className="space-y-2">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-primary" />
-            <Label htmlFor="location" className="font-medium">Location</Label>
-            </div>
-            <Input
+            <Label htmlFor="location" className="font-medium">{t("manageEvents.created.table.form.location")}</Label>
+          </div>
+          <Input
             type="text"
             name="location"
             control={control}
-            placeholder="Venue name or physical address"
+            placeholder={t("manageEvents.created.table.form.placeholders.location")}
             errorMsg={errors.location?.message}
             className="transition-all focus:ring-2 focus:ring-primary/20"
-            />
+          />
         </div>
 
         {/* Dates */}
         <div className="space-y-4">
-            <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-primary" />
-                <Label className="font-medium">Schedule</Label>
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-primary" />
+            <Label className="font-medium">{t("manageEvents.created.table.form.schedule")}</Label>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground ml-1">{t("manageEvents.created.table.form.startDate")}</span>
+              <DateTimeInput
+                type="datetime-local"
+                name="startDate"
+                control={control}
+                errorMsg={errors.startDate?.message}
+                className="transition-all focus:ring-2 focus:ring-primary/20"
+              />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                <span className="text-xs text-muted-foreground ml-1">Start Date & Time</span>
-                <DateTimeInput
-                    type="datetime-local"
-                    name="startDate"
-                    control={control}
-                    errorMsg={errors.startDate?.message}
-                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                />
-                </div>
-                <div className="space-y-1">
-                <span className="text-xs text-muted-foreground ml-1">End Date & Time</span>
-                <DateTimeInput
-                    type="datetime-local"
-                    name="endDate"
-                    control={control}
-                    errorMsg={errors.endDate?.message}
-                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                />
-                </div>
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground ml-1">{t("manageEvents.created.table.form.endDate")}</span>
+              <DateTimeInput
+                type="datetime-local"
+                name="endDate"
+                control={control}
+                errorMsg={errors.endDate?.message}
+                className="transition-all focus:ring-2 focus:ring-primary/20"
+              />
             </div>
+          </div>
         </div>
 
         {/* Capacity & Category */}
         <div className="space-y-4">
-            <div className="flex items-center gap-2">
-                <LayoutGrid className="w-4 h-4 text-primary" />
-                <Label className="font-medium">Details</Label>
+          <div className="flex items-center gap-2">
+            <LayoutGrid className="w-4 h-4 text-primary" />
+            <Label className="font-medium">{t("manageEvents.created.table.form.details")}</Label>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground ml-1 flex items-center gap-1">
+                <Users className="w-3 h-3" /> {t("manageEvents.created.table.form.capacity")}
+              </span>
+              <Input
+                type="number"
+                name="capacity"
+                control={control}
+                placeholder={t("manageEvents.created.table.form.placeholders.capacity")}
+                errorMsg={errors.capacity?.message as string}
+                className="transition-all focus:ring-2 focus:ring-primary/20"
+              />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                <span className="text-xs text-muted-foreground ml-1 flex items-center gap-1">
-                    <Users className="w-3 h-3" /> Capacity
-                </span>
-                <Input
-                    type="number"
-                    name="capacity"
-                    control={control}
-                    placeholder="Max attendees"
-                    errorMsg={errors.capacity?.message as string}
-                    className="transition-all focus:ring-2 focus:ring-primary/20"
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground ml-1">{t("manageEvents.created.table.form.category")}</span>
+              <div className="border border-input rounded-md px-1 bg-background h-10 flex items-center">
+                <SelectInput
+                  name="category"
+                  control={control}
+                  errorMsg={errors.category?.message}
+                  options={[
+                    { value: "WORKSHOP", label: t("manageEvents.created.table.form.categories.workshop") },
+                    { value: "MEETUP", label: t("manageEvents.created.table.form.categories.meetup") },
+                    { value: "CONFERENCE", label: t("manageEvents.created.table.form.categories.conference") },
+                    { value: "WEBINAR", label: t("manageEvents.created.table.form.categories.webinar") },
+                    { value: "HACKATHON", label: t("manageEvents.created.table.form.categories.hackathon") },
+                    { value: "COMPETITION", label: t("manageEvents.created.table.form.categories.competition") },
+                    { value: "OTHER", label: t("manageEvents.created.table.form.categories.other") },
+                  ]}
                 />
-                </div>
-                <div className="space-y-1">
-                <span className="text-xs text-muted-foreground ml-1">Category</span>
-                <div className="border border-input rounded-md px-1 bg-background h-10 flex items-center">
-                    <SelectInput
-                    name="category"
-                    control={control}
-                    errorMsg={errors.category?.message}
-                    options={[
-                        { value: "WORKSHOP", label: "Workshop" },
-                        { value: "MEETUP", label: "Meetup" },
-                        { value: "CONFERENCE", label: "Conference" },
-                        { value: "WEBINAR", label: "Webinar" },
-                        { value: "HACKATHON", label: "Hackathon" },
-                        { value: "COMPETITION", label: "Competition" },
-                        { value: "OTHER", label: "Other" },
-                    ]}
-                    />
-                </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
 
         {/* Tags */}
         <div className="space-y-2">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Tag className="w-4 h-4 text-primary" />
-            <Label htmlFor="tags" className="font-medium">Tags</Label>
-            </div>
-            <Input
+            <Label htmlFor="tags" className="font-medium">{t("manageEvents.created.table.form.tags")}</Label>
+          </div>
+          <Input
             type="text"
             name="tags"
             control={control}
-            placeholder="E.g. tech, networking, workshop (comma separated)"
+            placeholder={t("manageEvents.created.table.form.placeholders.tags")}
             errorMsg={errors.tags?.message as string}
             className="transition-all focus:ring-2 focus:ring-primary/20"
-            />
+          />
         </div>
 
         {/* Image */}
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <ImageIcon className="w-4 h-4 text-primary" />
-            <Label htmlFor="image" className="font-medium">Event Poster</Label>
+            <Label htmlFor="image" className="font-medium">{t("manageEvents.created.table.form.poster")}</Label>
           </div>
-          
+
           {event.image && (
-             <div className="relative h-40 w-full mb-2 rounded-md overflow-hidden border border-input">
-                <Image src={event.image} alt="Current Event Poster" fill className="object-cover" />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xs font-medium">
-                    Current Image
-                </div>
-             </div>
+            <div className="relative h-40 w-full mb-2 rounded-md overflow-hidden border border-input">
+              <Image src={event.image} alt="Current Event Poster" fill className="object-cover" />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xs font-medium">
+                {t("manageEvents.created.table.form.currentImage")}
+              </div>
+            </div>
           )}
 
           <FileInput
@@ -267,12 +269,12 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
         </div>
         <div>
           <SelectInput
-          className="max-w-[200px] border rounded-sm hover:bg-muted/50 cursor-pointer dark:bg-black p-1"
+            className="max-w-[200px] border rounded-sm hover:bg-muted/50 cursor-pointer dark:bg-black p-1"
             name="status"
             control={control}
             options={[
-              { value: "", label: "Select Status" },
-              { value: "CANCELLED", label: "Cancelled" },
+              { value: "", label: t("manageEvents.created.table.form.selectStatus") },
+              { value: "CANCELLED", label: t("manageEvents.created.table.form.cancelled") },
             ]}
             errorMsg={errors.status?.message as string}
           />
@@ -287,14 +289,14 @@ export default function UpdateEventForm({ event, onSuccess, onClose }: UpdateEve
             disabled={isSubmitting}
             onClick={onClose}
           >
-            Cancel
+            {t("manageEvents.created.table.buttons.cancel")}
           </Button>
           <Button
             className="group px-6 transition-all active:scale-95"
             type="submit"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Updating..." : "Update Event"}
+            {isSubmitting ? t("manageEvents.created.table.buttons.updating") : t("manageEvents.created.table.buttons.updateEvent")}
             <Save className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </div>

@@ -10,8 +10,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function VerifyOtp() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
@@ -34,13 +36,13 @@ export default function VerifyOtp() {
       if (response.status !== 200) {
         throw new Error(result.message);
       }
-      toast.success("OTP verified successfully.");
+      toast.success(t("auth.verifyOtp.success"));
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
         toast.error(error.message);
       } else {
-        toast.error("Error occurred while verifying OTP. Please try again.");
+        toast.error(t("auth.verifyOtp.error"));
       }
     }
   };
@@ -60,29 +62,29 @@ export default function VerifyOtp() {
       <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
         <div className="p-8">
           <div className="flex flex-col space-y-2 text-center mb-8">
-            <TypographyH2>Verify OTP</TypographyH2>
-            <TypographyP>Enter your email and the 6-digit OTP sent to your inbox</TypographyP>
+            <TypographyH2>{t("auth.verifyOtp.title")}</TypographyH2>
+            <TypographyP>{t("auth.verifyOtp.enterEmailOtp")}</TypographyP>
           </div>
 
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.verifyOtp.emailLabel")}</Label>
                 <Input
                   type="email"
                   name="email"
-                  placeholder="name@example.com"
+                  placeholder={t("auth.forgotPassword.emailPlaceholder")}
                   errorMsg={errors.email?.message}
                   control={control}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="otp">OTP Code</Label>
+                <Label htmlFor="otp">{t("auth.verifyOtp.otpLabel")}</Label>
                 <Input
                   type="text"
                   name="otp"
-                  placeholder="Enter 6-digit OTP"
+                  placeholder={t("auth.verifyOtp.otpPlaceholder")}
                   errorMsg={errors.otp?.message}
                   control={control}
                 />
@@ -90,14 +92,14 @@ export default function VerifyOtp() {
             </div>
 
             <Button className="w-full" size="lg">
-              Verify OTP
+              {isSubmitting ? t("auth.verifyOtp.verifying") : t("auth.verifyOtp.verifyBtn")}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Didn't receive the code? </span>
+            <span className="text-muted-foreground">{t("auth.verifyOtp.didntReceiveCode")} </span>
             <Link href="/auth/get-forgotpass-otp" className="font-medium text-primary hover:underline">
-              Resend OTP
+              {t("auth.verifyOtp.resendLink")}
             </Link>
           </div>
         </div>

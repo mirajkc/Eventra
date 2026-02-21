@@ -31,6 +31,7 @@ import GoogleMaps from "./GoogleMap";
 import { useRouter } from "next/navigation";
 import ShareButton from "./ShareButton";
 import { div } from "motion/react-client";
+import { useTranslation } from "react-i18next";
 
 
 interface InvitationComponentProps {
@@ -47,6 +48,7 @@ const categoryIcons: Record<string, typeof Trophy> = {
 };
 
 export default function InvitationComponent({ event }: InvitationComponentProps) {
+  const { t } = useTranslation();
   if (!event?.startDate || !event?.endDate) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -73,7 +75,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
     try {
       setJoining(true);
       if (!loggedInUser?.id) {
-        toast.error("You must be logged in to join an event.");
+        toast.error(t("events.single.loginToJoin"));
         return;
       }
       const accessToken = await getAccessToken();
@@ -86,13 +88,13 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
       });
       const result = await response.json();
       if (response.status !== 200) {
-        toast.error(result.message || "Failed to join event");
+        toast.error(result.message || t("events.single.anErrorOccurred"));
         return;
       }
-      toast.success("Successfully joined the event!");
+      toast.success(t("events.single.joinedSuccessfully"));
       window.location.reload();
     } catch (error) {
-      toast.error("An error occurred. Please try again later.");
+      toast.error(t("events.single.anErrorOccurred"));
     } finally {
       setJoining(false);
     }
@@ -149,7 +151,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                   {event.category}
                 </Badge>
                 <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-                  {event.status === "CANCELLED" ? "Cancelled" : status}
+                  {event.status === "CANCELLED" ? t("events.card.status.CANCELLED") : t(`events.card.status.${status}`)}
                 </Badge>
 
               </div>
@@ -175,7 +177,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                     <span className="font-bold text-lg">{event.organization.name}</span>
                     {event.organization.isPremium && <BadgeCheck className="w-4 h-4 text-primary fill-primary/10" />}
                   </div>
-                  <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">Event Organizer</span>
+                  <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">{t("events.single.eventOrganizer")}</span>
                 </div>
               </div>
 
@@ -183,7 +185,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                 <div>
                   <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
                     <Info className="w-5 h-5 text-primary" />
-                    About this Event
+                    {t("events.single.aboutEvent")}
                   </h3>
                   <div className="prose dark:prose-invert max-w-none">
                     <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg whitespace-pre-wrap">
@@ -224,12 +226,12 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                         <Calendar className="w-6 h-6" />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Start Date & Time</p>
+                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">{t("events.single.startDateAndTime")}</p>
                         {start && !isNaN(start.getTime()) && (
                           <>
                             <p className="font-bold">{format(start, "d, MMMM, yyyy")}</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                              {format(start, "h:mm a")} onwards
+                              {format(start, "h:mm a")} {t("events.single.onwards")}
                             </p>
                           </>
                         )}
@@ -244,7 +246,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                           end && !isNaN(end.getTime()) && (
                             <>
                               <p className="font-bold">{format(end, "d, MMMM , yyyy")}</p>
-                              <p className="text-sm text-neutral-600 dark:text-neutral-400">till {format(end, "h:mm a")}</p>
+                              <p className="text-sm text-neutral-600 dark:text-neutral-400">{t("events.single.till")} {format(end, "h:mm a")}</p>
                             </>
                           )
                         }
@@ -256,7 +258,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                         <MapPin className="w-6 h-6" />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Location</p>
+                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">{t("events.single.location")}</p>
                         <p className="font-bold">{event.location}</p>
                       </div>
                     </div>
@@ -266,8 +268,8 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                         <Users className="w-6 h-6" />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">Attendees</p>
-                        <p className="font-bold">{event.registeredCount} / {event.capacity} Joined</p>
+                        <p className="text-sm font-bold text-neutral-500 dark:text-neutral-500 uppercase tracking-wider">{t("events.single.attendees")}</p>
+                        <p className="font-bold">{event.registeredCount} / {event.capacity} {t("events.single.joined")}</p>
                         <div className="w-full h-1.5 bg-neutral-100 dark:bg-neutral-800 rounded-full mt-2 overflow-hidden">
                           <div
                             className="h-full bg-primary transition-all duration-500"
@@ -284,10 +286,10 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                       disabled={joining || event.registeredCount >= event.capacity}
                       className="w-full py-7 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98]"
                     >
-                      {joining ? "Joining..." : event.registeredCount >= event.capacity ? "Event Full" : "Join Event Now"}
+                      {joining ? t("events.single.joining") : event.registeredCount >= event.capacity ? t("events.single.eventFull") : t("events.single.joinNow")}
                     </Button>
                     <p className="text-center text-xs text-neutral-500 dark:text-neutral-500 mt-4 px-4">
-                      By joining, you agree to our terms and conditions.
+                      {t("events.single.terms")}
                     </p>
                   </div>
                 </CardContent>
@@ -305,7 +307,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
                     />
                   </div>
                   <div>
-                    <p className="text-xs text-neutral-500 font-bold uppercase tracking-tighter">Organized by</p>
+                    <p className="text-xs text-neutral-500 font-bold uppercase tracking-tighter">{t("events.single.organizedBy")}</p>
                     <p className="text-sm font-bold">{event.creator.name}</p>
                   </div>
                 </div>

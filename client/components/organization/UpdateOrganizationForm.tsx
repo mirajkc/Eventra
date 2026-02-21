@@ -16,8 +16,10 @@ import { Button } from "../ui/button"
 import { RotateCcw, Save } from "lucide-react"
 import { toast } from "sonner"
 import getAccessToken from "@/lib/access.token"
+import { useTranslation } from "react-i18next";
 
 export default function UpdateOrganizationForm() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getLoggedInUserOrganization())
@@ -32,8 +34,8 @@ export default function UpdateOrganizationForm() {
       description: organizationData?.description,
       website: organizationData?.website,
       type: organizationData?.type,
-      image: organizationData?.image,
-      thumbnail: organizationData?.thumbnail
+      image: organizationData?.image || "",
+      thumbnail: organizationData?.thumbnail || ""
     })
   }, [organizationData?.id])
 
@@ -76,7 +78,7 @@ export default function UpdateOrganizationForm() {
       }
       reset();
     } catch (error) {
-      toast.error("Error while updating the organizations details please try again later. ")
+      toast.error(t("manageOrganization.update.form.error"))
     }
   }
   if (loading) return <div className="flex items-center justify-center h-screen" ><Spinner /></div>
@@ -86,44 +88,44 @@ export default function UpdateOrganizationForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4">
         <div className="flex">
           <div className="w-1/3 s">
-            <Label>Name: </Label></div>
+            <Label>{t("manageOrganization.update.form.name")}: </Label></div>
           <div className="w-2/3">
-            <Input className="dark:bg-neutral-900" control={control} placeholder="Please enter new name for the organization" name="name" type="text" errorMsg={errors.name?.message} />
+            <Input className="dark:bg-neutral-900" control={control} placeholder={t("manageOrganization.update.form.placeholders.name")} name="name" type="text" errorMsg={errors.name?.message} />
           </div>
         </div>
         <div className="flex">
           <div className="w-1/3">
-            <Label>Description: </Label></div>
+            <Label>{t("manageOrganization.update.form.description")}: </Label></div>
           <div className="w-2/3">
-            <Input className="dark:bg-neutral-900" control={control} placeholder="Please enter new description for the organization" name="description" type="text" errorMsg={errors.description?.message} />
+            <Input className="dark:bg-neutral-900" control={control} placeholder={t("manageOrganization.update.form.placeholders.description")} name="description" type="text" errorMsg={errors.description?.message} />
           </div>
         </div>
         <div className="flex">
           <div className="w-1/3">
-            <Label>Website: </Label></div>
+            <Label>{t("manageOrganization.update.form.website")}: </Label></div>
           <div className="w-2/3">
-            <Input className="dark:bg-neutral-900" control={control} placeholder="Please enter new website for the organization" name="website" type="text" errorMsg={errors.website?.message} />
+            <Input className="dark:bg-neutral-900" control={control} placeholder={t("manageOrganization.update.form.placeholders.website")} name="website" type="text" errorMsg={errors.website?.message} />
           </div>
         </div>
         <div className="flex">
           <div className="w-1/3">
-            <Label>Type: </Label></div>
+            <Label>{t("manageOrganization.update.form.type")}: </Label></div>
           <div className="w-2/3 border-2 rounded-md p-1">
-            <SelectInput name="type" control={control} errorMsg={errors.type?.message} placeholder="Select your organization type" options={[
-              { value: "INDIVIDUAL", label: "Individual" },
-              { value: "COMPANY", label: "Company" },
-              { value: "EDUCATIONAL", label: "Educational" },
-              { value: "COMMUNITY", label: "Community" },
-              { value: "NON_PROFIT", label: "Non Profit" },
-              { value: "GOVERNMENT", label: "Government" },
+            <SelectInput name="type" control={control} errorMsg={errors.type?.message} placeholder={t("manageOrganization.create.form.placeholders.type")} options={[
+              { value: "INDIVIDUAL", label: t("manageOrganization.create.form.types.individual") },
+              { value: "COMPANY", label: t("manageOrganization.create.form.types.company") },
+              { value: "EDUCATIONAL", label: t("manageOrganization.create.form.types.educational") },
+              { value: "COMMUNITY", label: t("manageOrganization.create.form.types.community") },
+              { value: "NON_PROFIT", label: t("manageOrganization.create.form.types.nonProfit") },
+              { value: "GOVERNMENT", label: t("manageOrganization.create.form.types.government") },
             ]} />
           </div>
         </div>
         <div className="flex">
           <div className="w-1/3">
-            <p>Current Organization Image</p>
+            <p>{t("manageOrganization.update.form.currentImage")}</p>
             <Label htmlFor="image"><div>
-              <Image width={100} height={100} src={String(organizationData?.image)} alt="organization image" />
+              <Image width={100} height={100} src={organizationData?.image || "https://github.com/shadcn.png"} alt="organization image" />
             </div></Label>
           </div>
           <div className="w-2/3 dark:bg-neutral-900" >
@@ -132,9 +134,9 @@ export default function UpdateOrganizationForm() {
         </div>
         <div className="flex">
           <div className="w-1/3">
-            <p>Current Organization Thumbnail</p>
+            <p>{t("manageOrganization.update.form.currentThumbnail")}</p>
             <Label htmlFor="image"><div>
-              <Image width={100} height={100} src={String(organizationData?.thumbnail)} alt="organization thumbnail" />
+              <Image width={100} height={100} src={organizationData?.thumbnail || "https://github.com/shadcn.png"} alt="organization thumbnail" />
             </div></Label>
           </div>
           <div className="w-2/3 dark:bg-neutral-900" >
@@ -143,11 +145,11 @@ export default function UpdateOrganizationForm() {
         </div>
         <div className="flex gap-2 items-center mt-12 ">
           <Button className="hover:scale-105" type="submit" variant={"default"} disabled={isSubmitting}>
-            {isSubmitting ? "Updating..." : "Update"} <Save /> </Button>
+            {isSubmitting ? t("manageOrganization.update.form.buttons.updating") : t("manageOrganization.update.form.buttons.update")} <Save /> </Button>
           <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => {
             reset()
             dispatch(getLoggedInUserOrganization())
-          }}>{isSubmitting ? "Updating..." : "Reset"} <RotateCcw /> </Button>
+          }}>{isSubmitting ? t("manageOrganization.update.form.buttons.updating") : t("manageOrganization.update.form.buttons.reset")} <RotateCcw /> </Button>
         </div>
       </form>
     </div>

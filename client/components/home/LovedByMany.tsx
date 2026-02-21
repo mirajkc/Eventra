@@ -3,46 +3,46 @@
 import { motion } from "motion/react";
 import { Twitter } from "lucide-react";
 
-const testimonials = [
+const getTestimonials = (t: any) => [
   {
     name: "Sebastiaan Debrouwere",
     handle: "@iamsebdeb",
-    content: "Eventra made organizing our annual conference effortless. From registrations to live updates, everything was smooth and hassle-free.",
+    content: t("home.testimonials.t1"),
     date: "10:01 PM · Apr 7, 2022",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
   },
   {
     name: "Alon",
     handle: "@alon",
-    content: "As a startup hosting multiple workshops, Eventra helped us manage attendees, ticketing, and schedules without breaking a sweat.",
+    content: t("home.testimonials.t2"),
     date: "6:57 PM · Dec 1, 2022",
     avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop"
   },
   {
     name: "Dimitry Gershenson",
     handle: "@d_gershenson",
-    content: "We used Eventra for our fundraising gala. Tracking RSVPs, sending reminders, and checking in guests was so simple!",
+    content: t("home.testimonials.t3"),
     date: "1:32 PM · Jan 4, 2023",
     avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
   },
   {
     name: "Krishna",
     handle: "@ntkris",
-    content: "Eventra’s dashboard gave us a clear view of attendees, ticket sales, and event analytics. Organizing webinars has never been easier.",
+    content: t("home.testimonials.t4"),
     date: "1:03 PM · Mar 3, 2023",
     avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop"
   },
   {
     name: "Jono Bacon",
     handle: "@jonobacon",
-    content: "Planning a large meetup felt overwhelming, but Eventra handled everything—from invites to feedback collection—seamlessly.",
+    content: t("home.testimonials.t5"),
     date: "4:05 PM · Jan 9, 2023",
     avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop"
   },
   {
     name: "Sri",
     handle: "@therealsrii",
-    content: "Eventra turned our event management from stressful to smooth. Automated notifications, attendee management, and analytics all in one place!",
+    content: t("home.testimonials.t6"),
     date: "10:17 PM · Jan 3, 2023",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
   }
@@ -50,7 +50,12 @@ const testimonials = [
 
 
 
+import { useTranslation } from "react-i18next";
+
 export default function LovedByMany() {
+  const { t } = useTranslation();
+  const testimonials = getTestimonials(t);
+
   return (
     <section className="bg-background py-24 text-foreground overflow-hidden">
       <div className="container mx-auto px-6">
@@ -63,19 +68,19 @@ export default function LovedByMany() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
-              <span className="text-muted-foreground/60">Loved by</span> Builders.
+              <span className="text-muted-foreground/60">{t("home.testimonials.title1")}</span> {t("home.testimonials.title2")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8">
-              Eventra is the event management tool for everyone who values collaboration and seamless experiences.
+              {t("home.testimonials.subtitle")}
             </p>
-            
+
           </motion.div>
         </div>
 
         {/* Testimonials Grid */}
         <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
           {testimonials.map((testimonial, index) => (
-             <motion.div
+            <motion.div
               key={testimonial.handle}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -87,7 +92,7 @@ export default function LovedByMany() {
                 <div className="flex w-full items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 overflow-hidden rounded-full border border-border">
-                        <img src={testimonial.avatar} alt={testimonial.name} className="h-full w-full object-cover" />
+                      <img src={testimonial.avatar} alt={testimonial.name} className="h-full w-full object-cover" />
                     </div>
                     <div>
                       <h4 className="text-sm font-semibold">{testimonial.name}</h4>
@@ -96,13 +101,13 @@ export default function LovedByMany() {
                   </div>
                   <Twitter className="h-4 w-4 text-muted-foreground/40" />
                 </div>
-                
+
                 <p className="text-[15px] leading-relaxed mb-6 text-foreground/90">
-                  {testimonial.content.split(' ').map((word, i) => (
+                  {testimonial.content.split(' ').map((word: string, i: number) => (
                     word.startsWith('@') ? <span key={i} className="text-primary font-medium">{word} </span> : word + ' '
                   ))}
                 </p>
-                
+
                 <p className="text-[11px] text-muted-foreground/60 uppercase font-medium tracking-wider">
                   {testimonial.date}
                 </p>

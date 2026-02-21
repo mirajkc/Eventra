@@ -10,10 +10,14 @@ import DesktopNavigation from "./DesktopNavigation"
 import AuthSection from "./AuthSection"
 import { useState } from "react"
 import MobileMenu from "./MobileMenu"
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 
 export default function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { t } = useTranslation();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -31,7 +35,6 @@ export default function NavBar() {
             <Calendar className="h-6 w-6" />
             <span className="hidden sm:inline">Eventra</span>
           </Link>
-
           {/* Search Bar - Hidden on small screens */}
           <div className="hidden lg:flex flex-1 max-w-md">
             <SearchBar />
@@ -42,6 +45,7 @@ export default function NavBar() {
             {/* Navigation Links */}
             <DesktopNavigation />
 
+            <LanguageSwitcher />
             {/* Theme Toggle */}
             <ModeToggle />
 
@@ -51,6 +55,7 @@ export default function NavBar() {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
+            <LanguageSwitcher />
             <ModeToggle />
             <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
               {isMobileMenuOpen ? (

@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { Spinner } from "../ui/spinner";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
 
 export default function CheckOtherOrganizations() {
+  const { t } = useTranslation();
   const [organizations, setOrganizations] = useState<Array<ISingleOrganization>>([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -40,8 +42,8 @@ export default function CheckOtherOrganizations() {
   return (
     <div className="flex  flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50 min-h-[60vh]" >
       <div className="flex flex-col gap-2">
-        <TypographyH4>Check Other Organizations</TypographyH4>
-        <TypographyP>Check out other organizations that you might be interested in.</TypographyP>
+        <TypographyH4>{t("organizations.single.other.title")}</TypographyH4>
+        <TypographyP>{t("organizations.single.other.subtitle")}</TypographyP>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 mb-4">
         {
@@ -58,7 +60,7 @@ export default function CheckOtherOrganizations() {
       </div>
       <div className="flex items-center justify-center text-center w-full h-full">
         <Link href="/organizations">
-          <Button type='button' variant="outline" className="p-6">GO TO ORGANIZATIONS</Button>
+          <Button type='button' variant="outline" className="p-6">{t("organizations.single.other.goToOrganizations")}</Button>
         </Link>
       </div>
 

@@ -1,0 +1,708 @@
+{
+    "navbar": {
+        "logo": "Eventra",
+        "home": "Home",
+        "events": "Events",
+        "organizations": "Organizations",
+        "login": "Login",
+        "getStarted": "Get Started"
+    },
+    "landing": {
+        "welcome": "Welcome to Eventra",
+        "subtitle": "The All in One Event Management System",
+        "hero": {
+            "title": "Eventra",
+            "subtitle": "ALL IN ONE EVENT MANAGEMENT SYSTEM"
+        },
+        "search": {
+            "placeholder": "Search for the desired events...",
+            "button": "Search"
+        },
+        "whatIsEventra": {
+            "description": "Eventra is a platform to discover, create, and manage events, making it easy for organizers to list events and for users to browse and visit them."
+        },
+        "howItWorks": {
+            "title": "How it works",
+            "subtitle": "Simple steps to start your journey with Eventra",
+            "step1_title": "Create Account",
+            "step1_desc": "Enter your information and ensure your details are safe and secure with our platform.",
+            "step2_title": "Visit Events",
+            "step2_desc": "Explore thousands of events happening around you or globally with ease.",
+            "step3_title": "Join Them",
+            "step3_desc": "Join the community, participate in events, and create memories that last a lifetime."
+        },
+        "whyChooseUs": {
+            "badge": "Why Choose Eventra",
+            "title": "Everything you need to manage events effortlessly.",
+            "subtitle": "Whether you're organizing a small meetup or a large-scale conference, Eventra provides the tools and security to make it a success.",
+            "feature1": "Manage events with ease and efficiency.",
+            "feature2": "Secure transactions and instant payouts.",
+            "feature3": "24/7 dedicated support for organizers."
+        },
+        "pricing": {
+            "title": "Flexible Pricing Plans",
+            "subtitle": "Please visit the organization for which you want to purchase the credit for.",
+            "plans": {
+                "small": {
+                    "name": "Small",
+                    "description": "For small organizations."
+                },
+                "medium": {
+                    "name": "Medium",
+                    "description": "Perfect for medium organizations."
+                },
+                "large": {
+                    "name": "Large",
+                    "description": "For large organizations."
+                }
+            },
+            "features": {
+                "get50": "Get 50 credits",
+                "get100": "Get 100 credits",
+                "get200": "Get 200 credits",
+                "premium": "Organization marked as premium organization",
+                "notified": "Get notified for all people who has joined organization",
+                "noReset": "No credits reset monthly"
+            }
+        }
+    },
+    "footer": {
+        "company": "Company",
+        "product": "Product",
+        "aboutUs": "About Us",
+        "blog": "Blog",
+        "careers": "Careers",
+        "contact": "Contact",
+        "exploreEvents": "Explore Events",
+        "organizations": "Organizations",
+        "about": "About",
+        "brandDesc": "Empowering organizers to build extraordinary event experiences. The all-in-one platform for modern event management and collaboration.",
+        "newsletter": {
+            "title": "Stay updated",
+            "desc": "Subscribe to our newsletter for the latest updates and event tips.",
+            "placeholder": "name@company.com",
+            "button": "Join"
+        },
+        "copyright": "© 2026 Eventra Inc. All rights reserved."
+    },
+    "home": {
+        "hero": {
+            "badge": "New",
+            "badgeText": "Eventra is now live! 🎉",
+            "title": "Event management magic.",
+            "subtitle1": "Powerful, flexible and data-driven, Eventra makes it easy",
+            "subtitle2": "to build the exact event that you think of.",
+            "exploreBtn": "Explore Events",
+            "joinBtn": "Join Organizations"
+        },
+        "showcase": {
+            "title": "A event management system created to be yours.",
+            "subtitle1": "Tweak anything and everything to your liking.",
+            "subtitle2": "See how our platform can transform your event planning and management."
+        },
+        "more": {
+            "title1": "And so",
+            "title2": "much more...",
+            "subtitle1": "Your events are always evolving.",
+            "subtitle2": "Why should your management system be any different?",
+            "features": {
+                "f1_title": "Quick actions",
+                "f1_desc": "Streamline your event workflow with easy navigation and quick actions.",
+                "f2_title": "Guest enrichment",
+                "f2_desc": "Guest are free to visit the event page and organizations page before considering to join us.",
+                "f3_title": "Mobile responsive",
+                "f3_desc": "Eventra is fully responsive and can be accessed from any device.",
+                "f4_title": "Event analysis",
+                "f4_desc": "Get deeper insights into your event performance and guest engagement at a glance.",
+                "f5_title": "Dynamic Filters",
+                "f5_desc": "Easily find and segment attendees with our powerful and flexible filtering system.",
+                "f6_title": "Smart Sorting",
+                "f6_desc": "Organize your events and attendees exactly how you want with tiered sorting."
+            }
+        },
+        "testimonials": {
+            "title1": "Loved by",
+            "title2": "Builders.",
+            "subtitle": "Eventra is the event management tool for everyone who values collaboration and seamless experiences.",
+            "t1": "Eventra made organizing our annual conference effortless. From registrations to live updates, everything was smooth and hassle-free.",
+            "t2": "As a startup hosting multiple workshops, Eventra helped us manage attendees, ticketing, and schedules without breaking a sweat.",
+            "t3": "We used Eventra for our fundraising gala. Tracking RSVPs, sending reminders, and checking in guests was so simple!",
+            "t4": "Eventra’s dashboard gave us a clear view of attendees, ticket sales, and event analytics. Organizing webinars has never been easier.",
+            "t5": "Planning a large meetup felt overwhelming, but Eventra handled everything—from invites to feedback collection—seamlessly.",
+            "t6": "Eventra turned our event management from stressful to smooth. Automated notifications, attendee management, and analytics all in one place!"
+        },
+        "cta": {
+            "title1": "Ready to experience",
+            "title2": "the magic?",
+            "subtitle": "Join thousands of organizers building incredible events with Eventra. Start for free and see how easily you can scale your vision.",
+            "getStartedBtn": "Get started for free",
+            "exploreBtn": "Explore events",
+            "footerText": "No credit card required. Instant access."
+        }
+    },
+    "events": {
+        "title": "Eventra Events",
+        "subtitle": "Find the events you are interested in and join them.",
+        "list": {
+            "fetchFailed": "Failed to fetch events",
+            "noEvents": "No events found.",
+            "previous": "Previous",
+            "next": "Next",
+            "page": "Page",
+            "of": "of"
+        },
+        "card": {
+            "organizedBy": "Organized by",
+            "details": "Details",
+            "status": {
+                "CANCELLED": "Cancelled",
+                "COMPLETED": "Completed",
+                "ONGOING": "Ongoing",
+                "UPCOMING": "Upcoming"
+            }
+        },
+        "sidebar": {
+            "filters": "Filters",
+            "reset": "Reset",
+            "searchEvents": "Search Events",
+            "searchPlaceholder": "Search events...",
+            "capacity": "Capacity",
+            "allCapacity": "All Capacity",
+            "lessThan": "Less than",
+            "categories": "Categories",
+            "allCategories": "All Categories",
+            "publishedOnly": "Published Only",
+            "createdAt": "Created At",
+            "updatedAt": "Updated At",
+            "allTypes": "All Types",
+            "ascending": "Ascending",
+            "descending": "Descending"
+        },
+        "single": {
+            "failedUserStatus": "Failed to fetch user event status please try again later.",
+            "failedEventData": "Failed to fetch event data please try again later.",
+            "loginToJoin": "You must be logged in to join an event.",
+            "joinedSuccessfully": "Successfully joined the event!",
+            "anErrorOccurred": "An error occurred. Please try again later.",
+            "eventOrganizer": "Event Organizer",
+            "aboutEvent": "About this Event",
+            "startDateAndTime": "Start Date & Time",
+            "endDateAndTime": "End Date & Time",
+            "onwards": "onwards",
+            "till": "till",
+            "location": "Location",
+            "attendees": "Attendees",
+            "joined": "Joined",
+            "joining": "Joining...",
+            "eventFull": "Event Full",
+            "joinNow": "Join Event Now",
+            "terms": "By joining, you agree to our terms and conditions.",
+            "organizedBy": "Organized by",
+            "goBack": "Go Back",
+            "loginToLeave": "You must be logged in to leave an event.",
+            "failedToLeave": "Failed to leave event",
+            "leftSuccessfully": "Successfully left the event!",
+            "leaveEvent": "Leave Event",
+            "leaving": "Leaving...",
+            "leaveTerms": "By leaving, you agree to our terms and conditions.",
+            "fetchMembersError": "Error occurred while fetching registered members please try again later.",
+            "registeredMembers": "Registered Members",
+            "noRegisteredMembers": "No registered members found.",
+            "total": "Total:",
+            "joinedAgo": "Joined",
+            "ago": "ago",
+            "previous": "Previous",
+            "next": "Next",
+            "invalidTicket": "Invalid ticket please try again.",
+            "regError": "Error occured while registering the participant pleae try again later.",
+            "checkInTitle": "Check In the Events Participants",
+            "eventNotStarted": "The event has not started yet. You can register the participants once the event starts.",
+            "eventEnded": "The event has ended. You can not register the participants now.",
+            "enterTicket": "Enter the event ticket: ",
+            "enterTicketPlaceholder": "Enter Ticket (eg: TOKEN)",
+            "validating": "Registering...",
+            "validate": "Validate",
+            "cancel": "Cancel",
+            "attendedUsers": "Attended Users",
+            "seeAttended": "See who all attended the event",
+            "eventNotStartedYet": "Event is not started yet.",
+            "noAttendedUsers": "No attended users found.",
+            "attended": "Attended",
+            "attendedAt": "Attended at: ",
+            "recommendedEvents": "Recommended Events",
+            "seeRecommended": "See events you might be interested in",
+            "noRecommended": "No recommended events found at the moment.",
+            "shareEvent": "Share event",
+            "shareThisEvent": "Share this event",
+            "copyLink": "Copy link",
+            "linkCopied": "Link copied to clipboard"
+        }
+    },
+    "organizations": {
+        "title": "Eventra Organizations",
+        "subtitle": "Find the organizations you are interested in and join them.",
+        "sidebar": {
+            "filters": "Filters",
+            "reset": "Reset",
+            "type": "Type",
+            "allTypes": "All Types",
+            "individual": "Individual",
+            "company": "Company",
+            "educational": "Educational",
+            "community": "Community",
+            "nonProfit": "Non Profit",
+            "government": "Government",
+            "premiumOnly": "Premium Only",
+            "createdAt": "Created At",
+            "updatedAt": "Updated At",
+            "ascending": "Ascending",
+            "descending": "Descending",
+            "searchLabel": "Search",
+            "searchPlaceholder": "Search organizations..."
+        },
+        "list": {
+            "noOrganizationsFound": "No organizations found.",
+            "pageOf": "Page {{current}} of {{total}}",
+            "previous": "Previous",
+            "next": "Next",
+            "failedToFetch": "Failed to fetch organizations"
+        },
+        "card": {
+            "premium": "Premium",
+            "credits": "Credits",
+            "joined": "Joined",
+            "viewOrganization": "View Organization"
+        },
+        "eventCard": {
+            "registered": "registered",
+            "creator": "Creator",
+            "viewDetails": "View Details"
+        },
+        "single": {
+            "details": {
+                "premium": "Premium",
+                "noDescription": "No description provided.",
+                "subscriptionCredits": "Subscription & Credits",
+                "availableCredits": "Available Credits",
+                "lastCreditReset": "Last Credit Reset",
+                "accountDetails": "Account Details",
+                "organizationId": "Organization ID",
+                "memberSince": "Member Since",
+                "na": "N/A"
+            },
+            "hero": {
+                "premium": "Premium",
+                "memberSince": "Member since",
+                "createEvent": "Create Event",
+                "joinOrganization": "Join Organization",
+                "leaveOrganization": "Leave Organization",
+                "aboutOrganization": "About Organization",
+                "defaultDescription": "Building community through meaningful connection and shared experiences.",
+                "credits": "Credits",
+                "status": "Status",
+                "activePremium": "Active Premium",
+                "standard": "Standard",
+                "lastUpdated": "Last Updated",
+                "donateCredits": "Donate Credits",
+                "errorJoining": "Error occured while joining organization please try again later.",
+                "errorLeaving": "Error occured while leaving organization please try again later."
+            },
+            "activities": {
+                "title": "Organization Activities",
+                "subtitle": "Find the recent credit purchase and members joined on the organization.",
+                "recentMembers": "Recent Organization Members",
+                "recentPurchases": "Recent Credit Purchases"
+            },
+            "events": {
+                "title": "Organization Events",
+                "subtitle": "Find the recent events hosted by the organization.",
+                "totalEvents": "Total Events:",
+                "noEventsFound": "No events found",
+                "noEventsSubtitle": "This organization hasn't published any events yet.",
+                "previous": "Previous",
+                "next": "Next",
+                "failedToFetch": "Failed to fetch events"
+            },
+            "other": {
+                "title": "Check Other Organizations",
+                "subtitle": "Check out other organizations that you might be interested in.",
+                "goToOrganizations": "GO TO ORGANIZATIONS"
+            }
+        }
+    },
+    "profile": {
+        "organizationSettings": "Organization Settings",
+        "events": "Events",
+        "settings": "Settings",
+        "profileMenu": "Profile menu"
+    },
+    "auth": {
+        "sectionTitle": "Eventra Auth Section",
+        "login": {
+            "title": "Welcome Back",
+            "subtitle": "Enter your credentials to access your account",
+            "emailLabel": "Email",
+            "passwordLabel": "Password",
+            "emailPlaceholder": "name@example.com",
+            "passwordPlaceholder": "Enter your password",
+            "forgotPassword": "Forgot password?",
+            "signInBtn": "Sign In",
+            "dontHaveAccount": "Don't have an account?",
+            "signUpLink": "Sign up",
+            "loginSuccess": "You are logged in successfully.",
+            "loginError": "Error occured while logging you in please try again."
+        },
+        "register": {
+            "title": "Create an Account",
+            "subtitle": "Enter your details to get started",
+            "emailLabel": "Email",
+            "passwordLabel": "Password",
+            "confirmPasswordLabel": "Confirm Password",
+            "emailPlaceholder": "name@example.com",
+            "passwordPlaceholder": "Enter your password",
+            "confirmPlaceholder": "Confirm your password",
+            "signUpBtn": "Sign Up",
+            "alreadyHaveAccount": "Already have an account?",
+            "signInLink": "Sign in",
+            "registerSuccess": "You are registered successfully. Please login to continue.",
+            "registerError": "Error occurred while creating your account, please try again."
+        },
+        "changePassword": {
+            "title": "New Password",
+            "subtitle": "Enter your new password",
+            "passwordLabel": "Password",
+            "confirmPasswordLabel": "Confirm Password",
+            "passwordPlaceholder": "Enter your password",
+            "confirmPlaceholder": "Enter your confirm password",
+            "changeBtn": "Change Password",
+            "success": "Password changed successfully.",
+            "error": "Error occurred while changing password. Please try again."
+        },
+        "forgotPassword": {
+            "title": "Forgot Password",
+            "subtitle": "Enter your email to receive a password reset OTP",
+            "emailLabel": "Email",
+            "emailPlaceholder": "name@example.com",
+            "sendOtpBtn": "Send OTP",
+            "success": "OTP sent to your email successfully.",
+            "error": "Error occurred while sending OTP. Please try again.",
+            "rememberPassword": "Remember your password?",
+            "signInLink": "Sign in"
+        },
+        "verifyOtp": {
+            "title": "Verify OTP",
+            "otpSentTo": "Enter the 5-character OTP sent to",
+            "enterEmailOtp": "Enter your email and the 6-digit OTP sent to your inbox",
+            "emailLabel": "Email",
+            "otpLabel": "OTP Code",
+            "otpPlaceholder": "Enter OTP",
+            "verifyBtn": "Verify OTP",
+            "verifying": "Verifying...",
+            "didntReceiveCode": "Didn't receive the code?",
+            "resendLink": "Resend OTP",
+            "success": "OTP verified successfully!",
+            "error": "Error verifying OTP. Please try again.",
+            "invalidOtp": "Invalid OTP",
+            "resendSuccess": "OTP sent to your email successfully."
+        }
+    },
+    "manageOrganization": {
+        "sidebar": {
+            "title": "Organization Settings",
+            "subtitle": "Manage your organization settings and Information",
+            "myOrganization": "My Organization",
+            "updateOrganization": "Update Organization",
+            "updateMemberRole": "Update Member Role",
+            "joinedOrganizations": "Joined Organizations",
+            "creditsDonated": "Credits Donated",
+            "deleteOrganization": "Delete Organization"
+        },
+        "main": {
+            "title": "Organization",
+            "subtitle": "Manage your organization details and settings",
+            "createCard": {
+                "title": "No Organization Found",
+                "description": "You haven't created an organization yet. Create one to start hosting events and managing your team.",
+                "button": "Create Organization"
+            }
+        },
+        "create": {
+            "title": "Create Organization",
+            "subtitle": "Create an organization to manage your events",
+            "form": {
+                "name": "Organization Name",
+                "description": "Organization Description",
+                "website": "Organization Social Link or Website",
+                "type": "Organization Type",
+                "logo": "Organization Logo",
+                "thumbnail": "Thumbnail",
+                "placeholders": {
+                    "name": "Enter your organization name",
+                    "description": "Enter your organization description",
+                    "website": "Enter your organization website (eg: https://example.com)",
+                    "type": "Select your organization type"
+                },
+                "types": {
+                    "individual": "Individual",
+                    "company": "Company",
+                    "educational": "Educational",
+                    "community": "Community",
+                    "nonProfit": "Non Profit",
+                    "government": "Government"
+                },
+                "buttons": {
+                    "creating": "Creating...",
+                    "create": "Create",
+                    "reset": "Reset"
+                },
+                "error": "Error while creating organization please try again later."
+            }
+        },
+        "update": {
+            "title": "Update Organization",
+            "subtitle": "Update your organization details",
+            "form": {
+                "name": "Name",
+                "description": "Description",
+                "website": "Website",
+                "type": "Type",
+                "currentImage": "Current Organization Image",
+                "currentThumbnail": "Current Organization Thumbnail",
+                "placeholders": {
+                    "name": "Please enter new name for the organization",
+                    "description": "Please enter new description for the organization",
+                    "website": "Please enter new website for the organization"
+                },
+                "buttons": {
+                    "updating": "Updating...",
+                    "update": "Update",
+                    "reset": "Reset"
+                },
+                "error": "Error while updating the organizations details please try again later."
+            }
+        },
+        "updateRole": {
+            "title": "Update Member Role",
+            "subtitle": "Update your member role",
+            "noMembers": "No members found",
+            "table": {
+                "name": "Name",
+                "email": "Email",
+                "role": "Role",
+                "joinedAt": "Joined At",
+                "actions": "Actions"
+            },
+            "pagination": {
+                "showing": "showing {{current}} out of {{total}}",
+                "totalMembers": "total members {{total}}",
+                "previous": "Previous",
+                "next": "Next"
+            },
+            "error": "Error while fetching the organization member please try again.",
+            "input": {
+                "fetching": "Fetching...",
+                "update": "Update",
+                "success": "User role updated successfully",
+                "error": "Error occured while updating the user role please try again later.",
+                "roles": {
+                    "member": "Member",
+                    "admin": "Admin",
+                    "creator": "Creator"
+                }
+            }
+        },
+        "joined": {
+            "title": "Joined Organizations",
+            "subtitle": "Organizations you have joined",
+            "noOrganizations": "No organizations found",
+            "table": {
+                "name": "Organization Name",
+                "premium": "Premium",
+                "role": "Role",
+                "joinedAt": "Joined At",
+                "status": {
+                    "premium": "Premium",
+                    "nonPremium": "Non-Premium"
+                }
+            },
+            "pagination": {
+                "page": "Page {{current}} of {{total}}",
+                "total": "Total Joined Organizations: {{total}}"
+            },
+            "error": "Error occurred while fetching joined organizations."
+        },
+        "delete": {
+            "title": "Delete Organization",
+            "subtitle": "Delete your organization",
+            "confirmTitle": "Are you sure you want to delete your organization?",
+            "confirmDescription": "This action cannot be undone. All data associated with this organization will be permanently deleted.",
+            "buttons": {
+                "delete": "Delete",
+                "cancel": "Cancel"
+            },
+            "messages": {
+                "notAuthorized": "You are not authorized to perform this action.",
+                "failed": "Failed to delete organization",
+                "success": "Organization deleted successfully",
+                "error": "Error occured while deleting the organization plese try again later."
+            }
+        },
+        "credits": {
+            "title": "Donated Credits",
+            "subtitle": "Credits that you donated to organizations",
+            "noCredits": "No Credits found",
+            "table": {
+                "name": "Organization Name",
+                "package": "Package",
+                "credits": "Credits",
+                "amount": "Amount",
+                "purchasedAt": "Purchased At"
+            },
+            "error": "Error occurred while fetching joined Credits."
+        }
+    },
+    "manageEvents": {
+        "sidebar": {
+            "title": "Event Settings",
+            "subtitle": "Manage your event settings and information",
+            "createdEvents": "Created Events",
+            "participatedEvents": "Participated Events"
+        },
+        "created": {
+            "title": "The List of all events that you have hosted.",
+            "subtitle": "Manage your events here. You cannot update event that has been already completed.",
+            "error": "Failed to fetch hosted events please try again later.",
+            "table": {
+                "name": "Event Name",
+                "type": "Event Type",
+                "date": "Start Date and Time",
+                "location": "Event Location",
+                "status": "Event Status",
+                "actions": "Event Actions",
+                "statuses": {
+                    "cancelled": "Cancelled",
+                    "completed": "Completed",
+                    "published": "Published"
+                },
+                "buttons": {
+                    "edit": "Edit",
+                    "back": "Back to List",
+                    "update": "Update",
+                    "updating": "Updating...",
+                    "cancel": "Cancel",
+                    "updateEvent": "Update Event"
+                },
+                "editTitle": "Edit Event",
+                "editSubtitle": "Update the details of your event below.",
+                "form": {
+                    "title": "Event Title",
+                    "description": "Description",
+                    "location": "Location",
+                    "schedule": "Schedule",
+                    "startDate": "Start Date & Time",
+                    "endDate": "End Date & Time",
+                    "details": "Details",
+                    "capacity": "Capacity",
+                    "category": "Category",
+                    "tags": "Tags",
+                    "poster": "Event Poster",
+                    "currentImage": "Current Image",
+                    "selectStatus": "Select Status",
+                    "cancelled": "Cancelled",
+                    "placeholders": {
+                        "title": "e.g. Annual Tech Conference 2026",
+                        "description": "Tell people what your event is about...",
+                        "location": "Venue name or physical address",
+                        "capacity": "Max attendees",
+                        "tags": "E.g. tech, networking, workshop (comma separated)"
+                    },
+                    "categories": {
+                        "workshop": "Workshop",
+                        "meetup": "Meetup",
+                        "conference": "Conference",
+                        "webinar": "Webinar",
+                        "hackathon": "Hackathon",
+                        "competition": "Competition",
+                        "other": "Other"
+                    },
+                    "messages": {
+                        "success": "Event updated successfully!",
+                        "error": "Failed to update event",
+                        "genericError": "An error occurred while updating the event. Please try again."
+                    }
+                }
+            },
+            "noEvents": "No events found",
+            "pagination": {
+                "page": "Page {{current}} of {{total}}",
+                "total": "Total Hosted Events: {{total}}"
+            }
+        },
+        "participated": {
+            "title": "The List of all events that you have participated in.",
+            "subtitle": "This section covers the history of all the events that you have participated so far.",
+            "error": "Failed to fetch participated events please try again later.",
+            "table": {
+                "name": "Event Name",
+                "token": "Event CheckInToken",
+                "date": "Registered At",
+                "attended": "Attended",
+                "status": {
+                    "attended": "Attended",
+                    "notAttended": "Not Attended"
+                }
+            },
+            "noEvents": "No events found",
+            "total": "Total Participated Events: {{total}}"
+        }
+    },
+    "user": {
+        "logout": {
+            "title": "Logout",
+            "subtitle": "Logout from your account",
+            "areYouSure": "Are you sure you want to logout?",
+            "logoutBtn": "Logout",
+            "cancelBtn": "Cancel",
+            "error": "Error occurred while logging you out please try again later."
+        },
+        "sidebar": {
+            "title": "Account Settings",
+            "subtitle": "Manage your account settings and information",
+            "profile": "Profile",
+            "security": "Security",
+            "logout": "Logout"
+        },
+        "profile": {
+            "title": "Update User",
+            "subtitle": "Update your account settings and information",
+            "name": "Name",
+            "phone": "Phone",
+            "picture": "Profile Picture",
+            "placeholders": {
+                "name": "Please enter your new name",
+                "phone": "Please enter your new phone"
+            },
+            "buttons": {
+                "update": "Update",
+                "updating": "Updating...",
+                "reset": "Reset"
+            }
+        },
+        "security": {
+            "title": "Change Password",
+            "subtitle": "Update your password settings",
+            "newPassword": "New Password",
+            "confirmPassword": "Confirm New Password",
+            "placeholders": {
+                "currentPassword": "Please enter your current password",
+                "newPassword": "Please enter your new password"
+            },
+            "buttons": {
+                "update": "Update",
+                "updating": "Updating...",
+                "reset": "Reset"
+            },
+            "error": "Error while updating password please try again later."
+        }
+    }
+}

@@ -4,8 +4,10 @@ import { setSearch } from "@/state/slices/search.slice";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function SearchBar() {
+  const { t } = useTranslation();
   const router = useRouter()
   const search = useAppSelector((state) => state.search.search)
   const dispatcher = useAppDispatch()
@@ -24,7 +26,7 @@ export default function SearchBar() {
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
       <input
         type="search"
-        placeholder="Search events..."
+        placeholder={t("events.sidebar.searchPlaceholder")}
         className="w-full pl-10 pr-4 py-2 bg-background border border-input rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all dark:bg-input/30 dark:border-input dark:focus:bg-input/50"
         value={slug}
         onChange={(e) => setSlug(e.target.value)}

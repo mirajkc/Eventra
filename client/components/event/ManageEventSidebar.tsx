@@ -6,31 +6,34 @@ import {
   Calendar1,
   Calendar
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const sidebarItems = [
+const getSidebarItems = (t: any) => [
   {
-    title: "Created Events",
+    title: t("manageEvents.sidebar.createdEvents"),
     href: "/manage-events/created-events",
     icon: Calendar,
   },
   {
-    title: "Participated Events",
+    title: t("manageEvents.sidebar.participatedEvents"),
     href: "/manage-events/participated-events",
     icon: Calendar1,
   },
-  
+
 ];
 
 export default function ManageEventSidebar() {
+  const { t } = useTranslation();
   const pathname = usePathname();
+  const sidebarItems = getSidebarItems(t);
 
   return (
     <nav className="flex flex-col space-y-2 w-full">
       <div className="bg-background rounded-lg border shadow-sm p-2 flex flex-col gap-1">
         <div className="hidden md:block mb-4 px-4">
-          <h2 className="text-xl font-bold tracking-tight">Event Settings</h2>
+          <h2 className="text-xl font-bold tracking-tight">{t("manageEvents.sidebar.title")}</h2>
           <p className="text-muted-foreground text-sm">
-            Manage your Event settings and Informations
+            {t("manageEvents.sidebar.subtitle")}
           </p>
         </div>
         {sidebarItems.map((item) => {

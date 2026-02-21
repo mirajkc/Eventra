@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { OrganizationSearch } from "./Search";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export function OrganizationsSidebar() {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [isPremium, setIsPremium] = useState<boolean | null>(null);
   const [type, setType] = useState("");
@@ -51,14 +53,14 @@ export function OrganizationsSidebar() {
       {/* Header */}
       <div className="flex items-center gap-2 pb-4 border-b dark:border-neutral-800">
         <Filter className="w-5 h-5 text-neutral-500" />
-        <h2 className="font-semibold text-lg">Filters</h2>
+        <h2 className="font-semibold text-lg">{t("organizations.sidebar.filters")}</h2>
         <Button
           variant="ghost"
           size="sm"
           className="ml-auto text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 hover:cursor-pointer"
           onClick={handleReset}
         >
-          Reset
+          {t("organizations.sidebar.reset")}
         </Button>
       </div>
 
@@ -68,27 +70,27 @@ export function OrganizationsSidebar() {
       {/* Type Filter */}
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-          Type
+          {t("organizations.sidebar.type")}
         </label>
         <select
           className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 hover:cursor-pointer"
           value={type}
           onChange={(e) => setType(e.target.value)}
         >
-          <option value="">All Types</option>
-          <option value="INDIVIDUAL">Individual</option>
-          <option value="COMPANY">Company</option>
-          <option value="EDUCATIONAL">Educational</option>
-          <option value="COMMUNITY">Community</option>
-          <option value="NON_PROFIT">Non Profit</option>
-          <option value="GOVERNMENT">Government</option>
+          <option value="">{t("organizations.sidebar.allTypes")}</option>
+          <option value="INDIVIDUAL">{t("organizations.sidebar.individual")}</option>
+          <option value="COMPANY">{t("organizations.sidebar.company")}</option>
+          <option value="EDUCATIONAL">{t("organizations.sidebar.educational")}</option>
+          <option value="COMMUNITY">{t("organizations.sidebar.community")}</option>
+          <option value="NON_PROFIT">{t("organizations.sidebar.nonProfit")}</option>
+          <option value="GOVERNMENT">{t("organizations.sidebar.government")}</option>
         </select>
       </div>
 
       {/* Premium Filter */}
       <div className="flex items-center justify-between py-2">
         <label htmlFor="premium-filter" className="text-sm font-medium text-neutral-700 dark:text-neutral-300 cursor-pointer">
-          Premium Only
+          {t("organizations.sidebar.premiumOnly")}
         </label>
         <input
           id="premium-filter"
@@ -101,31 +103,31 @@ export function OrganizationsSidebar() {
       {/* Date Filters */}
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-          Created At
+          {t("organizations.sidebar.createdAt")}
         </label>
         <select
           className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 hover:cursor-pointer"
           value={createdAt}
           onChange={(e) => setCreatedAt(e.target.value)}
         >
-          <option value="">All Types</option>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
+          <option value="">{t("organizations.sidebar.allTypes")}</option>
+          <option value="asc">{t("organizations.sidebar.ascending")}</option>
+          <option value="desc">{t("organizations.sidebar.descending")}</option>
 
         </select>
       </div>
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-          Updated At
+          {t("organizations.sidebar.updatedAt")}
         </label>
         <select
           className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 hover:cursor-pointer"
           value={updatedAt}
           onChange={(e) => setUpdatedAt(e.target.value)}
         >
-          <option value="">All Types</option>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
+          <option value="">{t("organizations.sidebar.allTypes")}</option>
+          <option value="asc">{t("organizations.sidebar.ascending")}</option>
+          <option value="desc">{t("organizations.sidebar.descending")}</option>
 
         </select>
       </div>

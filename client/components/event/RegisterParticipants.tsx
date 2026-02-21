@@ -10,20 +10,21 @@ import Label from "../form/Label";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import getAccessToken from "@/lib/access.token";
-
+import { useTranslation } from "react-i18next";
 
 
 export default function RegisterParticipants({ event }: { event: ISingleEvent }) {
+  const { t } = useTranslation();
   const userDetails = useAppSelector((state) => state.authSlice.userDetails)
   const isCreator = userDetails?.id === event.creatorId
-  const {control, handleSubmit, formState:{errors, isSubmitting}, reset} = useForm({
-    defaultValues:{
-      ticket:""
+  const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
+    defaultValues: {
+      ticket: ""
     },
     resolver: zodResolver(EventTicketDTO)
   })
 
-  const validateToken = async (data:any) => {
+  const validateToken = async (data: any) => {
     const accessToken = await getAccessToken()
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/participant/make-attendance/${event.id}`, {
@@ -35,62 +36,62 @@ export default function RegisterParticipants({ event }: { event: ISingleEvent })
         body: JSON.stringify(data),
       })
       const result = await response.json()
-      if(response.status !== 200){
-        toast.error("Invalid ticket please try again. ")
+      if (response.status !== 200) {
+        toast.error(t("events.single.invalidTicket"))
         return
       }
       toast.success(result.message)
-      reset()      
+      reset()
     } catch (error) {
       console.log(error);
-      toast.error("Error occured while registering the participant pleae try again later. ")
+      toast.error(t("events.single.regError"))
     }
   }
 
-  if(!isCreator){
-      return <></>
+  if (!isCreator) {
+    return <></>
   }
-    return (
-        <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900">
-          <div>
-            <TypographyH4> 
-              Check In the Events Participants
-            </TypographyH4>
-          </div>
-          <div className="mb-4">
-            {
-              new Date(event.startDate) > new Date() ? (
-                <>
-                <p className="text-sm text-muted-foreground">The event has not started yet. You can register the participants once the event starts.</p>
-                </>
-              ) : new Date() > new Date(event.endDate) ? (
-                <>
-                <p className="text-sm text-muted-foreground">The event has ended. You can not register the participants now.</p>
-                </>
-              ) : (
-                <>
-            <form onSubmit={handleSubmit(validateToken)} className="flex flex-col md:flex-row gap-2">
-            <div className="flex gap-4 items-center">
-            <Label htmlFor="ticket">Enter the event tiket: </Label>
-            <Input control={control} name="ticket" type="text" errorMsg={errors.ticket?.message} placeholder="Enter Ticket (eg: TOKEN)" />
-          </div>
-          <div className="flex gap-2">
-            <Button>
-              {isSubmitting ? "Registering..." : "Validate"}
-            </Button>
-            <Button
-            type="button"
-            onClick={() => reset()}
-            variant={"outline"}
-            >
-              Cancel
-            </Button>
-          </div>
-          </form>
-                </>
-              )
-            }
-          </div>
-        </div>
-    )
+  return (
+    <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900">
+      <div>
+        <TypographyH4>
+          {t("events.single.checkInTitle")}
+        </TypographyH4>
+      </div>
+      <div className="mb-4">
+        {
+          new Date(event.startDate) > new Date() ? (
+            <>
+              <p className="text-sm text-muted-foreground">{t("events.single.eventNotStarted")}</p>
+            </>
+          ) : new Date() > new Date(event.endDate) ? (
+            <>
+              <p className="text-sm text-muted-foreground">{t("events.single.eventEnded")}</p>
+            </>
+          ) : (
+            <>
+              <form onSubmit={handleSubmit(validateToken)} className="flex flex-col md:flex-row gap-2">
+                <div className="flex gap-4 items-center">
+                  <Label htmlFor="ticket">{t("events.single.enterTicket")}</Label>
+                  <Input control={control} name="ticket" type="text" errorMsg={errors.ticket?.message} placeholder={t("events.single.enterTicketPlaceholder")} />
+                </div>
+                <div className="flex gap-2">
+                  <Button>
+                    {isSubmitting ? t("events.single.validating") : t("events.single.validate")}
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => reset()}
+                    variant={"outline"}
+                  >
+                    {t("events.single.cancel")}
+                  </Button>
+                </div>
+              </form>
+            </>
+          )
+        }
+      </div>
+    </div>
+  )
 }

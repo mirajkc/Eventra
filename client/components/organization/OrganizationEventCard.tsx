@@ -8,10 +8,13 @@ import * as motion from "motion/react-client"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import { useTranslation } from "react-i18next";
+
 interface OrganizationEventCardProps {
   event: IEventReponse
 }
 export default function OrganizationEventCard({ event }: OrganizationEventCardProps) {
+  const { t } = useTranslation();
   const startDate = new Date(event.startDate)
 
   return (
@@ -68,7 +71,7 @@ export default function OrganizationEventCard({ event }: OrganizationEventCardPr
             </div>
             <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
               <Users className="h-3.5 w-3.5" />
-              <span>{event.registeredCount}/{event.capacity} registered</span>
+              <span>{event.registeredCount}/{event.capacity} {t("organizations.eventCard.registered")}</span>
             </div>
           </div>
 
@@ -122,14 +125,14 @@ export default function OrganizationEventCard({ event }: OrganizationEventCardPr
               )}
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold leading-none">Creator</span>
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold leading-none">{t("organizations.eventCard.creator")}</span>
               <span className="text-xs font-semibold">{event.creator.name}</span>
             </div>
           </div>
 
           <Link href={`/event/${event.id}`}>
             <Button size="sm" variant="ghost" className="group/btn gap-2 rounded-full">
-              View Details
+              {t("organizations.eventCard.viewDetails")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
             </Button>
           </Link>

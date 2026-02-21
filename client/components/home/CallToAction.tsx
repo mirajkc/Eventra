@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { TypographyH1, TypographyP } from "@/components/ui/Typography";
+import { useTranslation } from "react-i18next";
 
 export default function CallToAction() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden bg-background">
@@ -24,8 +26,8 @@ export default function CallToAction() {
             viewport={{ once: true }}
           >
             <TypographyH1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl mb-6">
-              Ready to experience <br className="hidden sm:block" />
-              <span className="text-muted-foreground/60">the magic?</span>
+              {t("home.cta.title1")} <br className="hidden sm:block" />
+              <span className="text-muted-foreground/60">{t("home.cta.title2")}</span>
             </TypographyH1>
           </motion.div>
 
@@ -37,8 +39,7 @@ export default function CallToAction() {
             viewport={{ once: true }}
           >
             <TypographyP className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-10">
-              Join thousands of organizers building incredible events with Eventra.
-              Start for free and see how easily you can scale your vision.
+              {t("home.cta.subtitle")}
             </TypographyP>
           </motion.div>
 
@@ -55,7 +56,7 @@ export default function CallToAction() {
               size="lg"
               className="w-full sm:w-auto h-14 rounded-xl bg-slate-900 px-10 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-200 shadow-xl shadow-slate-900/10 dark:shadow-none hover:cursor-pointer"
             >
-              Get started for free
+              {t("home.cta.getStartedBtn")}
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
@@ -64,7 +65,7 @@ export default function CallToAction() {
               size="lg"
               className="w-full sm:w-auto h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98] hover:cursor-pointer"
             >
-              Explore events
+              {t("home.cta.exploreBtn")}
             </Button>
           </motion.div>
 
@@ -76,7 +77,7 @@ export default function CallToAction() {
             viewport={{ once: true }}
             className="mt-12 text-sm text-muted-foreground/60 font-medium"
           >
-            No credit card required. Instant access.
+            {t("home.cta.footerText")}
           </motion.p>
         </div>
       </div>

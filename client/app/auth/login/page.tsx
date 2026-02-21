@@ -15,8 +15,10 @@ import Cookies from 'js-cookie'
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { IUserDetails } from "@/types/user.types";
 import { getUserDetails } from "@/state/slices/auth.slice";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
+  const { t } = useTranslation();
   const router = useRouter()
   const dispatch = useAppDispatch()
   const userDetials: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
@@ -56,14 +58,14 @@ export default function Login() {
         path: "/"
       });
       await dispatch(getUserDetails())
-      toast.success("You are logged in successfully. ")
+      toast.success(t("auth.login.loginSuccess"))
       router.push('/home')
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("Error occured while logging you in please try again. ")
+        toast.error(t("auth.login.loginError"))
       }
     }
   }
@@ -82,18 +84,18 @@ export default function Login() {
       <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
         <div className="p-8">
           <div className="flex flex-col space-y-2 text-center mb-8">
-            <TypographyH2>Welcome Back</TypographyH2>
-            <TypographyP>Enter your credentials to access your account</TypographyP>
+            <TypographyH2>{t("auth.login.title")}</TypographyH2>
+            <TypographyP>{t("auth.login.subtitle")}</TypographyP>
           </div>
 
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.login.emailLabel")}</Label>
                 <Input
                   type="email"
                   name="email"
-                  placeholder="name@example.com"
+                  placeholder={t("auth.login.emailPlaceholder")}
                   errorMsg={errors.email?.message}
                   control={control}
                 />
@@ -101,18 +103,18 @@ export default function Login() {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("auth.login.passwordLabel")}</Label>
                   <Link
                     href="/auth/get-forgotpass-otp"
                     className="text-sm font-medium text-primary hover:underline"
                   >
-                    Forgot password?
+                    {t("auth.login.forgotPassword")}
                   </Link>
                 </div>
                 <Input
                   type="password"
                   name="password"
-                  placeholder="Enter your password"
+                  placeholder={t("auth.login.passwordPlaceholder")}
                   control={control}
                   errorMsg={errors.password?.message}
                 />
@@ -120,14 +122,14 @@ export default function Login() {
             </div>
 
             <Button className="w-full" size="lg">
-              Sign In
+              {t("auth.login.signInBtn")}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Don't have an account? </span>
+            <span className="text-muted-foreground">{t("auth.login.dontHaveAccount")} </span>
             <Link href="/auth/register" className="font-medium text-primary hover:underline">
-              Sign up
+              {t("auth.login.signUpLink")}
             </Link>
           </div>
         </div>

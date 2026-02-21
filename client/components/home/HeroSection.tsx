@@ -6,9 +6,11 @@ import { TypographyH1, TypographyP } from "@/components/ui/Typography";
 import { motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function HeroSection() {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-background px-6 pt-24 pb-16 sm:pt-32 sm:pb-24">
       {/* Background Grid Pattern */}
@@ -24,10 +26,10 @@ export default function HeroSection() {
         >
           <div className="group flex items-center gap-2 rounded-full border border-border bg-background/50 p-1 pr-3 text-sm backdrop-blur-sm transition-all hover:bg-muted/50">
             <Badge className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900">
-              New
+              {t("home.hero.badge")}
             </Badge>
             <span className="flex items-center gap-1 text-muted-foreground transition-colors group-hover:text-foreground">
-              Eventra is now live! 🎉
+              {t("home.hero.badgeText")}
               <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
             </span>
           </div>
@@ -40,7 +42,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <TypographyH1 className="max-w-4xl text-5xl font-bold tracking-[-0.03em] text-foreground sm:text-7xl lg:text-8xl">
-            Event management magic.
+            {t("home.hero.title")}
           </TypographyH1>
         </motion.div>
 
@@ -51,8 +53,8 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <TypographyP className="mt-8 max-w-2xl text-lg text-muted-foreground sm:text-xl md:text-2xl">
-            Powerful, flexible and data-driven, Eventra makes it easy <br className="hidden md:block" />
-            to build the exact event that you think of.
+            {t("home.hero.subtitle1")} <br className="hidden md:block" />
+            {t("home.hero.subtitle2")}
           </TypographyP>
         </motion.div>
 
@@ -66,12 +68,12 @@ export default function HeroSection() {
           <Button
             onClick={() => router.push("/events")}
             size="lg" className="h-14 rounded-xl bg-slate-900 px-10 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-200 hover:cursor-pointer">
-            Explore Events
+            {t("home.hero.exploreBtn")}
           </Button>
           <Button
             onClick={() => router.push("/organizations")}
             variant="outline" size="lg" className="h-14 rounded-xl border-border px-10 text-base font-semibold shadow-sm transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98] hover:cursor-pointer">
-            Join Organizations
+            {t("home.hero.joinBtn")}
           </Button>
         </motion.div>
       </div>

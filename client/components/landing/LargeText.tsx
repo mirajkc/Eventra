@@ -2,13 +2,16 @@
 
 import BlurText from "../BlurText";
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 
 export default function LargeText() {
+    const { t } = useTranslation();
+
     return (
         <section className="min-h-screen w-full flex items-center justify-center overflow-hidden select-none bg-white dark:bg-neutral-950">
             <div className="flex flex-col items-center justify-center w-full px-4">
                 <BlurText
-                    text="Eventra"
+                    text={t("landing.hero.title")}
                     delay={150}
                     animateBy="letters"
                     direction="top"
@@ -30,7 +33,7 @@ export default function LargeText() {
                     transition={{ delay: 2, duration: 0.8 }}
                     className="mt-8 text-sm md:text-xl font-medium tracking-[0.5em] text-zinc-400 dark:text-zinc-600 uppercase"
                 >
-                    ALL IN ONE EVENT MANAGEMENT SYSTEM
+                    {t("landing.hero.subtitle")}
                 </motion.p>
             </div>
         </section>

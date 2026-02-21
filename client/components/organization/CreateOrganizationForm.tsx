@@ -11,8 +11,10 @@ import { Button } from "../ui/button";
 import { RotateCcw, Save } from "lucide-react";
 import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function CreateOrganizationForm() {
+  const { t } = useTranslation();
   const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ICreateOrganization>({
     defaultValues: {
       name: "",
@@ -53,7 +55,7 @@ export default function CreateOrganizationForm() {
       }
       reset();
     } catch (error) {
-      toast.error("Error while creting organization please try again later. ")
+      toast.error(t("manageOrganization.create.form.error"))
     }
   }
   return (
@@ -61,46 +63,46 @@ export default function CreateOrganizationForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex" >
           <div className="w-1/3" >
-            <Label htmlFor="name">Organization Name : </Label>
+            <Label htmlFor="name">{t("manageOrganization.create.form.name")} : </Label>
           </div>
           <div className="w-2/3">
-            <Input type="text" name="name" control={control} errorMsg={errors.name?.message} placeholder="Enter your organization name" />
+            <Input type="text" name="name" control={control} errorMsg={errors.name?.message} placeholder={t("manageOrganization.create.form.placeholders.name")} />
           </div>
         </div>
         <div className="flex" >
           <div className="w-1/3" >
-            <Label htmlFor="description">Organization Description : </Label>
+            <Label htmlFor="description">{t("manageOrganization.create.form.description")} : </Label>
           </div>
           <div className="w-2/3">
-            <Input type="text" name="description" control={control} errorMsg={errors.description?.message} placeholder="Enter your organization description" />
+            <Input type="text" name="description" control={control} errorMsg={errors.description?.message} placeholder={t("manageOrganization.create.form.placeholders.description")} />
           </div>
         </div>
         <div className="flex" >
           <div className="w-1/3" >
-            <Label htmlFor="website">Organization Social Link or Website : </Label>
+            <Label htmlFor="website">{t("manageOrganization.create.form.website")} : </Label>
           </div>
           <div className="w-2/3">
-            <Input type="text" name="website" control={control} errorMsg={errors.website?.message} placeholder="Enter your organization website (eg: https://example.com)" />
+            <Input type="text" name="website" control={control} errorMsg={errors.website?.message} placeholder={t("manageOrganization.create.form.placeholders.website")} />
           </div>
         </div>
         <div className="flex" >
           <div className="w-1/3" >
-            <Label htmlFor="type">Organization Type : </Label>
+            <Label htmlFor="type">{t("manageOrganization.create.form.type")} : </Label>
           </div>
           <div className="w-2/3 border-2 rounded-md p-1">
-            <SelectInput name="type" control={control} errorMsg={errors.type?.message} placeholder="Select your organization type" options={[
-              { value: "INDIVIDUAL", label: "Individual" },
-              { value: "COMPANY", label: "Company" },
-              { value: "EDUCATIONAL", label: "Educational" },
-              { value: "COMMUNITY", label: "Community" },
-              { value: "NON_PROFIT", label: "Non Profit" },
-              { value: "GOVERNMENT", label: "Government" },
+            <SelectInput name="type" control={control} errorMsg={errors.type?.message} placeholder={t("manageOrganization.create.form.placeholders.type")} options={[
+              { value: "INDIVIDUAL", label: t("manageOrganization.create.form.types.individual") },
+              { value: "COMPANY", label: t("manageOrganization.create.form.types.company") },
+              { value: "EDUCATIONAL", label: t("manageOrganization.create.form.types.educational") },
+              { value: "COMMUNITY", label: t("manageOrganization.create.form.types.community") },
+              { value: "NON_PROFIT", label: t("manageOrganization.create.form.types.nonProfit") },
+              { value: "GOVERNMENT", label: t("manageOrganization.create.form.types.government") },
             ]} />
           </div>
         </div>
         <div className="flex">
           <div className="w-1/3" >
-            <Label htmlFor="logo">Organization Logo : </Label>
+            <Label htmlFor="logo">{t("manageOrganization.create.form.logo")} : </Label>
           </div>
           <div className="w-2/3">
             <FileInput name="image" control={control} errorMsg={errors.image?.message} />
@@ -108,7 +110,7 @@ export default function CreateOrganizationForm() {
         </div>
         <div className="flex">
           <div className="w-1/3" >
-            <Label htmlFor="thumbnail">Thumbnail : </Label>
+            <Label htmlFor="thumbnail">{t("manageOrganization.create.form.thumbnail")} : </Label>
           </div>
           <div className="w-2/3">
             <FileInput name="thumbnail" control={control} errorMsg={errors.thumbnail?.message} />
@@ -116,8 +118,8 @@ export default function CreateOrganizationForm() {
         </div>
         <div className="flex gap-2 items-center mt-12 ">
           <Button className="hover:scale-105" type="submit" variant={"default"} disabled={isSubmitting}>
-            {isSubmitting ? "Creating..." : "Create"} <Save /> </Button>
-          <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => reset()}>{isSubmitting ? "Creating..." : "Reset"} <RotateCcw /> </Button>
+            {isSubmitting ? t("manageOrganization.create.form.buttons.creating") : t("manageOrganization.create.form.buttons.create")} <Save /> </Button>
+          <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => reset()}>{isSubmitting ? t("manageOrganization.create.form.buttons.creating") : t("manageOrganization.create.form.buttons.reset")} <RotateCcw /> </Button>
         </div>
 
       </form>

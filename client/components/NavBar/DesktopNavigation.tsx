@@ -2,25 +2,30 @@ import { Building2, Calendar, Home } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-export const navigationLinks = [
+import { useTranslation } from "react-i18next";
+
+export const getNavigationLinks = (t: any) => [
   {
-    label: "Home",
+    label: t("navbar.home"),
     href: "/home",
     icon: <Home className="h-4 w-4" />,
   },
   {
-    label: "Events",
+    label: t("navbar.events"),
     href: "/events",
     icon: <Calendar className="h-4 w-4" />,
   },
   {
-    label: "Organizations",
+    label: t("navbar.organizations"),
     href: "/organizations",
     icon: <Building2 className="h-4 w-4" />,
   },
 ]
 
 export default function DesktopNavigation() {
+  const { t } = useTranslation();
+  const navigationLinks = getNavigationLinks(t);
+
   return (
     <>
       {navigationLinks.map((link) => (

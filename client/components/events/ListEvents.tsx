@@ -11,8 +11,10 @@ import type { IEventPagination, IEventReponse } from "@/types/event.type";
 
 import EventCard from "./EventCard";
 import { useAppSelector } from "@/state/hooks";
+import { useTranslation } from "react-i18next";
 
 export default function ListEvents() {
+  const { t } = useTranslation();
   const [pagination, setPagination] = useState<IEventPagination>({
     currentPage: 1,
     totalPages: 0,
@@ -38,7 +40,7 @@ export default function ListEvents() {
 
   useEffect(() => {
     fetchEvents();
-  }, [pagination.currentPage, slug, capacity, status, category, createdAt, updatedAt, search  ]);
+  }, [pagination.currentPage, slug, capacity, status, category, createdAt, updatedAt, search]);
 
   useEffect(() => {
     setPagination((prev: any) => ({
@@ -55,9 +57,9 @@ export default function ListEvents() {
         limit: pagination.take.toString(),
       });
 
-      if(search){
+      if (search) {
         params.set("slug", search)
-      } 
+      }
 
       if (slug) params.set("slug", slug);
 
@@ -80,14 +82,14 @@ export default function ListEvents() {
           },
         }
       );
-      if(response.status !== 200){
+      if (response.status !== 200) {
         setEvent([])
         return
       }
       const result = await response.json();
       setEvent(result.data || []);
       setPagination((prev) => {
-        if(prev.currentPage === result.pagination.currentPage){
+        if (prev.currentPage === result.pagination.currentPage) {
           return {
             ...prev,
             ...result.pagination
@@ -96,11 +98,11 @@ export default function ListEvents() {
         return {
           ...prev,
           ...result.pagination,
-          currentPage : prev.currentPage
+          currentPage: prev.currentPage
         }
       });
     } catch (error: any) {
-      toast.error("Failed to fetch events");
+      toast.error(t("events.list.fetchFailed"));
     } finally {
       setLoading(false);
     }
@@ -110,7 +112,7 @@ export default function ListEvents() {
     if (pagination.hasNextPage) {
       setPagination((prev: any) => ({
         ...prev,
-        currentPage: prev.currentPage + 1 ,
+        currentPage: prev.currentPage + 1,
       }));
     }
   };
@@ -133,10 +135,10 @@ export default function ListEvents() {
   }
 
 
-  if(event.length < 1)  { 
+  if (event.length < 1) {
     return (
       <div className="flex w-full justify-center items-center mt-4">
-        <p>No events found. </p>
+        <p>{t("events.list.noEvents")}</p>
       </div>
     )
   }
@@ -148,8 +150,8 @@ export default function ListEvents() {
       transition={{ duration: 0.6, ease: "easeInOut" }}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-       {event.map((item) => (
-          <EventCard key={item.id} event={item} /> ))}
+        {event.map((item) => (
+          <EventCard key={item.id} event={item} />))}
       </div>
 
       {pagination?.totalPages > 1 && (
@@ -165,11 +167,11 @@ export default function ListEvents() {
                 className="flex-1"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
-                Previous
+                {t("events.list.previous")}
               </Button>
 
               <span className="text-sm text-muted-foreground px-2">
-                Page {pagination.currentPage} of {pagination.totalPages}
+                {t("events.list.page")} {pagination.currentPage} {t("events.list.of")} {pagination.totalPages}
               </span>
 
               <Button
@@ -179,7 +181,7 @@ export default function ListEvents() {
                 disabled={!pagination.hasNextPage || loading}
                 className="flex-1"
               >
-                Next
+                {t("events.list.next")}
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             </div>

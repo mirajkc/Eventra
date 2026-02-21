@@ -1,22 +1,22 @@
 "use client";
 
 import { motion } from "motion/react";
-import { 
-  Zap, 
-  Users, 
-  BarChart3, 
-  Filter, 
-  Calendar, 
+import {
+  Zap,
+  Users,
+  BarChart3,
+  Filter,
+  Calendar,
   Layers,
   Sparkles,
   Search,
   CheckCircle2
 } from "lucide-react";
 
-const features = [
+const getFeatures = (t: any) => [
   {
-    title: "Quick actions",
-    description: "Streamline your event workflow with easy navigation and quick actions.",
+    title: t("home.more.features.f1_title"),
+    description: t("home.more.features.f1_desc"),
     icon: <Zap className="h-5 w-5 text-blue-500 dark:text-blue-400" />,
     illustration: (
       <div className="relative flex h-24 w-full items-center justify-center">
@@ -31,8 +31,8 @@ const features = [
     )
   },
   {
-    title: "Guest enrichment",
-    description: "Guest are free to visit the event page and organizations page before considering to join us.",
+    title: t("home.more.features.f2_title"),
+    description: t("home.more.features.f2_desc"),
     icon: <Sparkles className="h-5 w-5 text-purple-500 dark:text-purple-400" />,
     illustration: (
       <div className="flex flex-col gap-2 w-full max-w-[140px]">
@@ -47,8 +47,8 @@ const features = [
     )
   },
   {
-    title: "Mobile responsive",
-    description: "Eventra is fully responsive and can be accessed from any device.",
+    title: t("home.more.features.f3_title"),
+    description: t("home.more.features.f3_desc"),
     icon: <Users className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />,
     illustration: (
       <div className="relative h-24 w-16 rounded-xl border border-border/50 bg-background/50 p-2">
@@ -62,15 +62,15 @@ const features = [
     )
   },
   {
-    title: "Event analysis",
-    description: "Get deeper insights into your event performance and guest engagement at a glance.",
+    title: t("home.more.features.f4_title"),
+    description: t("home.more.features.f4_desc"),
     icon: <BarChart3 className="h-5 w-5 text-orange-500 dark:text-orange-400" />,
     illustration: (
       <div className="flex items-end gap-1.5 h-16">
         {[40, 70, 45, 90, 60, 80].map((h, i) => (
-          <div 
-            key={i} 
-            className="w-3 rounded-t-sm bg-orange-500/20 dark:bg-orange-400/30" 
+          <div
+            key={i}
+            className="w-3 rounded-t-sm bg-orange-500/20 dark:bg-orange-400/30"
             style={{ height: `${h}%` }}
           />
         ))}
@@ -78,8 +78,8 @@ const features = [
     )
   },
   {
-    title: "Dynamic Filters",
-    description: "Easily find and segment attendees with our powerful and flexible filtering system.",
+    title: t("home.more.features.f5_title"),
+    description: t("home.more.features.f5_desc"),
     icon: <Filter className="h-5 w-5 text-pink-500 dark:text-pink-400" />,
     illustration: (
       <div className="flex flex-wrap gap-1.5 justify-center max-w-[160px]">
@@ -92,8 +92,8 @@ const features = [
     )
   },
   {
-    title: "Smart Sorting",
-    description: "Organize your events and attendees exactly how you want with tiered sorting.",
+    title: t("home.more.features.f6_title"),
+    description: t("home.more.features.f6_desc"),
     icon: <Layers className="h-5 w-5 text-cyan-500 dark:text-cyan-400" />,
     illustration: (
       <div className="space-y-2 w-full max-w-[140px]">
@@ -109,30 +109,35 @@ const features = [
   }
 ];
 
+import { useTranslation } from "react-i18next";
+
 export default function SoMuchMore() {
+  const { t } = useTranslation();
+  const features = getFeatures(t);
+
   return (
     <section className="bg-background py-24 text-foreground overflow-hidden">
       <div className="container mx-auto px-6">
         {/* Header content */}
         <div className="mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="text-4xl font-semibold tracking-tight sm:text-5xl"
           >
-            And so <span className="text-muted-foreground">much more...</span>
+            {t("home.more.title1")} <span className="text-muted-foreground">{t("home.more.title2")}</span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
             className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed"
           >
-            Your events are always evolving. <br />
-            Why should your management system be any different?
+            {t("home.more.subtitle1")} <br />
+            {t("home.more.subtitle2")}
           </motion.p>
         </div>
 

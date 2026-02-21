@@ -5,9 +5,10 @@ import { TypographyH4, TypographyP } from "../ui/Typography";
 import { useState, useEffect } from "react";
 import { IEventReponse } from "@/types/event.type";
 import EventCard from "../events/EventCard";
+import { useTranslation } from "react-i18next";
 
 export default function RecommendedEvents() {
-
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState<Array<IEventReponse>>([]);
   useEffect(() => {
@@ -33,33 +34,33 @@ export default function RecommendedEvents() {
     }
   }
 
-  if(loading){
+  if (loading) {
     return <div className="flex items-center justify-center h-full w-full">
       <Spinner />
     </div>
   }
-    return (
-        <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900 min-h-[35vh]">
-           <div className="flex flex-col gap-4">
-             <div>
-            <TypographyH4>Recommended Events</TypographyH4>
-            <TypographyP>See events you might be interested in</TypographyP>
-           </div>
-           
-           {events.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {events.map((event) => (
-                <div key={event.id} className="h-full">
-                  <EventCard event={event} />
-                </div>
-              ))}
-            </div>
-           ) : (
-             <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
-               <p>No recommended events found at the moment.</p>
-             </div>
-           )}
-           </div>
+  return (
+    <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900 min-h-[35vh]">
+      <div className="flex flex-col gap-4">
+        <div>
+          <TypographyH4>{t("events.single.recommendedEvents")}</TypographyH4>
+          <TypographyP>{t("events.single.seeRecommended")}</TypographyP>
         </div>
-    )
+
+        {events.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {events.map((event) => (
+              <div key={event.id} className="h-full">
+                <EventCard event={event} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+            <p>{t("events.single.noRecommended")}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
 }

@@ -21,6 +21,7 @@ import { motion } from "motion/react"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import { useTranslation } from "react-i18next";
 
 interface EventCardProps {
   event: IEventReponse
@@ -36,6 +37,7 @@ const categoryIcons: Record<string, typeof Trophy> = {
 }
 
 export default function EventCard({ event }: EventCardProps) {
+  const { t } = useTranslation();
   const startDate = new Date(event.startDate)
   const Icon = categoryIcons[event.category] || Tag
   const now = new Date();
@@ -85,7 +87,7 @@ export default function EventCard({ event }: EventCardProps) {
           <div className="absolute top-3 right-3">
             <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
               {
-                event.status === "CANCELLED" ? "Cancelled" : status
+                event.status === "CANCELLED" ? t("events.card.status.CANCELLED") : t(`events.card.status.${status}`)
               }
             </Badge>
           </div>
@@ -165,14 +167,14 @@ export default function EventCard({ event }: EventCardProps) {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider leading-none">Organized by</span>
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider leading-none">{t("events.card.organizedBy")}</span>
               <span className="text-xs font-semibold">{event.creator.name}</span>
             </div>
           </div>
 
           <Link href={`/event/${event.id}`}>
             <Button size="sm" className="rounded-full px-4 h-9 font-semibold group/btn hover:cursor-pointer">
-              Details
+              {t("events.card.details")}
               <ArrowRight className="ml-1.5 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
             </Button>
           </Link>

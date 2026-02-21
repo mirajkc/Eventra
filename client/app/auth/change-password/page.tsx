@@ -10,8 +10,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 export default function ChangePassword() {
+    const { t } = useTranslation();
     const router = useRouter();
     const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         defaultValues: {
@@ -35,10 +37,10 @@ export default function ChangePassword() {
                 throw new Error(result.message);
             }
             Cookies.remove("changePasswordToken");
-            toast.success("Password changed successfully.");
+            toast.success(t("auth.changePassword.success"));
             router.push(`/auth/login`);
         } catch (error) {
-            toast.error("Error occurred while changing password. Please try again.");
+            toast.error(t("auth.changePassword.error"));
         }
     };
 
@@ -57,18 +59,18 @@ export default function ChangePassword() {
             <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                 <div className="p-8">
                     <div className="flex flex-col space-y-2 text-center mb-8">
-                        <TypographyH2> New Password</TypographyH2>
-                        <TypographyP>Enter your new password</TypographyP>
+                        <TypographyH2>{t("auth.changePassword.title")}</TypographyH2>
+                        <TypographyP>{t("auth.changePassword.subtitle")}</TypographyP>
                     </div>
 
                     <form className="flex flex-col space-y-6" onSubmit={handleSubmit(onSubmit)}>
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">{t("auth.changePassword.passwordLabel")}</Label>
                                 <Input
                                     type="password"
                                     name="password"
-                                    placeholder="Enter your password"
+                                    placeholder={t("auth.changePassword.passwordPlaceholder")}
                                     errorMsg={errors.password?.message}
                                     control={control}
                                 />
@@ -76,11 +78,11 @@ export default function ChangePassword() {
                         </div>
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                                <Label htmlFor="confirmPassword">{t("auth.changePassword.confirmPasswordLabel")}</Label>
                                 <Input
                                     type="password"
                                     name="confirmPassword"
-                                    placeholder="Enter your confirm password"
+                                    placeholder={t("auth.changePassword.confirmPlaceholder")}
                                     errorMsg={errors.confirmPassword?.message}
                                     control={control}
                                 />
@@ -88,7 +90,7 @@ export default function ChangePassword() {
                         </div>
 
                         <Button className="w-full" size="lg">
-                            Change Password
+                            {t("auth.changePassword.changeBtn")}
                         </Button>
                     </form>
 

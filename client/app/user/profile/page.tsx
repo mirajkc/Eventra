@@ -13,8 +13,10 @@ import Image from "next/image";
 import { toast } from "sonner";
 import getAccessToken from "@/lib/access.token";
 import FileInput from "@/components/form/FileInput";
+import { useTranslation } from "react-i18next";
 
 export default function UpdateUserPage() {
+  const { t } = useTranslation();
   const userDetails: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
   const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
@@ -57,46 +59,46 @@ export default function UpdateUserPage() {
 
   return (
     <div className="flex flex-col gap-4 shadow-sm rounded-lg p-4 min-h-[calc(100vh-10rem)]">
-      <h1 className="text-2xl font-bold tracking-tight">Update User</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t("user.profile.title")}</h1>
       <p className="text-muted-foreground text-sm">
-        Update your account settings and Informations
+        {t("user.profile.subtitle")}
       </p>
       <form onSubmit={handleSubmit(updateUser)}>
         <div className="flex flex-col gap-4 ">
           <div className="flex gap-2 items-center " >
             <div className="flex w-1/3 items-center ">
-              <Label htmlFor="name" >Name:  </Label>
+              <Label htmlFor="name" >{t("user.profile.name")}:  </Label>
             </div>
-            <div className="w-2/3 w-full">
-              <Input type="text" placeholder="Please enter your new name" name="name" control={control} errorMsg={errors?.name?.message as string} />
+            <div className="w-2/3">
+              <Input type="text" placeholder={t("user.profile.placeholders.name")} name="name" control={control} errorMsg={errors?.name?.message as string} />
             </div>
           </div>
           <div className="flex gap-2 items-center " >
             <div className="flex w-1/3 items-center">
-              <Label htmlFor="phone" >Phone:  </Label>
+              <Label htmlFor="phone" >{t("user.profile.phone")}:  </Label>
             </div>
-            <div className="w-2/3 w-full">
-              <Input type="text" placeholder="Please enter your new phone" name="phone" control={control} errorMsg={errors?.phone?.message as string} />
+            <div className="w-2/3">
+              <Input type="text" placeholder={t("user.profile.placeholders.phone")} name="phone" control={control} errorMsg={errors?.phone?.message as string} />
             </div>
           </div>
           <div className="flex gap-2 items-center">
             <div className="flex w-1/3 items-center">
               <Label htmlFor="image" >
                 <div className="flex flex-col justify-start  gap-2">
-                  <span>Profile Picture: </span>
+                  <span>{t("user.profile.picture")}: </span>
                   <Image src={userDetails?.image || "/placeholder.png"} alt="Profile Picture" width={100} height={100} />
                 </div>
               </Label>
             </div>
-            <div className="w-2/3 w-full">
+            <div className="w-2/3">
               <FileInput name="image" control={control} errorMsg={errors?.image?.message as string} />
             </div>
           </div>
         </div>
         <div className="flex gap-2 items-center mt-12 ">
           <Button className="hover:scale-105" type="submit" variant={"default"} disabled={isSubmitting}>
-            {isSubmitting ? "Updating..." : "Update"} <Save /> </Button>
-          <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => reset()}>{isSubmitting ? "Updating..." : "Reset"} <RotateCcw /> </Button>
+            {isSubmitting ? t("user.profile.buttons.updating") : t("user.profile.buttons.update")} <Save /> </Button>
+          <Button className="hover:scale-105" type="button" variant={"destructive"} disabled={isSubmitting} onClick={() => reset()}>{isSubmitting ? t("user.profile.buttons.updating") : t("user.profile.buttons.reset")} <RotateCcw /> </Button>
         </div>
       </form>
     </div>

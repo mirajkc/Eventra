@@ -2,29 +2,33 @@
 
 import { motion } from "motion/react";
 import { UserPlus, Search, Users } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const steps = [
+const getSteps = (t: any) => [
     {
-        title: "Create Account",
-        description: "Enter your information and ensure your details are safe and secure with our platform.",
+        title: t("landing.howItWorks.step1_title"),
+        description: t("landing.howItWorks.step1_desc"),
         icon: <UserPlus className="w-10 h-10 text-zinc-900 dark:text-zinc-100" />,
         delay: 0.2
     },
     {
-        title: "Visit Events",
-        description: "Explore thousands of events happening around you or globally with ease.",
+        title: t("landing.howItWorks.step2_title"),
+        description: t("landing.howItWorks.step2_desc"),
         icon: <Search className="w-10 h-10 text-zinc-900 dark:text-zinc-100" />,
         delay: 0.4
     },
     {
-        title: "Join Them",
-        description: "Join the community, participate in events, and create memories that last a lifetime.",
+        title: t("landing.howItWorks.step3_title"),
+        description: t("landing.howItWorks.step3_desc"),
         icon: <Users className="w-10 h-10 text-zinc-900 dark:text-zinc-100" />,
         delay: 0.6
     }
 ];
 
 export default function HowItWorks() {
+    const { t } = useTranslation();
+    const steps = getSteps(t);
+
     return (
         <section className="py-32 w-full max-w-7xl mx-auto px-6 relative overflow-visible">
             {/* Header */}
@@ -36,7 +40,7 @@ export default function HowItWorks() {
                     transition={{ duration: 0.6 }}
                     className="text-4xl md:text-6xl font-bold text-zinc-900 dark:text-zinc-100 mb-6 tracking-tight"
                 >
-                    How it works
+                    {t("landing.howItWorks.title")}
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -45,7 +49,7 @@ export default function HowItWorks() {
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="text-zinc-500 dark:text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto font-medium"
                 >
-                    Simple steps to start your journey with Eventra
+                    {t("landing.howItWorks.subtitle")}
                 </motion.p>
             </div>
 

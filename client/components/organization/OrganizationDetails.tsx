@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +11,7 @@ import {
   CreditCard
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={`rounded-xl border bg-card text-card-foreground shadow ${className}`} {...props} />
@@ -28,10 +31,11 @@ const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
 
 export default function OrganizationDetails({ organizationDetails }: { organizationDetails: any }) {
   const router = useRouter();
-    return (
-    <div 
-    onClick={() => router.push(`/organization/${organizationDetails.data?.id}`)}
-    className="grid gap-6 hover:cursor-pointer">
+  const { t } = useTranslation();
+  return (
+    <div
+      onClick={() => router.push(`/organization/${organizationDetails.data?.id}`)}
+      className="grid gap-6 hover:cursor-pointer">
       {/* Header Card with Image and Basic Info */}
       <Card>
         <CardContent className="pt-6">
@@ -53,15 +57,15 @@ export default function OrganizationDetails({ organizationDetails }: { organizat
                       {organizationDetails.data?.type?.toLowerCase().replace('_', ' ')}
                     </Badge>
                     {organizationDetails.data?.isPremium && (
-                      <Badge variant="default" className="bg-linear-gradient-to-r from-amber-500 to-yellow-500 text-white border-none">
-                        <ShieldCheck className="w-3 h-3 mr-1" /> Premium
+                      <Badge variant="default" className="bg-linear-to-r from-amber-500 to-yellow-500 text-white border-none">
+                        <ShieldCheck className="w-3 h-3 mr-1" /> {t("organizations.single.details.premium")}
                       </Badge>
                     )}
                   </div>
                 </div>
               </div>
               <p className="text-muted-foreground line-clamp-2">
-                {organizationDetails.data?.description || "No description provided."}
+                {organizationDetails.data?.description || t("organizations.single.details.noDescription")}
               </p>
 
               {organizationDetails.data?.website && (
@@ -83,21 +87,21 @@ export default function OrganizationDetails({ organizationDetails }: { organizat
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
               <CreditCard className="w-5 h-5 text-primary" />
-              Subscription & Credits
+              {t("organizations.single.details.subscriptionCredits")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-muted-foreground">Available Credits</span>
+                <span className="text-sm font-medium text-muted-foreground">{t("organizations.single.details.availableCredits")}</span>
                 <span className="text-2xl font-bold">{organizationDetails.data?.credits}</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-muted-foreground">Last Credit Reset</span>
+                <span className="text-sm font-medium text-muted-foreground">{t("organizations.single.details.lastCreditReset")}</span>
                 <span className="text-sm">
                   {organizationDetails.data?.lastCreditReset
                     ? format(new Date(organizationDetails.data.lastCreditReset), "PPP")
-                    : "N/A"
+                    : t("organizations.single.details.na")
                   }
                 </span>
               </div>
@@ -109,24 +113,24 @@ export default function OrganizationDetails({ organizationDetails }: { organizat
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
               <LayoutDashboard className="w-5 h-5 text-primary" />
-              Account Details
+              {t("organizations.single.details.accountDetails")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-muted-foreground">Organization ID</span>
+                <span className="text-sm font-medium text-muted-foreground">{t("organizations.single.details.organizationId")}</span>
                 <code className="text-xs bg-muted p-1 rounded w-fit mt-1">
                   {organizationDetails.data?.id}
                 </code>
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-muted-foreground">Member Since</span>
+                <span className="text-sm font-medium text-muted-foreground">{t("organizations.single.details.memberSince")}</span>
                 <span className="flex items-center gap-2 text-sm mt-1">
                   <Calendar className="w-4 h-4 text-muted-foreground" />
                   {organizationDetails.data?.createdAt
                     ? format(new Date(organizationDetails.data.createdAt), "PPP")
-                    : "N/A"
+                    : t("organizations.single.details.na")
                   }
                 </span>
               </div>

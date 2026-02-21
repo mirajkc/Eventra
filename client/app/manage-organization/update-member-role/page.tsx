@@ -10,66 +10,68 @@ import { IOrganizationMember, IOrganizationMemberPagination } from "@/types/user
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function UpdateMemberRolePage() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false)
   const [members, setMembers] = useState<IOrganizationMember[]>([])
   const [pagination, setPagination] = useState<IOrganizationMemberPagination>({
-            currentPage: 1,
-            totalPages: 0,
-            take: 10,
-            totalDocs: 0,
-            hasNextPage: false,
-            hasPreviousPage: false
+    currentPage: 1,
+    totalPages: 0,
+    take: 10,
+    totalDocs: 0,
+    hasNextPage: false,
+    hasPreviousPage: false
   })
   const dispatch = useAppDispatch()
   const loggedInUser = useAppSelector((state) => state.authSlice.userDetails)
-  const getOrganizationDetails = useAppSelector((state)=>state.organization.organizationDetails?.data)
+  const getOrganizationDetails = useAppSelector((state) => state.organization.organizationDetails?.data)
 
   useEffect(() => {
     dispatch(getLoggedInUserOrganization())
-  } , [])
+  }, [])
 
   useEffect(() => {
-    if(getOrganizationDetails?.id && getOrganizationDetails.id.length > 0){
+    if (getOrganizationDetails?.id && getOrganizationDetails.id.length > 0) {
       getOrganizationMembers()
     }
-  } , [getOrganizationDetails])
-  const getOrganizationMembers = async() => {
+  }, [getOrganizationDetails])
+  const getOrganizationMembers = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-single-organization/${getOrganizationDetails?.id}?members=true&page=${pagination?.currentPage}&take=${pagination?.take}` , {
-        method : "GET",
-        headers : {
-          "Content-Type" : "application/json"
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-single-organization/${getOrganizationDetails?.id}?members=true&page=${pagination?.currentPage}&take=${pagination?.take}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
         }
       })
-      if(!response.ok){
-        throw new Error("Error while fetching the organization member please try again. ")
+      if (!response.ok) {
+        throw new Error(t("manageOrganization.updateRole.error"))
       }
       const result = await response.json()
       setMembers(result.data.members)
       setPagination(result.pagination.memberCount)
     } catch (error) {
-      toast.error("Error while fetching the organization member please try again. ")
-    }finally{
+      toast.error(t("manageOrganization.updateRole.error"))
+    } finally {
       setLoading(false)
     }
   }
 
-  if(loading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Spinner />
       </div>
     )
   }
- 
+
   return (
     <div className="flex flex-col gap-4 p-4 min-h-[60vh] shadow-sm rounded-lg dark:bg-neutral-900 mb-8" >
       <div>
-        <TypographyH3>Update Member Role</TypographyH3>
-        <TypographyP>Update your member role</TypographyP>
+        <TypographyH3>{t("manageOrganization.updateRole.title")}</TypographyH3>
+        <TypographyP>{t("manageOrganization.updateRole.subtitle")}</TypographyP>
       </div>
       <div>
         {!loggedInUser?.id ? (
@@ -78,7 +80,7 @@ export default function UpdateMemberRolePage() {
           <div>
             {
               members.length === 0 ? (
-                <TypographyP>No members found</TypographyP>
+                <TypographyP>{t("manageOrganization.updateRole.noMembers")}</TypographyP>
               ) : (
                 <UpdateMemberTable members={members} organizationId={getOrganizationDetails?.id || ""} />
               )
@@ -90,14 +92,14 @@ export default function UpdateMemberRolePage() {
         {
           pagination.totalPages > 1 ? (
             <>
-            <div className="flex justify-between text-sm italic">
-              <p>showing {pagination.currentPage} out of {pagination.totalPages}</p>
-              <p>total members {pagination.totalDocs}</p>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <Button variant={"outline"} onClick={() => {setPagination({...pagination, currentPage : pagination.currentPage --}); getOrganizationMembers()}} disabled={pagination.currentPage === 1}> <ChevronLeft /> Previous</Button>
-              <Button variant={"outline"} onClick={() => {setPagination({...pagination, currentPage : pagination.currentPage ++}); getOrganizationMembers()}} disabled={pagination.currentPage === pagination.totalPages}>Next <ChevronRight /></Button>
-            </div>
+              <div className="flex justify-between text-sm italic">
+                <p>{t("manageOrganization.updateRole.pagination.showing", { current: pagination.currentPage, total: pagination.totalPages })}</p>
+                <p>{t("manageOrganization.updateRole.pagination.totalMembers", { total: pagination.totalDocs })}</p>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Button variant={"outline"} onClick={() => { setPagination({ ...pagination, currentPage: pagination.currentPage-- }); getOrganizationMembers() }} disabled={pagination.currentPage === 1}> <ChevronLeft /> {t("manageOrganization.updateRole.pagination.previous")}</Button>
+                <Button variant={"outline"} onClick={() => { setPagination({ ...pagination, currentPage: pagination.currentPage++ }); getOrganizationMembers() }} disabled={pagination.currentPage === pagination.totalPages}>{t("manageOrganization.updateRole.pagination.next")} <ChevronRight /></Button>
+              </div>
             </>
           ) : (<></>)
         }

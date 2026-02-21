@@ -1,12 +1,18 @@
+"use client";
+
 import TextType from "../TextType";
+import { useTranslation } from "react-i18next";
 
 export default function WhatIsEventra() {
+    const { t } = useTranslation();
+    const description = t("landing.whatIsEventra.description");
+
     return (
         <>
             {/* Desktop */}
             <div className="hidden md:flex justify-start w-full items-center min-h-screen">
                 <TextType
-                    text={["Eventra is a platform to discover, create, and manage events, making it easy for organizers to list events and for users to browse and visit them."]}
+                    text={[description]}
                     typingSpeed={15}
                     pauseDuration={500}
                     showCursor
@@ -23,7 +29,7 @@ export default function WhatIsEventra() {
             {/* Mobile */}
             <div className="flex md:hidden justify-center w-full items-center min-h-screen">
                 <TextType
-                    text={["Eventra is a platform to discover, create, and manage events, making it easy for organizers to list events and for users to browse and visit them."]}
+                    text={[description]}
                     typingSpeed={15}
                     pauseDuration={500}
                     showCursor

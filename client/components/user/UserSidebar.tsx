@@ -9,30 +9,33 @@ import {
   Delete,
   Trash
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const sidebarItems = [
+const getSidebarItems = (t: any) => [
   {
-    title: "Profile",
+    title: t("user.sidebar.profile"),
     href: "/user/profile",
     icon: User,
   },
   {
-    title: "Security",
+    title: t("user.sidebar.security"),
     href: "/user/security",
     icon: Shield,
   }
 ];
 
 export default function UserSidebar() {
+  const { t } = useTranslation();
   const pathname = usePathname();
+  const sidebarItems = getSidebarItems(t);
 
   return (
     <nav className="flex flex-col space-y-2 w-full">
       <div className="bg-background rounded-lg border shadow-sm p-2 flex flex-col gap-1">
         <div className="hidden md:block mb-4 px-4">
-          <h2 className="text-xl font-bold tracking-tight">Settings</h2>
+          <h2 className="text-xl font-bold tracking-tight">{t("user.sidebar.title")}</h2>
           <p className="text-muted-foreground text-sm">
-            Manage your account settings and Informations
+            {t("user.sidebar.subtitle")}
           </p>
         </div>
         {sidebarItems.map((item) => {
@@ -63,7 +66,7 @@ export default function UserSidebar() {
             "flex items-center text-red-500 gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-accent "}
         >
           <LogOut className="h-4 w-4" />
-          LogOut
+          {t("user.sidebar.logout")}
         </Link>
       </div>
     </nav>

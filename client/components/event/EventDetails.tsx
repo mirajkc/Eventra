@@ -6,6 +6,8 @@ import RegisterParticipants from "./RegisterParticipants";
 import AttendedUsers from "./AttendedUsers";
 import RecommendedEvents from "./RecommendedEvents";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
+import Footer from "@/components/ui/Footer";
 
 
 export interface EventDetailsProps {
@@ -13,6 +15,7 @@ export interface EventDetailsProps {
 }
 
 export default function EventDetails({ event }: EventDetailsProps) {
+  const { t } = useTranslation();
   return (
     <div>
       <div>
@@ -39,9 +42,10 @@ export default function EventDetails({ event }: EventDetailsProps) {
         onClick={() => window.history.back()}
         className="w-full flex items-center justify-center m-4" >
         <Button type="button" className="w-35 hover:cursor-pointer  " >
-          Go Back
+          {t("events.single.goBack")}
         </Button>
       </div>
+      <Footer />
     </div>
   )
 }

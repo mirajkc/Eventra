@@ -8,8 +8,10 @@ import { formatDistanceToNow } from "date-fns"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 export default function AttendedUsers({ event }: { event: ISingleEvent }) {
+  const { t } = useTranslation()
   const [attendedUsers, setAttendedUsers] = useState<Array<IEventAttendedUser>>([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState<IEventParticipantsPagination>({
@@ -54,8 +56,8 @@ export default function AttendedUsers({ event }: { event: ISingleEvent }) {
   return (
     <div className="flex flex-col gap-8 p-4 shadow-sm rounded-2xl mt-4 border dark:border-gray-800 dark:bg-neutral-900 min-h-[35vh]">
       <div>
-        <TypographyH4>Attended Users</TypographyH4>
-        <TypographyP>See who all attended the event</TypographyP>
+        <TypographyH4>{t("events.single.attendedUsers")}</TypographyH4>
+        <TypographyP>{t("events.single.seeAttended")}</TypographyP>
       </div>
 
 
@@ -63,9 +65,9 @@ export default function AttendedUsers({ event }: { event: ISingleEvent }) {
         <div className="flex flex-col items-center justify-center flex-1 min-h-[200px]">
           <Spinner />
         </div>
-      ) : new Date(event.startDate) > new Date() ? <div className="flex flex-col items-center justify-center flex-1 min-h-[200px] text-neutral-500 italic">Event is not started yet.</div> : attendedUsers?.length === 0 ? (
+      ) : new Date(event.startDate) > new Date() ? <div className="flex flex-col items-center justify-center flex-1 min-h-[200px] text-neutral-500 italic">{t("events.single.eventNotStartedYet")}</div> : attendedUsers?.length === 0 ? (
         <div className="flex flex-col items-center justify-center flex-1 min-h-[200px] text-neutral-500 italic">
-          No attended users found.
+          {t("events.single.noAttendedUsers")}
         </div>
       ) : (
         <>
@@ -86,12 +88,12 @@ export default function AttendedUsers({ event }: { event: ISingleEvent }) {
                       {user.user.name}
                     </h4>
                     <p className="text-[10px] text-neutral-500 font-medium">
-                      Attended
+                      {t("events.single.attended")}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-100 dark:border-neutral-800">
-                  <span className="text-[10px] text-neutral-400">Attended at: </span>
+                  <span className="text-[10px] text-neutral-400">{t("events.single.attendedAt")} </span>
                   <span className="text-[10px] text-neutral-600 dark:text-neutral-300 font-medium">
                     {formatDistanceToNow(user.checkedInAt, { addSuffix: true })}
                   </span>
@@ -111,7 +113,7 @@ export default function AttendedUsers({ event }: { event: ISingleEvent }) {
                   className="rounded-full px-4"
                 >
                   <ChevronLeft className="w-4 h-4 mr-1" />
-                  Previous
+                  {t("events.single.previous")}
                 </Button>
                 <Button
                   variant={"outline"}
@@ -120,7 +122,7 @@ export default function AttendedUsers({ event }: { event: ISingleEvent }) {
                   onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage + 1 }))}
                   className="rounded-full px-4"
                 >
-                  Next
+                  {t("events.single.next")}
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>

@@ -8,8 +8,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { toast } from "sonner"
 import { useParams } from "next/navigation"
+import { useTranslation } from "react-i18next"
 
 export default function OrganizationEvents() {
+  const { t } = useTranslation()
   const params = useParams()
   const organizationId = params.id
   const [events, setEvents] = useState<Array<IEventReponse>>([])
@@ -33,7 +35,7 @@ export default function OrganizationEvents() {
       setPagination(result.pagination)
       setLoading(false)
     } catch (error) {
-      toast.error("Failed to fetch events")
+      toast.error(t("organizations.single.events.failedToFetch"))
       setLoading(false)
     } finally {
       setLoading(false)
@@ -43,14 +45,14 @@ export default function OrganizationEvents() {
   return (
     <div className="flex  flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50 min-h-[60vh]" >
       <div>
-        <TypographyH4>Organization Events</TypographyH4>
-        <TypographyP>Find the recent events hosted by the organization.</TypographyP>
+        <TypographyH4>{t("organizations.single.events.title")}</TypographyH4>
+        <TypographyP>{t("organizations.single.events.subtitle")}</TypographyP>
       </div>
       {
         pagination?.totalDocs > 0 && (
           <div className="flex w-full mt-2">
             <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              Total Events: {pagination.totalDocs}
+              {t("organizations.single.events.totalEvents")} {pagination.totalDocs}
             </p>
           </div>
         )
@@ -67,8 +69,8 @@ export default function OrganizationEvents() {
                   <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
                   <div className="h-4 w-2/3 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
                   <div className="mt-auto flex gap-4">
-                     <div className="h-8 w-8 rounded-full bg-neutral-200 dark:bg-neutral-800 animate-pulse" />
-                     <div className="h-8 w-24 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                    <div className="h-8 w-8 rounded-full bg-neutral-200 dark:bg-neutral-800 animate-pulse" />
+                    <div className="h-8 w-24 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
                   </div>
                 </div>
               </div>
@@ -80,8 +82,8 @@ export default function OrganizationEvents() {
             ))
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <TypographyH4 className="text-muted-foreground">No events found</TypographyH4>
-              <TypographyP>This organization hasn't published any events yet.</TypographyP>
+              <TypographyH4 className="text-muted-foreground">{t("organizations.single.events.noEventsFound")}</TypographyH4>
+              <TypographyP>{t("organizations.single.events.noEventsSubtitle")}</TypographyP>
             </div>
           )}
         </div>
@@ -102,7 +104,7 @@ export default function OrganizationEvents() {
                 className="rounded-full px-4"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
-                Previous
+                {t("organizations.single.events.previous")}
               </Button>
               <Button
                 variant="outline"
@@ -117,7 +119,7 @@ export default function OrganizationEvents() {
                 }}
                 className="rounded-full px-4"
               >
-                Next
+                {t("organizations.single.events.next")}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </div>

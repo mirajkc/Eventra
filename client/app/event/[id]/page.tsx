@@ -8,8 +8,10 @@ import { ISingleEvent } from "@/types/event.type";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function Event() {
+  const { t } = useTranslation();
   const params = useParams()
   const eventId = params.id
   const [isUserJoined, setIsUserJoined] = useState(false)
@@ -46,7 +48,7 @@ export default function Event() {
   }
   const getEventData = async () => {
     try {
-      setLoading(true)      
+      setLoading(true)
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/get-single-event/${eventId}`, {
         method: "GET",
         headers: {
@@ -61,19 +63,19 @@ export default function Event() {
       setEventMetadata(result.data.eventDetails)
       setParticipantsCount(result.data.totalParticipants)
     } catch (error) {
-      toast.error("Failed to fetch event data please try again later. ")
+      toast.error(t("events.single.failedEventData"))
     } finally {
       setLoading(false)
     }
   }
 
-if (loading || !eventMetadata) {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <Spinner />
-    </div>
-  );
-}
+  if (loading || !eventMetadata) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -85,7 +87,7 @@ if (loading || !eventMetadata) {
         ) : (
           <div>
             {eventMetadata && (
-              <InvitationComponent event={eventMetadata}  />
+              <InvitationComponent event={eventMetadata} />
             )}
           </div>
         )

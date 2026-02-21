@@ -6,7 +6,10 @@ import ProfileDropDown from "./ProfileDropDown"
 import { useAppSelector } from "@/state/hooks"
 import { useEffect, useState } from "react"
 import { IUserDetails } from "@/types/user.types";
+import { useTranslation } from "react-i18next";
+
 export default function AuthSection() {
+  const { t } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const userDetails: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
   useEffect(() => {
@@ -22,7 +25,7 @@ export default function AuthSection() {
       {!isLoggedIn ? (
         <Link href="/auth/login">
           <Button variant="default" size="default">
-            Login
+            {t("navbar.login")}
           </Button>
         </Link>
       ) : (

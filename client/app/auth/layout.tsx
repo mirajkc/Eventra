@@ -1,17 +1,15 @@
+"use client";
+
 import Antigravity from "@/components/Antigravity";
 import BlurText from "@/components/BlurText";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Eventra - Auth",
-  description: "Eventra All In One Event Management Platform",
-};
+import { useTranslation } from "react-i18next";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { t } = useTranslation();
   return (
     <>
       <div className="flex h-screen w-full">
@@ -29,7 +27,7 @@ export default function RootLayout({
               particleVariance={1}
               autoAnimate={true} />
           </div>
-          <BlurText text="Eventra Auth Section" delay={200}
+          <BlurText text={t("auth.sectionTitle")} delay={200}
             animateBy="words"
             direction="top" className=" text-xl md:text-2xl lg:text-4xl font-bold " />
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { navigationLinks } from "./DesktopNavigation";
+import { getNavigationLinks } from "./DesktopNavigation";
 import SearchBar from "./SearchBar";
 import AuthSection from "./AuthSection";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,11 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
+import { useTranslation } from "react-i18next";
+
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const { t } = useTranslation();
+  const navigationLinks = getNavigationLinks(t);
   if (!isOpen) return null;
 
   return (

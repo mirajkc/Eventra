@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 export default function Logout() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [loading, setLoading] = useState(false)
 
@@ -23,7 +25,7 @@ export default function Logout() {
         }
       })
       if (!response.ok) {
-        throw new Error("Error occured while logging you out please try again later. ")
+        throw new Error(t("user.logout.error"))
       }
       const result = await response.json()
       Cookies.remove("accessToken")
@@ -31,7 +33,7 @@ export default function Logout() {
       toast.success(result.message)
       window.location.href = "/"
     } catch (error) {
-      toast.error("Error occured while logging you out please try again later. ")
+      toast.error(t("user.logout.error"))
     } finally {
       setLoading(false)
     }
@@ -52,20 +54,20 @@ export default function Logout() {
   return (
     <div className="flex flex-col gap-4 shadow-sm rounded-md min-h-[60vh] p-4" >
       <div className="flex flex-col gap-2 h-1/4">
-        <h1 className="text-2xl font-bold tracking-tight">Logout</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t("user.logout.title")}</h1>
         <p className="text-muted-foreground text-sm mt-2">
-          Logout from your account
+          {t("user.logout.subtitle")}
         </p>
       </div>
-      <div className="flex flex-col w-full justify-center items-center  w-[30vw] h-3/4 h-[40vh] " >
+      <div className="flex flex-col w-full justify-center items-center  h-[40vh] " >
         <div className="flex flex-col justify-center items-center w-full h-full " >
-          <h1 className="text-2xl font-bold tracking-tight">Are you sure you want to logout?</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{t("user.logout.areYouSure")}</h1>
           <p className="text-muted-foreground text-sm mt-2">
-            Logout from your account
+            {t("user.logout.subtitle")}
           </p>
           <div className="flex flex-row gap-2 mt-2">
-            <Button onClick={handleLogout} className="hover:bg-red-700 transition hover:scale-105 " variant="destructive">Logout</Button>
-            <Button onClick={handleCancel} className="hover:bg-blue-700 transition hover:scale-105 " >Cancel</Button>
+            <Button onClick={handleLogout} className="hover:bg-red-700 transition hover:scale-105 " variant="destructive">{t("user.logout.logoutBtn")}</Button>
+            <Button onClick={handleCancel} className="hover:bg-blue-700 transition hover:scale-105 " >{t("user.logout.cancelBtn")}</Button>
           </div>
         </div>
       </div>

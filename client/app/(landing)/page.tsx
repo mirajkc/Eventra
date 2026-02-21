@@ -1,3 +1,5 @@
+"use client";
+
 import BlurText from "@/components/BlurText";
 import LandingSearch from "@/components/landing/LandingSearch";
 import { ChevronDown } from "lucide-react";
@@ -7,22 +9,25 @@ import WhatIsEventra from "@/components/landing/WhatIsEventra";
 import HowItWorks from "@/components/landing/HowItWorks";
 import WhyChooseUs from "@/components/landing/WhyChooseUs";
 import LargeText from "@/components/landing/LargeText";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
       {/* main landing */}
       <div className="flex flex-col justify-center items-center min-h-[calc(100vh-4rem)] py-12 md:py-0">
         <div className="flex flex-col justify-center items-center text-center w-full max-w-4xl">
           <BlurText
-            text="Welcome to Eventra"
+            text={t("landing.welcome")}
             delay={0}
             animateBy="words"
             direction='top'
             className="text-4xl md:text-6xl mb-6 font-bold tracking-tight"
           />
           <BlurText
-            text="The All in One Event Management System"
+            text={t("landing.subtitle")}
             delay={150}
             animateBy="words"
             direction="top"

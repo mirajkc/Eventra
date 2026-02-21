@@ -1,6 +1,8 @@
+"use client";
 import { Building2, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={`rounded-xl border bg-card text-card-foreground shadow ${className}`} {...props} />
 );
@@ -13,19 +15,20 @@ const CardDescription = ({ className, ...props }: React.HTMLAttributes<HTMLDivEl
 
 
 export default function CreateOrganizationCard() {
+  const { t } = useTranslation();
   return (
     <Card className="flex flex-col items-center justify-center py-16 text-center border-dashed">
       <div className="p-4 bg-muted rounded-full mb-4">
         <Building2 className="w-8 h-8 text-muted-foreground" />
       </div>
-      <CardTitle className="text-xl mb-2">No Organization Found</CardTitle>
+      <CardTitle className="text-xl mb-2">{t("manageOrganization.main.createCard.title")}</CardTitle>
       <CardDescription className="max-w-sm mb-6">
-        You haven't created an organization yet. Create one to start hosting events and managing your team.
+        {t("manageOrganization.main.createCard.description")}
       </CardDescription>
       <Link href="/manage-organization/create">
         <Button className="gap-2">
           <PlusCircle className="w-4 h-4" />
-          Create Organization
+          {t("manageOrganization.main.createCard.button")}
         </Button>
       </Link>
     </Card>

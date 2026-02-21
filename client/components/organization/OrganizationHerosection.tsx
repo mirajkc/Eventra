@@ -12,6 +12,7 @@ import { format } from "date-fns"
 import getAccessToken from "@/lib/access.token"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next";
 
 interface OrganizationHeroSectionProps {
   organizationData: ISingleOrganization
@@ -19,6 +20,7 @@ interface OrganizationHeroSectionProps {
 
 
 export default function OrganizationHeroSection({ organizationData }: OrganizationHeroSectionProps) {
+  const { t } = useTranslation();
   const params = useParams()
   const organizationId = params.id
   const [isJoined, setIsJoined] = useState<boolean>(false)
@@ -63,13 +65,13 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
       })
       const result = await response.json()
       if (!result.message) {
-        toast.error("Error occured while joining organization please try again later. ")
+        toast.error(t("organizations.single.hero.errorJoining"))
         return
       }
       toast.success(result.message)
       checkIfJoined()
     } catch (error) {
-      toast.error("Error occured while joining organization please try again later. ")
+      toast.error(t("organizations.single.hero.errorJoining"))
     }
   }
   const handleLeave = async () => {
@@ -84,13 +86,13 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
       })
       const result = await response.json()
       if (!result.message) {
-        toast.error("Error occured while leaving organization please try again later. ")
+        toast.error(t("organizations.single.hero.errorLeaving"))
         return
       }
       toast.success(result.message)
       checkIfJoined()
     } catch (error) {
-      toast.error("Error occured while leaving organization please try again later. ")
+      toast.error(t("organizations.single.hero.errorLeaving"))
     }
   }
 
@@ -130,13 +132,13 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
             <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-end">
               <div className="space-y-3 text-center md:text-left">
                 <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                  <h1 className="bg-gradient-to-br from-neutral-900 to-neutral-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-white dark:to-neutral-400 md:text-4xl">
+                  <h1 className="bg-linear-to-br from-neutral-900 to-neutral-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-white dark:to-neutral-400 md:text-4xl">
                     {organizationData.name}
                   </h1>
                   <div className="flex gap-2">
                     {organizationData.isPremium && (
                       <Badge className="bg-amber-500 hover:bg-amber-600 border-none text-white shadow-sm gap-1 animate-pulse">
-                        <ShieldCheck className="w-3 h-3" /> Premium
+                        <ShieldCheck className="w-3 h-3" /> {t("organizations.single.hero.premium")}
                       </Badge>
                     )}
                     <Badge variant="secondary" className="capitalize px-3 py-1 font-semibold tracking-wide">
@@ -170,7 +172,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   )}
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    <span>Member since {format(new Date(organizationData.createdAt), "MMMM yyyy")}</span>
+                    <span>{t("organizations.single.hero.memberSince")} {format(new Date(organizationData.createdAt), "MMMM yyyy")}</span>
                   </div>
                 </div>
               </div>
@@ -191,7 +193,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                             className="w-full md:w-auto h-12 hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 "
                           >
                             <Plus />
-                            Create Event
+                            {t("organizations.single.hero.createEvent")}
                           </Button></Link>
                       </>
                     ) : (<></>)
@@ -212,7 +214,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                         size="lg"
                         className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
                       >
-                        Leave Organization
+                        {t("organizations.single.hero.leaveOrganization")}
                       </Button>
                     ) : (
                       <Button
@@ -220,7 +222,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                         size="lg"
                         className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
                       >
-                        Join Organization
+                        {t("organizations.single.hero.joinOrganization")}
                       </Button>
                     )
                   }
@@ -239,26 +241,26 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
         >
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">About Organization</h3>
+              <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">{t("organizations.single.hero.aboutOrganization")}</h3>
               <p className="max-w-4xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
-                {organizationData.description || "Building community through meaningful connection and shared experiences."}
+                {organizationData.description || t("organizations.single.hero.defaultDescription")}
               </p>
             </div>
 
             {/* Quick Stats or Additional Info could go here */}
             <div className="flex flex-col gap-4 rounded-2xl bg-neutral-50 p-6 dark:bg-neutral-900/50">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-neutral-500">Credits</span>
+                <span className="text-sm font-medium text-neutral-500">{t("organizations.single.hero.credits")}</span>
                 <span className="text-sm font-bold text-neutral-900 dark:text-neutral-100">{organizationData.credits} pts</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-neutral-500">Status</span>
+                <span className="text-sm font-medium text-neutral-500">{t("organizations.single.hero.status")}</span>
                 <Badge variant={organizationData.isPremium ? "default" : "secondary"} className="text-[10px] h-5">
-                  {organizationData.isPremium ? "Active Premium" : "Standard"}
+                  {organizationData.isPremium ? t("organizations.single.hero.activePremium") : t("organizations.single.hero.standard")}
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-neutral-500">Last Updated</span>
+                <span className="text-sm font-medium text-neutral-500">{t("organizations.single.hero.lastUpdated")}</span>
                 <span className="text-sm text-neutral-900 dark:text-neutral-100">{format(new Date(organizationData.updatedAt), "PP")}</span>
               </div>
               <Link href={`/credit/purchase/${organizationData.id}`}>
@@ -266,7 +268,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   size={'sm'}
                   className="p-2 hover:cursor-pointer w-full"
                 >
-                  Donate Credits
+                  {t("organizations.single.hero.donateCredits")}
                 </Button>
               </Link>
             </div>

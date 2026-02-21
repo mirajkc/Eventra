@@ -11,45 +11,48 @@ import {
   UserX,
   Coins,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const sidebarItems = [
+const getSidebarItems = (t: any) => [
   {
-    title: "My Organization",
+    title: t("manageOrganization.sidebar.myOrganization"),
     href: "/manage-organization/organization",
     icon: Building,
   },
   {
-    title: "Update Organization",
+    title: t("manageOrganization.sidebar.updateOrganization"),
     href: "/manage-organization/update-organization",
     icon: Settings,
   },
   {
-    title: "Update Member Role",
+    title: t("manageOrganization.sidebar.updateMemberRole"),
     href: "/manage-organization/update-member-role",
     icon: Settings2,
   },
   {
-    title: "Joined Organizations",
+    title: t("manageOrganization.sidebar.joinedOrganizations"),
     href: "/manage-organization/joined-organizations",
     icon: HandshakeIcon,
   },
   {
-    title: "Credits Donated",
+    title: t("manageOrganization.sidebar.creditsDonated"),
     href: "/manage-organization/credits-donated",
     icon: Coins,
   },
 ];
 
 export default function ManageOrganizationSidebar() {
+  const { t } = useTranslation();
   const pathname = usePathname();
+  const sidebarItems = getSidebarItems(t);
 
   return (
     <nav className="flex flex-col space-y-2 w-full">
       <div className="bg-background rounded-lg border shadow-sm p-2 flex flex-col gap-1">
         <div className="hidden md:block mb-4 px-4">
-          <h2 className="text-xl font-bold tracking-tight">Organizaion Settings</h2>
+          <h2 className="text-xl font-bold tracking-tight">{t("manageOrganization.sidebar.title")}</h2>
           <p className="text-muted-foreground text-sm">
-            Manage your organizaion settings and Informations
+            {t("manageOrganization.sidebar.subtitle")}
           </p>
         </div>
         {sidebarItems.map((item) => {
@@ -80,7 +83,7 @@ export default function ManageOrganizationSidebar() {
             "flex items-center text-red-500 gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-accent "}
         >
           <LogOut className="h-4 w-4" />
-          Delete Organization
+          {t("manageOrganization.sidebar.deleteOrganization")}
         </Link>
       </div>
     </nav>

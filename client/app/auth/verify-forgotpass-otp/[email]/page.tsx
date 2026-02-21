@@ -12,8 +12,10 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 export default function VerifyForgotPasswordOtp() {
+    const { t } = useTranslation();
     const params = useParams();
     const router = useRouter();
 
@@ -50,14 +52,14 @@ export default function VerifyForgotPasswordOtp() {
             });
             const result = await response.json();
             if (response.status !== 200) {
-                throw new Error(result.message || "Invalid OTP");
+                throw new Error(result.message || t("auth.verifyOtp.invalidOtp"));
             }
             Cookies.set("changePasswordToken", result.data);
-            toast.success("OTP verified successfully!");
+            toast.success(t("auth.verifyOtp.success"));
             router.push(`/auth/change-password`);
         } catch (error) {
             console.error(error);
-            toast.error(error instanceof Error ? error.message : "Error verifying OTP. Please try again.");
+            toast.error(error instanceof Error ? error.message : t("auth.verifyOtp.error"));
         }
     }
 
@@ -74,18 +76,18 @@ export default function VerifyForgotPasswordOtp() {
             <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                 <div className="p-8">
                     <div className="flex flex-col space-y-2 text-center mb-8">
-                        <TypographyH2>Verify OTP</TypographyH2>
-                        <TypographyP>Enter the 5-character OTP sent to <b>{email}</b></TypographyP>
+                        <TypographyH2>{t("auth.verifyOtp.title")}</TypographyH2>
+                        <TypographyP>{t("auth.verifyOtp.otpSentTo")} <b>{email}</b></TypographyP>
                     </div>
 
                     <form className="flex flex-col space-y-6" onSubmit={handleSubmit(verifyOTP)}>
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="otp">OTP Code</Label>
+                                <Label htmlFor="otp">{t("auth.verifyOtp.otpLabel")}</Label>
                                 <Input
                                     type="text"
                                     name="otp"
-                                    placeholder="Enter 5-character OTP"
+                                    placeholder={t("auth.verifyOtp.otpPlaceholder")}
                                     control={control}
                                     errorMsg={errors.otp?.message}
                                 />
@@ -97,14 +99,14 @@ export default function VerifyForgotPasswordOtp() {
                             </div>
                         </div>
                         <Button className="w-full hover:cursor-pointer" size="lg" type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Verifying..." : "Verify OTP"}
+                            {isSubmitting ? t("auth.verifyOtp.verifying") : t("auth.verifyOtp.verifyBtn")}
                         </Button>
                     </form>
 
                     <div className="mt-6 text-center text-sm">
-                        <span className="text-muted-foreground">Didn't receive the code? </span>
+                        <span className="text-muted-foreground">{t("auth.verifyOtp.didntReceiveCode")} </span>
                         <Link href="/auth/get-forgotpass-otp" className="font-medium text-primary hover:underline">
-                            Resend OTP
+                            {t("auth.verifyOtp.resendLink")}
                         </Link>
                     </div>
                 </div>

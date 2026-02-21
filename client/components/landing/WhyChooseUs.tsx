@@ -2,14 +2,18 @@
 
 import { motion } from "motion/react";
 import { CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const features = [
-    "Manage events with ease and efficiency.",
-    "Secure transactions and instant payouts.",
-    "24/7 dedicated support for organizers.",
+const getFeatures = (t: any) => [
+    t("landing.whyChooseUs.feature1"),
+    t("landing.whyChooseUs.feature2"),
+    t("landing.whyChooseUs.feature3"),
 ];
 
 export default function WhyChooseUs() {
+    const { t } = useTranslation();
+    const features = getFeatures(t);
+
     return (
         <section className="py-24 w-full max-w-7xl mx-auto px-6 overflow-hidden flex flex-col items-center justify-center text-center">
             <div className="max-w-4xl w-full flex flex-col items-center gap-10">
@@ -20,7 +24,7 @@ export default function WhyChooseUs() {
                     transition={{ duration: 0.6 }}
                 >
                     <span className="px-5 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 text-xs font-bold uppercase tracking-widest rounded-full">
-                        Why Choose Eventra
+                        {t("landing.whyChooseUs.badge")}
                     </span>
                 </motion.div>
 
@@ -32,7 +36,7 @@ export default function WhyChooseUs() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter leading-[1.05] text-zinc-900 dark:text-zinc-100 max-w-3xl"
                     >
-                        Everything you need to manage events effortlessly.
+                        {t("landing.whyChooseUs.title")}
                     </motion.h2>
 
                     <motion.p
@@ -42,7 +46,7 @@ export default function WhyChooseUs() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-lg md:text-xl text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-2xl"
                     >
-                        Whether you're organizing a small meetup or a large-scale conference, Eventra provides the tools and security to make it a success.
+                        {t("landing.whyChooseUs.subtitle")}
                     </motion.p>
                 </div>
 

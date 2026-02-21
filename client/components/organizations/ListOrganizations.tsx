@@ -10,8 +10,10 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
 import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function ListOrganizations() {
+  const { t } = useTranslation();
   const [pagination, setPagination] = useState<IOrganizationsPagination>({
     currentPage: 1,
     take: 9,
@@ -72,13 +74,13 @@ export default function ListOrganizations() {
       );
       const result = await response.json();
       if (!response.ok) {
-        toast.error("Failed to fetch organizations");
+        toast.error(t("organizations.list.failedToFetch"));
         return;
       }
       setOrganizations(result.data || []);
       setPagination(result.pagination);
     } catch (error: any) {
-      toast.error("Failed to fetch organizations");
+      toast.error(t("organizations.list.failedToFetch"));
     } finally {
       setLoading(false);
     }
@@ -88,7 +90,7 @@ export default function ListOrganizations() {
     if (pagination.hasNextPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage ++,
+        currentPage: prev.currentPage++,
       }));
 
     }
@@ -98,7 +100,7 @@ export default function ListOrganizations() {
     if (pagination.hasPrevPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage --,
+        currentPage: prev.currentPage--,
       }));
 
     }
@@ -121,7 +123,7 @@ export default function ListOrganizations() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {organizations.length === 0 && !loading ? (
           <p className="col-span-full text-center text-muted-foreground">
-            No organizations found.
+            {t("organizations.list.noOrganizationsFound")}
           </p>
         ) : (
           organizations.map((organization) => (
@@ -146,11 +148,11 @@ export default function ListOrganizations() {
                 className="flex-1"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
-                Previous
+                {t("organizations.list.previous")}
               </Button>
 
               <span className="text-sm text-muted-foreground px-2">
-                Page {pagination.currentPage} of {pagination.totalPages}
+                {t("organizations.list.pageOf", { current: pagination.currentPage, total: pagination.totalPages })}
               </span>
 
               <Button
@@ -160,7 +162,7 @@ export default function ListOrganizations() {
                 disabled={!pagination.hasNextPage || loading}
                 className="flex-1"
               >
-                Next
+                {t("organizations.list.next")}
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             </div>

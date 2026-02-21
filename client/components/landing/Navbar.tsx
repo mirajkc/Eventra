@@ -1,24 +1,31 @@
+"use client";
+
 import Link from "next/link";
 import { ModeToggle } from "../ModeSwitch";
 import { MobileMenu } from "./MobileMenu";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../NavBar/LanguageSwitcher";
 
-export const menuLinks = [
+export const getMenuLinks = (t: any) => [
   {
     href: "/home",
-    label: "Home",
+    label: t("navbar.home"),
   },
   {
     href: "/events",
-    label: "Events",
+    label: t("navbar.events"),
   },
   {
     href: "/organizations",
-    label: "Organizations",
+    label: t("navbar.organizations"),
   },
 ]
 
 export default function LandingNavbar() {
+  const { t } = useTranslation();
+  const menuLinks = getMenuLinks(t);
+
   return (
     <nav className="sticky top-2 z-50">
       <div className="flex justify-between max-w-7xl mx-auto items-center mt-4 text-black dark:text-white bg-gray-100 dark:bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg shadow-sm" >
@@ -41,17 +48,21 @@ export default function LandingNavbar() {
         </div>
         <div className="hidden md:block md:flex gap-4 justify-center items-center" >
           <div>
+            <LanguageSwitcher />
+          </div>
+          <div>
             <ModeToggle />
           </div>
           <div>
             <Link href="/auth/login"> <Button className="hover:cursor-pointer" variant={"default"}>
-              Get Started
+              {t("navbar.getStarted")}
             </Button></Link>
           </div>
         </div>
 
         {/* mobile menu */}
-        <div className="block md:hidden flex gap-2" >
+        <div className="block md:hidden flex gap-2 items-center" >
+          <LanguageSwitcher />
           <ModeToggle />
           <MobileMenu />
         </div>

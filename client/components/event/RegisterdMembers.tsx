@@ -8,8 +8,10 @@ import { Spinner } from "../ui/spinner";
 import { formatDistanceToNow } from "date-fns";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterdMembers() {
+  const { t } = useTranslation();
   const params = useParams()
   const [members, setMembers] = useState<Array<IEventParticipantsDetails>>([]);
   const [loading, setLoading] = useState(true);
@@ -33,13 +35,13 @@ export default function RegisterdMembers() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/participant/get-all-participants/${eventId}?page=${page}&take=${pagination.take}`)
       const result = await response.json()
       if (!response.ok) {
-        toast.error(result.message || "Error occurred while fetching registered members.")
+        toast.error(result.message || t("events.single.fetchMembersError"))
         return
       }
       setMembers(result.data)
       setPagnation(result.pagination)
     } catch (error) {
-      toast.error("Error occurred while fetching registered members please try again later.")
+      toast.error(t("events.single.fetchMembersError"))
     } finally {
       setLoading(false)
     }
@@ -57,10 +59,10 @@ export default function RegisterdMembers() {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <TypographyH4>Registered Members</TypographyH4>
+          <TypographyH4>{t("events.single.registeredMembers")}</TypographyH4>
         </div>
         <div className="flex flex-col items-center justify-center min-h-[40vh] text-neutral-500 italic">
-          No registered members found.
+          {t("events.single.noRegisteredMembers")}
         </div>
       </div>
     )
@@ -69,10 +71,10 @@ export default function RegisterdMembers() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <TypographyH4>Registered Members</TypographyH4>
+        <TypographyH4>{t("events.single.registeredMembers")}</TypographyH4>
         {pagination?.totalDoccuments > 0 && (
           <p className="text-sm text-neutral-500 dark:text-neutral-400">
-            Total: {pagination.totalDoccuments}
+            {t("events.single.total")} {pagination.totalDoccuments}
           </p>
         )}
       </div>
@@ -97,7 +99,7 @@ export default function RegisterdMembers() {
             </div>
             <div className="flex flex-col items-end gap-1.5">
               <p className="text-[10px] text-neutral-400 dark:text-neutral-500 font-medium">
-                {member.registeredAt ? `Joined ${formatDistanceToNow(new Date(member.registeredAt))} ago` : ""}
+                {member.registeredAt ? `${t("events.single.joinedAgo")} ${formatDistanceToNow(new Date(member.registeredAt))} ${t("events.single.ago")}` : ""}
               </p>
             </div>
           </div>
@@ -115,7 +117,7 @@ export default function RegisterdMembers() {
               className="rounded-full px-4"
             >
               <ChevronLeft className="w-4 h-4 mr-1" />
-              Previous
+              {t("events.single.previous")}
             </Button>
             <Button
               variant={"outline"}
@@ -124,7 +126,7 @@ export default function RegisterdMembers() {
               onClick={() => setPagnation(prev => ({ ...prev, currentPage: prev.currentPage + 1 }))}
               className="rounded-full px-4"
             >
-              Next
+              {t("events.single.next")}
               <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           </div>

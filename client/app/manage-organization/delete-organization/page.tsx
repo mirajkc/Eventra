@@ -8,8 +8,10 @@ import { getLoggedInUserOrganization } from "@/state/slices/organization.slice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function Logout() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch()
   const hasOrganization = useAppSelector((state) => state.organization.organizationDetails?.hasOrganization)
   const router = useRouter();
@@ -20,7 +22,7 @@ export default function Logout() {
     try {
       const accessToken = await getAccessToken();
       if (!accessToken) {
-        toast.error("You are not authorized to perform this action.");
+        toast.error(t("manageOrganization.delete.messages.notAuthorized"));
         return;
       }
 
@@ -34,14 +36,14 @@ export default function Logout() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to delete organization");
+        throw new Error(errorData.message || t("manageOrganization.delete.messages.failed"));
       }
 
-      toast.success("Organization deleted successfully");
+      toast.success(t("manageOrganization.delete.messages.success"));
       router.replace("/");
 
     } catch (error) {
-      toast.error("Error occured while deleting the organization plese try again later. ")
+      toast.error(t("manageOrganization.delete.messages.error"))
     } finally {
       setLoading(false)
     }
@@ -66,20 +68,20 @@ export default function Logout() {
   return (
     <div className="flex flex-col gap-4 shadow-sm rounded-md min-h-[60vh] p-4 dark:bg-neutral-900" >
       <div className="flex flex-col gap-2 h-1/4">
-        <h1 className="text-2xl font-bold tracking-tight">Delete Organization</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t("manageOrganization.delete.title")}</h1>
         <p className="text-muted-foreground text-sm mt-2">
-          Delete your organization
+          {t("manageOrganization.delete.subtitle")}
         </p>
       </div>
-      <div className="flex flex-col w-full justify-center items-center  w-[30vw] h-3/4 h-[40vh] " >
+      <div className="flex flex-col w-full justify-center items-center h-[40vh] " >
         <div className="flex flex-col justify-center items-center w-full h-full " >
-          <h1 className="text-2xl font-bold tracking-tight">Are you sure you want to delete your organization?</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{t("manageOrganization.delete.confirmTitle")}</h1>
           <p className="text-muted-foreground text-sm mt-2">
-            This action cannot be undone. All data associated with this organization will be permanently deleted.
+            {t("manageOrganization.delete.confirmDescription")}
           </p>
           <div className="flex flex-row gap-2 mt-2">
-            <Button onClick={handleDelete} className="hover:bg-red-700 transition hover:scale-105 " variant="destructive">Delete</Button>
-            <Button onClick={handleCancel} className="hover:bg-blue-700 transition hover:scale-105 " >Cancel</Button>
+            <Button onClick={handleDelete} className="hover:bg-red-700 transition hover:scale-105 " variant="destructive">{t("manageOrganization.delete.buttons.delete")}</Button>
+            <Button onClick={handleCancel} className="hover:bg-blue-700 transition hover:scale-105 " >{t("manageOrganization.delete.buttons.cancel")}</Button>
           </div>
         </div>
       </div>
