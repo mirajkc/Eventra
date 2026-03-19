@@ -24,15 +24,15 @@ const pricingData = [
 ]
 
 export default function PurchasePage() {
-  const userDetails:IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
+  const userDetails: IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
   const params = useParams()
   const organizationId = params.id
   const router = useRouter()
   const purchaseCredit = async (packageName: string) => {
-    if(!userDetails?.id){
-    toast.error("please log in in order to donate credits.")
-    return
-  }
+    if (!userDetails?.id) {
+      toast.error("please log in in order to donate credits.")
+      return
+    }
     try {
       const accessToken = await getAccessToken()
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/credit/purcahse-credit/${organizationId}`, {
@@ -55,9 +55,8 @@ export default function PurchasePage() {
     }
   }
   return (
-    <section className='flex items-center justify-center flex-col  px-4 dark:text-white'>
+    <section className='flex items-center min-h-screen justify-center flex-col  px-4 dark:text-white'>
       <h1 className='font-medium text-4xl md:text-[52px] text-slate-800 text-center dark:text-white'>Flexible Pricing Plans</h1>
-      <p className='text-base/7 text-red-500 max-w-sm text-center mt-4 dark:text-red-500'>Note: The website is in  development phase so you are allowed to purchase credits for free but that will get reseted when the website goes live.</p>
       <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         {pricingData.map((item, index) => (
           <div key={index} className={`border border-zinc-200 rounded-2xl p-6 flex flex-col items-start max-w-md transition duration-300 hover:-translate-y-1 ${item.mostPopular ? 'bg-gray-100 dark:bg-gray-800' : ''}`}>
