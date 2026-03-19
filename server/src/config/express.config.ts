@@ -8,6 +8,7 @@ import notFound from "../notfound.js";
 import router from "../route/route.js";
 import emailService from "../service/email.service.js";
 import enviroment from "./enviroment.config.js";
+import creditController from "../controller/credit.controller.js";
 
 const app: Application = express()
 
@@ -29,6 +30,9 @@ app.get('/', (req, res) => {
     message: "Server is working"
   })
 })
+app.post('/webhooks',
+  express.raw({ type: 'application/json' }),
+  creditController.handleWebhook)
 app.use('/api/v1', router)
 app.use(notFound)
 app.use(errorHandler)

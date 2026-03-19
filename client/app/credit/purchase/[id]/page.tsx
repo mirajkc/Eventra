@@ -3,6 +3,9 @@
 
 import { Button } from "@/components/ui/button"
 import getAccessToken from "@/lib/access.token"
+import { useAppSelector } from "@/state/hooks"
+import { authSlice } from "@/state/slices/auth.slice"
+import { IUserDetails } from "@/types/user.types"
 import { useParams, useRouter } from "next/navigation"
 import { toast } from "sonner"
 const pricingData = [
@@ -21,10 +24,15 @@ const pricingData = [
 ]
 
 export default function PurchasePage() {
+  const userDetails:IUserDetails | null = useAppSelector((state) => state.authSlice.userDetails)
   const params = useParams()
   const organizationId = params.id
   const router = useRouter()
   const purchaseCredit = async (packageName: string) => {
+    if(!userDetails?.id){
+    toast.error("please log in in order to donate credits.")
+    return
+  }
     try {
       const accessToken = await getAccessToken()
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/credit/purcahse-credit/${organizationId}`, {
@@ -40,10 +48,8 @@ export default function PurchasePage() {
         toast.error("Error occured while purchasing credits please try again later. ")
         return
       }
-      if (result.message) {
-        toast.success("Credits purchased successfully.")
-      }
-      router.push(`/organization/${organizationId}`)
+      console.log(result);
+      window.location.href = result.data
     } catch (error) {
       toast.error("Error occured while purchasing credits please try again later. ")
     }

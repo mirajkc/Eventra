@@ -4,6 +4,8 @@ class Enviroment {
   secretKey: string = process.env.SECRET_KEY || "SECRET"
   mode: string = process.env.MODE || "development"
   clientURL: string = process.env.CLIENT_URL || "http://localhost:3000"
+  stripeKey: string | undefined = process.env.STRIPE_SECRET
+  stripeWebHookSigningSecret=process.env.STRIPE_SIGNING_SECRET
   enableEmail: boolean = true
   SMTPConfigs = {
     provider: process.env.SMTP_PROVIDER || "gmail",
@@ -23,7 +25,9 @@ class Enviroment {
 
   geocodeKeys = {
     locationIq: process.env.LOCATION_IQ_ACCESSTOKEN
-  }
+  };
+
+
 }
 const enviroment = new Enviroment()
 export default enviroment

@@ -6,5 +6,6 @@ import { creditPurchaseDTO } from '../rules/credit.rules.js'
 const creditRouter:Router = express.Router()
 
 creditRouter.get('/get-credit/:organizationId' ,  creditController.getCredit)
-creditRouter.post('/purcahse-credit/:organizationId',validator(creditPurchaseDTO), authorize({}), creditController.purchaseCredit)
+creditRouter.post('/purcahse-credit/:organizationId',validator(creditPurchaseDTO), authorize({}), creditController.getStripeURI)
+creditRouter.post('/webhooks', creditController.purchaseCredit)
 export default creditRouter
