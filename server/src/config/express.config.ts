@@ -21,6 +21,11 @@ app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10000
 }))
+app.post(
+  '/webhooks',
+  express.raw({ type: 'application/json' }),
+  creditController.handleWebhook
+)
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieParser())
@@ -30,9 +35,7 @@ app.get('/', (req, res) => {
     message: "Server is working"
   })
 })
-app.post('/webhooks',
-  express.raw({ type: 'application/json' }),
-  creditController.handleWebhook)
+
 app.use('/api/v1', router)
 app.use(notFound)
 app.use(errorHandler)
