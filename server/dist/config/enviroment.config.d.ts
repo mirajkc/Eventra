@@ -4,6 +4,8 @@ declare class Enviroment {
     secretKey: string;
     mode: string;
     clientURL: string;
+    stripeKey: string | undefined;
+    stripeWebHookSigningSecret: string | undefined;
     enableEmail: boolean;
     SMTPConfigs: {
         provider: string;

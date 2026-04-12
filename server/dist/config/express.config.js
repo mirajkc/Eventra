@@ -8,6 +8,7 @@ import notFound from "../notfound.js";
 import router from "../route/route.js";
 import emailService from "../service/email.service.js";
 import enviroment from "./enviroment.config.js";
+import creditController from "../controller/credit.controller.js";
 const app = express();
 app.use(cors({
     origin: [enviroment.clientURL, "http://localhost:3000", "http://localhost:5173", "https://eventra-admin-dashboard.vercel.app", "https://eventraa.tech", "https://www.eventraa.tech"],
@@ -18,6 +19,7 @@ app.use(rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: 10000
 }));
+app.post('/webhooks', express.raw({ type: 'application/json' }), creditController.handleWebhook);
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());

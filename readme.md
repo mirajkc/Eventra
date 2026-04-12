@@ -1,114 +1,154 @@
 # Eventra
 
-Eventra is a comprehensive, modern event management platform designed to streamline the process of creating, managing, and attending events. From real-time chat interactions to organization-level event hosting and a built-in credit system, Eventra provides a seamless experience for both organizers and attendees.
+## Project Overview
+
+Eventra is a full-stack event management platform where users can discover events, organizations can host and manage communities, and teams can collaborate through real-time chat, notifications, and analytics.
+
+
 
 ## Key Features
 
-- Robust Authentication\*\*: Secure user registration and login using JWT and bcrypt.
-- Organization Management\*\*: Create and manage organizations to host professional events.
-- Event Lifecycle\*\*: Full control over event creation, updates, and registration management.
-- Real-time Interactions\*\*: Live event chat powered by Socket.IO for instant communication.
-- Credit System\*\*: Integrated credits for premium features or event-related transactions.
-- Smart Notifications\*\*: Real-time and email notifications to keep users updated.
-- Modern UI/UX\*\*: Fully responsive design with Dark and Light mode support, enhanced by Framer Motion and Three.js.
-- Cloud-Powered\*\*: Image hosting via Cloudinary and automated emails with Nodemailer.
+- 🚀 Organization-first event lifecycle management from creation to attendance.
+- 🔐 Secure authentication and protected role-based workflows.
+- 💬 Real-time event chat powered by Socket.IO.
+- 🏢 Organization membership, roles, and governance tooling.
+- 🎟 Registration and participation tracking for events.
+- 💳 Credit-based purchasing flow with webhook-ready backend handling.
+- 🔔 Notification system for in-app updates and engagement events.
+- 📊 Dedicated admin dashboard for platform analytics and moderation.
+- 🌐 Responsive user experience across desktop and mobile.
 
 ## Tech Stack
 
-### Frontend
+### Core Technologies
 
-- **Framework**: [Next.js 14 (App Router)](https://nextjs.org/)
-- **Library**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [Three.js](https://threejs.org/)
-- **Real-time**: [Socket.IO Client](https://socket.io/)
-- **Form Handling**: React Hook Form + Zod
-
-### Backend
-
-- **Runtime**: [Node.js](https://nodejs.org/)
-- **Framework**: [Express.js](https://expressjs.com/)
-- **ORM**: [Prisma](https://www.prisma.io/)
-- **Database**: [PostgreSQL](https://www.postgresql.org/)
-- **Real-time**: [Socket.IO](https://socket.io/)
-- **Authentication**: JSON Web Tokens (JWT)
-- **Utilities**: Cloudinary (Media), Nodemailer (Emails)
-
-## Project Structure
-
-```bash
-Eventra/
-├── client/           # Next.js frontend application
-│   ├── app/          # App router pages and layouts
-│   ├── components/   # Reusable UI components
-│   ├── state/        # Redux store and slices
-│   └── public/       # Static assets and images
-├── server/           # Express backend API
-│   ├── src/          # Source code (Controllers, Routes, Services)
-│   ├── prisma/       # Database schema and migrations
-│   └── dist/         # Compiled JavaScript
-└── readme.md         # Documentation
-```
+<p>
+	<img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" />
+	<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+	<img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+	<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+	<img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
+	<img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express" />
+	<img src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white" alt="Prisma" />
+	<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+	<img src="https://img.shields.io/badge/Socket.IO-010101?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" />
+	<img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+	<img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
+</p>
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- pnpm (recommended) or npm
-- PostgreSQL database
+- Docker and Docker Compose
+- Node.js 20+ (for local non-Docker workflow)
+- npm or pnpm
 
 ### Installation
 
-1. **Clone the repository**:
+```bash
+git clone git@github.com:mirajkc/Eventra.git
+cd eventra
+```
 
-   ```bash
-   git clone https://github.com/your-username/Eventra.git
-   cd Eventra
-   ```
+### Quick Start (Docker Recommended)
 
-2. **Setup the Server**:
+```bash
+docker compose up --build
+```
 
-   ```bash
-   cd server
-   pnpm install
-   ```
+Services after startup:
 
-   - Create a `.env` file in the `server` directory based on `.env.sample`.
-   - Run database migrations:
-     ```bash
-     npx prisma migrate dev
-     ```
-   - Start the server:
-     ```bash
-     pnpm dev
-     ```
+- Main frontend: http://localhost
+- Admin dashboard: http://localhost:5173
+- Backend API: http://localhost:9000
 
-3. **Setup the Client**:
+To stop all services:
 
-   ```bash
-   cd ../client
-   pnpm install
-   ```
+```bash
+docker compose down
+```
 
-   - Create a `.env` file in the `client` directory:
-     ```env
-     NEXT_PUBLIC_BASE_URL=http://localhost:9000/api/v1
-     NEXT_PUBLIC_SOCKET_BASE_URL=http://localhost:9000/
-     ```
-   - Start the development server:
-     ```bash
-     pnpm dev
-     ```
+### Local Development (Without Docker)
 
-## API Endpoints (v1)
+1. Start backend
 
-- `POST /api/v1/auth/register` - User Registration
-- `POST /api/v1/auth/login` - User Login
-- `GET /api/v1/event` - Fetch All Events
-- `POST /api/v1/organization` - Create Organization
-- `GET /api/v1/user/profile` - Get User Profile
+```bash
+cd server
+npm install
+npm run dev
+```
+
+2. Start client
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+3. Start admin dashboard
+
+```bash
+cd admin-dashboard
+npm install
+npm run dev
+```
+
+## Environment Configuration
+
+Create environment files in each service directory as needed.
+
+### server/.env
+
+```env
+PORT=9000
+CLIENT_URL=http://localhost
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB_NAME
+```
+
+### client/.env
+
+```env
+NEXT_PUBLIC_BASE_URL=http://localhost:9000/api/v1
+NEXT_PUBLIC_SOCKET_BASE_URL=http://localhost:9000
+```
+
+### admin-dashboard/.env
+
+```env
+VITE_APP_API_BASE_URL=http://localhost:9000/api/v1
+```
+
+## Repository Structure
+
+```text
+Eventra/
+├── admin-dashboard/          # React + Vite admin console
+│   ├── src/
+│   └── Dockerfile
+├── client/                   # Next.js main frontend
+│   ├── app/
+│   ├── components/
+│   └── Dockerfile
+├── server/                   # Express + Prisma backend
+│   ├── prisma/
+│   ├── src/
+│   └── Dockerfile
+├── nginx/                    # Optional reverse proxy configs
+├── docker-compose.yml        # Multi-service orchestration
+└── readme.md
+```
+
+## API Snapshot
+
+Representative endpoints:
+
+- `POST /api/v1/auth/register`
+- `POST /api/v1/auth/login`
+- `GET /api/v1/event/fetchallevents`
+- `POST /api/v1/organization/create-organization`
+- `GET /api/v1/user/me`
 
 ## Live Preview
 
@@ -119,4 +159,3 @@ Eventra/
 ---
 
 Built with ❤️ by the Eventra Team.
-

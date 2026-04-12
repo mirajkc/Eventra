@@ -76,7 +76,7 @@ class OrganizationController {
   async getOrganizationDetailsById(req: Request, res: Response, next: NextFunction) {
     try {
       const data: IOrganizationQuery = req.query
-      const organizationId = String(req.params.organizationId)
+      const organizationId : string = String(req.params.organizationId) as string
       if (!organizationId) {
         throw {
           code: 403,
@@ -194,7 +194,7 @@ class OrganizationController {
   async joinOrganization(req: Request, res: Response, next: NextFunction) {
     try {
       const userDetails: IUserDetails = req.userDetails
-      const organizationId: string = String(req.params.organizationId)
+      const organizationId: string = String(req.params.organizationId) as string
       await checkForCredit(organizationId)
       const organizationDetails = await organizationService.getOrganizationByFilter({
         filter: { id: organizationId },
@@ -263,7 +263,7 @@ class OrganizationController {
   async leaveOrganization(req: Request, res: Response, next: NextFunction) {
     try {
       const userDetails: IUserDetails = req.userDetails
-      const organizationId: string = String(req.params.organizationId)
+      const organizationId: string = String(req.params.organizationId) as string
       await checkForCredit(organizationId)
       const organizationDetails = await organizationService.getOrganizationByFilter({
         filter: { id: organizationId },
@@ -465,7 +465,7 @@ class OrganizationController {
   }
   async kickMember(req: Request, res: Response, next: NextFunction) {
     try {
-      const memberId = String(req.params.memberId)
+      const memberId : string = String(req.params.memberId) as string
       const organizationId = String(req.params.organizationId)
       const userDetails: IUserDetails = req.userDetails
       const organization = await organizationService.getOrganizationByFilter({
@@ -609,7 +609,7 @@ class OrganizationController {
   checkIfUserIsJoined = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userDetails: IUserDetails = req.userDetails
-      const organizationId = req.params.organizationId
+      const organizationId : string = req.params.organizationId as string
       if (!organizationId) {
         throw {
           code: 404,
@@ -645,7 +645,7 @@ class OrganizationController {
   getLoggedInUserOrganizationRole = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userDetails: IUserDetails = req.userDetails
-      const organizationId = req.params.organizationId
+      const organizationId: string = req.params.organizationId as string
       if (!organizationId) {
         throw {
           code: 404,

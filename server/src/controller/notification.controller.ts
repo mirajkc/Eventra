@@ -41,7 +41,7 @@ class NotificationController {
 
   async updateNotification(req: Request, res: Response, next: NextFunction) {
     try {
-      const notificationId = req.params.notificationId
+      const notificationId:string = req.params.notificationId as string
       if (!notificationId) {
         throw {
           code: 400,

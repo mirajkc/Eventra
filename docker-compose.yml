@@ -1,0 +1,35 @@
+services:
+  server:
+    build: ./server
+    container_name: server
+    ports:
+      - "9000:9000"
+    environment:
+      - PORT=9000
+      - CLIENT_URL=http://localhost
+    volumes:
+      - ./server/.env:/app/.env:ro
+
+  client:
+    build:
+      context: ./client
+      args:
+        NEXT_PUBLIC_BASE_URL: http://localhost:9000/api/v1
+        NEXT_PUBLIC_SOCKET_BASE_URL: http://localhost:9000
+    container_name: client
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+  admin-dashboard:
+    build:
+      context: ./admin-dashboard
+      args:
+        VITE_APP_API_BASE_URL: http://localhost:9000/api/v1
+    container_name: admin-dashboard
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+      - client

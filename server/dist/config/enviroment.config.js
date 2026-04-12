@@ -4,6 +4,8 @@ class Enviroment {
     secretKey = process.env.SECRET_KEY || "SECRET";
     mode = process.env.MODE || "development";
     clientURL = process.env.CLIENT_URL || "http://localhost:3000";
+    stripeKey = process.env.STRIPE_SECRET;
+    stripeWebHookSigningSecret = process.env.STRIPE_SIGNING_SECRET;
     enableEmail = true;
     SMTPConfigs = {
         provider: process.env.SMTP_PROVIDER || "gmail",
