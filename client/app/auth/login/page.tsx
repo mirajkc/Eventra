@@ -36,6 +36,11 @@ export default function Login() {
   })
   const onSubmit = async (data: any) => {
     try {
+      for (const name of ["accessToken", "refreshToken"]) {
+        Cookies.remove(name);
+        Cookies.remove(name, { path: "/" });
+        Cookies.remove(name, { path: "" });
+      }
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
@@ -49,12 +54,12 @@ export default function Login() {
       }
       Cookies.set("accessToken", result.data.accessToken, {
         expires: 1 / 24,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         path: "/"
       });
       Cookies.set("refreshToken", result.data.refreshToken, {
         expires: 15,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         path: "/"
       });
       await dispatch(getUserDetails())

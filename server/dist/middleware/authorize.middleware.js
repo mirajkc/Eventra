@@ -3,8 +3,8 @@ import authService from "../service/auth.service.js";
 export default function authorize({ role = "CUSTOMER" }) {
     return async (req, res, next) => {
         try {
-            const token = (req.cookies.accessToken || req.headers.authorization)?.replace(/^Bearer\s*/, '');
-            if (!token)
+            const token = (req.headers.authorization || req.cookies.accessToken)?.replace(/^Bearer\s*/, '');
+            if (!token || token === 'null' || token === 'undefined')
                 throw {
                     code: 401,
                     message: 'User not authorized',

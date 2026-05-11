@@ -12,6 +12,8 @@ import { useState } from "react"
 import MobileMenu from "./MobileMenu"
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { motion } from "motion/react"
+
 
 
 export default function NavBar() {
@@ -24,7 +26,11 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="sticky top-0 rounded-sm z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black dark:border-gray-800 dark:text-gray-100">
+    <motion.nav
+      initial={{ opacity: 0, y: -25 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeIn" }}
+      className="sticky top-0 rounded-sm z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black dark:border-gray-800 dark:text-gray-100">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
@@ -71,6 +77,6 @@ export default function NavBar() {
 
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-    </nav>
+    </motion.nav>
   )
 }

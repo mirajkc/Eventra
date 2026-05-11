@@ -8,7 +8,7 @@ export default function LargeText() {
     const { t } = useTranslation();
 
     return (
-        <section className="min-h-screen w-full flex items-center justify-center overflow-hidden select-none bg-white dark:bg-neutral-950">
+        <section className="min-h-screen  w-full flex items-center justify-center overflow-hidden select-none  dark:bg-neutral-950">
             <div className="flex flex-col items-center justify-center w-full px-4">
                 <BlurText
                     text={t("landing.hero.title")}

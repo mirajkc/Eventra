@@ -193,6 +193,19 @@ class UserController {
             next(error);
         }
     }
+    async getRecentUserActivities(req, res, next) {
+        try {
+            const userDetails = req.userDetails;
+            const data = await userService.getUserActivity({ filter: { id: userDetails.id } });
+            return res.json({
+                message: "User activities fetched successfully",
+                data
+            });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
 }
 const userController = new UserController();
 export default userController;

@@ -29,7 +29,11 @@
             "step2_title": "Visit Events",
             "step2_desc": "Explore thousands of events happening around you or globally with ease.",
             "step3_title": "Join Them",
-            "step3_desc": "Join the community, participate in events, and create memories that last a lifetime."
+            "step3_desc": "Join the community, participate in events, and create memories that last a lifetime.",
+            "step4_title": "Track Activity",
+            "step4_desc": "Keep track of upcoming schedules and monitor your event participation effortlessly.",
+            "step5_title": "Share your Experience",
+            "step5_desc": "Share your experience and build connection by leaving honest feedback on the events you attended."
         },
         "whyChooseUs": {
             "badge": "Why Choose Eventra",
@@ -64,6 +68,13 @@
                 "notified": "Get notified for all people who has joined organization",
                 "noReset": "No credits reset monthly"
             }
+        },
+        "puzzleHero": {
+            "topText": "Discover the joy of",
+            "highlight1": "effortless",
+            "midText": "event management sourcing",
+            "highlight2": "with Eventra.",
+            "subtitle": "Eventra's event management platform is now available and ready to revolutionize the way you think about organizing and attending events."
         }
     },
     "footer": {
@@ -93,7 +104,16 @@
             "subtitle1": "Powerful, flexible and data-driven, Eventra makes it easy",
             "subtitle2": "to build the exact event that you think of.",
             "exploreBtn": "Explore Events",
-            "joinBtn": "Join Organizations"
+            "joinBtn": "Join Organizations",
+            "welcome": "Welcome back, {{name}}! 👋",
+            "quickSettings": "Quick Actions",
+            "recentActivity": "Recent Activity",
+            "noActivity": "No recent activity yet. Start exploring!",
+            "viewAll": "View All",
+            "searchTitle": "Find your next experience.",
+            "searchSubtitle": "Discover events that match your passion and interests.",
+            "joined": "Joined",
+            "viewed": "Viewed"
         },
         "showcase": {
             "title": "A event management system created to be yours.",
@@ -105,6 +125,8 @@
             "title2": "much more...",
             "subtitle1": "Your events are always evolving.",
             "subtitle2": "Why should your management system be any different?",
+            "title_discover": "Discover our core features",
+            "subtitle_discover": "Everything you need to create, manage, and scale your events effortlessly. We provide powerful tools that adapt to your unique event requirements.",
             "features": {
                 "f1_title": "Quick actions",
                 "f1_desc": "Streamline your event workflow with easy navigation and quick actions.",
@@ -134,10 +156,139 @@
         "cta": {
             "title1": "Ready to experience",
             "title2": "the magic?",
+            "convincedTitle": "Are you convinced yet?",
+            "joinUs": "Join Eventra today",
             "subtitle": "Join thousands of organizers building incredible events with Eventra. Start for free and see how easily you can scale your vision.",
             "getStartedBtn": "Get started for free",
             "exploreBtn": "Explore events",
             "footerText": "No credit card required. Instant access."
+        }
+    },
+    "loggedInHome": {
+        "welcome": "Welcome back,",
+        "subtitle": "Your events, your circle, your moments — all in one place.",
+        "sections": {
+            "featured": "Featured for you",
+            "featuredKicker": "Up next",
+            "recommended": "Recommended events",
+            "recommendedKicker": "Picked for you",
+            "recentlyJoined": "Recently joined",
+            "recentlyJoinedKicker": "Your events",
+            "recentlyViewed": "Recently viewed",
+            "recentlyViewedKicker": "Take a second look",
+            "trending": "Trending now",
+            "trendingKicker": "Most popular",
+            "upcoming": "Upcoming this week",
+            "upcomingKicker": "Don't miss out",
+            "discover": "Discover more",
+            "discoverKicker": "Fresh on the platform",
+            "browse": "Find what's next",
+            "browseKicker": "Browse and search",
+            "quickActions": "Quick actions",
+            "quickActionsKicker": "Manage your space"
+        },
+        "empty": {
+            "joined": "You haven't joined any events yet.",
+            "viewed": "Nothing here yet — start browsing.",
+            "recommended": "No recommendations yet. Here are some events you might like.",
+            "events": "No events available right now.",
+            "upcoming": "Nothing on your calendar this week."
+        },
+        "actions": {
+            "seeAll": "See all",
+            "viewEvent": "View",
+            "previous": "Previous",
+            "next": "Next",
+            "browseEvents": "Browse all events",
+            "browseOrganizations": "Browse organizations",
+            "search": "Search"
+        },
+        "search": {
+            "placeholder": "Search workshops, hackathons, meetups..."
+        },
+        "categories": {
+            "WORKSHOP": "Workshop",
+            "MEETUP": "Meetup",
+            "CONFERENCE": "Conference",
+            "WEBINAR": "Webinar",
+            "HACKATHON": "Hackathon",
+            "COMPETITION": "Competition"
+        },
+        "quick": {
+            "organization": {
+                "title": "Organization settings",
+                "description": "Manage your organizations, members and roles."
+            },
+            "events": {
+                "title": "Event settings",
+                "description": "Edit, publish and review the events you've created."
+            },
+            "profile": {
+                "title": "Profile settings",
+                "description": "Update your name, photo, password and account."
+            }
+        }
+    },
+    "nonLoggedInHome": {
+        "eyebrow": "Eventra",
+        "headlineLead": "Find what's worth",
+        "headlineAccent": "showing up to.",
+        "subtitle": "A quiet place for loud ideas, small gatherings and serious workshops. Browse public events without an account.",
+        "actions": {
+            "explore": "Explore events",
+            "signUp": "Create account",
+            "signIn": "Sign in",
+            "search": "Search",
+            "viewAll": "See all"
+        },
+        "search": {
+            "placeholder": "Workshops, hackathons, meetups in your city..."
+        },
+        "stats": {
+            "kicker": "By the numbers",
+            "eventsLabel": "Live events",
+            "organizersLabel": "Organizers",
+            "attendeesLabel": "Attendees joined",
+            "categoriesLabel": "Categories"
+        },
+        "sections": {
+            "featured": "Worth your week",
+            "featuredKicker": "Editor's pick",
+            "trending": "Trending right now",
+            "trendingKicker": "Most attended",
+            "upcoming": "This week",
+            "upcomingKicker": "Starting soon",
+            "discover": "Discover more",
+            "discoverKicker": "Fresh on Eventra",
+            "browse": "Find what's next",
+            "browseKicker": "Browse and search",
+            "promises": "Why people stay",
+            "promisesKicker": "What you'll find here"
+        },
+        "empty": {
+            "events": "No events yet — be the first to host one."
+        },
+        "promises": {
+            "discover": {
+                "title": "Discover with intent.",
+                "description": "Hand-picked workshops, conferences and meetups — filtered the way you'd filter them yourself."
+            },
+            "organize": {
+                "title": "Organize without the noise.",
+                "description": "Publish, manage and track your event in one place. No setup, no spreadsheets, no clutter."
+            },
+            "belong": {
+                "title": "Belong somewhere real.",
+                "description": "Join communities that show up, not just sign up. People over pageviews."
+            }
+        },
+        "banner": {
+            "kicker": "Ready when you are",
+            "title": "Begin where",
+            "titleAccent": "everyone shows up.",
+            "description": "Create a free account to register for events, follow organizers and host your own.",
+            "primaryCta": "Create account",
+            "secondaryCta": "I already have one"
         }
     },
     "events": {

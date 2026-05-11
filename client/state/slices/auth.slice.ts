@@ -19,6 +19,9 @@ export const getUserDetails = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = await getAccessToken();
+      if (!token) {
+        return rejectWithValue("No token");
+      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/me`,
         {

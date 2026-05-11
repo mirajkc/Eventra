@@ -616,6 +616,36 @@ declare class UserService {
         clickedEventsCount: number;
     }[]>;
     getTotalUsersCount(filter?: any): Promise<number>;
+    getUserActivity({ filter }: {
+        filter: {
+            id: string;
+        };
+    }): Promise<{
+        event: {
+            id: string;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            organizationId: string;
+            slug: string;
+            creatorId: string;
+            title: string;
+            description: string;
+            location: string;
+            latitude: number | null;
+            longitude: number | null;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+            eventScore: number | null;
+        };
+        hasClicked: boolean;
+        hasJoined: boolean;
+    }[]>;
 }
 declare const userService: UserService;
 export default userService;

@@ -1,44 +1,61 @@
 "use client";
 
-import { motion } from "motion/react";
-import { UserPlus, Search, Users } from "lucide-react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { UserPlus, Search, Users, Activity, Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useRef } from "react";
 
 const getSteps = (t: any) => [
     {
         title: t("landing.howItWorks.step1_title"),
         description: t("landing.howItWorks.step1_desc"),
-        icon: <UserPlus className="w-10 h-10 text-zinc-900 dark:text-zinc-100" />,
-        delay: 0.2
+        icon: <UserPlus className="w-8 h-8 text-primary" />,
     },
     {
         title: t("landing.howItWorks.step2_title"),
         description: t("landing.howItWorks.step2_desc"),
-        icon: <Search className="w-10 h-10 text-zinc-900 dark:text-zinc-100" />,
-        delay: 0.4
+        icon: <Search className="w-8 h-8 text-primary" />,
     },
     {
         title: t("landing.howItWorks.step3_title"),
         description: t("landing.howItWorks.step3_desc"),
-        icon: <Users className="w-10 h-10 text-zinc-900 dark:text-zinc-100" />,
-        delay: 0.6
+        icon: <Users className="w-8 h-8 text-primary" />,
+    },
+    {
+        title: t("landing.howItWorks.step4_title"),
+        description: t("landing.howItWorks.step4_desc"),
+        icon: <Activity className="w-8 h-8 text-primary" />,
+    },
+    {
+        title: t("landing.howItWorks.step5_title"),
+        description: t("landing.howItWorks.step5_desc"),
+        icon: <Star className="w-8 h-8 text-primary" />,
     }
 ];
 
 export default function HowItWorks() {
     const { t } = useTranslation();
     const steps = getSteps(t);
+    const containerRef = useRef<HTMLDivElement>(null);
+    
+    // For tracking the scroll progress across the entire timeline wrapper
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start center", "end center"],
+    });
+
+    const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
     return (
-        <section className="py-32 w-full max-w-7xl mx-auto px-6 relative overflow-visible">
+        <section className="py-24 w-full max-w-5xl mx-auto px-6 overflow-x-hidden">
             {/* Header */}
-            <div className="text-center mb-24">
+            <div className="text-center mb-20">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-4xl md:text-6xl font-bold text-zinc-900 dark:text-zinc-100 mb-6 tracking-tight"
+                    className="text-4xl md:text-5xl font-bold tracking-tight mb-6"
                 >
                     {t("landing.howItWorks.title")}
                 </motion.h2>
@@ -47,69 +64,83 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-zinc-500 dark:text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto font-medium"
+                    className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto"
                 >
                     {t("landing.howItWorks.subtitle")}
                 </motion.p>
             </div>
 
-            {/* Steps Container */}
-            <div className="relative">
-                {/* Dotted Connection Path (Desktop) */}
-                <div className="hidden lg:block absolute top-[20%] left-[15%] right-[15%] h-32 -z-10 overflow-visible">
-                    <svg width="100%" height="100%" viewBox="0 0 1000 120" fill="none" preserveAspectRatio="none">
-                        <motion.path
-                            d="M0,60 C150,60 150,10 333,10 C516,10 516,110 666,110 C816,110 816,60 1000,60"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeDasharray="8 8"
-                            className="text-zinc-200 dark:text-zinc-800"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.5, ease: "easeInOut" }}
-                        />
-                    </svg>
-                </div>
+            {/* Vertical Timeline Container */}
+            <div ref={containerRef} className="relative mt-8 w-full pb-10">
+                {/* Background vertical line */}
+                <div className="absolute left-4 sm:left-1/2 top-4 bottom-4 w-1 bg-border/50 transform -translate-x-1/2 rounded-full z-0"></div>
+                
+                {/* Automated Animated filled vertical line */}
+                <motion.div 
+                    className="absolute left-4 sm:left-1/2 top-4 bottom-4 w-1 bg-primary transform -translate-x-1/2 origin-top rounded-full z-0"
+                    style={{ scaleY }}
+                />
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 lg:gap-16">
-                    {steps.map((step, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: step.delay }}
-                            className="flex flex-col items-center text-center group"
-                        >
-                            {/* Icon Wrapper */}
-                            <div className="relative mb-10">
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center bg-white dark:bg-zinc-900/50 backdrop-blur-xl rounded-[2.5rem] border border-zinc-200 dark:border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)] transition-all duration-500"
-                                >
-                                    <div className="absolute inset-0 rounded-[2.5rem] bg-linear-to-br from-white/20 via-transparent to-transparent pointer-events-none" />
+                <div className="flex flex-col gap-16 relative z-10 w-full pt-4">
+                    {steps.map((step, index) => {
+                        const isEven = index % 2 === 0;
 
-                                    <div className="transform group-hover:scale-110 transition-transform duration-500">
-                                        {step.icon}
-                                    </div>
+                        return (
+                            <div key={index} className="relative flex items-center w-full group min-h-[120px]">
+                                {/* Number Circle (Center Point) */}
+                                <div className="absolute left-4 sm:left-1/2 transform -translate-x-1/2 w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-primary-foreground border-4 border-background shadow-sm transition-transform duration-300 z-20 group-hover:scale-110">
+                                    {index + 1}
+                                </div>
 
-                                    {/* Number Badge (Neutral) */}
-                                    <div className="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-zinc-900 dark:bg-zinc-100 flex items-center justify-center text-white dark:text-zinc-900 text-sm font-bold shadow-lg border-2 border-white dark:border-zinc-900">
-                                        {index + 1}
-                                    </div>
-                                </motion.div>
+                                {/* Desktop: The Alternating Layout Container */}
+                                <div className="w-full flex sm:flex-row flex-col relative justify-center">
+                                    
+                                    {/* Text Content Block */}
+                                    <motion.div
+                                        initial={{ opacity: 0, x: isEven ? 40 : -40 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true, margin: "-50px" }}
+                                        transition={{ duration: 0.6 }}
+                                        className={`w-full sm:w-[45%] pl-14 sm:pl-0 pt-1 sm:pt-0 ${
+                                            isEven 
+                                                ? "sm:absolute sm:right-0 sm:text-left sm:pl-10" 
+                                                : "sm:absolute sm:left-0 sm:text-right sm:pr-10"
+                                        }`}
+                                    >
+                                        <h3 className="text-xl md:text-2xl font-bold mb-2 text-foreground">{step.title}</h3>
+                                        <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+                                            {step.description}
+                                        </p>
+                                        
+                                        {/* Mobile Inline Icon */}
+                                        <div className="sm:hidden mt-4">
+                                            <div className="w-16 h-16 border-[3px] border-border rounded-full flex items-center justify-center bg-card">
+                                                {step.icon}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+
+                                    {/* Icon Decoration Block (Desktop Only) */}
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true, margin: "-50px" }}
+                                        transition={{ duration: 0.6, delay: 0.1 }}
+                                        className={`hidden sm:flex absolute top-1/2 -translate-y-1/2 items-center justify-center ${
+                                            isEven 
+                                                ? "left-0 w-[45%] pr-10 justify-end" 
+                                                : "right-0 w-[45%] pl-10 justify-start"
+                                        }`}
+                                    >
+                                        <div className="w-28 h-28 border-4 border-border rounded-full flex items-center justify-center bg-card group-hover:border-primary/40 group-hover:shadow-lg transition-all duration-500 z-10">
+                                            {step.icon}
+                                        </div>
+                                    </motion.div>
+
+                                </div>
                             </div>
-
-                            {/* Content */}
-                            <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-4 tracking-tight">
-                                {step.title}
-                            </h3>
-                            <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-[300px] text-lg">
-                                {step.description}
-                            </p>
-                        </motion.div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>

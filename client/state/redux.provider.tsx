@@ -5,8 +5,10 @@ import { store } from "./store";
 import { getUserDetails } from "./slices/auth.slice";
 import { useAppDispatch } from "./hooks";
 import "../i18n/index";
+import {QueryClient,  QueryClientProvider} from "@tanstack/react-query";
 
 
+const queryClient = new QueryClient();
 
 function ReduxInitializer() {
   const dispatch = useAppDispatch();
@@ -33,9 +35,11 @@ export default function ReduxProvider({
   children: React.ReactNode;
 }) {
   return (
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
       <ReduxInitializer />
       {children}
     </Provider>
+    </QueryClientProvider>
   );
 }

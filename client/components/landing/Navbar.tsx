@@ -1,72 +1,100 @@
 "use client";
 
 import Link from "next/link";
-import { ModeToggle } from "../ModeSwitch";
 import { MobileMenu } from "./MobileMenu";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "../NavBar/LanguageSwitcher";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
+import { motion } from "motion/react";
 
 export const getMenuLinks = (t: any) => [
-  {
-    href: "/home",
-    label: t("navbar.home"),
-  },
-  {
-    href: "/events",
-    label: t("navbar.events"),
-  },
-  {
-    href: "/organizations",
-    label: t("navbar.organizations"),
-  },
-]
+  { href: "/home", label: t("navbar.home") || "Home" },
+  { href: "/events", label: t("navbar.events") || "Events" },
+  { href: "/organizations", label: t("navbar.organizations") || "Organizations" },
+];
 
 export default function LandingNavbar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const menuLinks = getMenuLinks(t);
+  const { theme, setTheme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "ne" : "en";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("i18nextLng", newLang);
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   return (
-    <nav className="sticky top-2 z-50">
-      <div className="flex justify-between max-w-7xl mx-auto items-center mt-4 text-black dark:text-white bg-gray-100 dark:bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg shadow-sm" >
-        <div>
-          <h1 className="text-2xl font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer" >Eventra</h1>
+    <nav className="w-full absolute top-0 left-0 z-50 pt-6 px-4 md:px-8 bg-transparent overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: -15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="flex justify-between w-full max-w-[1440px] mx-auto items-center text-black dark:text-white relative"
+      >
+        {/* Left - Logo */}
+        <div className="flex items-center gap-3 cursor-pointer z-10 lg:w-[200px]  justify-center">
+          <h1 className="text-xl font-extrabold tracking-[0.2em] uppercase text-center">
+            Eventra
+          </h1>
         </div>
-        <div className="hidden md:block flex items-center" >
-          <div className="flex items-center gap-4" >
-            {menuLinks.map((link) => (
-              <Link
-                href={link.href}
-                key={link.label}
-                className="relative px-3 py-2 rounded-md font-medium transition-all duration-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-800 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 dark:after:bg-blue-400 after:transition-all after:duration-200 hover:after:w-full"
-              >
-                {link.label}
-              </Link>
-            ))}
+
+
+        {/* Right - Actions */}
+        <div className="hidden md:flex gap-6 justify-end items-center z-10 lg:w-[350px]">
+          {/* Toggles */}
+          <div className="flex items-center gap-4 border-r border-gray-200 dark:border-gray-800 pr-5">
+            <button
+              onClick={toggleLanguage}
+              className="text-[11px] font-bold tracking-widest uppercase hover:text-gray-500 transition-colors w-8 text-center"
+            >
+              {mounted && i18n.language === "ne" ? "NP" : "EN"}
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="text-[11px] font-bold tracking-widest uppercase hover:text-gray-500 transition-colors w-12 text-center"
+            >
+              {mounted && theme === "dark" ? "DARK" : "LIGHT"}
+            </button>
           </div>
 
-        </div>
-        <div className="hidden md:block md:flex gap-4 justify-center items-center" >
-          <div>
-            <LanguageSwitcher />
-          </div>
-          <div>
-            <ModeToggle />
-          </div>
-          <div>
-            <Link href="/auth/login"> <Button className="hover:cursor-pointer" variant={"default"}>
-              {t("navbar.getStarted")}
-            </Button></Link>
-          </div>
+          <Link href="/home">
+            <Button size="sm" className="rounded-full px-6 py-0 h-10 text-[11px] font-bold tracking-widest uppercase bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 transition-all shadow-md active:scale-95 hover:cursor-pointer">
+              {t("navbar.getStarted", "Get Started")}
+            </Button>
+          </Link>
         </div>
 
         {/* mobile menu */}
-        <div className="block md:hidden flex gap-2 items-center" >
-          <LanguageSwitcher />
-          <ModeToggle />
+        <div className="flex lg:hidden gap-4 items-center">
+          <button
+            onClick={toggleLanguage}
+            className="text-[11px] font-bold tracking-widest uppercase w-8 text-center"
+          >
+            {mounted && i18n.language === "ne" ? "NP" : "EN"}
+          </button>
+          <button
+            onClick={toggleTheme}
+            className="text-[11px] font-bold tracking-widest uppercase w-12 text-center"
+          >
+            {mounted && theme === "dark" ? "DARK" : "LIGHT"}
+          </button>
           <MobileMenu />
         </div>
-      </div>
+      </motion.div>
     </nav>
   )
 }

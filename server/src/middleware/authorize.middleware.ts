@@ -11,10 +11,10 @@ interface IJwtPayload {
 export default function authorize({ role = "CUSTOMER" } : { role?: "CUSTOMER" | "ADMIN" }) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const token = (req.cookies.accessToken || req.headers.authorization)?.replace(/^Bearer\s*/, '');     
-      if (!token) throw { 
-        code: 401, 
-        message: 'User not authorized', 
+      const token = (req.headers.authorization || req.cookies.accessToken)?.replace(/^Bearer\s*/, '');
+      if (!token || token === 'null' || token === 'undefined') throw {
+        code: 401,
+        message: 'User not authorized',
         status: 'USER_NOT_AUTHORIZED_ERR' } as IErrorTypes;
 
       const decoded = verifyToken(token) as IJwtPayload;

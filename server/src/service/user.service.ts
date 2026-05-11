@@ -1,79 +1,97 @@
-﻿import { prisma } from "../config/prisma.config.js"
+import { prisma } from "../config/prisma.config.js"
 import type { IErrorTypes } from "../lib/types/errorhandler.types.js"
 
 class UserService {
-  getPublicUser (userDetails:any){
-    const {password, session,userInteractions,userEmbedding, otpdetails, ...publicUser  } = userDetails
+  getPublicUser(userDetails: any) {
+    const { password, session, userInteractions, userEmbedding, otpdetails, ...publicUser } = userDetails
     return publicUser
   }
-  async deleteUser (filter : {id : string}){
+  async deleteUser(filter: { id: string }) {
     const deletedUser = await prisma.user.delete({
-      where : filter
+      where: filter
     })
-    if(!deletedUser){
+    if (!deletedUser) {
       throw {
-        code : 500,
-        message : "Unable to delete the user. ",
-        status : "USER_DELETION_ERR"
+        code: 500,
+        message: "Unable to delete the user. ",
+        status: "USER_DELETION_ERR"
       } as IErrorTypes
     }
     return deletedUser
   }
   async getUserDetails(filter: { id: string }, include: any) {
-  const user = await prisma.user.findUnique({
-    where: filter,
-    include: include
-  });
+    const user = await prisma.user.findUnique({
+      where: filter,
+      include: include
+    });
 
-  if (!user) {
-    throw {
-      code: 404,
-      message: "User not found",
-      status: "USER_NOT_FOUND_ERR",
-    } as IErrorTypes;
+    if (!user) {
+      throw {
+        code: 404,
+        message: "User not found",
+        status: "USER_NOT_FOUND_ERR",
+      } as IErrorTypes;
+    }
+    return user;
   }
-  return user;
-}
 
 
-  async getUserDetailsByName(filter: { name?: {contains : string, mode: 'insensitive'}}, include: any) {
-  const user = await prisma.user.findFirst({
-    where: filter,
-    include: include
-  });
+  async getUserDetailsByName(filter: { name?: { contains: string, mode: 'insensitive' } }, include: any) {
+    const user = await prisma.user.findFirst({
+      where: filter,
+      include: include
+    });
 
-  if (!user?.id) {
-    throw {
-      code: 404,
-      message: "User not found",
-      status: "USER_NOT_FOUND_ERR",
-    } as IErrorTypes;
+    if (!user?.id) {
+      throw {
+        code: 404,
+        message: "User not found",
+        status: "USER_NOT_FOUND_ERR",
+      } as IErrorTypes;
+    }
+    return user;
   }
-  return user;
-}
 
 
-async getAllUsers (skip : number, take : number, filter : any){
-  const userDetails = await prisma.user.findMany({
-    where : filter,
-    skip : skip,
-    take : take
-  })
-  if(!userDetails[0]?.id){
-    throw {
-      code : 404,
-      message : "User not found",
-      status : "USER_NOT_FOUND_ERR",
-    } as IErrorTypes
+  async getAllUsers(skip: number, take: number, filter: any) {
+    const userDetails = await prisma.user.findMany({
+      where: filter,
+      skip: skip,
+      take: take
+    })
+    if (!userDetails[0]?.id) {
+      throw {
+        code: 404,
+        message: "User not found",
+        status: "USER_NOT_FOUND_ERR",
+      } as IErrorTypes
+    }
+    return userDetails
   }
-  return userDetails
-}
+
+  async getTotalUsersCount(filter?: any) {
+    return await prisma.user.count()
+  }
 
 
-
-
-  async getTotalUsersCount (filter? : any){
-    return  await prisma.user.count()
+  async getUserActivity({ filter }: { filter: { id: string } }) {
+    const result = await prisma.eventMetric.findMany({
+      where: { userId: filter.id },
+      select: {
+        event: true,
+        hasClicked: true,
+        hasJoined: true,
+      },
+      take: 10
+    })
+    if (!result) {
+      throw {
+        code: 404,
+        message: "User activities not found",
+        status: "USER_ACTIVITIES_NOT_FOUND_ERR",
+      } as IErrorTypes
+    }
+    return result
   }
 
 

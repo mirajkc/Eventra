@@ -63,6 +63,25 @@ class UserService {
     async getTotalUsersCount(filter) {
         return await prisma.user.count();
     }
+    async getUserActivity({ filter }) {
+        const result = await prisma.eventMetric.findMany({
+            where: { userId: filter.id },
+            select: {
+                event: true,
+                hasClicked: true,
+                hasJoined: true,
+            },
+            take: 10
+        });
+        if (!result) {
+            throw {
+                code: 404,
+                message: "User activities not found",
+                status: "USER_ACTIVITIES_NOT_FOUND_ERR",
+            };
+        }
+        return result;
+    }
 }
 const userService = new UserService();
 export default userService;

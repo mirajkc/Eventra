@@ -182,3 +182,11 @@ export interface IEventUpdate {
   tags?: string | string[],
   image?: File | string | null
 }
+
+
+
+export interface IEventRecentActivities {
+            event : ISingleEvent
+            hasClicked: boolean,
+            hasJoined: boolean
+}

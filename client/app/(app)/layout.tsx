@@ -18,7 +18,7 @@ export default function RootLayout({
         <div className="sticky top-4 z-50" >
           <NavBar />
         </div>
-        <div className="flex flex-col min-h-screen max-w-7xl mx-auto" >
+        <div className="flex flex-col min-h-screen max-w-7xl mx-auto w-full" >
           {children}
         </div>
         <div className="mt-auto">

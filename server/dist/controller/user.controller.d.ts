@@ -5,6 +5,7 @@ declare class UserController {
     deleteUser(req: Request, res: Response, next: NextFunction): Promise<void>;
     getUserDetails(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
     getAllUsers(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
+    getRecentUserActivities(req: Request, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined>;
 }
 declare const userController: UserController;
 export default userController;

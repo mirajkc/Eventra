@@ -1,24 +1,9 @@
 "use client"
 
 import { IEventReponse } from "@/types/event.type"
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
-import { Badge } from "../ui/badge"
-import {
-  Calendar,
-  MapPin,
-  Users,
-  Clock,
-  ArrowRight,
-  Trophy,
-  Video,
-  Users2,
-  CalendarDays,
-  Tag,
-  BadgeCheck
-} from "lucide-react"
+import { MapPin, ArrowRight } from "lucide-react"
 import { format } from "date-fns"
 import { motion } from "motion/react"
-import { Button } from "../ui/button"
 import Link from "next/link"
 import Image from "next/image"
 import { useTranslation } from "react-i18next";
@@ -27,159 +12,96 @@ interface EventCardProps {
   event: IEventReponse
 }
 
-const categoryIcons: Record<string, typeof Trophy> = {
-  COMPETITION: Trophy,
-  WEBINAR: Video,
-  MEETUP: Users2,
-  CONFERENCE: CalendarDays,
-  HACKATHON: Trophy,
-  WORKSHOP: Trophy,
-}
-
 export default function EventCard({ event }: EventCardProps) {
   const { t } = useTranslation();
   const startDate = new Date(event.startDate)
-  const Icon = categoryIcons[event.category] || Tag
   const now = new Date();
   const start = new Date(event.startDate);
   const end = new Date(event.endDate);
 
   let status = "CANCELLED";
-
   if (end < now) status = "COMPLETED";
   else if (start <= now && end >= now) status = "ONGOING";
   else if (start > now) status = "UPCOMING";
+
+  const capacity = event.capacity || 1;
+  const registeredCount = event.registeredCount || 0;
+  const percentage = Math.min(Math.round((registeredCount / capacity) * 100), 100);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -6 }}
       transition={{ duration: 0.3 }}
-      className="h-full"
+      className="h-full z-10"
     >
-      <Card className="group relative h-full flex flex-col overflow-hidden border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10">
-        {/* Banner/Thumbnail */}
-        <div className="relative aspect-video w-full overflow-hidden">
-          {event.image ? (
-            <Image
-              src={event.image}
-              alt={event.title}
-              fill
-              sizes='w-10'
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              loading="eager"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-li-to-br from-neutral-100 border to-neutral-200 dark:from-neutral-900 dark:to-neutral-800">
-              <Calendar className="h-12 w-12 text-neutral-400 opacity-50" />
-            </div>
-          )}
-
-          {/* Category Overlay */}
-          <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-            <Badge className="bg-white/90 dark:bg-neutral-900/90 text-neutral-900 dark:text-neutral-100 backdrop-blur-md border-none flex items-center gap-1.5 py-1 px-3">
-              <Icon className="w-3.5 h-3.5" />
-              <span className="text-[10px] font-bold tracking-tight uppercase">{event.category}</span>
-            </Badge>
-          </div>
-
-          <div className="absolute top-3 right-3">
-            <Badge variant="outline" className="border-neutral-200 bg-gray-200 dark:bg-gray-500 dark:border-neutral-700">
-              {
-                event.status === "CANCELLED" ? t("events.card.status.CANCELLED") : t(`events.card.status.${status}`)
-              }
-            </Badge>
-          </div>
-
-          {/* Organization Mini Badge */}
-          <div className="absolute bottom-3 left-3">
-            <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full pl-1 pr-3 py-1 border border-white/10">
-              <div className="relative size-6 rounded-full overflow-hidden border border-white/20">
-                <Image
-                  src={event.organization.image || "/organization_profile.jpg"}
-                  alt={event.organization.name}
-                  fill
-                  sizes="w-10"
-                  className="object-cover"
-                />
+      <div className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-white border border-neutral-100 dark:border-neutral-800/60 dark:bg-neutral-950/80 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-neutral-200 dark:hover:border-neutral-700">
+        <Link href={`/event/${event.id}`} className="absolute inset-0 z-10">
+          <span className="sr-only">View Event Details</span>
+        </Link>
+        <div className="relative h-[180px] w-full p-2.5 pb-0">
+          <div className="relative w-full h-full rounded-2xl overflow-hidden ring-1 ring-neutral-100 dark:ring-neutral-800">
+            {event.image ? (
+              <Image
+                src={event.image}
+                alt={event.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="eager"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-900 dark:to-neutral-800">
+                <span className="text-neutral-400 font-medium">No Image</span>
               </div>
-              <span className="text-[10px] font-semibold text-white truncate max-w-25 flex items-center gap-1">
-                {event.organization.name}
-                {event.organization.isPremium && <BadgeCheck className="w-3 h-3 text-amber-400 fill-amber-400/20" />}
-              </span>
+            )}
+            {/* Overlay Badges */}
+            <div className="absolute top-2.5 left-2.5">
+              <div className="px-2.5 py-1 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md rounded-full text-[10px] font-bold text-neutral-800 dark:text-neutral-100 shadow-sm border border-black/5 dark:border-white/5">
+                {event.category || "Event"}
+              </div>
+            </div>
+            <div className="absolute top-2.5 right-2.5">
+              <div className="px-2.5 py-1 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md rounded-full flex items-center gap-1.5 shadow-sm border border-black/5 dark:border-white/5">
+                <div className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-white animate-pulse" />
+                <span className="text-[10px] font-bold text-neutral-800 dark:text-neutral-100">
+                  {event.status === "CANCELLED" ? t("events.card.status.CANCELLED") : t(`events.card.status.${status}`)}
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        <CardHeader className="p-5 pb-2">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs font-medium text-primary bg-primary/5 dark:bg-primary/10 w-fit px-2 py-0.5 rounded-full">
-              <Clock className="w-3 h-3" />
-              <span>{format(startDate, "h:mm a")} • {format(startDate, "MMM d, yyyy")}</span>
-            </div>
-            <Link href={`/event/${event.slug}`}>
-              <h3 className="text-xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
-                {event.title}
-              </h3>
-            </Link>
+        <div className="p-4 flex flex-col flex-grow">
+          <div className="text-[12px] font-semibold tracking-tight text-neutral-500 dark:text-neutral-400 mb-1.5">
+            {format(startDate, "MMM d, yyyy • h:mm a")}
           </div>
-        </CardHeader>
-
-        <CardContent className="p-5 pt-0 grow">
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2 mb-4">
-            {event.description}
-          </p>
-
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            <div className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-500">
-              <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-900">
-                <MapPin className="w-3.5 h-3.5 text-primary" />
-              </div>
-              <span className="truncate">{event.location}</span>
-            </div>
-            <div className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-500">
-              <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-900">
-                <Users className="w-3.5 h-3.5 text-primary" />
-              </div>
-              <span>{event.registeredCount}/{event.capacity}</span>
-            </div>
+          <h3 className="text-[17px] font-bold text-neutral-900 dark:text-white leading-snug mb-2 line-clamp-2 transition-colors">
+            {event.title}
+          </h3>
+          <div className="flex items-center gap-1.5 text-[13px] text-neutral-500 dark:text-neutral-400 mb-3 font-medium">
+            <MapPin className="w-3.5 h-3.5 shrink-0 text-neutral-400" />
+            <span className="truncate">{event.location}</span>
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {event.tags?.slice(0, 3).map((tag, idx) => (
-              <span key={idx} className="text-[10px] px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 font-medium">
-                #{tag}
+          <div className="mt-auto flex items-center justify-between pt-3 border-t border-neutral-100 dark:border-neutral-800/50">
+            <div className="flex items-center gap-3 flex-1 overflow-hidden pr-4">
+              <div className="h-1.5 w-full max-w-[100px] bg-neutral-100 dark:bg-neutral-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-neutral-900 dark:bg-white rounded-full transition-all duration-500"
+                  style={{ width: `${percentage}%` }}
+                />
+              </div>
+              <span className="text-[13px] font-bold text-neutral-900 dark:text-white shrink-0">
+                {percentage}%
               </span>
-            ))}
-          </div>
-        </CardContent>
-
-        <CardFooter className="p-5 pt-0 mt-auto border-t border-neutral-100 dark:border-neutral-900 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="relative size-8 rounded-full overflow-hidden">
-              <Image
-                src={event.creator.image || "https://github.com/shadcn.png"}
-                alt={event.creator.name}
-                fill
-                sizes="w-10"
-                className="object-cover"
-              />
             </div>
-            <div className="flex flex-col">
-              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider leading-none">{t("events.card.organizedBy")}</span>
-              <span className="text-xs font-semibold">{event.creator.name}</span>
+            <div className="flex items-center justify-center shrink-0 w-8 h-8 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 group-hover:bg-neutral-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-neutral-900 transition-all duration-300">
+              <ArrowRight className="w-3.5 h-3.5 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
             </div>
           </div>
-
-          <Link href={`/event/${event.id}`}>
-            <Button size="sm" className="rounded-full px-4 h-9 font-semibold group/btn hover:cursor-pointer">
-              {t("events.card.details")}
-              <ArrowRight className="ml-1.5 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-            </Button>
-          </Link>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </motion.div>
   )
 }

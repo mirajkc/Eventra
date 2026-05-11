@@ -4,13 +4,16 @@ import userController from '../controller/user.controller.js'
 import { upload } from '../middleware/uploader.middleware.js'
 import validator from '../middleware/validator.middleware.js'
 import { userUpdateDTO } from '../rules/user.rules.js'
-const userRouter:Router = express.Router()
+const userRouter: Router = express.Router()
 // ===== User Profile =====
 userRouter.get('/me', authorize({}), userController.getLoggedInUser)
-userRouter.post('/update-user', authorize({}),upload.single('image'),validator(userUpdateDTO), userController.updateUser)
-userRouter.delete('/delete-user' , authorize({}), userController.deleteUser)
+userRouter.post('/update-user', authorize({}), upload.single('image'), validator(userUpdateDTO), userController.updateUser)
+userRouter.delete('/delete-user', authorize({}), userController.deleteUser)
 userRouter.get('/me/getdetails', authorize({}), userController.getUserDetails)
 
 //get all users by admin
-userRouter.get('/get-all-users', authorize({role : 'ADMIN'}), userController.getAllUsers)
+userRouter.get('/get-all-users', authorize({ role: 'ADMIN' }), userController.getAllUsers)
+
+
+userRouter.get('/recent-activities', authorize({ role: "CUSTOMER" }), userController.getRecentUserActivities)
 export default userRouter

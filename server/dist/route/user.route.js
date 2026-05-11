@@ -12,5 +12,6 @@ userRouter.delete('/delete-user', authorize({}), userController.deleteUser);
 userRouter.get('/me/getdetails', authorize({}), userController.getUserDetails);
 //get all users by admin
 userRouter.get('/get-all-users', authorize({ role: 'ADMIN' }), userController.getAllUsers);
+userRouter.get('/recent-activities', authorize({ role: "CUSTOMER" }), userController.getRecentUserActivities);
 export default userRouter;
 //# sourceMappingURL=user.route.js.map

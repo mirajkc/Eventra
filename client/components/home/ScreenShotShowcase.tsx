@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 export default function ScreenShotShowcase() {
   const { t } = useTranslation();
   return (
-    <section className="relative px-6 py-12 lg:py-24 overflow-hidden">
+    <section className="relative w-full mx-auto px-6 py-12 lg:py-24 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -z-10 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[120px]" />
       <TypographyH3 className="mb-4">{t("home.showcase.title")}</TypographyH3>
       <TypographyP className="mb-12">{t("home.showcase.subtitle1")}
