@@ -22,18 +22,17 @@
             "description": "Eventra is a platform to discover, create, and manage events, making it easy for organizers to list events and for users to browse and visit them."
         },
         "howItWorks": {
+            "eyebrow": "The process",
             "title": "How it works",
-            "subtitle": "Simple steps to start your journey with Eventra",
-            "step1_title": "Create Account",
-            "step1_desc": "Enter your information and ensure your details are safe and secure with our platform.",
-            "step2_title": "Visit Events",
-            "step2_desc": "Explore thousands of events happening around you or globally with ease.",
-            "step3_title": "Join Them",
-            "step3_desc": "Join the community, participate in events, and create memories that last a lifetime.",
-            "step4_title": "Track Activity",
-            "step4_desc": "Keep track of upcoming schedules and monitor your event participation effortlessly.",
-            "step5_title": "Share your Experience",
-            "step5_desc": "Share your experience and build connection by leaving honest feedback on the events you attended."
+            "subtitle": "Four small moves between the decision to show up and the moment you actually do.",
+            "step1_title": "Create profile",
+            "step1_desc": "Sign up in seconds and tell us what kind of gatherings move you.",
+            "step2_title": "Discover events",
+            "step2_desc": "Browse a quiet, curated feed of workshops, meetups and conferences.",
+            "step3_title": "Reserve your spot",
+            "step3_desc": "Reach out to organizers, secure your seat and get every detail in one place.",
+            "step4_title": "Live the moment",
+            "step4_desc": "Show up, take it in, and share what was worth remembering."
         },
         "whyChooseUs": {
             "badge": "Why Choose Eventra",

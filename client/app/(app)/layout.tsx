@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <>
       <div className="flex flex-col max-w-7xl  min-h-screen mx-auto" >
-        <div className="sticky top-4 z-50" >
+        <div className="sticky top-0 z-50" >
           <NavBar />
         </div>
         <div className="flex flex-col min-h-screen max-w-7xl mx-auto w-full" >
