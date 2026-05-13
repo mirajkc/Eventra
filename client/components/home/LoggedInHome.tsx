@@ -3,18 +3,35 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import dynamic from "next/dynamic";
 import getAccessToken from "@/lib/access.token";
 import type {
   IEventRecentActivities,
   IEventReponse,
 } from "@/types/event.type";
 
-import Header from "./hero/Header";
 import SectionHead from "./hero/SectionHead";
 import Featured from "./hero/Featured";
-import EventGrid from "./hero/EventGrid";
-import BrowsePanel from "./hero/BrowsePanel";
-import QuickActionsFooter from "./hero/QuickActionsFooter";
+import {
+  HeaderSkeleton,
+  EventGridSkeleton,
+  BrowsePanelSkeleton,
+  QuickActionsFooterSkeleton,
+} from "./skeletons";
+
+const Header = dynamic(() => import("./hero/Header"), {
+  loading: () => <HeaderSkeleton />,
+});
+const EventGrid = dynamic(() => import("./hero/EventGrid"), {
+  loading: () => <EventGridSkeleton />,
+});
+const BrowsePanel = dynamic(() => import("./hero/BrowsePanel"), {
+  loading: () => <BrowsePanelSkeleton />,
+});
+const QuickActionsFooter = dynamic(() => import("./hero/QuickActionsFooter"), {
+  loading: () => <QuickActionsFooterSkeleton />,
+});
+
 
 async function authedFetch(path: string) {
   const token = await getAccessToken();

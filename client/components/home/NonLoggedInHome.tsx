@@ -3,17 +3,38 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import dynamic from "next/dynamic";
 import type { IEventReponse } from "@/types/event.type";
 
 import SectionHead from "./hero/SectionHead";
 import Featured from "./hero/Featured";
-import EventGrid from "./hero/EventGrid";
-import BrowsePanel from "./hero/BrowsePanel";
+import {
+  HeroIntroSkeleton,
+  StatsStripSkeleton,
+  EventGridSkeleton,
+  BrowsePanelSkeleton,
+  PromisesGridSkeleton,
+  JoinBannerSkeleton,
+} from "./skeletons";
 
-import HeroIntro from "./guest/HeroIntro";
-import StatsStrip from "./guest/StatsStrip";
-import PromisesGrid from "./guest/PromisesGrid";
-import JoinBanner from "./guest/JoinBanner";
+const EventGrid = dynamic(() => import("./hero/EventGrid"), {
+  loading: () => <EventGridSkeleton />,
+});
+const BrowsePanel = dynamic(() => import("./hero/BrowsePanel"), {
+  loading: () => <BrowsePanelSkeleton />,
+});
+const HeroIntro = dynamic(() => import("./guest/HeroIntro"), {
+  loading: () => <HeroIntroSkeleton />,
+});
+const StatsStrip = dynamic(() => import("./guest/StatsStrip"), {
+  loading: () => <StatsStripSkeleton />,
+});
+const PromisesGrid = dynamic(() => import("./guest/PromisesGrid"), {
+  loading: () => <PromisesGridSkeleton />,
+});
+const JoinBanner = dynamic(() => import("./guest/JoinBanner"), {
+  loading: () => <JoinBannerSkeleton />,
+});
 
 async function publicFetch(path: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${path}`, {
