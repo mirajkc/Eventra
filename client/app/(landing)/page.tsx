@@ -1,14 +1,43 @@
 "use client";
 
-import PuzzleHero from "@/components/landing/PuzzleHero";
-import LandingPricing from "@/components/landing/LandingPricing";
-import CallToAction from "@/components/home/CallToAction";
-import HowItWorks from "@/components/landing/HowItWorks";
+import dynamic from "next/dynamic";
+import {
+  PuzzleHeroSkeleton,
+  ScreenShotShowcaseSkeleton,
+  HowItWorksSkeleton,
+  FeaturesSkeleton,
+  TestimonialsSkeleton,
+  LandingPricingSkeleton,
+  CallToActionSkeleton,
+  LargeTextSkeleton,
+} from "./skeletons";
 
-import LargeText from "@/components/landing/LargeText";
-import Features from "@/components/home/Features";
-import Testimonials from "@/components/home/Testimonials";
-import ScreenShotShowcase from "@/components/home/ScreenShotShowcase";
+const PuzzleHero = dynamic(() => import("@/components/landing/PuzzleHero"), {
+  loading: () => <PuzzleHeroSkeleton />,
+});
+const ScreenShotShowcase = dynamic(
+  () => import("@/components/home/ScreenShotShowcase"),
+  { loading: () => <ScreenShotShowcaseSkeleton /> }
+);
+const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks"), {
+  loading: () => <HowItWorksSkeleton />,
+});
+const Features = dynamic(() => import("@/components/home/Features"), {
+  loading: () => <FeaturesSkeleton />,
+});
+const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
+  loading: () => <TestimonialsSkeleton />,
+});
+const LandingPricing = dynamic(
+  () => import("@/components/landing/LandingPricing"),
+  { loading: () => <LandingPricingSkeleton /> }
+);
+const CallToAction = dynamic(() => import("@/components/home/CallToAction"), {
+  loading: () => <CallToActionSkeleton />,
+});
+const LargeText = dynamic(() => import("@/components/landing/LargeText"), {
+  loading: () => <LargeTextSkeleton />,
+});
 
 export default function Home() {
 

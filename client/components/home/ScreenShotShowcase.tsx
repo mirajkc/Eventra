@@ -40,8 +40,10 @@ export default function ScreenShotShowcase() {
                   src="/event_desktop.png"
                   alt="Eventra Dashboard Desktop"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1100px"
+                  quality={75}
+                  loading="lazy"
                   className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
-                  priority
                 />
               </div>
             </div>
@@ -55,8 +57,10 @@ export default function ScreenShotShowcase() {
                 alt="Eventra Dashboard Mobile"
                 width={300}
                 height={650}
+                sizes="300px"
+                quality={75}
+                loading="lazy"
                 className="w-full rounded-[1.8rem]"
-                priority
               />
             </div>
           </div>

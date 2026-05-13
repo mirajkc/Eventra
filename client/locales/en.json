@@ -142,15 +142,25 @@
             }
         },
         "testimonials": {
-            "title1": "Loved by",
-            "title2": "Builders.",
-            "subtitle": "Eventra is the event management tool for everyone who values collaboration and seamless experiences.",
+            "eyebrow": "Voices from the field",
+            "title1": "Trusted by",
+            "title2": "Nepali organizers.",
+            "subtitle": "From Kathmandu tech summits to Pokhara meetups, Eventra is the quiet engine behind communities across Nepal.",
+            "featuredOrg": "Kathmandu Tech Summit",
             "t1": "Eventra made organizing our annual conference effortless. From registrations to live updates, everything was smooth and hassle-free.",
             "t2": "As a startup hosting multiple workshops, Eventra helped us manage attendees, ticketing, and schedules without breaking a sweat.",
             "t3": "We used Eventra for our fundraising gala. Tracking RSVPs, sending reminders, and checking in guests was so simple!",
             "t4": "Eventra’s dashboard gave us a clear view of attendees, ticket sales, and event analytics. Organizing webinars has never been easier.",
             "t5": "Planning a large meetup felt overwhelming, but Eventra handled everything—from invites to feedback collection—seamlessly.",
-            "t6": "Eventra turned our event management from stressful to smooth. Automated notifications, attendee management, and analytics all in one place!"
+            "t6": "Eventra turned our event management from stressful to smooth. Automated notifications, attendee management, and analytics all in one place!",
+            "n1": "Aarav Sharma",
+            "n2": "Sneha Gurung",
+            "n3": "Bishal Thapa",
+            "n4": "Riya Maharjan",
+            "r1": "Event Director, Kathmandu Tech Summit",
+            "r2": "Founder, Pokhara Ventures",
+            "r3": "Coordinator, Himalayan Aid",
+            "r4": "Marketing Lead, Patan Studios"
         },
         "cta": {
             "title1": "Ready to experience",

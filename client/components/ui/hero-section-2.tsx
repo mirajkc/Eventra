@@ -1,10 +1,10 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { cn } from "@/lib/utils";
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'motion/react';
 
-// Prop types for the HeroSection component
 interface HeroSectionProps extends Omit<HTMLMotionProps<"section">, 'title'> {
   title: React.ReactNode;
   subtitle: string;
@@ -18,7 +18,6 @@ interface HeroSectionProps extends Omit<HTMLMotionProps<"section">, 'title'> {
 const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
   ({ className, title, subtitle, callToAction, backgroundImage, ...props }, ref) => {
 
-    // Animation variants for the container to orchestrate children animations
     const containerVariants = {
       hidden: { opacity: 0 },
       visible: {
@@ -30,7 +29,6 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
       },
     };
 
-    // Animation variants for individual text/UI elements
     const itemVariants = {
       hidden: { y: 20, opacity: 0 },
       visible: {
@@ -56,7 +54,6 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
         variants={containerVariants}
         {...props}
       >
-        {/* Left Side: Content */}
         <div className="flex w-full flex-col justify-center p-8 md:w-1/2 md:p-12 lg:w-3/5 lg:p-24">
           <div>
             <motion.main variants={containerVariants}>
@@ -79,17 +76,22 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
           </div>
         </div>
 
-        {/* Right Side: Image with Clip Path Animation */}
         <motion.div
-          className="w-full min-h-[400px] bg-cover bg-center md:w-1/2 md:min-h-full lg:w-2/5"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-          }}
+          className="relative w-full min-h-[400px] md:w-1/2 md:min-h-full lg:w-2/5"
           initial={{ clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' }}
           whileInView={{ clipPath: 'polygon(25% 0, 100% 0, 100% 100%, 0% 100%)' }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: "circOut", delay: 0.2 }}
         >
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 40vw"
+            quality={70}
+            loading="lazy"
+            className="object-cover"
+          />
         </motion.div>
       </motion.section>
     );
