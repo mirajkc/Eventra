@@ -34,6 +34,7 @@ export default function DesktopNavigation() {
             variant="ghost"
             size="default"
             className="gap-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-primary/10 hover:text-primary dark:hover:text-white dark:hover:bg-primary/20 active:scale-95 hover:cursor-pointer"
+            onClick={()=> window.scrollTo(0,0)}
           >
             {link.icon}
             {link.label}

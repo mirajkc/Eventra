@@ -2,7 +2,7 @@
 "use client"
 
 import { IOrganizationActivitiesPagination, JoinedMember } from "@/types/organization.types"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
 import { Spinner } from "../ui/spinner"
 import { useParams } from "next/navigation"
@@ -11,63 +11,59 @@ import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import HandleKickMember from "./HandleKickMember"
 import getAccessToken from "@/lib/access.token"
+import { useQuery } from "@tanstack/react-query"
+
+
 export default function JoinedMemberList() {
   const params = useParams()
-  const organizationId = params.id
-  const [joinedMembers, setJoinedMembers] = useState<Array<JoinedMember>>([])
-
-  const [loadingMembers, setLoadingMembers] = useState(true)
-  const [loadingRole, setLoadingRole] = useState(true)
-  const [role, setRole] = useState<string>("")
-  const [pagination, setPagination] = useState<IOrganizationActivitiesPagination>({
-    currentPage: 1,
+  const organizationId = useMemo(() => String(params.id ?? ""), [params.id])
+  const [page, setPage] = useState(1)
+  const [take] = useState(10)
+  const [paginationMeta, setPaginationMeta] = useState<Omit<IOrganizationActivitiesPagination, "currentPage" | "take">>({
     totalPages: 0,
-    take: 10,
     totalDocs: 0,
     hasNextPage: false,
     hasPreviousPage: false
   })
-  useEffect(() => {
-    fethcJoinedMember(pagination.currentPage)
-  }, [pagination.currentPage])
-
-  useEffect(() => {
-    fetchUserRole()
-  }, [])
 
 
-  const fethcJoinedMember = async (page: number) => {
-    setLoadingMembers(true)
-    try {
+  const { data: rawResponse, isLoading: loadingMembers, error, refetch: refetchMembers } = useQuery({
+    queryKey: ["organization-member", organizationId, page, take],
+    enabled: Boolean(organizationId),
+    queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-single-organization/${organizationId}?members=true&page=${page}&take=${pagination.take}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-single-organization/${organizationId}?members=true&page=${page}&take=${take}`
       )
-
       if (!response.ok) {
-        toast.error("Error occurred while fetching joined members.")
-        return
+        throw new Error("Error occurred while fetching joined members.")
       }
+      return response.json()
+    },
+    staleTime: 100 * 60 * 3
+  })
 
-      const result = await response.json()
+  const joinedMembersData = rawResponse?.data?.members
+  const joinedMembers: JoinedMember[] = joinedMembersData ?? []
 
-      setPagination(result.pagination.memberCount)
-      setJoinedMembers(result.data.members)
-
-
-    } catch (error) {
-      toast.error("Error occurred while fetching joined members.")
-    } finally {
-      setLoadingMembers(false)
+  useEffect(() => {
+    if (rawResponse?.pagination?.memberCount) {
+      const m = rawResponse.pagination.memberCount
+      setPaginationMeta({
+        totalPages: m.totalPages ?? 0,
+        totalDocs: m.totalDocs ?? 0,
+        hasNextPage: m.hasNextPage ?? false,
+        hasPreviousPage: m.hasPreviousPage ?? false
+      })
     }
-  }
+  }, [rawResponse?.pagination?.memberCount])
 
-  const fetchUserRole = async () => {
-    try {
-      setLoadingRole(true)
+
+  const { data: role, isLoading: loadingRole } = useQuery({
+    queryKey: ["organization-user-role", organizationId],
+    queryFn: async () => {
       const accessToken = await getAccessToken()
       if (!accessToken) {
-        setRole("GUEST")
-        return
+        return "GUEST" as const
       }
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-loggedinuser-role/${organizationId}`, {
         method: "GET",
@@ -77,20 +73,28 @@ export default function JoinedMemberList() {
         }
       })
       const result = await response.json()
-      setRole(result.data.members[0].role)
-
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoadingRole(false)
-    }
-  }
+      return result.data.members[0].role as string
+    },
+    enabled: Boolean(organizationId),
+    staleTime: 100 * 60 * 3
+  })
 
 
   if (loadingMembers) {
     return <div className="flex flex-col items-center justify-center min-h-[40vh]">
       <Spinner />
     </div>
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[40vh] text-neutral-500 italic gap-3">
+        <p>Failed to load joined members.</p>
+        <Button variant="outline" size="sm" onClick={() => refetchMembers()}>
+          Try again
+        </Button>
+      </div>
+    )
   }
 
   if (joinedMembers.length === 0) {
@@ -104,10 +108,10 @@ export default function JoinedMemberList() {
   return (
     <div className="flex flex-col gap-4 mt-4">
       {
-        pagination?.totalDocs > 0 && (
+        paginationMeta.totalDocs > 0 && (
           <div className="flex w-full">
             <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              Total Members: {pagination.totalDocs}
+              Total Members: {paginationMeta.totalDocs}
             </p>
           </div>
         )
@@ -148,9 +152,9 @@ export default function JoinedMemberList() {
             {(role === "OWNER" || role === "ADMIN") && (
               <div className="shrink-0">
                 <HandleKickMember
-                  fethcJoinedMember={fethcJoinedMember}
+                  fethcJoinedMember={() => refetchMembers()}
                   memberId={String(member.id)}
-                  organizationId={String(organizationId)}
+                  organizationId={organizationId}
                 />
               </div>
             )}
@@ -160,13 +164,13 @@ export default function JoinedMemberList() {
 
       <div className="flex w-full justify-center items-center mt-6">
         {
-          pagination.totalPages > 1 && (
+          paginationMeta.totalPages > 1 && (
             <div className="flex gap-4">
               <Button
                 variant={"outline"}
                 size="sm"
-                disabled={!pagination.hasPreviousPage}
-                onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage - 1 }))}
+                disabled={!paginationMeta.hasPreviousPage}
+                onClick={() => setPage(prev => prev - 1)}
                 className="rounded-full px-4"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
@@ -175,8 +179,8 @@ export default function JoinedMemberList() {
               <Button
                 variant={"outline"}
                 size="sm"
-                disabled={!pagination.hasNextPage}
-                onClick={() => setPagination(prev => ({ ...prev, currentPage: prev.currentPage + 1 }))}
+                disabled={!paginationMeta.hasNextPage}
+                onClick={() => setPage(prev => prev + 1)}
                 className="rounded-full px-4"
               >
                 Next

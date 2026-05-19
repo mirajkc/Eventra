@@ -5,41 +5,60 @@ import { IEventPagination, IEventReponse } from "@/types/event.type"
 import OrganizationEventCard from "./OrganizationEventCard"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-
-import { toast } from "sonner"
 import { useParams } from "next/navigation"
 import { useTranslation } from "react-i18next"
+import { useQuery } from "@tanstack/react-query"
 
 export default function OrganizationEvents() {
   const { t } = useTranslation()
   const params = useParams()
   const organizationId = params.id
-  const [events, setEvents] = useState<Array<IEventReponse>>([])
-  const [loading, setLoading] = useState(true)
-  const [pagination, setPagination] = useState<IEventPagination>({
-    currentPage: 1,
+  const [page, setPage] = useState(1)
+  const [take] = useState(5)
+  const [paginationMeta, setPaginationMeta] = useState<Omit<IEventPagination, "currentPage" | "take">>({
     totalPages: 0,
-    take: 5,
     totalDocs: 0,
     hasNextPage: false,
     hasPreviousPage: false
   })
+
+  const { data: rawResponse, isLoading: loading, error, refetch: refetchEvents } = useQuery({
+    queryKey: ["organization-events", organizationId, page, take],
+    enabled: Boolean(organizationId),
+    queryFn: async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/fetchallevents?organizationId=${organizationId}&limit=${take}&page=${page}`)
+      if (!response.ok) {
+        throw new Error(t("organizations.single.events.failedToFetch"))
+      }
+      return response.json()
+    },
+    staleTime: 100 * 60 * 3
+  })
+
+  const events: IEventReponse[] | undefined = rawResponse?.data
+
   useEffect(() => {
-    fetchEvents()
-  }, [organizationId])
-  const fetchEvents = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/fetchallevents?organizationId=${organizationId}&limit=${pagination.take}&page=${pagination.currentPage}`)
-      const result = await response.json()
-      setEvents(result.data)
-      setPagination(result.pagination)
-      setLoading(false)
-    } catch (error) {
-      toast.error(t("organizations.single.events.failedToFetch"))
-      setLoading(false)
-    } finally {
-      setLoading(false)
+    if (rawResponse?.pagination) {
+      setPaginationMeta({
+        totalPages: rawResponse.pagination.totalPages ?? 0,
+        totalDocs: rawResponse.pagination.totalDocs ?? 0,
+        hasNextPage: rawResponse.pagination.hasNextPage ?? false,
+        hasPreviousPage: rawResponse.pagination.hasPreviousPage ?? false
+      })
     }
+  }, [rawResponse?.pagination])
+
+  if (error) {
+    return (
+      <div className="flex flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50 min-h-[60vh]">
+        <div className="flex flex-col items-center justify-center min-h-[40vh] text-neutral-500 italic gap-3">
+          <p>{t("organizations.single.events.failedToFetch")}</p>
+          <Button variant="outline" size="sm" onClick={() => refetchEvents()}>
+            Try again
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -49,10 +68,10 @@ export default function OrganizationEvents() {
         <TypographyP>{t("organizations.single.events.subtitle")}</TypographyP>
       </div>
       {
-        pagination?.totalDocs > 0 && (
+        paginationMeta.totalDocs > 0 && (
           <div className="flex w-full mt-2">
             <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              {t("organizations.single.events.totalEvents")} {pagination.totalDocs}
+              {t("organizations.single.events.totalEvents")} {paginationMeta.totalDocs}
             </p>
           </div>
         )
@@ -75,7 +94,7 @@ export default function OrganizationEvents() {
                 </div>
               </div>
             ))
-          ) : events?.length > 0 ? (
+          ) : events && events.length > 0 ? (
 
             events.map((event) => (
               <OrganizationEventCard key={event.id} event={event} />
@@ -88,19 +107,13 @@ export default function OrganizationEvents() {
           )}
         </div>
         <div className="flex w-full justify-center items-center mt-6">
-          {pagination?.totalPages > 1 && (
+          {paginationMeta.totalPages > 1 && (
             <div className="flex gap-4">
               <Button
                 variant="outline"
                 size="sm"
-                disabled={!pagination.hasPreviousPage}
-                onClick={() => {
-                  setPagination({
-                    ...pagination,
-                    currentPage: pagination.currentPage--
-                  })
-                  fetchEvents()
-                }}
+                disabled={!paginationMeta.hasPreviousPage}
+                onClick={() => setPage(prev => prev - 1)}
                 className="rounded-full px-4"
               >
                 <ChevronLeft className="w-4 h-4 mr-1" />
@@ -109,14 +122,8 @@ export default function OrganizationEvents() {
               <Button
                 variant="outline"
                 size="sm"
-                disabled={!pagination.hasNextPage}
-                onClick={() => {
-                  setPagination({
-                    ...pagination,
-                    currentPage: pagination.currentPage++
-                  })
-                  fetchEvents()
-                }}
+                disabled={!paginationMeta.hasNextPage}
+                onClick={() => setPage(prev => prev + 1)}
                 className="rounded-full px-4"
               >
                 {t("organizations.single.events.next")}

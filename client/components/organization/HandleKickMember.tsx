@@ -5,7 +5,7 @@ import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
 
 
-export default function HandleKickMember({ organizationId, memberId,fethcJoinedMember }: { organizationId: string, memberId: string,fethcJoinedMember: (page:number) => void }) {
+export default function HandleKickMember({ organizationId, memberId, fethcJoinedMember }: { organizationId: string, memberId: string, fethcJoinedMember: () => void }) {
   const [loading, setLoading] = useState(false)
   const handleKickMember = async () => {
     setLoading(true)
@@ -25,8 +25,8 @@ export default function HandleKickMember({ organizationId, memberId,fethcJoinedM
         return
       }
       toast.success(result.message || "Member kicked successfully")
-      fethcJoinedMember(1)
-    } catch (error) {
+      fethcJoinedMember()
+    } catch {
       toast.error("Error kicking member")
     } finally {
       setLoading(false)

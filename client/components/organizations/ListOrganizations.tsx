@@ -15,6 +15,47 @@ import {
   IOrganizationDetails,
   IOrganizationsPagination,
 } from "@/types/organization.types";
+import { Skeleton } from "../ui/skeleton";
+
+function OrganizationCardSkeleton() {
+  return (
+    <div className="h-full flex flex-col overflow-hidden rounded-3xl bg-white border border-neutral-100 dark:border-neutral-800/60 dark:bg-neutral-950/80 shadow-sm">
+      <div className="relative h-[180px] w-full p-2.5 pb-0">
+        <div className="relative w-full h-full rounded-2xl overflow-hidden ring-1 ring-neutral-100 dark:ring-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+          <Skeleton className="w-full h-full" />
+          <div className="absolute -bottom-1 left-2.5">
+            <div className="relative size-14 rounded-xl border-2 border-white dark:border-neutral-950 overflow-hidden bg-white dark:bg-neutral-900 shadow-sm z-20">
+              <Skeleton className="w-full h-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="p-4 flex flex-col grow pt-4 gap-2">
+        <div className="flex items-center gap-3 mb-1.5">
+          <Skeleton className="h-3 w-24" />
+        </div>
+        <Skeleton className="h-5 w-3/4 mb-2" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3 mb-4" />
+        <div className="mt-auto flex items-center justify-between pt-3 border-t border-neutral-100 dark:border-neutral-800/50">
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-8 w-8 rounded-full" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ListOrganizationsSkeleton({ count = 9 }: { count?: number }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {Array.from({ length: count }).map((_, i) => (
+        <OrganizationCardSkeleton key={i} />
+      ))}
+    </div>
+  );
+}
+
 
 
 export default function ListOrganizations() {
@@ -108,11 +149,7 @@ export default function ListOrganizations() {
   };
 
   if (isLoading && organizations.length === 0) {
-    return (
-      <div className="flex justify-center items-center min-h-[50vh]">
-        <Spinner className="size-8" />
-      </div>
-    );
+    return <ListOrganizationsSkeleton />;
   }
 
   return (

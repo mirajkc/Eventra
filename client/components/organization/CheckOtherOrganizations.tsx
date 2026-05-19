@@ -2,42 +2,30 @@
 import { ISingleOrganization } from "@/types/organization.types";
 import OrganizationCard from "../organizations/OrganizationCard";
 import { TypographyH4, TypographyP } from "../ui/Typography";
-import { useEffect, useState } from "react";
 import { Spinner } from "../ui/spinner";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 
 export default function CheckOtherOrganizations() {
   const { t } = useTranslation();
-  const [organizations, setOrganizations] = useState<Array<ISingleOrganization>>([])
-  const [loading, setLoading] = useState(false)
-  useEffect(() => {
-    getOrganizations()
-  }, [])
-  const getOrganizations = async () => {
-    try {
-      setLoading(true)
+
+  const { data: rawResponse, isLoading: loading } = useQuery({
+    queryKey: ["check-other-organizations"],
+    queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-organizations?take=6`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-organizations?take=6`
       );
-      const result = await response.json();
       if (!response.ok) {
-        return;
+        throw new Error("Failed to fetch organizations.")
       }
-      setOrganizations(result.data)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+      return response.json()
+    },
+    staleTime: 100 * 60 * 3
+  })
+
+  const organizations: ISingleOrganization[] = rawResponse?.data ?? []
 
   return (
     <div className="flex  flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50 min-h-[60vh]" >

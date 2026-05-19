@@ -2,6 +2,7 @@ import { EventsSidebar } from "@/components/events/EventsSidebar";
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/ui/Footer";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Eventra - Events",
@@ -17,7 +18,11 @@ export default function RootLayout({
     <div className="flex flex-col max-w-7xl mx-auto">
       <NavBar />
       <div className="flex flex-col md:flex-row max-w-7xl w-full p-4 min-h-screen mt-4 mb-8 gap-4">
-        <div className="w-full md:w-1/4" ><EventsSidebar /></div>
+        <div className="w-full md:w-1/4">
+          <Suspense fallback={<div className="p-4">Loading...</div>}>
+            <EventsSidebar />
+          </Suspense>
+        </div>
         <div className="w-full md:w-3/4" >{children}</div>
       </div>
       <Footer />

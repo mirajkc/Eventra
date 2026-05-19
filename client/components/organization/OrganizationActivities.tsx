@@ -1,8 +1,22 @@
 "use client"
+import dynamic from "next/dynamic";
 import { TypographyH4, TypographyP } from "../ui/Typography"
-import JoinedMemberList from "./JoinedMemberList"
-import CreditPurchaseList from "./CreditPurchaseList"
+const JoinedMemberList = dynamic(() => import("./JoinedMemberList"), {
+  loading: () => (<>
+    <div className="flex-1 overflow-auto">
+      <Spinner />
+    </div>
+  </>)
+})
+const CreditPurchaseList = dynamic(() => import("./CreditPurchaseList"), {
+  loading: () => (<>
+    <div className="flex-1 overflow-auto">
+      <Spinner />
+    </div>
+  </>)
+})
 import { useTranslation } from "react-i18next";
+import { Spinner } from "../ui/spinner";
 
 export default function OrganizationActivities({ organizationId }: { organizationId: string }) {
   const { t } = useTranslation();
