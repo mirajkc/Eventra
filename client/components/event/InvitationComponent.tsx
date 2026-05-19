@@ -100,6 +100,7 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
           </div>
         </div>
       </div>
+
     </section>
   );
 }

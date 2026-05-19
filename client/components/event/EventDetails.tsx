@@ -45,7 +45,6 @@ export default function EventDetails({ event }: EventDetailsProps) {
           {t("events.single.goBack")}
         </Button>
       </div>
-      <Footer />
     </div>
   )
 }

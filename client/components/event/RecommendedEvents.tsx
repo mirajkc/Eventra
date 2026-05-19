@@ -1,38 +1,71 @@
 "use client"
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import getAccessToken from "@/lib/access.token";
 import { Spinner } from "../ui/spinner";
 import { TypographyH4, TypographyP } from "../ui/Typography";
-import { useState, useEffect } from "react";
 import { IEventReponse } from "@/types/event.type";
 import EventCard from "../events/EventCard";
 import { useTranslation } from "react-i18next";
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function RecommendedEvents() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-  const [events, setEvents] = useState<Array<IEventReponse>>([]);
-  useEffect(() => {
-    fetchRecommendedEvents();
-  }, []);
 
-
-  const fetchRecommendedEvents = async () => {
-    setLoading(true);
-    const accessToken = await getAccessToken()
-    try {
+  const recommendedQ = useQuery({
+    queryKey: ["recommended-events-detail"],
+    queryFn: async () => {
+      const accessToken = await getAccessToken()
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/get-recommended-events`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      const result = await response.json();
-      setEvents(result.data);
-    } catch (error) {
-      console.error('Error fetching recommended events:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
+      if (!response.ok) {
+        throw new Error("Failed to fetch recommended events.")
+      }
+      return response.json()
+    },
+    staleTime: 100 * 60 * 3,
+  })
+
+  const allEventsQ = useQuery({
+    queryKey: ["recommended-events-fallback"],
+    queryFn: async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/fetchallevents?limit=30&status=PUBLISHED`)
+      if (!response.ok) {
+        throw new Error("Failed to fetch events.")
+      }
+      return response.json()
+    },
+    staleTime: 100 * 60 * 3,
+  })
+
+  const recommendedRaw: IEventReponse[] = useMemo(() => {
+    const raw = recommendedQ.data?.data ?? recommendedQ.data ?? [];
+    return Array.isArray(raw) ? raw : [];
+  }, [recommendedQ.data])
+
+  const allEvents: IEventReponse[] = useMemo(() => {
+    const raw = allEventsQ.data?.data ?? [];
+    return Array.isArray(raw) ? raw : [];
+  }, [allEventsQ.data])
+
+  const events: IEventReponse[] = useMemo(() => {
+    if (recommendedRaw.length > 0) return recommendedRaw;
+    if (allEvents.length === 0) return [];
+    return shuffle(allEvents).slice(0, 6);
+  }, [recommendedRaw, allEvents])
+
+  const loading = recommendedQ.isLoading || allEventsQ.isLoading
 
   if (loading) {
     return <div className="flex items-center justify-center h-full w-full">
