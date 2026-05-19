@@ -6,13 +6,21 @@ import { Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { EventSearch } from "./Search";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "@/state/hooks";
+import { setSearch } from "@/state/slices/search.slice";
 
 export function EventsSidebar() {
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState("");
+  const reduxSearch = useAppSelector((s) => s.search.search);
+  const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+
+  const [searchTerm, setSearchTerm] = useState(
+    () => searchParams.get("slug") || reduxSearch || ""
+  );
   const [isPremium, setIsPremium] = useState<boolean | null>(null);
   const [type, setType] = useState("");
   const [capacity, setCapacity] = useState("");
@@ -21,6 +29,11 @@ export function EventsSidebar() {
 
   const pathName = usePathname()
   const { replace } = useRouter();
+
+  useEffect(() => {
+    dispatch(setSearch(searchTerm));
+  }, [searchTerm, dispatch]);
+
   const handleSearch = () => {
     const params = new URLSearchParams();
     if (searchTerm) params.set("slug", searchTerm);
@@ -40,6 +53,7 @@ export function EventsSidebar() {
 
   const handleReset = () => {
     setSearchTerm("");
+    dispatch(setSearch(""));
     setIsPremium(false);
     setType("");
     setCreatedAt("");

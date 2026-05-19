@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
-import { IOrganizationDetails, IOrganizationsPagination } from "@/types/organization.types";
 import { motion } from "motion/react";
 import OrganizationCard from "./OrganizationCard";
 import { useSearchParams } from "next/navigation";
@@ -11,57 +11,49 @@ import { Button } from "../ui/button";
 import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import {
+  IOrganizationDetails,
+  IOrganizationsPagination,
+} from "@/types/organization.types";
+
 
 export default function ListOrganizations() {
   const { t } = useTranslation();
-  const [pagination, setPagination] = useState<IOrganizationsPagination>({
-    currentPage: 1,
-    take: 9,
-    totalPages: 0,
-    totalDocs: 0,
-    hasNextPage: false,
-    hasPrevPage: false,
-  });
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [organizations, setOrganizations] = useState<IOrganizationDetails[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const searchParams = useSearchParams();
-  const searchQuery = searchParams.toString();
+  const premium = searchParams.get("isPremium") === "true";
+  const search = searchParams.get("search") ?? "";
+  const type = searchParams.get("type") ?? "";
+  const createdAt = searchParams.get("createdAt") ?? "";
+  const updatedAt = searchParams.get("updatedAt") ?? "";
+
+  const queryParams = useMemo(
+    () => ({
+      page: currentPage,
+      limit: 9,
+      premium,
+      name : search,
+      type,
+      createdAt,
+      updatedAt,
+    }),
+    [currentPage, premium, search, type, createdAt, updatedAt],
+  );
 
   useEffect(() => {
-    fetchOrganizations();
-  }, [pagination.currentPage, searchQuery]);
+    setCurrentPage(1);
+  }, [premium, search, type, createdAt, updatedAt]);
 
-  useEffect(() => {
-    setPagination((prev) => ({
-      ...prev,
-      currentPage: 1,
-    }));
-  }, [searchQuery]);
-
-  const fetchOrganizations = async () => {
-    try {
-      setLoading(true);
-      const params = new URLSearchParams({
-        page: pagination.currentPage.toString(),
-        take: pagination.take.toString(),
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["organizations", queryParams],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      Object.entries(queryParams).forEach(([key, value]) => {
+        if (value !== "" && value !== false && value !== null && value !== undefined) {
+          params.set(key, String(value));
+        }
       });
-
-      const premium = searchParams.get("isPremium") === "true";
-      if (premium) params.set("premium", "true");
-
-      const search = searchParams.get("search");
-      if (search) params.set("name", search);
-
-      const type = searchParams.get("type");
-      if (type) params.set("type", type);
-
-      const createdAt = searchParams.get("createdAt");
-      if (createdAt) params.set("createdAt", createdAt);
-
-      const updatedAt = searchParams.get("updatedAt");
-      if (updatedAt) params.set("updatedAt", updatedAt);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/organization/get-organizations?${params}`,
@@ -70,43 +62,52 @@ export default function ListOrganizations() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
-      const result = await response.json();
+
       if (!response.ok) {
-        toast.error(t("organizations.list.failedToFetch"));
-        return;
+        throw new Error("Failed to fetch organizations");
       }
-      setOrganizations(result.data || []);
-      setPagination(result.pagination);
-    } catch (error: any) {
-      toast.error(t("organizations.list.failedToFetch"));
-    } finally {
-      setLoading(false);
-    }
+
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 3,
+    retry: 1,
+  });
+
+  const organizations: IOrganizationDetails[] = data?.data ?? [];
+  const pagination: IOrganizationsPagination = data?.pagination ?? {
+    currentPage: 1,
+    take: 9,
+    totalPages: 0,
+    totalDocs: 0,
+    hasNextPage: false,
+    hasPrevPage: false,
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t("organizations.list.failedToFetch"),
+      );
+    }
+  }, [error, t]);
 
   const handleNextPage = () => {
     if (pagination.hasNextPage) {
-      setPagination((prev) => ({
-        ...prev,
-        currentPage: prev.currentPage++,
-      }));
-
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const handlePrevPage = () => {
     if (pagination.hasPrevPage) {
-      setPagination((prev) => ({
-        ...prev,
-        currentPage: prev.currentPage--,
-      }));
-
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
-  if (loading && organizations.length === 0) {
+  if (isLoading && organizations.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-[50vh]">
         <Spinner className="size-8" />
@@ -115,13 +116,13 @@ export default function ListOrganizations() {
   }
 
   return (
-    <motion.div
+      <motion.div
       initial={{ opacity: 0, y: 60 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {organizations.length === 0 && !loading ? (
+        {organizations.length === 0 && !isLoading ? (
           <p className="col-span-full text-center text-muted-foreground">
             {t("organizations.list.noOrganizationsFound")}
           </p>
@@ -144,7 +145,7 @@ export default function ListOrganizations() {
                 variant="outline"
                 size="sm"
                 onClick={handlePrevPage}
-                disabled={!pagination.hasPrevPage || loading}
+                disabled={!pagination.hasPrevPage || isLoading}
                 className="flex-1"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
@@ -159,7 +160,7 @@ export default function ListOrganizations() {
                 variant="outline"
                 size="sm"
                 onClick={handleNextPage}
-                disabled={!pagination.hasNextPage || loading}
+                disabled={!pagination.hasNextPage || isLoading}
                 className="flex-1"
               >
                 {t("organizations.list.next")}

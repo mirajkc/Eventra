@@ -2,8 +2,7 @@
 
 import { Suspense } from "react";
 import BlurText from "@/components/BlurText";
-import ListEvents from "@/components/events/ListEvents";
-import { Spinner } from "@/components/ui/spinner";
+import ListEvents, { ListEventsSkeleton } from "@/components/events/ListEvents";
 import { useTranslation } from "react-i18next";
 
 
@@ -27,13 +26,9 @@ export default function EventsPage() {
           direction="top"
           className="text-sm md:text-base mb-12 text-gray-600 dark:text-gray-300"
         />
-      </div> 
+      </div>
       <div>
-        <Suspense fallback={
-          <div className="flex justify-center items-center min-h-[50vh]">
-            <Spinner className="size-8" />
-          </div>
-        }>
+        <Suspense fallback={<ListEventsSkeleton />}>
           <ListEvents />
         </Suspense>
       </div>
