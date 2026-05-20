@@ -8,9 +8,13 @@ export interface IInputTypes {
   type: string,
   placeholder?: string,
   name: string,
+  id?: string,
   control?: any,
   errorMsg?: string
   disabled?: boolean
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onChange?: (val: string) => void
 }
 
 export default function Input({
@@ -18,9 +22,13 @@ export default function Input({
   type,
   placeholder,
   name,
+  id,
   disabled = false,
   control,
   errorMsg,
+  onFocus,
+  onBlur,
+  onChange,
 }: IInputTypes) {
   return (
     <div>
@@ -31,11 +39,20 @@ export default function Input({
           <input
             type={type}
             placeholder={placeholder}
-            id={name}
+            id={id || name}
             {...field}
             value={field.value || ""}
-            className={`border border-input bg-background rounded-md px-3 py-2 text-sm ring-offset-background w-full ${className}`}
+            className={`border border-input bg-background rounded-md px-3 py-2 text-sm ring-offset-background w-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
             disabled={disabled}
+            onFocus={onFocus}
+            onBlur={(e) => {
+              field.onBlur();
+              if (onBlur) onBlur(e);
+            }}
+            onChange={(e) => {
+              field.onChange(e);
+              if (onChange) onChange(e.target.value);
+            }}
           />
         )}
       />

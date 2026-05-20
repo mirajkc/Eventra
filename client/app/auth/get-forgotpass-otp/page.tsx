@@ -1,9 +1,10 @@
 "use client";
+
+import React, { useEffect } from "react";
 import Input from "@/components/form/Input";
 import Label from "@/components/form/Label";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { TypographyH2, TypographyP } from "@/components/ui/Typography";
 import { forgotPasswordOtpDTO } from "@/rules/auth.rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -11,16 +12,20 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { useAuthVisual } from "@/app/auth/layout";
 
 export default function GetForgotPasswordOtp() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { setIsTyping } = useAuthVisual();
+
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       email: "",
     },
     resolver: zodResolver(forgotPasswordOtpDTO)
   });
+
   const onSubmit = async (data: any) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/get-forgot-password-otp`, {
@@ -46,52 +51,73 @@ export default function GetForgotPasswordOtp() {
     }
   };
 
-  if (isSubmitting) {
-    return (
-      <section className="flex items-center justify-center min-h-screen w-full bg-slate-50 dark:bg-black p-4">
-        <div className="flex items-center gap-4">
-          <Spinner />
-        </div>
-      </section>
-    );
-  }
+  // Reset typing state on unmount
+  useEffect(() => {
+    return () => {
+      setIsTyping(false);
+    };
+  }, [setIsTyping]);
 
   return (
-    <section className="flex items-center justify-center min-h-screen w-full bg-slate-50 dark:bg-black p-4">
-      <div className="w-full max-w-md bg-white dark:bg-slate-950 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
-        <div className="p-8">
-          <div className="flex flex-col space-y-2 text-center mb-8">
-            <TypographyH2>{t("auth.forgotPassword.title")}</TypographyH2>
-            <TypographyP>{t("auth.forgotPassword.subtitle")}</TypographyP>
-          </div>
-
-          <form className="flex flex-col space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">{t("auth.forgotPassword.emailLabel")}</Label>
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder={t("auth.forgotPassword.emailPlaceholder")}
-                  errorMsg={errors.email?.message}
-                  control={control}
-                />
-              </div>
-            </div>
-
-            <Button className="w-full" size="lg">
-              {t("auth.forgotPassword.sendOtpBtn")}
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">{t("auth.forgotPassword.rememberPassword")} </span>
-            <Link href="/auth/login" className="font-medium text-primary hover:underline">
-              {t("auth.forgotPassword.signInLink")}
-            </Link>
-          </div>
-        </div>
+    <div className="w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      
+      {/* Header */}
+      <div className="text-center md:text-left space-y-2">
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+          {t("auth.forgotPassword.title")}
+        </h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          {t("auth.forgotPassword.subtitle")}
+        </p>
       </div>
-    </section>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        
+        {/* Email Field */}
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            {t("auth.forgotPassword.emailLabel")}
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            placeholder={t("auth.forgotPassword.emailPlaceholder")}
+            errorMsg={errors.email?.message}
+            control={control}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            disabled={isSubmitting}
+          />
+        </div>
+
+        {/* Submit Button */}
+        <Button 
+          type="submit" 
+          className="w-full hover:cursor-pointer flex items-center justify-center gap-2" 
+          size="lg"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>
+              <Spinner className="h-4 w-4 text-white" />
+              <span>{t("auth.verifyOtp.verifying") || "Sending..."}</span>
+            </>
+          ) : (
+            t("auth.forgotPassword.sendOtpBtn")
+          )}
+        </Button>
+      </form>
+
+      {/* Back to Sign In Redirect */}
+      <div className="text-center text-sm text-slate-500 dark:text-slate-400 pt-4">
+        {t("auth.forgotPassword.rememberPassword")}{" "}
+        <Link href="/auth/login" className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+          {t("auth.forgotPassword.signInLink")}
+        </Link>
+      </div>
+
+    </div>
   );
 }
