@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import ReduxProvider from "@/state/redux.provider";
 import { Analytics } from '@vercel/analytics/next';
+import FloatingAiAssistant from "@/components/ui/glowing-ai-chat-assistant";
 
 
 
@@ -54,6 +55,7 @@ export default function RootLayout({
             <Toaster
               position='top-center'
             />
+            <FloatingAiAssistant />
           </ThemeProvider>
 
         </ReduxProvider>

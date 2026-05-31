@@ -21,11 +21,11 @@ export default function EventDetails({ event }: EventDetailsProps) {
       <div>
         <EventHero event={event} />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-auto lg:h-[80vh]" >
-        <div className="bg-white dark:bg-neutral-900 rounded-3xl p-6 md:p-8 shadow-sm border border-neutral-200 dark:border-neutral-800 h-[500px] lg:h-auto overflow-y-auto custom-scrollbar" >
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-auto lg:h-[80vh]" >
+        <div className="lg:col-span-7 bg-white dark:bg-neutral-900 rounded-3xl p-6 md:p-8 shadow-sm border border-neutral-200 dark:border-neutral-800 h-[500px] lg:h-auto overflow-y-auto custom-scrollbar" >
           <RegisterdMembers />
         </div>
-        <div className="bg-white dark:bg-neutral-900 rounded-3xl shadow-sm border border-neutral-200 dark:border-neutral-800 h-[600px] lg:h-auto overflow-hidden" >
+        <div className="lg:col-span-5 bg-white dark:bg-neutral-900 rounded-3xl shadow-sm border border-neutral-200 dark:border-neutral-800 h-[600px] lg:h-auto overflow-hidden" >
           <EventChatBox event={event} />
         </div>
       </div>

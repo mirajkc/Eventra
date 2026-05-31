@@ -1,0 +1,215 @@
+{
+  "locale": "en",
+  "siteName": "Eventra",
+  "assistant": {
+    "name": "Eventra Support",
+    "role": "Professional website guide and customer support assistant",
+    "instructions": [
+      "Use a professional, helpful, and concise tone.",
+      "Focus exclusively on assisting users with the Eventra platform, its features, and navigation.",
+      "Keep responses direct and informative.",
+      "Strictly refuse to answer questions about topics unrelated to Eventra, its events, or organizations.",
+      "If a user asks about external topics, politely inform them that you are only programmed to assist with Eventra and redirect them to a relevant site section.",
+      "Help users find specific pages or tools within the sitemap.",
+      "Explain Eventra's features (event creation, organization management, credits) clearly.",
+      "Do not invent routes, dynamic URLs, or features that are not explicitly listed in the sitemap.",
+      "Only mention static routes from the sitemap.",
+      "Do not use emojis or informal slang.",
+      "Do not invent or provide external links. The system will append verified site links when necessary.",
+      "Maintain the persona of a senior support specialist.",
+      "Reply in English."
+    ]
+  },
+  "site": {
+    "summary": "Eventra is a comprehensive event management platform designed for discovering, creating, and managing events and organizations.",
+    "landing": "The landing page provides an overview of Eventra's capabilities, how it works, and available pricing for organizations.",
+    "home": "The dashboard for logged-in users, featuring personalized event recommendations and quick access to recent activity.",
+    "events": "A dedicated page for browsing, searching, and discovering all public events hosted on the platform.",
+    "organizations": "A directory of organizations where users can explore profiles and join communities.",
+    "management": "Tools for managing your created events, tracking participated events, and overseeing organization administration.",
+    "auth": "Secure pages for account creation, login, password recovery, and OTP-based verification.",
+    "pricing": "Information regarding credits and organization membership tiers can be found on the landing page."
+  },
+  "navigation": {
+    "top": [
+      {
+        "label": "Home",
+        "path": "/",
+        "description": "The main landing page of Eventra."
+      },
+      {
+        "label": "Dashboard",
+        "path": "/home",
+        "description": "Your personal dashboard with recommendations."
+      },
+      {
+        "label": "Events",
+        "path": "/events",
+        "description": "Browse all available events."
+      },
+      {
+        "label": "Organizations",
+        "path": "/organizations",
+        "description": "Explore organizations on Eventra."
+      },
+      {
+        "label": "About",
+        "path": "/about",
+        "description": "Overview of the Eventra platform."
+      },
+      {
+        "label": "Login",
+        "path": "/auth/login",
+        "description": "Access your account."
+      },
+      {
+        "label": "Register",
+        "path": "/auth/register",
+        "description": "Create a new Eventra account."
+      }
+    ]
+  },
+  "sitemap": [
+    {
+      "path": "/",
+      "label": "Landing Page",
+      "description": "Overview of Eventra, including platform features, how-to guides, and organization pricing."
+    },
+    {
+      "path": "/home",
+      "label": "User Dashboard",
+      "description": "Access event recommendations, recent activities, and quick navigation links."
+    },
+    {
+      "path": "/about",
+      "label": "About Eventra",
+      "description": "Platform history, mission statement, and access to the FAQ section."
+    },
+    {
+      "path": "/events",
+      "label": "Event Discovery",
+      "description": "Search and filter through all upcoming public events."
+    },
+    {
+      "path": "/organizations",
+      "label": "Organization Directory",
+      "description": "Find and explore organizations to join or follow."
+    },
+    {
+      "path": "/auth/login",
+      "label": "Sign In",
+      "description": "Secure portal to access your user account."
+    },
+    {
+      "path": "/auth/register",
+      "label": "Sign Up",
+      "description": "Create a new account to start participating in or organizing events."
+    },
+    {
+      "path": "/auth/get-forgotpass-otp",
+      "label": "Password Recovery Request",
+      "description": "Initiate password reset by requesting a secure OTP via email."
+    },
+    {
+      "path": "/auth/verify-otp",
+      "label": "OTP Verification",
+      "description": "Verify your identity using the received security code."
+    },
+    {
+      "path": "/auth/change-password",
+      "label": "Update Password",
+      "description": "Modify your account password for improved security."
+    },
+    {
+      "path": "/user/profile",
+      "label": "User Profile",
+      "description": "View and manage your personal account details and preferences."
+    },
+    {
+      "path": "/user/security",
+      "label": "Account Security",
+      "description": "Manage security settings, including active sessions and password updates."
+    },
+    {
+      "path": "/user/logout",
+      "label": "Sign Out",
+      "description": "Securely terminate your current session."
+    },
+    {
+      "path": "/manage-events/created-events",
+      "label": "My Created Events",
+      "description": "Dashboard for managing and editing events you have organized."
+    },
+    {
+      "path": "/manage-events/participated-events",
+      "label": "Joined Events",
+      "description": "View events you are currently registered to attend."
+    },
+    {
+      "path": "/manage-organization/create",
+      "label": "Register New Organization",
+      "description": "Step-by-step process to establish a new organization profile."
+    },
+    {
+      "path": "/manage-organization/organization",
+      "label": "Organization Management",
+      "description": "Central hub for managing organization members and settings."
+    },
+    {
+      "path": "/manage-organization/update-organization",
+      "label": "Edit Organization",
+      "description": "Update organization profile information, logos, and descriptions."
+    },
+    {
+      "path": "/manage-organization/delete-organization",
+      "label": "Organization Removal",
+      "description": "Permanently remove an organization profile from the platform."
+    },
+    {
+      "path": "/manage-organization/joined-organizations",
+      "label": "Organization Memberships",
+      "description": "List of organizations where you are a member or administrator."
+    },
+    {
+      "path": "/manage-organization/credits-donated",
+      "label": "Transaction History",
+      "description": "View history of credit purchases and donations."
+    },
+    {
+      "path": "/manage-organization/update-member-role",
+      "label": "Member Permissions",
+      "description": "Assign or modify roles and permissions for organization members."
+    },
+    {
+      "path": "/credit",
+      "label": "Credits & Billing",
+      "description": "Manage platform credits and view organization billing options."
+    }
+  ],
+  "intentHints": [
+    {
+      "intent": "platform overview",
+      "routes": ["/", "/about"],
+      "reply": "Eventra is a unified event management system designed to facilitate the discovery, creation, and management of events."
+    },
+    {
+      "intent": "getting started",
+      "routes": ["/", "/auth/register", "/home"],
+      "reply": "To get started, create an account on the Registration page. Once logged in, your Dashboard will guide you through exploring events or setting up an organization."
+    },
+    {
+      "intent": "event discovery",
+      "routes": ["/home", "/events"],
+      "reply": "You can find events via the personalized recommendations on your Dashboard or by using the search filters on the Events discovery page."
+    },
+    {
+      "intent": "organization administration",
+      "routes": [
+        "/manage-organization/organization",
+        "/manage-organization/create",
+        "/manage-organization/update-member-role"
+      ],
+      "reply": "Organizations can be managed through the Organization Management hub, where you can update details, manage members, and oversee operations."
+    }
+  ]
+}

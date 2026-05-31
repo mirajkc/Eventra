@@ -4,6 +4,9 @@ declare class Enviroment {
     secretKey: string;
     mode: string;
     clientURL: string;
+    openRouterApiKey: string;
+    openRouterEndpoint: string;
+    openRouterModel: string;
     stripeKey: string | undefined;
     stripeWebHookSigningSecret: string | undefined;
     enableEmail: boolean;

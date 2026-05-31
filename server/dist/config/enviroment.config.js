@@ -4,6 +4,9 @@ class Enviroment {
     secretKey = process.env.SECRET_KEY || "SECRET";
     mode = process.env.MODE || "development";
     clientURL = process.env.CLIENT_URL || "http://localhost:3000";
+    openRouterApiKey = process.env.OPENROUTERAPI || "";
+    openRouterEndpoint = process.env.OPENROUTER_ENDPOINT || "https://openrouter.ai/api/v1/chat/completions";
+    openRouterModel = process.env.OPENROUTER_MODEL || "openai/gpt-4o-mini";
     stripeKey = process.env.STRIPE_SECRET;
     stripeWebHookSigningSecret = process.env.STRIPE_SIGNING_SECRET;
     enableEmail = true;
