@@ -205,6 +205,33 @@ export function FloatingAiAssistant() {
   }, [isOpen])
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return
+    }
+
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 640
+      if (isOpen && isMobile) {
+        document.body.style.overflow = "hidden"
+      } else {
+        document.body.style.overflow = ""
+      }
+    }
+
+    if (isOpen) {
+      handleResize()
+      window.addEventListener("resize", handleResize)
+    } else {
+      document.body.style.overflow = ""
+    }
+
+    return () => {
+      document.body.style.overflow = ""
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
     const container = chatRef.current?.querySelector<HTMLElement>("[data-chat-scroll]")
     if (container) {
       container.scrollTop = container.scrollHeight
@@ -288,6 +315,9 @@ export function FloatingAiAssistant() {
 
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter" && !event.shiftKey) {
+      if (typeof window !== "undefined" && window.innerWidth < 640) {
+        return
+      }
       event.preventDefault()
       handleSubmit()
     }
@@ -305,7 +335,7 @@ export function FloatingAiAssistant() {
         aria-label="Open chat assistant"
         className={cn(
           "ai-assistant-toggle group relative flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-neutral-950 text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)] transition-transform duration-300 hover:scale-105 sm:h-14 sm:w-14 dark:border-white/10 dark:bg-white dark:text-neutral-950",
-          isOpen && "scale-105"
+          isOpen && "hidden sm:flex scale-105"
         )}
         onClick={() => setIsOpen((current) => !current)}
       >
@@ -317,7 +347,7 @@ export function FloatingAiAssistant() {
       {isOpen && (
         <div
           ref={chatRef}
-          className="absolute bottom-16 right-0 flex max-h-[calc(100vh-8rem)] w-full flex-col overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-white text-neutral-950 shadow-[0_30px_80px_rgba(0,0,0,0.16)] sm:bottom-20 sm:w-[400px] sm:max-h-[min(calc(100vh-12rem),640px)] sm:rounded-[1.5rem] dark:border-neutral-800 dark:bg-neutral-950 dark:text-white"
+          className="fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white sm:absolute sm:inset-auto sm:bottom-20 sm:right-0 sm:h-[600px] sm:max-h-[min(calc(100vh-12rem),640px)] sm:w-[400px] sm:rounded-[1.5rem] sm:border sm:border-neutral-200 sm:shadow-[0_30px_80px_rgba(0,0,0,0.16)] dark:sm:border-neutral-800 animate-chat-in"
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(0,0,0,0.045),_transparent_42%)] dark:bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.05),_transparent_42%)]" />
 
@@ -334,9 +364,9 @@ export function FloatingAiAssistant() {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="rounded-full p-1.5 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:hover:bg-neutral-900 dark:hover:text-white"
+              className="rounded-full p-2 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:hover:bg-neutral-900 dark:hover:text-white sm:p-1.5"
             >
-              <X className="size-4" />
+              <X className="size-5 sm:size-4" />
             </button>
           </div>
 
@@ -438,7 +468,7 @@ export function FloatingAiAssistant() {
                   className="min-h-[60px] sm:min-h-[80px] w-full resize-none rounded-2xl border border-neutral-300 bg-white px-3 py-2.5 text-[0.8rem] text-neutral-950 outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-950 sm:rounded-3xl sm:px-4 sm:py-3 sm:text-sm dark:border-neutral-700 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-white"
                 />
                 <div className="mt-2 flex items-center justify-between px-1 text-[0.7rem] text-neutral-500 sm:text-xs dark:text-neutral-400">
-                  <span className="inline-flex items-center gap-1">
+                  <span className="hidden sm:inline-flex items-center gap-1">
                     <MessageSquareText className="size-3.5" />
                     Press Enter to send
                   </span>
