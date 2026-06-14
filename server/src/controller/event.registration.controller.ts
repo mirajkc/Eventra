@@ -80,15 +80,6 @@ class EventRegistrationController {
         }
       })
 
-      await notificationService.sendNotificaion({
-        userId: userDetails.id,
-        title: "You registerd for a new event. ",
-        message: `Hello, ${userDetails.name} you are successfully registed for the event ${eventDetails.title}. Here is the token ${token} please keep it safe as this is needed on checkin proccess. `,
-        type: "EVENT_REMINDER",
-        entityType: "EVENT",
-        entityId: eventDetails.id
-      })
-
       const groupNotification: Array<ICreateNotificaion> =
         eventDetails.participants?.map((m: any) => ({
           userId: (m as { userId: string }).userId,
@@ -98,11 +89,32 @@ class EventRegistrationController {
           entityType: 'EVENT',
           entityId: eventDetails.id
         })) ?? []
-      await notificationService.sendManyNotification(groupNotification)
-      await emailService.sendEmail({
-        to: userDetails.email,
-        subject: "You are registed for new event",
-        message: newMemberRegistrationTemplate(userDetails.name, eventDetails.title, token)
+
+      const postJoinTasks = [
+        notificationService.sendNotificaion({
+          userId: userDetails.id,
+          title: "You registerd for a new event. ",
+          message: `Hello, ${userDetails.name} you are successfully registed for the event ${eventDetails.title}. Here is the token ${token} please keep it safe as this is needed on checkin proccess. `,
+          type: "EVENT_REMINDER",
+          entityType: "EVENT",
+          entityId: eventDetails.id
+        }),
+        emailService.sendEmail({
+          to: userDetails.email,
+          subject: "You are registed for new event",
+          message: newMemberRegistrationTemplate(userDetails.name, eventDetails.title, token)
+        })
+      ]
+
+      if (groupNotification.length > 0) {
+        postJoinTasks.push(notificationService.sendManyNotification(groupNotification))
+      }
+
+      const joinResults = await Promise.allSettled(postJoinTasks)
+      joinResults.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Join event side effect failed:", result.reason)
+        }
       })
 
       return res.json({
@@ -159,21 +171,6 @@ class EventRegistrationController {
       }
       const removedUser = await eventParticipantService.removeUserRegistration(userDetails.id, eventDetails.id)
 
-      await notificationService.sendNotificaion({
-        userId: userDetails.id,
-        title: "You left an event " + eventDetails.title,
-        message: `Hello, ${userDetails.name} you have left an event ${eventDetails.title}. We are always welcome to have you back at the event`,
-        type: "EVENT_UPDATED",
-        entityId: eventDetails.id,
-        entityType: "EVENT"
-      })
-
-      await emailService.sendEmail({
-        to: userDetails.email,
-        subject: `You left the event: ${eventDetails.title}`,
-        message: leftEventTemplate(userDetails.name, eventDetails.title)
-      })
-
       const groupNotification: Array<ICreateNotificaion> =
         eventDetails.participants
           ?.filter((p: any) => p.userId !== userDetails.id)
@@ -186,7 +183,32 @@ class EventRegistrationController {
             entityId: eventDetails.id
           })) ?? []
 
-      await notificationService.sendManyNotification(groupNotification)
+        const postLeaveTasks = [
+          notificationService.sendNotificaion({
+            userId: userDetails.id,
+            title: "You left an event " + eventDetails.title,
+            message: `Hello, ${userDetails.name} you have left an event ${eventDetails.title}. We are always welcome to have you back at the event`,
+            type: "EVENT_UPDATED",
+            entityId: eventDetails.id,
+            entityType: "EVENT"
+          }),
+          emailService.sendEmail({
+            to: userDetails.email,
+            subject: `You left the event: ${eventDetails.title}`,
+            message: leftEventTemplate(userDetails.name, eventDetails.title)
+          })
+        ]
+
+        if (groupNotification.length > 0) {
+          postLeaveTasks.push(notificationService.sendManyNotification(groupNotification))
+        }
+
+        const leaveResults = await Promise.allSettled(postLeaveTasks)
+        leaveResults.forEach((result) => {
+          if (result.status === "rejected") {
+            console.error("Leave event side effect failed:", result.reason)
+          }
+        })
 
       return res.json({
         message: "Successfully left the event.",

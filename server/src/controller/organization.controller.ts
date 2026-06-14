@@ -229,14 +229,6 @@ class OrganizationController {
         organizationId: organizationId,
       }
       const newMember = await organizationMemberService.createNewMember(newMemberDetail)
-      await notificationService.sendNotificaion({
-        userId: userDetails.id,
-        title: "Joined a new organization" + organizationDetails.name,
-        message: `Hello ${userDetails.name} you joined a new organization ${organizationDetails.name}. You will get notified for activites related to this organization`,
-        type: "ORG_APPROVED",
-        entityType: "ORGANIZATION",
-        entityId: organizationDetails.id
-      })
       const groupNotification: Array<ICreateNotificaion> =
         organizationDetails.members?.map((m: any) => ({
           userId: (m as { userId: string }).userId,
@@ -246,11 +238,32 @@ class OrganizationController {
           entityType: "ORGANIZATION",
           entityId: organizationDetails.id
         })) ?? []
-      await notificationService.sendManyNotification(groupNotification)
-      await emailService.sendEmail({
-        to: userDetails.email,
-        subject: "Joined the new organization",
-        message: joinedOrganizationEmail(organizationDetails.name, userDetails.name)
+
+      const postJoinTasks = [
+        notificationService.sendNotificaion({
+          userId: userDetails.id,
+          title: "Joined a new organization" + organizationDetails.name,
+          message: `Hello ${userDetails.name} you joined a new organization ${organizationDetails.name}. You will get notified for activites related to this organization`,
+          type: "ORG_APPROVED",
+          entityType: "ORGANIZATION",
+          entityId: organizationDetails.id
+        }),
+        emailService.sendEmail({
+          to: userDetails.email,
+          subject: "Joined the new organization",
+          message: joinedOrganizationEmail(organizationDetails.name, userDetails.name)
+        })
+      ]
+
+      if (groupNotification.length > 0) {
+        postJoinTasks.push(notificationService.sendManyNotification(groupNotification))
+      }
+
+      const joinResults = await Promise.allSettled(postJoinTasks)
+      joinResults.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Organization join side effect failed:", result.reason)
+        }
       })
       return res.json({
         message: "Successfully joined the organization",
@@ -303,14 +316,6 @@ class OrganizationController {
       const leavedUser = await organizationMemberService.deleteMember({
         filter: { id: memberDetails.id }
       })
-      await notificationService.sendNotificaion({
-        userId: leavedUser.userId,
-        title: `Left the organization ${organizationDetails.name}`,
-        message: `Hello ${userDetails.name} you left a  organization ${organizationDetails.name}. You are always free to join organization if you change your mind. `,
-        type: "ORG_APPROVED",
-        entityType: "ORGANIZATION",
-        entityId: organizationDetails.id
-      })
       const groupNotification: Array<ICreateNotificaion> =
         organizationDetails.members?.map((m: any) => ({
           userId: (m as { userId: string }).userId,
@@ -320,11 +325,32 @@ class OrganizationController {
           entityType: "ORGANIZATION",
           entityId: organizationDetails.id
         })) ?? []
-      await notificationService.sendManyNotification(groupNotification)
-      await emailService.sendEmail({
-        to: userDetails.email,
-        subject: "You left an organization",
-        message: leftOrganizationEmail(organizationDetails.name, userDetails.name)
+
+      const postLeaveTasks = [
+        notificationService.sendNotificaion({
+          userId: leavedUser.userId,
+          title: `Left the organization ${organizationDetails.name}`,
+          message: `Hello ${userDetails.name} you left a  organization ${organizationDetails.name}. You are always free to join organization if you change your mind. `,
+          type: "ORG_APPROVED",
+          entityType: "ORGANIZATION",
+          entityId: organizationDetails.id
+        }),
+        emailService.sendEmail({
+          to: userDetails.email,
+          subject: "You left an organization",
+          message: leftOrganizationEmail(organizationDetails.name, userDetails.name)
+        })
+      ]
+
+      if (groupNotification.length > 0) {
+        postLeaveTasks.push(notificationService.sendManyNotification(groupNotification))
+      }
+
+      const leaveResults = await Promise.allSettled(postLeaveTasks)
+      leaveResults.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Organization leave side effect failed:", result.reason)
+        }
       })
       return res.json({
         message: "Successfully left the organization",

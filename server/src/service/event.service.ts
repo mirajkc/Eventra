@@ -105,13 +105,6 @@ class EventService {
         }
       }
     })
-    if (!events || events.length <= 0) {
-      throw {
-        code: 500,
-        message: "No results found. ",
-        status: "NO_RESULTS_FOUND_ERR"
-      } as IErrorTypes
-    }
     return events
   }
 

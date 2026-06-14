@@ -125,7 +125,7 @@ export default function UpdateOrganizationForm() {
           <div className="w-1/3">
             <p>{t("manageOrganization.update.form.currentImage")}</p>
             <Label htmlFor="image"><div>
-              <Image width={100} height={100} src={organizationData?.image || "https://github.com/shadcn.png"} alt="organization image" />
+              <Image width={100} height={100} src={organizationData?.image || "https://github.com/shadcn.png"} alt="organization image" unoptimized />
             </div></Label>
           </div>
           <div className="w-2/3 dark:bg-neutral-900" >
@@ -136,7 +136,7 @@ export default function UpdateOrganizationForm() {
           <div className="w-1/3">
             <p>{t("manageOrganization.update.form.currentThumbnail")}</p>
             <Label htmlFor="image"><div>
-              <Image width={100} height={100} src={organizationData?.thumbnail || "https://github.com/shadcn.png"} alt="organization thumbnail" />
+              <Image width={100} height={100} src={organizationData?.thumbnail || "https://github.com/shadcn.png"} alt="organization thumbnail" unoptimized />
             </div></Label>
           </div>
           <div className="w-2/3 dark:bg-neutral-900" >

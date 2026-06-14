@@ -45,15 +45,7 @@ class EventParticipantService {
 
   async removeUserRegistration(userId: string, eventId: string) {
     return await prisma.$transaction(async (tx: any) => {
-      await tx.event.update({
-        where: {
-          id: eventId,
-        },
-        data: {
-          registeredCount: { decrement: 1 }
-        }
-      })
-      const eventParticipantsId = await prisma.eventParticipants.findFirst({
+      const eventParticipantsId = await tx.eventParticipants.findFirst({
         where: {
           eventId: eventId,
           userId: userId
@@ -69,7 +61,8 @@ class EventParticipantService {
           status: "USER_NOT_FOUND_ERR"
         } as IErrorTypes
       }
-      const removedUser = await prisma.eventParticipants.delete({
+
+      const removedUser = await tx.eventParticipants.delete({
         where: eventParticipantsId
       })
       if (!removedUser) {
@@ -79,6 +72,16 @@ class EventParticipantService {
           status: "LEAVE_EVENT_ERR"
         } as IErrorTypes
       }
+
+      await tx.event.update({
+        where: {
+          id: eventId,
+        },
+        data: {
+          registeredCount: { decrement: 1 }
+        }
+      })
+
       return removedUser
     })
   }
