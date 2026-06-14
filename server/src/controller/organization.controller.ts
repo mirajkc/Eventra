@@ -239,7 +239,11 @@ class OrganizationController {
           entityId: organizationDetails.id
         })) ?? []
 
+<<<<<<< HEAD
       const postJoinTasks: Promise<unknown>[] = [
+=======
+      const postJoinTasks = [
+>>>>>>> 8941cf9101c300c31daea77d883bec7e12292bae
         notificationService.sendNotificaion({
           userId: userDetails.id,
           title: "Joined a new organization" + organizationDetails.name,
@@ -326,7 +330,11 @@ class OrganizationController {
           entityId: organizationDetails.id
         })) ?? []
 
+<<<<<<< HEAD
       const postLeaveTasks: Promise<unknown>[] = [
+=======
+      const postLeaveTasks = [
+>>>>>>> 8941cf9101c300c31daea77d883bec7e12292bae
         notificationService.sendNotificaion({
           userId: leavedUser.userId,
           title: `Left the organization ${organizationDetails.name}`,
