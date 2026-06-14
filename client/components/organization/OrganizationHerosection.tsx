@@ -107,6 +107,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
           className="object-cover transition-transform duration-700 hover:scale-105"
           priority
           sizes="100vw"
+          unoptimized
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -120,6 +121,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
             fill
             className="object-cover"
             sizes="(max-width: 768px) 128px, 176px"
+            unoptimized
           />
         </motion.div>
       </div>

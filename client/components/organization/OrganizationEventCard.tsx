@@ -62,6 +62,7 @@ export default function OrganizationEventCard({ event }: OrganizationEventCardPr
                     fill
                     sizes="10"
                     className="rounded-full object-cover"
+                    unoptimized
                   />
                 </div>
               )}

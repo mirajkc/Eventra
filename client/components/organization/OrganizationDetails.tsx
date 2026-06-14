@@ -46,6 +46,7 @@ export default function OrganizationDetails({ organizationDetails }: { organizat
                 alt={organizationDetails.data?.name || "Organization"}
                 fill
                 className="object-cover"
+                unoptimized
               />
             </div>
             <div className="flex-1 space-y-2">

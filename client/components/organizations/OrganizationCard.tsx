@@ -24,7 +24,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
         <Link href={`/organization/${organization.id}`} className="absolute inset-0 z-10">
           <span className="sr-only">View Organization Details</span>
         </Link>
-        <div className="relative h-[180px] w-full p-2.5 pb-0">
+        <div className="relative h-45 w-full p-2.5 pb-0">
           <div className="relative w-full h-full rounded-2xl overflow-hidden ring-1 ring-neutral-100 dark:ring-neutral-800 bg-neutral-100 dark:bg-neutral-900">
             <Image
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -33,6 +33,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               loading="eager"
+              unoptimized
             />
             {/* Overlay Badges */}
             <div className="absolute top-2.5 left-2.5">
@@ -51,13 +52,14 @@ export default function OrganizationCard({ organization }: { organization: IOrga
               </div>
             )}
             <div className="absolute -bottom-1 left-2.5">
-              <div className="relative size-14 rounded-xl border-2 border-white dark:border-neutral-950 overflow-hidden bg-white dark:bg-neutral-900 shadow-sm z-20">
+              <div className="relative size-14 rounded-xl  dark:border-neutral-950 overflow-hidden bg-white dark:bg-neutral-900 shadow-sm z-20 mb-1.5">
                 <Image
                   className="object-cover"
                   src={organization.image || "/organization_profile.jpg"}
                   alt={organization.name}
                   fill
                   sizes="56px"
+                  unoptimized
                 />
               </div>
             </div>

@@ -18,15 +18,7 @@ declare class EventParticipantService {
         userId: string;
         checkInToken: string;
     }): Promise<any>;
-    removeUserRegistration(userId: string, eventId: string): Promise<{
-        id: string;
-        userId: string;
-        eventId: string;
-        registeredAt: Date;
-        checkInToken: string;
-        attended: boolean;
-        checkedInAt: Date | null;
-    }>;
+    removeUserRegistration(userId: string, eventId: string): Promise<any>;
     chekIn(token: string, eventId: string, include: any): Promise<{
         [x: string]: never;
         [x: number]: never;

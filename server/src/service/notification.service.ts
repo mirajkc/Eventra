@@ -31,6 +31,9 @@ class NotificationService {
   }
 
   async sendManyNotification(data: Array<ICreateNotificaion>) {
+    if (data.length === 0) {
+      return { count: 0 }
+    }
     const notifications = await prisma.notification.createMany({ data: data })
     if (!notifications || notifications.count <= 0) {
       throw {
