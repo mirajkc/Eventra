@@ -13,7 +13,7 @@ import creditController from "../controller/credit.controller.js";
 const app: Application = express()
 
 app.use(cors({
-  origin: [enviroment.clientURL, "http://localhost", "http://localhost:80", "http://localhost:3000", "http://localhost:5173","https://eventra-admin-dashboard.vercel.app", "https://eventraa.tech", "https://www.eventraa.tech"],
+  origin: enviroment.allowedOrigins,
   credentials: true
 }));
 app.use(helmet())

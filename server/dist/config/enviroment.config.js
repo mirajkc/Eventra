@@ -4,6 +4,7 @@ class Enviroment {
     secretKey = process.env.SECRET_KEY || "SECRET";
     mode = process.env.MODE || "development";
     clientURL = process.env.CLIENT_URL || "http://localhost:3000";
+    allowedOrigins = (process.env.ALLOWED_ORIGINS ?? "").split(",");
     openRouterApiKey = process.env.OPENROUTERAPI || "";
     openRouterEndpoint = process.env.OPENROUTER_ENDPOINT || "https://openrouter.ai/api/v1/chat/completions";
     openRouterModel = process.env.OPENROUTER_MODEL || "openai/gpt-4o-mini";

@@ -4,6 +4,7 @@ declare class Enviroment {
     secretKey: string;
     mode: string;
     clientURL: string;
+    allowedOrigins: string[] | string;
     openRouterApiKey: string;
     openRouterEndpoint: string;
     openRouterModel: string;
