@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 import {
   PuzzleHeroSkeleton,
   ScreenShotShowcaseSkeleton,
@@ -10,66 +10,80 @@ import {
   LandingPricingSkeleton,
   CallToActionSkeleton,
   LargeTextSkeleton,
-} from "./skeletons";
+} from './skeletons';
 
-const PuzzleHero = dynamic(() => import("@/components/landing/PuzzleHero"), {
+import gsap from 'gsap';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import Footer from '@/components/ui/Footer';
+
+const PuzzleHero = dynamic(() => import('@/components/landing/PuzzleHero'), {
   loading: () => <PuzzleHeroSkeleton />,
 });
 const ScreenShotShowcase = dynamic(
-  () => import("@/components/home/ScreenShotShowcase"),
-  { loading: () => <ScreenShotShowcaseSkeleton /> }
+  () => import('@/components/home/ScreenShotShowcase'),
+  { loading: () => <ScreenShotShowcaseSkeleton /> },
 );
-const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks"), {
+const HowItWorks = dynamic(() => import('@/components/landing/HowItWorks'), {
   loading: () => <HowItWorksSkeleton />,
 });
-const Features = dynamic(() => import("@/components/home/Features"), {
+const Features = dynamic(() => import('@/components/home/Features'), {
   loading: () => <FeaturesSkeleton />,
 });
-const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
+const Testimonials = dynamic(() => import('@/components/home/Testimonials'), {
   loading: () => <TestimonialsSkeleton />,
 });
 const LandingPricing = dynamic(
-  () => import("@/components/landing/LandingPricing"),
-  { loading: () => <LandingPricingSkeleton /> }
+  () => import('@/components/landing/LandingPricing'),
+  { loading: () => <LandingPricingSkeleton /> },
 );
-const CallToAction = dynamic(() => import("@/components/home/CallToAction"), {
+const CallToAction = dynamic(() => import('@/components/home/CallToAction'), {
   loading: () => <CallToActionSkeleton />,
 });
-const LargeText = dynamic(() => import("@/components/landing/LargeText"), {
+const LargeText = dynamic(() => import('@/components/landing/LargeText'), {
   loading: () => <LargeTextSkeleton />,
 });
 
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
 export default function Home() {
-
+  useGSAP(() => {
+    ScrollSmoother.create({
+      smooth: 1.5,
+      effects: true,
+      smoothTouch: 0.1,
+    });
+  });
   return (
-    <main className="w-full">
-      <PuzzleHero />
+    <main className='w-full' id='smooth-wrapper'>
+      <div id='smooth-content'>
+        <PuzzleHero />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
+            <ScreenShotShowcase />
+          </div>
+          {/* how it works */}
+          <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
+            <HowItWorks />
+          </div>
 
-        <div className="min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0">
+          {/* //features section here and remove the ScreenShotShowcase */}
+          <Features />
 
-          <ScreenShotShowcase />
+          {/* // testimonials */}
+          <Testimonials />
+
+          {/* pricing */}
+          <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
+            <LandingPricing />
+          </div>
+          <CallToAction />
+          <LargeText />
+          <Footer />
         </div>
-        {/* how it works */}
-        <div className="min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0">
-          <HowItWorks />
-        </div>
-
-        {/* //features section here and remove the ScreenShotShowcase */}
-        <Features />
-
-        {/* // testimonials */}
-        <Testimonials />
-
-
-        {/* pricing */}
-        <div className="min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0">
-          <LandingPricing />
-        </div>
-        <CallToAction />
-        <LargeText />
       </div>
     </main>
-  )
+  );
 }
