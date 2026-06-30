@@ -1,310 +1,247 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import { useTranslation } from "react-i18next";
-import { Check } from "lucide-react";
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
+import {
+  UserPlus,
+  UserCircle,
+  Search,
+  CalendarCheck,
+  MessageSquare,
+  PartyPopper,
+} from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-function ProfileMockup() {
-    return (
-        <div className="relative w-full max-w-[240px] mx-auto">
-            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-foreground/[0.04] to-transparent blur-xl" aria-hidden />
-            <div className="relative aspect-[5/4] rounded-2xl border border-border bg-card shadow-[0_24px_60px_-30px_rgba(0,0,0,0.35)] dark:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] overflow-hidden">
-                <div className="h-7 bg-foreground/[0.04] dark:bg-foreground/[0.06] border-b border-border flex items-center px-3 gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-foreground/25" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-foreground/25" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-foreground/25" />
-                    <div className="ml-auto h-2 w-14 rounded-full bg-foreground/10" />
-                </div>
-                <div className="p-4 space-y-3">
-                    <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-foreground/85" />
-                        <div className="flex-1 space-y-1.5">
-                            <div className="h-1.5 w-3/4 rounded-full bg-foreground/30" />
-                            <div className="h-1.5 w-1/2 rounded-full bg-foreground/15" />
-                        </div>
-                    </div>
-                    <div className="space-y-1.5 pt-1">
-                        <div className="h-2 rounded-sm bg-foreground/8" />
-                        <div className="h-2 rounded-sm bg-foreground/8 w-11/12" />
-                    </div>
-                    <div className="flex items-center gap-2 pt-1">
-                        <div className="h-5 w-16 rounded-md bg-foreground" />
-                        <div className="h-5 w-10 rounded-md border border-border" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function DiscoverMockup() {
-    return (
-        <div className="relative w-full max-w-[240px] mx-auto">
-            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-foreground/[0.04] to-transparent blur-xl" aria-hidden />
-            <div className="relative h-[180px]">
-                <div className="absolute left-0 top-6 w-[78%] aspect-[5/2.2] rounded-xl border border-border bg-card shadow-[0_18px_40px_-22px_rgba(0,0,0,0.3)] flex items-center gap-3 px-3">
-                    <div className="w-9 h-9 rounded-md bg-foreground/85" />
-                    <div className="flex-1 space-y-1.5">
-                        <div className="h-1.5 w-3/4 rounded-full bg-foreground/30" />
-                        <div className="h-1.5 w-1/2 rounded-full bg-foreground/12" />
-                    </div>
-                </div>
-                <div className="absolute right-0 top-[58px] w-[78%] aspect-[5/2.2] rounded-xl border border-border bg-card shadow-[0_18px_40px_-22px_rgba(0,0,0,0.3)] flex items-center gap-3 px-3">
-                    <div className="w-9 h-9 rounded-md border border-border bg-foreground/[0.04]" />
-                    <div className="flex-1 space-y-1.5">
-                        <div className="h-1.5 w-2/3 rounded-full bg-foreground/30" />
-                        <div className="h-1.5 w-2/5 rounded-full bg-foreground/12" />
-                    </div>
-                    <div className="h-5 w-10 rounded-md bg-foreground" />
-                </div>
-                <div className="absolute left-3 top-[110px] w-[78%] aspect-[5/2.2] rounded-xl border border-border bg-card shadow-[0_18px_40px_-22px_rgba(0,0,0,0.3)] flex items-center gap-3 px-3">
-                    <div className="w-9 h-9 rounded-md bg-foreground/[0.12]" />
-                    <div className="flex-1 space-y-1.5">
-                        <div className="h-1.5 w-2/3 rounded-full bg-foreground/30" />
-                        <div className="h-1.5 w-1/3 rounded-full bg-foreground/12" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function ReserveMockup() {
-    return (
-        <div className="relative w-full max-w-[240px] mx-auto">
-            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-foreground/[0.04] to-transparent blur-xl" aria-hidden />
-            <div className="relative aspect-[5/4] rounded-2xl border border-border bg-card shadow-[0_24px_60px_-30px_rgba(0,0,0,0.35)] dark:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] overflow-hidden p-3">
-                <div className="grid grid-cols-2 gap-2 h-full">
-                    <div className="rounded-lg border border-border bg-foreground/[0.02] p-2 flex flex-col gap-1.5">
-                        <div className="h-1.5 w-2/3 rounded-full bg-foreground/30" />
-                        <div className="flex-1 grid grid-cols-4 gap-1 mt-1">
-                            {Array.from({ length: 12 }).map((_, i) => (
-                                <div
-                                    key={i}
-                                    className={`rounded-[3px] ${i === 5 ? "bg-foreground" : "bg-foreground/8"}`}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                    <div className="rounded-lg border border-border bg-foreground/[0.02] p-2 flex flex-col gap-1.5">
-                        <div className="h-1.5 w-3/4 rounded-full bg-foreground/30" />
-                        <div className="h-1.5 w-1/2 rounded-full bg-foreground/12" />
-                        <div className="mt-auto space-y-1.5">
-                            <div className="h-1.5 w-full rounded-full bg-foreground/8" />
-                            <div className="h-1.5 w-5/6 rounded-full bg-foreground/8" />
-                            <div className="h-5 w-full rounded-md bg-foreground mt-1" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function LiveMockup() {
-    return (
-        <div className="relative w-full max-w-[240px] mx-auto">
-            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-foreground/[0.04] to-transparent blur-xl" aria-hidden />
-            <div className="absolute -left-2 top-3 w-[55%] aspect-[3/4] rounded-xl border border-border bg-card shadow-[0_14px_30px_-20px_rgba(0,0,0,0.3)] rotate-[-6deg]" aria-hidden />
-            <div className="absolute -right-2 top-1 w-[55%] aspect-[3/4] rounded-xl border border-border bg-card shadow-[0_14px_30px_-20px_rgba(0,0,0,0.3)] rotate-[6deg]" aria-hidden />
-            <div className="relative mx-auto w-[78%] aspect-[3/4] rounded-2xl border border-border bg-card shadow-[0_30px_70px_-30px_rgba(0,0,0,0.45)] dark:shadow-[0_36px_90px_-30px_rgba(0,0,0,0.7)] overflow-hidden p-3 flex flex-col gap-2">
-                <div className="h-2 w-1/2 rounded-full bg-foreground/30" />
-                <div className="h-1.5 w-2/3 rounded-full bg-foreground/12" />
-                <div className="mt-1 flex-1 rounded-lg bg-foreground/[0.04] border border-dashed border-border grid grid-cols-5 grid-rows-5 gap-[2px] p-1.5">
-                    {Array.from({ length: 25 }).map((_, i) => (
-                        <div
-                            key={i}
-                            className={`rounded-[1px] ${[0, 1, 4, 5, 9, 11, 13, 16, 19, 20, 21, 24].includes(i) ? "bg-foreground/85" : "bg-transparent"}`}
-                        />
-                    ))}
-                </div>
-                <div className="h-1.5 w-3/4 rounded-full bg-foreground/12" />
-            </div>
-            <motion.div
-                initial={{ scale: 0, rotate: -30, opacity: 0 }}
-                whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: 0.55, type: "spring", stiffness: 220, damping: 16 }}
-                className="absolute -top-3 -right-3 w-11 h-11 rounded-full bg-foreground text-background flex items-center justify-center shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)] ring-4 ring-background"
-            >
-                <Check className="w-5 h-5" strokeWidth={3} />
-            </motion.div>
-        </div>
-    );
-}
+gsap.registerPlugin(ScrollTrigger);
 
 const STEPS = [
-    {
-        titleKey: "landing.howItWorks.step1_title",
-        descKey: "landing.howItWorks.step1_desc",
-        Mockup: ProfileMockup,
-        lift: "lg:translate-y-6",
-    },
-    {
-        titleKey: "landing.howItWorks.step2_title",
-        descKey: "landing.howItWorks.step2_desc",
-        Mockup: DiscoverMockup,
-        lift: "lg:-translate-y-3",
-    },
-    {
-        titleKey: "landing.howItWorks.step3_title",
-        descKey: "landing.howItWorks.step3_desc",
-        Mockup: ReserveMockup,
-        lift: "lg:translate-y-4",
-    },
-    {
-        titleKey: "landing.howItWorks.step4_title",
-        descKey: "landing.howItWorks.step4_desc",
-        Mockup: LiveMockup,
-        lift: "lg:-translate-y-10",
-    },
+  {
+    titleKey: 'landing.howItWorks.step1_title',
+    descKey: 'landing.howItWorks.step1_desc',
+    Icon: UserPlus,
+  },
+  {
+    titleKey: 'landing.howItWorks.step2_title',
+    descKey: 'landing.howItWorks.step2_desc',
+    Icon: UserCircle,
+  },
+  {
+    titleKey: 'landing.howItWorks.step3_title',
+    descKey: 'landing.howItWorks.step3_desc',
+    Icon: Search,
+  },
+  {
+    titleKey: 'landing.howItWorks.step4_title',
+    descKey: 'landing.howItWorks.step4_desc',
+    Icon: CalendarCheck,
+  },
+  {
+    titleKey: 'landing.howItWorks.step5_title',
+    descKey: 'landing.howItWorks.step5_desc',
+    Icon: MessageSquare,
+  },
+  {
+    titleKey: 'landing.howItWorks.step6_title',
+    descKey: 'landing.howItWorks.step6_desc',
+    Icon: PartyPopper,
+  },
 ] as const;
 
+// Custom character splitter to avoid needing the premium SplitText plugin
+const SplitChars = ({ text }: { text: string }) => {
+  return (
+    <span aria-label={text} className='inline-block'>
+      {text.split('').map((char, i) => (
+        <span
+          key={i}
+          className='char-split inline-block whitespace-pre'
+          aria-hidden='true'
+        >
+          {char === ' ' ? ' ' : char}
+        </span>
+      ))}
+    </span>
+  );
+};
+
 export default function HowItWorks() {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
-    return (
-        <section className="relative w-full py-20 lg:py-28 overflow-hidden">
-            {/* atmosphere */}
-            <div
-                className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 h-[420px] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.05),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06),transparent_60%)]"
-                aria-hidden
-            />
+  const [isTablet, setIsTablet] = useState(false);
 
-            {/* header */}
-            <div className="relative text-center max-w-2xl mx-auto px-6 mb-16 lg:mb-20">
-                <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                    className="inline-flex items-center gap-3 mb-7"
-                >
-                    <span className="h-px w-8 bg-foreground/40" />
-                    <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-                        {t("landing.howItWorks.eyebrow")}
-                    </span>
-                    <span className="h-px w-8 bg-foreground/40" />
-                </motion.div>
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ fontFamily: "var(--font-fraunces)" }}
-                    className="text-5xl sm:text-6xl lg:text-7xl font-medium tracking-[-0.02em] leading-[0.95]"
-                >
-                    {t("landing.howItWorks.title")}
-                </motion.h2>
-                <motion.p
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.15 }}
-                    className="mt-6 text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl mx-auto"
-                >
-                    {t("landing.howItWorks.subtitle")}
-                </motion.p>
+  useEffect(() => {
+    const handleResize = () => setIsTablet(window.innerWidth <= 1024);
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      const slider = sliderRef.current;
+      if (!section || !slider) return;
+
+      // 1. Text Reveals (Bottom to Top characters)
+      gsap.from('.first-text-split .char-split', {
+        yPercent: 200,
+        stagger: 0.02,
+        ease: 'power1.inOut',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 60%',
+        },
+      });
+
+      // Highlight box reveal with correctly formatted clip-path
+      gsap.fromTo(
+        '.flavor-text-scroll',
+        { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)' },
+        {
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          duration: 1,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 50%',
+          },
+        },
+      );
+
+      gsap.from('.second-text-split .char-split', {
+        yPercent: 200,
+        stagger: 0.02,
+        ease: 'power1.inOut',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 40%',
+        },
+      });
+
+      // 2. Horizontal Scroll and Parallax
+      if (!isTablet) {
+        const scrollAmount = slider.scrollWidth - section.offsetWidth;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: `+=${scrollAmount + 1000}px`, // Added extra scroll distance for smooth feel
+            scrub: 1,
+            pin: true,
+          },
+        });
+
+        // Translate the entire wrapper to scroll the cards into view
+        tl.to(slider, {
+          x: -scrollAmount,
+          ease: 'none',
+        });
+
+        // Title block parallax effect (Slides slightly faster/slower than the background)
+        const titleTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: `+=${scrollAmount + 1000}px`,
+            scrub: 1,
+          },
+        });
+
+        titleTl
+          .to('.first-text-split', { xPercent: -30, ease: 'none' }, 0)
+          .to('.flavor-text-scroll', { xPercent: -22, ease: 'none' }, 0)
+          .to('.second-text-split', { xPercent: -10, ease: 'none' }, 0);
+      }
+    },
+    { dependencies: [isTablet], revertOnUpdate: true },
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      className='relative w-full mx-auto h-screen overflow-hidden bg-background z-10'
+    >
+      {/* The wrapper that will be translated horizontally on desktop */}
+      <div
+        ref={sliderRef}
+        className='flex flex-col lg:flex-row h-auto lg:h-full w-full lg:w-max items-center'
+      >
+        {/* Title Block - Takes full viewport width on mobile, or 45vw on desktop */}
+        <div className='w-full lg:w-[45vw] flex-none px-6 py-20 lg:py-0 lg:pl-20 flex flex-col justify-center relative z-10'>
+          <div className='general-title flex flex-col gap-4 lg:gap-8'>
+            <div className='overflow-hidden first-text-split py-2'>
+              <h1
+                className='text-5xl lg:text-7xl font-bold uppercase'
+                style={{ fontFamily: 'var(--font-fraunces)' }}
+              >
+                <SplitChars
+                  text={t('landing.howItWorks.eyebrow') || 'DISCOVER'}
+                />
+              </h1>
             </div>
 
-            {/* steps row */}
-            <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-                {/* desktop curve overlay */}
-                <svg
-                    aria-hidden
-                    className="hidden lg:block absolute left-0 right-0 top-[80px] w-full h-[280px] pointer-events-none text-foreground/35"
-                    viewBox="0 0 1200 280"
-                    preserveAspectRatio="none"
-                    fill="none"
-                >
-                    <motion.path
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        whileInView={{ pathLength: 1, opacity: 1 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        transition={{ duration: 1.8, ease: "easeInOut" }}
-                        d="M 180 200 C 240 270 320 270 380 195 C 430 130 470 80 540 80 C 610 80 640 175 700 200 C 760 225 800 240 870 200 C 930 165 950 110 1010 70"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeDasharray="2 7"
-                        strokeLinecap="round"
-                    />
-                    <motion.circle
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        transition={{ delay: 1.6, duration: 0.4 }}
-                        cx="180"
-                        cy="200"
-                        r="3.5"
-                        fill="currentColor"
-                    />
-                    <motion.circle
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        transition={{ delay: 1.7, duration: 0.4 }}
-                        cx="1010"
-                        cy="70"
-                        r="3.5"
-                        fill="currentColor"
-                    />
-                </svg>
-
-                <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 lg:gap-x-4 gap-y-20 lg:gap-y-0 relative">
-                    {STEPS.map((step, i) => {
-                        const { Mockup } = step;
-                        return (
-                            <li key={i} className="relative flex flex-col items-center">
-                                {/* mobile vertical connector */}
-                                {i < STEPS.length - 1 && (
-                                    <span
-                                        aria-hidden
-                                        className="sm:hidden absolute left-1/2 -translate-x-1/2 -bottom-[68px] h-14 w-px border-l border-dashed border-foreground/30"
-                                    />
-                                )}
-
-                                <motion.div
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-60px" }}
-                                    transition={{
-                                        duration: 0.7,
-                                        delay: i * 0.12,
-                                        ease: [0.16, 1, 0.3, 1],
-                                    }}
-                                    className={`w-full flex justify-center ${step.lift}`}
-                                >
-                                    <Mockup />
-                                </motion.div>
-
-                                <motion.div
-                                    initial={{ opacity: 0, y: 16 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-60px" }}
-                                    transition={{ duration: 0.6, delay: 0.2 + i * 0.12 }}
-                                    className={`mt-7 lg:mt-10 text-center px-2 max-w-[240px] ${step.lift}`}
-                                >
-                                    <div className="flex items-center justify-center gap-2 mb-2">
-                                        <span className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground">
-                                            {String(i + 1).padStart(2, "0")}
-                                        </span>
-                                        <span className="h-px w-4 bg-foreground/30" />
-                                    </div>
-                                    <h3
-                                        style={{ fontFamily: "var(--font-fraunces)" }}
-                                        className="text-xl md:text-2xl font-medium tracking-tight text-foreground"
-                                    >
-                                        {t(step.titleKey)}
-                                    </h3>
-                                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                                        {t(step.descKey)}
-                                    </p>
-                                </motion.div>
-                            </li>
-                        );
-                    })}
-                </ol>
+            <div className='flavor-text-scroll bg-primary px-6 py-4 w-max shadow-xl -rotate-2 origin-left'>
+              <h2 className='text-4xl lg:text-6xl font-black text-primary-foreground uppercase tracking-tight'>
+                6 SIMPLE STEPS
+              </h2>
             </div>
-        </section>
-    );
+
+            <div className='overflow-hidden second-text-split py-2'>
+              <h1
+                className='text-5xl lg:text-7xl font-bold uppercase text-muted-foreground'
+                style={{ fontFamily: 'var(--font-fraunces)' }}
+              >
+                <SplitChars text={t('landing.howItWorks.title')} />
+              </h1>
+            </div>
+
+            <p className='mt-6 text-muted-foreground font-medium text-lg lg:text-xl leading-relaxed max-w-xl'>
+              {t('landing.howItWorks.subtitle')}
+            </p>
+          </div>
+        </div>
+
+        {/* Huge Cards Container */}
+        <div className='flex flex-col lg:flex-row gap-10 lg:gap-20 px-6 lg:px-20 lg:pr-40 w-full lg:w-max pb-20 lg:pb-0'>
+          {STEPS.map((step, i) => {
+            const { Icon } = step;
+            return (
+              <div
+                key={i}
+                className={`relative w-full lg:w-[45vw] xl:w-[38vw] 2xl:w-[35vw] h-auto lg:h-[70vh] flex-none bg-card border border-border/50 rounded-3xl shadow-2xl p-10 flex flex-col justify-center overflow-hidden transition-transform hover:-translate-y-2 duration-300 group ${
+                  i % 2 === 0 ? 'lg:-rotate-2' : 'lg:rotate-2'
+                }`}
+              >
+                {/* Massive Background Icon */}
+                <div className='absolute -bottom-10 -right-10 text-muted-foreground/5 group-hover:text-muted-foreground/10 group-hover:scale-110 transition-all duration-500 pointer-events-none'>
+                  <Icon className='w-64 h-64 md:w-96 md:h-96' />
+                </div>
+
+                <div className='relative z-10'>
+                  <span className='font-mono text-xl md:text-2xl tracking-[0.2em] uppercase text-primary font-bold block mb-6'>
+                    STEP {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3
+                    className='text-4xl md:text-6xl font-black tracking-tight text-foreground mb-6'
+                    style={{ fontFamily: 'var(--font-fraunces)' }}
+                  >
+                    {t(step.titleKey)}
+                  </h3>
+                  <p className='text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-[85%]'>
+                    {t(step.descKey)}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 }

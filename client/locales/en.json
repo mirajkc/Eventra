@@ -29,15 +29,19 @@
         "howItWorks": {
             "eyebrow": "The process",
             "title": "How it works",
-            "subtitle": "Four small moves between the decision to show up and the moment you actually do.",
-            "step1_title": "Create profile",
-            "step1_desc": "Sign up in seconds and tell us what kind of gatherings move you.",
-            "step2_title": "Discover events",
-            "step2_desc": "Browse a quiet, curated feed of workshops, meetups and conferences.",
-            "step3_title": "Reserve your spot",
-            "step3_desc": "Reach out to organizers, secure your seat and get every detail in one place.",
-            "step4_title": "Live the moment",
-            "step4_desc": "Show up, take it in, and share what was worth remembering."
+            "subtitle": "Six simple steps between discovering an event and living the moment.",
+            "step1_title": "Register",
+            "step1_desc": "Join our platform securely in just a few clicks.",
+            "step2_title": "Create Profile",
+            "step2_desc": "Set up your preferences to find the gatherings that move you.",
+            "step3_title": "Explore Events",
+            "step3_desc": "Browse a quiet, curated feed of workshops, meetups and conferences.",
+            "step4_title": "Join Events",
+            "step4_desc": "Secure your seat and get every detail directly in your calendar.",
+            "step5_title": "Discuss & Connect",
+            "step5_desc": "Engage with organizers and attendees before the event begins.",
+            "step6_title": "Live the Moment",
+            "step6_desc": "Show up, take it in, and share what was worth remembering."
         },
         "whyChooseUs": {
             "badge": "Why Choose Eventra",

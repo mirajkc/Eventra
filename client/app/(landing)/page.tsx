@@ -60,12 +60,12 @@ export default function Home() {
       <div id='smooth-content'>
         <ScrambleHero />
         <MessageSection />
+        <div className='w-full py-16 md:py-0'>
+          <HowItWorks />
+        </div>
 
         <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8'>
           {/* how it works */}
-          <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
-            <HowItWorks />
-          </div>
 
           {/* //features section here and remove the ScreenShotShowcase */}
           <Features />
