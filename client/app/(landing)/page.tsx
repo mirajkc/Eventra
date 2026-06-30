@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import {
-  PuzzleHeroSkeleton,
+  HeroSkeleton,
   ScreenShotShowcaseSkeleton,
   HowItWorksSkeleton,
   FeaturesSkeleton,
@@ -17,9 +17,10 @@ import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import Footer from '@/components/ui/Footer';
+import MessageSection from '@/components/landing/MessageSection';
 
-const PuzzleHero = dynamic(() => import('@/components/landing/PuzzleHero'), {
-  loading: () => <PuzzleHeroSkeleton />,
+const ScrambleHero = dynamic(() => import('@/components/landing/ScrambleHero'), {
+  loading: () => <HeroSkeleton />,
 });
 const ScreenShotShowcase = dynamic(
   () => import('@/components/home/ScreenShotShowcase'),
@@ -58,7 +59,8 @@ export default function Home() {
   return (
     <main className='w-full' id='smooth-wrapper'>
       <div id='smooth-content'>
-        <PuzzleHero />
+        <ScrambleHero />
+        <MessageSection />
 
         <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>

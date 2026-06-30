@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function PuzzleHeroSkeleton() {
+export function HeroSkeleton() {
   return (
     <div className="w-full bg-transparent relative z-10 pt-24 md:pt-32">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-12 flex flex-col">

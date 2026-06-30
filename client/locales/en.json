@@ -5,14 +5,19 @@
         "events": "Events",
         "organizations": "Organizations",
         "login": "Login",
-        "getStarted": "Get Started"
+        "getStarted": "Get Started",
+        "about": "About"
     },
     "landing": {
         "welcome": "Welcome to Eventra",
         "subtitle": "The All in One Event Management System",
         "hero": {
             "title": "Eventra",
-            "subtitle": "ALL IN ONE EVENT MANAGEMENT SYSTEM"
+            "subtitle": "ALL IN ONE EVENT MANAGEMENT SYSTEM",
+            "weAre": "(We Are)",
+            "title1": "The ultimate",
+            "title2": "platform for",
+            "title3": "event management."
         },
         "search": {
             "placeholder": "Search for the desired events...",
@@ -74,6 +79,12 @@
             "midText": "event management sourcing",
             "highlight2": "with Eventra.",
             "subtitle": "Eventra's event management platform is now available and ready to revolutionize the way you think about organizing and attending events."
+        },
+        "messageSection": {
+            "firstMessage": "Simplify your event planning process and",
+            "highlight": "Scale Up",
+            "secondMessage": "your organization's growth with Eventra",
+            "paragraph": "Empower your team and simplify the complexity of events with Eventra, where you're one click away from effortless planning and memorable experiences."
         }
     },
     "footer": {
