@@ -4,8 +4,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function HeroSkeleton() {
   return (
-    <div className="w-full bg-transparent relative z-10 pt-24 md:pt-32">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-12 flex flex-col">
+    <div className="w-full h-screen bg-transparent relative z-10 pt-24 md:pt-32 overflow-hidden">
+      <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-12 flex flex-col">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24 mb-16 lg:mb-20">
           <div className="flex-1 w-full flex flex-col items-start max-w-xl space-y-4">
             <Skeleton className="h-12 lg:h-14 w-3/4" />

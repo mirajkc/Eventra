@@ -19,12 +19,11 @@ import { useGSAP } from '@gsap/react';
 import Footer from '@/components/ui/Footer';
 import MessageSection from '@/components/landing/MessageSection';
 
-const ScrambleHero = dynamic(() => import('@/components/landing/ScrambleHero'), {
-  loading: () => <HeroSkeleton />,
-});
-const ScreenShotShowcase = dynamic(
-  () => import('@/components/home/ScreenShotShowcase'),
-  { loading: () => <ScreenShotShowcaseSkeleton /> },
+const ScrambleHero = dynamic(
+  () => import('@/components/landing/ScrambleHero'),
+  {
+    loading: () => <HeroSkeleton />,
+  },
 );
 const HowItWorks = dynamic(() => import('@/components/landing/HowItWorks'), {
   loading: () => <HowItWorksSkeleton />,
@@ -63,9 +62,6 @@ export default function Home() {
         <MessageSection />
 
         <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
-            <ScreenShotShowcase />
-          </div>
           {/* how it works */}
           <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
             <HowItWorks />

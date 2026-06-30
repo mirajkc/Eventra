@@ -2,84 +2,104 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { SplitText } from 'gsap/all';
+import { SplitText, ScrollTrigger } from 'gsap/all';
 import { useTranslation } from 'react-i18next';
+
+import { useState, useEffect } from 'react';
 
 export default function MessageSection() {
   const { t } = useTranslation();
+  const [initGSAP, setInitGSAP] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setInitGSAP(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useGSAP(() => {
-    const firstMsgSplit = SplitText.create('.first-message', {
+    if (!initGSAP) return;
+
+    const firstMsgSplit = new SplitText('.first-message', {
       type: 'chars',
     });
-    const secondMsgSplit = SplitText.create('.second-message', {
+    const secondMsgSplit = new SplitText('.second-message', {
       type: 'chars',
     });
 
-    const paragraphSplit = SplitText.create('.message-content p', {
+    const paragraphSplit = new SplitText('.message-content p', {
       type: 'words, lines',
       linesClass: 'paragraph-line',
     });
 
+    const allChars = firstMsgSplit.chars.concat(secondMsgSplit.chars);
+
+    // Text fill effect scrubbing through the whole wrapper smoothly
     gsap.fromTo(
-      firstMsgSplit.chars,
-      { opacity: 0.2 },
+      allChars,
+      { opacity: 0.15 },
       {
         opacity: 1,
-        ease: 'power1.in',
+        ease: 'none',
         stagger: 0.1,
         scrollTrigger: {
-          trigger: '.message-content',
-          start: 'top center',
-          end: '30% center',
+          trigger: '.message-wrapper',
+          start: 'top 60%',
+          end: 'bottom 40%',
           scrub: true,
         },
       }
     );
 
+    // Scale up and reveal effect for the middle banner
     gsap.fromTo(
-      secondMsgSplit.chars,
-      { opacity: 0.2 },
-      {
-        opacity: 1,
-        ease: 'power1.in',
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: '.second-message',
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true,
-        },
-      }
-    );
-
-    const revealTl = gsap.timeline({
-      delay: 1,
-      scrollTrigger: {
-        trigger: '.msg-text-scroll',
-        start: 'top 60%',
+      '.msg-text-scroll',
+      { 
+        scale: 0.5,
+        opacity: 0,
+        clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)',
+        rotate: -5
       },
-    });
-    revealTl.to('.msg-text-scroll', {
-      duration: 1,
-      clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-      ease: 'circ.inOut',
-    });
+      {
+        scale: 1,
+        opacity: 1,
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        rotate: 3,
+        duration: 1.2,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: '.message-wrapper',
+          start: 'center 75%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
 
     const paragraphTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.message-content p',
-        start: 'top center',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse',
       },
     });
     paragraphTl.from(paragraphSplit.words, {
-      yPercent: 300,
+      yPercent: 150,
+      opacity: 0,
       rotate: 3,
-      ease: 'power1.inOut',
-      duration: 1,
-      stagger: 0.01,
+      ease: 'power3.out',
+      duration: 0.8,
+      stagger: 0.02,
     });
-  });
+
+    // Refresh ScrollTrigger to ensure correct calculations after component mounts
+    ScrollTrigger.refresh();
+
+    // Clean up SplitText on unmount or re-render
+    return () => {
+      firstMsgSplit.revert();
+      secondMsgSplit.revert();
+      paragraphSplit.revert();
+    };
+  }, { dependencies: [initGSAP] });
 
   return (
     <section className='message-content bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen w-full overflow-hidden flex flex-col justify-center items-center relative z-20 px-4 py-20'>
@@ -89,10 +109,7 @@ export default function MessageSection() {
             {t('landing.messageSection.firstMessage', 'Simplify your event planning process and')}
           </h1>
           <div
-            style={{
-              clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)',
-            }}
-            className='msg-text-scroll rotate-[3deg] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 border-[4px] border-[#1a1f3c] dark:border-white shadow-xl'
+            className='msg-text-scroll absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 border-[4px] border-[#1a1f3c] dark:border-white shadow-xl'
           >
             <div className='bg-[#e8ecff] dark:bg-[#1a1f3c] md:px-8 px-5 py-2 md:py-4 flex items-center justify-center'>
               <h2 className='text-[#7c8fff] dark:text-[#7c8fff] text-4xl md:text-6xl 2xl:text-7xl font-bold uppercase tracking-tight'>
