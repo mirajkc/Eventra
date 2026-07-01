@@ -1,87 +1,89 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
+import { useRef } from "react";
+import KineticNav from "@/components/landing/KineticNav";
+import MessageSection from "@/components/landing/MessageSection";
+import { CinematicFooter } from "@/components/ui/motion-footer";
 import {
-  HeroSkeleton,
-  ScreenShotShowcaseSkeleton,
-  HowItWorksSkeleton,
-  FeaturesSkeleton,
-  TestimonialsSkeleton,
-  LandingPricingSkeleton,
-  CallToActionSkeleton,
-  LargeTextSkeleton,
-} from './skeletons';
-
-import gsap from 'gsap';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-import Footer from '@/components/ui/Footer';
-import MessageSection from '@/components/landing/MessageSection';
+	FeaturesSkeleton,
+	HeroSkeleton,
+	HowItWorksSkeleton,
+	LandingPricingSkeleton,
+	LargeTextSkeleton,
+	TestimonialsSkeleton,
+} from "./skeletons";
 
 const ScrambleHero = dynamic(
-  () => import('@/components/landing/ScrambleHero'),
-  {
-    loading: () => <HeroSkeleton />,
-  },
+	() => import("@/components/landing/ScrambleHero"),
+	{
+		loading: () => <HeroSkeleton />,
+	},
 );
-const HowItWorks = dynamic(() => import('@/components/landing/HowItWorks'), {
-  loading: () => <HowItWorksSkeleton />,
+const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks"), {
+	loading: () => <HowItWorksSkeleton />,
 });
-const Features = dynamic(() => import('@/components/home/Features'), {
-  loading: () => <FeaturesSkeleton />,
+const Features = dynamic(() => import("@/components/home/Features"), {
+	loading: () => <FeaturesSkeleton />,
 });
-const Testimonials = dynamic(() => import('@/components/home/Testimonials'), {
-  loading: () => <TestimonialsSkeleton />,
+const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
+	loading: () => <TestimonialsSkeleton />,
 });
 const LandingPricing = dynamic(
-  () => import('@/components/landing/LandingPricing'),
-  { loading: () => <LandingPricingSkeleton /> },
+	() => import("@/components/landing/LandingPricing"),
+	{ loading: () => <LandingPricingSkeleton /> },
 );
-const CallToAction = dynamic(() => import('@/components/home/CallToAction'), {
-  loading: () => <CallToActionSkeleton />,
-});
-const LargeText = dynamic(() => import('@/components/landing/LargeText'), {
-  loading: () => <LargeTextSkeleton />,
+const LargeText = dynamic(() => import("@/components/landing/LargeText"), {
+	loading: () => <LargeTextSkeleton />,
 });
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default function Home() {
-  useGSAP(() => {
-    ScrollSmoother.create({
-      smooth: 1.5,
-      effects: true,
-      smoothTouch: 0.1,
-    });
-  });
-  return (
-    <main className='w-full' id='smooth-wrapper'>
-      <div id='smooth-content'>
-        <ScrambleHero />
-        <MessageSection />
-        <div className='w-full py-16 md:py-0'>
-          <HowItWorks />
-        </div>
+	const smoothWrapperRef = useRef<HTMLElement>(null);
+	const smoothContentRef = useRef<HTMLDivElement>(null);
 
-        <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8'>
-          {/* how it works */}
+	useGSAP(() => {
+		if (!smoothWrapperRef.current || !smoothContentRef.current) return;
 
-          {/* //features section here and remove the ScreenShotShowcase */}
-          <Features />
+		ScrollSmoother.create({
+			wrapper: smoothWrapperRef.current,
+			content: smoothContentRef.current,
+			smooth: 1.5,
+			effects: true,
+			smoothTouch: 0.1,
+		});
+	});
+	return (
+		<>
+			<KineticNav />
+			<main className="w-full" ref={smoothWrapperRef}>
+				<div ref={smoothContentRef}>
+					<ScrambleHero />
+					<MessageSection />
+					<div className="w-full py-16 md:py-0">
+						<HowItWorks />
+					</div>
 
-          {/* // testimonials */}
-          <Testimonials />
+					<div className="w-full py-16 md:py-0">
+						<Features />
+					</div>
+					<div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+						<Testimonials />
 
-          {/* pricing */}
-          <div className='min-h-screen w-full flex flex-col justify-center items-center py-16 md:py-0'>
-            <LandingPricing />
-          </div>
-          <CallToAction />
-          <LargeText />
-          <Footer />
-        </div>
-      </div>
-    </main>
-  );
+						{/* pricing */}
+						<div className="flex min-h-screen w-full flex-col items-center justify-center py-16 md:py-0">
+							<LandingPricing />
+						</div>
+						<LargeText />
+					</div>
+					<CinematicFooter />
+				</div>
+			</main>
+		</>
+	);
 }
