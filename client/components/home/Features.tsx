@@ -47,7 +47,23 @@ export default function Features() {
         clipPath: 'polygon(0% 0%, 100% 0, 100% 100%, 0% 100%)',
         ease: 'circ.out',
       });
-  }, { scope: container });
+
+
+         const t1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: container.current,
+        scrub: true,
+        start: '1% top',
+        end: 'bottom top',
+      },
+    });
+    t1.to(container.current, {
+      rotate: 7,
+      scale: 0.9,
+      yPercent: 30,
+      ease: 'power1.inOut',
+    });
+  }, { scope: container }); 
 
   return (
     <section ref={container} className='benefit-section'>
