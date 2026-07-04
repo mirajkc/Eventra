@@ -37,36 +37,6 @@ export function HeroSkeleton() {
   );
 }
 
-export function ScreenShotShowcaseSkeleton() {
-  return (
-    <section className="relative w-full mx-auto px-6 py-12 lg:py-24">
-      <div className="flex flex-col items-center text-center space-y-4 mb-12">
-        <Skeleton className="h-9 w-72 max-w-full" />
-        <Skeleton className="h-4 w-96 max-w-full" />
-        <Skeleton className="h-4 w-80 max-w-full" />
-      </div>
-      <div className="container mx-auto max-w-6xl">
-        <div className="hidden md:block">
-          <div className="overflow-hidden rounded-[1.5rem] border border-border bg-background">
-            <div className="flex items-center gap-1.5 border-b border-border bg-muted/30 px-5 py-4">
-              <div className="flex gap-1.5">
-                <Skeleton className="h-3 w-3 rounded-full" />
-                <Skeleton className="h-3 w-3 rounded-full" />
-                <Skeleton className="h-3 w-3 rounded-full" />
-              </div>
-              <Skeleton className="ml-4 h-5 w-48" />
-            </div>
-            <Skeleton className="aspect-video w-full rounded-none" />
-          </div>
-        </div>
-        <div className="md:hidden flex justify-center">
-          <Skeleton className="w-full max-w-[300px] aspect-[300/650] rounded-[2.5rem]" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function StepSkeleton({ lift = "" }: { lift?: string }) {
   return (
     <li className="relative flex flex-col items-center">
@@ -198,57 +168,6 @@ export function TestimonialsSkeleton() {
           <TestimonialCardSkeleton size="sm" />
           <TestimonialCardSkeleton size="sm" />
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function LandingPricingSkeleton() {
-  return (
-    <section className="w-full py-16 lg:py-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center space-y-4 mb-12">
-          <Skeleton className="h-10 w-72 mx-auto" />
-          <Skeleton className="h-5 w-96 max-w-full mx-auto" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-border bg-card p-8 space-y-6"
-            >
-              <Skeleton className="h-5 w-24" />
-              <div className="flex items-baseline gap-2">
-                <Skeleton className="h-10 w-20" />
-                <Skeleton className="h-4 w-12" />
-              </div>
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-10 w-full rounded-md" />
-              <div className="space-y-3 pt-2">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <div key={j} className="flex items-center gap-3">
-                    <Skeleton className="h-4 w-4 rounded-full" />
-                    <Skeleton className="h-3 flex-1" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function CallToActionSkeleton() {
-  return (
-    <section className="relative w-full border-y border-border overflow-hidden">
-      <Skeleton className="absolute inset-0 rounded-none" />
-      <div className="relative max-w-3xl mx-auto px-6 py-24 lg:py-32 flex flex-col items-center text-center space-y-6">
-        <Skeleton className="h-10 sm:h-12 w-3/4" />
-        <Skeleton className="h-10 sm:h-12 w-1/2" />
-        <Skeleton className="h-5 w-full max-w-md" />
-        <Skeleton className="h-11 w-48 rounded-md mt-4" />
       </div>
     </section>
   );

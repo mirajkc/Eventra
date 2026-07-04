@@ -14,7 +14,6 @@ import {
 	FeaturesSkeleton,
 	HeroSkeleton,
 	HowItWorksSkeleton,
-	LandingPricingSkeleton,
 	LargeTextSkeleton,
 	TestimonialsSkeleton,
 } from "./skeletons";
@@ -34,10 +33,6 @@ const Features = dynamic(() => import("@/components/home/Features"), {
 const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
 	loading: () => <TestimonialsSkeleton />,
 });
-const LandingPricing = dynamic(
-	() => import("@/components/landing/LandingPricing"),
-	{ loading: () => <LandingPricingSkeleton /> },
-);
 const LargeText = dynamic(() => import("@/components/landing/LargeText"), {
 	loading: () => <LargeTextSkeleton />,
 });
@@ -103,11 +98,6 @@ export default function Home() {
 					</div>
 					<div className="mx-auto px-4 sm:px-6 lg:px-8">
 						<Testimonials />
-
-						{/* pricing */}
-						{/* <div className="flex min-h-screen w-full flex-col items-center justify-center py-16 md:py-0">
-							<LandingPricing />
-						</div> */}
 					</div>
 					<LargeText />
 					<CinematicFooter />
