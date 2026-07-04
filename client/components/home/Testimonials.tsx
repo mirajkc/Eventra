@@ -7,6 +7,7 @@ import { SplitText } from "gsap/SplitText";
 import { Star } from "lucide-react";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,10 +65,10 @@ function TestimonialsCard({
 }) {
 	return (
 		<div
-			className={`group relative flex h-115 flex-col overflow-hidden ${
+			className={`group relative flex lg:h-115 flex-col overflow-hidden border border-neutral-200 dark:border-neutral-800 ${
 				isRightRail
-					? "border-r border-t border-b border-neutral-200 dark:border-neutral-800"
-					: "border-l border-t border-b border-neutral-200 dark:border-neutral-800"
+					? "lg:border-r lg:border-t lg:border-b"
+					: "lg:border-l lg:border-t lg:border-b"
 			} bg-white dark:bg-neutral-950 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/50`}
 		>
 			{/* Watermark */}
@@ -85,7 +86,7 @@ function TestimonialsCard({
 
 			{/* Quote */}
 			<p
-				className="relative z-10 mt-8 max-w-[24ch] text-[1.15rem] leading-9 text-neutral-800 dark:text-neutral-200"
+				className="relative z-10 mt-8 lg:max-w-[24ch] text-[1.15rem] leading-9 text-neutral-800 dark:text-neutral-200"
 				style={{
 					fontFamily: "var(--font-fraunces, Georgia, serif)",
 				}}
@@ -124,6 +125,7 @@ export default function Testimonials() {
 	const sectionRef = useRef<HTMLElement>(null);
 	const leftRailRef = useRef<HTMLDivElement>(null);
 	const rightRailRef = useRef<HTMLDivElement>(null);
+	const isMobile = useIsMobile();
 
 	const testimonials = Array.from({ length: 6 }, (_, i) => ({
 		quote: t(`home.testimonials.t${i + 1}`, ""),
@@ -181,6 +183,8 @@ export default function Testimonials() {
 					"<",
 				);
 
+			if (isMobile) return;
+
 			if (!leftRailRef.current || !rightRailRef.current || !sectionRef.current)
 				return;
 			const innerPin = ScrollTrigger.create({
@@ -200,7 +204,7 @@ export default function Testimonials() {
 				thirdWord.revert();
 			};
 		},
-		{ dependencies: [] },
+		{ dependencies: [isMobile], revertOnUpdate: true },
 	);
 
 	return (
@@ -238,7 +242,22 @@ export default function Testimonials() {
 							ref={rightRailRef}
 							className="bg-white dark:bg-neutral-950 lg:ml-[-1px] pb-10"
 						>
-							<div className="flex flex-row w-full mx-auto">
+							{/* Mobile: single column with all cards */}
+							<div className="flex flex-col w-full lg:hidden gap-4">
+								{testimonials.map((t, i) => (
+									<TestimonialsCard
+										key={i}
+										quote={t.quote}
+										name={t.name}
+										role={t.role}
+										image={t.image}
+										rating={t.rating}
+									/>
+								))}
+							</div>
+
+							{/* Desktop: two-column split */}
+							<div className="hidden lg:flex flex-row w-full mx-auto">
 								<div className="flex flex-col w-1/2 border-r border-neutral-200 dark:border-neutral-800">
 									{leftTestimonials.map((t, i) => (
 										<TestimonialsCard
