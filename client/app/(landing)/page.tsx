@@ -17,6 +17,7 @@ import {
 	LargeTextSkeleton,
 	TestimonialsSkeleton,
 } from "./skeletons";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ScrambleHero = dynamic(
 	() => import("@/components/landing/ScrambleHero"),
@@ -46,9 +47,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 export default function Home() {
 	const smoothWrapperRef = useRef<HTMLElement>(null);
 	const smoothContentRef = useRef<HTMLDivElement>(null);
+	const isMobile = useIsMobile();
 
 	useGSAP(() => {
-		if (!smoothWrapperRef.current || !smoothContentRef.current) return;
+		if (!smoothWrapperRef.current || !smoothContentRef.current || isMobile) return;
 
 		ScrollSmoother.create({
 			wrapper: smoothWrapperRef.current,
@@ -69,10 +71,10 @@ export default function Home() {
 						<HowItWorks />
 					</div>
 
-					<div className="w-full py-16 md:py-0">
+					<div className="w-full py-16 md:py-0 min-h-screen">
 						<Features />
 					</div>
-					<div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+					<div className="mx-auto px-4 sm:px-6 lg:px-8 ">
 						<Testimonials />
 
 						{/* pricing */}
