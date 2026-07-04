@@ -195,6 +195,9 @@ export default function Testimonials() {
 
 			return () => {
 				innerPin.kill();
+				firstWord.revert();
+				secondWord.revert();
+				thirdWord.revert();
 			};
 		},
 		{ dependencies: [] },

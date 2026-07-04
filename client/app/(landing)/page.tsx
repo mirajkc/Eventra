@@ -5,10 +5,11 @@ import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import KineticNav from "@/components/landing/KineticNav";
 import MessageSection from "@/components/landing/MessageSection";
 import { CinematicFooter } from "@/components/ui/motion-footer";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
 	FeaturesSkeleton,
 	HeroSkeleton,
@@ -17,7 +18,6 @@ import {
 	LargeTextSkeleton,
 	TestimonialsSkeleton,
 } from "./skeletons";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const ScrambleHero = dynamic(
 	() => import("@/components/landing/ScrambleHero"),
@@ -49,17 +49,44 @@ export default function Home() {
 	const smoothContentRef = useRef<HTMLDivElement>(null);
 	const isMobile = useIsMobile();
 
-	useGSAP(() => {
-		if (!smoothWrapperRef.current || !smoothContentRef.current || isMobile) return;
+	useEffect(() => {
+		document.documentElement.classList.add("scrollbar-hide");
+		return () => {
+			document.documentElement.classList.remove("scrollbar-hide");
+		};
+	}, []);
 
-		ScrollSmoother.create({
-			wrapper: smoothWrapperRef.current,
-			content: smoothContentRef.current,
-			smooth: 1.5,
-			effects: true,
-			smoothTouch: 0.1,
-		});
-	});
+	useEffect(() => {
+		if (sessionStorage.getItem("_landing_visited")) {
+			sessionStorage.removeItem("_landing_visited");
+			window.location.reload();
+			return;
+		}
+		sessionStorage.setItem("_landing_visited", "true");
+	}, []);
+
+	useGSAP(
+		() => {
+			if (!smoothWrapperRef.current || !smoothContentRef.current || isMobile)
+				return;
+
+			const smoother = ScrollSmoother.create({
+				wrapper: smoothWrapperRef.current,
+				content: smoothContentRef.current,
+				smooth: 1.5,
+				effects: true,
+				smoothTouch: 0.1,
+			});
+
+			return () => {
+				smoother.kill();
+				ScrollTrigger.getAll().forEach((st) => {
+					st.kill();
+				});
+			};
+		},
+		{ dependencies: [] },
+	);
 	return (
 		<>
 			<KineticNav />

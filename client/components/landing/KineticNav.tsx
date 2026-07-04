@@ -26,7 +26,7 @@ export default function KineticNav() {
       label: t('navbar.organizations') || 'Organizations',
     },
     { href: '/about', label: t('navbar.about') || 'About' },
-    { href: '/login', label: t('navbar.getStarted') || 'Get Started' },
+    { href: '/auth/register', label: t('navbar.getStarted') || 'Get Started' },
   ];
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);

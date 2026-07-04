@@ -12,7 +12,7 @@ export const getMenuLinks = (t: any) => [
   { href: '/home', label: t('navbar.home') || 'Home' },
   { href: '/events', label: t('navbar.events') || 'Events' },
   { href: '/about', label: t('navbar.about') || 'About' },
-  { href: '/home', label: t('navbar.getStarted') || 'Get Started' },
+  { href: '/auth/register', label: t('navbar.getStarted') || 'Get Started' },
 ];
 
 export default function LandingNavbar() {

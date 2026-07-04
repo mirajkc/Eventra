@@ -347,3 +347,11 @@ html {
 		0px 0px 20px color-mix(in oklch, var(--foreground) 15%, transparent)
 	);
 }
+
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
