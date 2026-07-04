@@ -8,19 +8,39 @@ export default function ScrambleHero() {
   const { t } = useTranslation();
 
   useGSAP(() => {
-    // Animate letters falling
-    gsap.fromTo(
-      '.scramble-letter',
-      { y: '-150vh', opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.8,
-        ease: 'bounce.out',
-        stagger: 0.1,
-        delay: 1.5,
-      },
-    );
+    const mm = gsap.matchMedia();
+
+    // Mobile: animate mobile-specific letters
+    mm.add('(max-width: 767px)', () => {
+      gsap.fromTo(
+        '.scramble-letter-mobile',
+        { y: '-150vh', opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.8,
+          ease: 'bounce.out',
+          stagger: 0.1,
+          delay: 1.5,
+        },
+      );
+    });
+
+    // Desktop: animate desktop-specific letters
+    mm.add('(min-width: 768px)', () => {
+      gsap.fromTo(
+        '.scramble-letter-desktop',
+        { y: '-150vh', opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.8,
+          ease: 'bounce.out',
+          stagger: 0.1,
+          delay: 1.5,
+        },
+      );
+    });
 
     // Fade in "We Are" from left
     gsap.fromTo(
@@ -93,18 +113,48 @@ export default function ScrambleHero() {
         </div>
 
         {/* Left side - Scrambled Letters Container */}
-        <div className='absolute bottom-0 left-0 w-[120%] md:w-[85%] lg:w-[75%] h-[60%] md:h-[65%] pointer-events-none -ml-[5%] md:ml-0'>
-          {letters.map((l, i) => (
-            <div
-              key={i}
-              className={`scramble-letter absolute text-[24vw] md:text-[18vw] lg:text-[15rem] xl:text-[18rem] font-black leading-none text-[#1a1a1a] dark:text-[#f0f0f0] tracking-tighter ${l.className}`}
-            >
-              {l.char}
+        <div className='absolute bottom-0 left-0 w-full md:w-[85%] lg:w-[75%] h-[60%] md:h-[65%] pointer-events-none'>
+
+          {/* Mobile layout - two centered rows: EVEN + TRA */}
+          <div className='flex md:hidden flex-col items-center justify-center w-full h-full pb-12'>
+            <div className='flex items-center justify-center gap-1 sm:gap-3'>
+              {letters.slice(0, 4).map((l, i) => (
+                <div
+                  key={`m-${i}`}
+                  className='scramble-letter-mobile text-[22vw] sm:text-[20vw] font-black leading-none text-[#1a1a1a] dark:text-[#f0f0f0] tracking-tighter'
+                >
+                  {l.char}
+                </div>
+              ))}
             </div>
-          ))}
-          {/* Trademark/Registered Circle similar to the reference */}
-          <div className='scramble-letter absolute bottom-[15%] left-[92%] text-3xl md:text-5xl font-bold z-30 text-[#1a1a1a] dark:text-[#f0f0f0]'>
-            ®
+            <div className='flex items-center justify-center gap-1 sm:gap-3 -mt-4 sm:-mt-6'>
+              {letters.slice(4).map((l, i) => (
+                <div
+                  key={`m-${i + 4}`}
+                  className='scramble-letter-mobile text-[22vw] sm:text-[20vw] font-black leading-none text-[#1a1a1a] dark:text-[#f0f0f0] tracking-tighter'
+                >
+                  {l.char}
+                </div>
+              ))}
+              <div className='scramble-letter-mobile text-4xl sm:text-5xl font-bold text-[#1a1a1a] dark:text-[#f0f0f0] self-start mt-2'>
+                ®
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop layout - absolute positioned scattered letters */}
+          <div className='hidden md:block relative w-full h-full'>
+            {letters.map((l, i) => (
+              <div
+                key={i}
+                className={`scramble-letter-desktop absolute text-[18vw] lg:text-[15rem] xl:text-[18rem] font-black leading-none text-[#1a1a1a] dark:text-[#f0f0f0] tracking-tighter ${l.className}`}
+              >
+                {l.char}
+              </div>
+            ))}
+            <div className='scramble-letter-desktop absolute bottom-[15%] left-[92%] text-3xl md:text-5xl font-bold z-30 text-[#1a1a1a] dark:text-[#f0f0f0]'>
+              ®
+            </div>
           </div>
         </div>
       </div>

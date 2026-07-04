@@ -396,7 +396,7 @@ export default function KineticNav() {
                       onClick={closeMenu}
                       className='nav-link inline-block origin-left group'
                     >
-                      <div className='nav-link-text text-5xl md:text-6xl font-extrabold uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors'>
+                      <div className='nav-link-text text-2xl md:text-6xl font-extrabold uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors'>
                         {link.label}
                       </div>
                     </Link>

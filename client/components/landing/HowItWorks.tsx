@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
+import {useIsMobile} from '@/hooks/use-mobile';
 import {
   UserPlus,
   UserCircle,
@@ -73,6 +74,7 @@ export default function HowItWorks() {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const [isTablet, setIsTablet] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleResize = () => setIsTablet(window.innerWidth <= 1024);
@@ -123,41 +125,40 @@ export default function HowItWorks() {
         },
       });
 
-      // 2. Horizontal Scroll and Parallax
-      if (!isTablet) {
+      // 2. Horizontal Scroll (desktop only — pin the section and scroll cards horizontally)
+      if (!isTablet && !isMobile) {
         const scrollAmount = slider.scrollWidth - section.offsetWidth;
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: 'top top',
-            end: `+=${scrollAmount + 1000}px`, // Added extra scroll distance for smooth feel
+            end: `+=${scrollAmount + 1000}px`,
             scrub: 1,
             pin: true,
           },
         });
 
-        // Translate the entire wrapper to scroll the cards into view
         tl.to(slider, {
           x: -scrollAmount,
           ease: 'none',
         });
-
-        // Title block parallax effect (Slides slightly faster/slower than the background)
-        const titleTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: `+=${scrollAmount + 1000}px`,
-            scrub: 1,
-          },
-        });
-
-        titleTl
-          .to('.first-text-split', { xPercent: -30, ease: 'none' }, 0)
-          .to('.flavor-text-scroll', { xPercent: -22, ease: 'none' }, 0)
-          .to('.second-text-split', { xPercent: -10, ease: 'none' }, 0);
       }
+
+      // 3. Title parallax — runs on every screen size (moved outside the desktop check)
+      const titleTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom 80%',
+          scrub: 1,
+        },
+      });
+
+      titleTl
+        .to('.first-text-split', { xPercent: -30, ease: 'none' }, 0)
+        .to('.flavor-text-scroll', { xPercent: -22, ease: 'none' }, 0)
+        .to('.second-text-split', { xPercent: -10, ease: 'none' }, 0);
     },
     { dependencies: [isTablet], revertOnUpdate: true },
   );
@@ -165,7 +166,7 @@ export default function HowItWorks() {
   return (
     <section
       ref={sectionRef}
-      className='relative w-full mx-auto h-screen overflow-hidden bg-background z-10'
+      className='relative w-full mx-auto lg:h-screen overflow-hidden bg-background z-10'
     >
       {/* The wrapper that will be translated horizontally on desktop */}
       <div
