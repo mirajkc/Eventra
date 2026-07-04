@@ -74,15 +74,15 @@ export default function Home() {
 					<div className="w-full py-16 md:py-0 min-h-screen">
 						<Features />
 					</div>
-					<div className="mx-auto px-4 sm:px-6 lg:px-8 ">
+					<div className="mx-auto px-4 sm:px-6 lg:px-8">
 						<Testimonials />
 
 						{/* pricing */}
-						<div className="flex min-h-screen w-full flex-col items-center justify-center py-16 md:py-0">
+						{/* <div className="flex min-h-screen w-full flex-col items-center justify-center py-16 md:py-0">
 							<LandingPricing />
-						</div>
-						<LargeText />
+						</div> */}
 					</div>
+					<LargeText />
 					<CinematicFooter />
 				</div>
 			</main>

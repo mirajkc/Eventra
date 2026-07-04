@@ -88,7 +88,7 @@ export default function PricingCard() {
   ];
 
   return (
-    <section className='flex items-center justify-center flex-col py-20 px-4'>
+    <section className='flex items-center justify-center flex-col py-20'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

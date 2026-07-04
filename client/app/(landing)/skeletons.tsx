@@ -255,13 +255,5 @@ export function CallToActionSkeleton() {
 }
 
 export function LargeTextSkeleton() {
-  return (
-    <section className="min-h-screen w-full flex items-center justify-center overflow-hidden">
-      <div className="flex flex-col items-center justify-center w-full px-4 space-y-8">
-        <Skeleton className="h-[14vw] xl:h-[11vw] w-[90vw] max-w-[1400px]" />
-        <Skeleton className="h-[0.5vw] min-h-[2px] w-[90vw] max-w-[1400px]" />
-        <Skeleton className="h-5 w-64" />
-      </div>
-    </section>
-  );
+  return <section className="min-h-screen w-full" />;
 }

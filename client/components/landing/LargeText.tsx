@@ -63,7 +63,7 @@ export default function LargeText() {
   return (
     <section
       ref={sectionRef}
-      className="container min-h-screen flex items-center justify-center overflow-hidden select-none dark:bg-neutral-950"
+      className="w-full z-50 min-h-screen flex items-center justify-center overflow-hidden select-none bg-white dark:bg-neutral-950"
     >
       <div className="flex flex-col items-center justify-center w-full px-4">
         <h1

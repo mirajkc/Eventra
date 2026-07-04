@@ -7,7 +7,7 @@ import { useRef } from 'react';
 export default function LandingPricing() {
   const containerRef = useRef<HTMLDivElement>(null);
   return (
-    <div ref={containerRef} className='container'>
+    <div ref={containerRef} className='container z-20 bg-white'>
       <PricingCard />
     </div>
   );
