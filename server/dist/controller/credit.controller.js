@@ -181,7 +181,7 @@ class CreditController {
                     return res.status(400).send("No metadata found");
                 }
                 const { userId, organizationId, package: pkg, credits } = session.metadata;
-                const amount = session.amount_total ? session.amount_total / 100 : 0;
+                const amount = (session.amount_total ?? 0) / 100;
                 const organizationDetails = await organizationService.getOrganizationByFilter({
                     filter: { id: organizationId },
                     include: {

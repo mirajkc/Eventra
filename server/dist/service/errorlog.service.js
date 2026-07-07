@@ -3,6 +3,7 @@ class ErrorLogService {
     async getErrorLogs(skip, take, filter) {
         const errorlog = await prisma.errorLog.findMany({
             where: filter,
+            orderBy: { id: 'desc' },
             skip: skip,
             take: take,
         });

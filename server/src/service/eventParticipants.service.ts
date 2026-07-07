@@ -10,19 +10,29 @@ class EventParticipantService {
       ...(skip !== undefined && { skip }),
       ...(take !== undefined && { take })
     })
-    if (!paticipants || paticipants.length <= 0) {
-      throw {
-
-        code: 500,
-        message: "Error while fetching registerd users detials for this event",
-        status: "USER_DATA_FETCH_ERR"
-      } as IErrorTypes
-    }
-    return paticipants
+    return paticipants ?? []
   }
 
   async createEvent(eventId: string, data: { eventId: string, userId: string, checkInToken: string }) {
     return prisma.$transaction(async (tx: any) => {
+      const event = await tx.event.findUnique({
+        where: { id: eventId },
+        select: { registeredCount: true, capacity: true }
+      })
+      if (!event) {
+        throw {
+          code: 404,
+          message: "Event not found.",
+          status: "EVENT_NOT_FOUND_ERR"
+        } as IErrorTypes
+      }
+      if (event.registeredCount >= event.capacity) {
+        throw {
+          code: 403,
+          message: "Sorry, the maximum capacity is reached for the event. ",
+          status: "MAXIMUM_CAPACITY_REACHED_ERR"
+        } as IErrorTypes
+      }
       await tx.event.update({
         where: { id: eventId },
         data: {

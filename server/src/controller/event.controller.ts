@@ -58,7 +58,7 @@ class EventController {
         status: "ORGANIZATION_NOT_FOUND_ERR"
       } as IErrorTypes
     }
-    await checkForCredit(organizationDetails.id)
+    const { credits: refreshedCredits } = await checkForCredit(organizationDetails.id)
     const creatorDetails = await organizationMemberService.getMemberByFilter({
       filter: {
         userId: userDetails.id,
@@ -76,10 +76,10 @@ class EventController {
         status: 'AUTHORIZAED_USER_NOT_FOUND_ERR'
       } as IErrorTypes
     }
-    if (organizationDetails.credits < 5) {
+    if (refreshedCredits < 5) {
       throw {
         code: 406,
-        message: "You are out of organization creadits please purchase the addional credits or wait till the credit resets. ",
+        message: "You are out of organization credits please purchase the additional credits or wait till the credit resets. ",
         status: "OUT_OF_CREDIT_ERR"
       } as IErrorTypes
     }
@@ -317,7 +317,7 @@ class EventController {
       const filters: IEventQuery = req.query;
 
       const page: number = Number(filters.page) || 1;
-      const take: number = Number(filters.limit) || 10;
+      const take: number = Number(filters.take) || 10;
       const skip: number = (page - 1) * take;
 
       const where: any = {};

@@ -36,12 +36,12 @@ declare class CreditPurchaseService {
         creditPurchase: any;
     }>;
     getRevenue(): Promise<{
-        monthlyRevenue: number | null;
-        totalRevenue: number | null;
+        monthlyRevenue: number;
+        totalRevenue: number;
     }>;
     getCreditPurchases(): Promise<{
-        monthlyCreditPurchases: number | null;
-        totalCreditPurchases: number | null;
+        monthlyCreditPurchases: number;
+        totalCreditPurchases: number;
     }>;
     getCreditPurchase(filter: any, skip: number, take: number, include: any): Promise<({
         [x: string]: never;

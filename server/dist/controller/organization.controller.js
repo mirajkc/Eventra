@@ -149,10 +149,13 @@ class OrganizationController {
             }
             let orderBy = [];
             if (query.createdAt) {
-                orderBy.push({ "createdAt": query.createdAt });
+                orderBy.push({ createdAt: query.createdAt });
             }
             if (query.updatedAt) {
-                orderBy.push({ "updatedAt": query.updatedAt });
+                orderBy.push({ updatedAt: query.updatedAt });
+            }
+            if (orderBy.length === 0) {
+                orderBy.push({ createdAt: 'desc' });
             }
             const fetchedOrganizations = await organizationService.getAllOrganizationByFilter({
                 filter: filter,

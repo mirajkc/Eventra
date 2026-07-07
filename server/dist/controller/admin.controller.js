@@ -5,7 +5,7 @@ import notificationService from "../service/notification.service.js";
 import eventService from "../service/event.service.js";
 import userService from "../service/user.service.js";
 import eventParticipantService from "../service/eventParticipants.service.js";
-import { totalRegistrationsPerMonth } from "../utilities/webdata.js";
+import { totalRegistrationsPerMonth, totalAttendeesPerMonth } from "../utilities/webdata.js";
 import adminLogsService from "../service/admin.logs.service.js";
 import errorLogService from "../service/errorlog.service.js";
 import creditService from "../service/creditpurchase.service.js";
@@ -202,7 +202,7 @@ class AdminController {
                     totalEventViews,
                     monthlyData: {
                         totalRegistrations: await totalRegistrationsPerMonth(),
-                        totalAttendees: await totalRegistrationsPerMonth(),
+                        totalAttendees: await totalAttendeesPerMonth(),
                         totalViews: null
                     }
                 }
@@ -216,7 +216,7 @@ class AdminController {
         try {
             const query = req.query;
             const page = Number(query.page) || 1;
-            const take = Number(query.limit) || 10;
+            const take = Number(query.take) || 10;
             const skip = (page - 1) * take;
             const filter = query.title ? { title: { contains: String(query.title) } } : {};
             const notifications = await notificationService.getNotification(filter, skip, take);
@@ -241,7 +241,7 @@ class AdminController {
         try {
             const query = req.query;
             const page = Number(query.page) || 1;
-            const take = Number(query.limit) || 10;
+            const take = Number(query.take) || 10;
             const skip = (page - 1) * take;
             const message = String(query.message) || "";
             const errorLogs = await errorLogService.getErrorLogs(skip, take, { message: { contains: message } });
@@ -266,7 +266,7 @@ class AdminController {
         try {
             const query = req.query;
             const page = Number(query.page) || 1;
-            const take = Number(query.limit) || 10;
+            const take = Number(query.take) || 10;
             const skip = (page - 1) * take;
             const name = query.name;
             let filter = {};
@@ -296,10 +296,10 @@ class AdminController {
         try {
             const query = req.query;
             const page = Number(query.page) || 1;
-            const take = Number(query.limit) || 10;
+            const take = Number(query.take) || 10;
             const skip = (page - 1) * take;
             const name = query.name;
-            const revenue = await creditService.getCreditPurchases();
+            const revenue = await creditService.getRevenue();
             const credits = await creditService.getCreditPurchases();
             const filter = {
                 organization: {
@@ -329,9 +329,9 @@ class AdminController {
                 message: "Credit purchases has been fetched successfully",
                 data: {
                     creditPurchases,
-                    totalRevenue: revenue.totalCreditPurchases,
+                    totalRevenue: revenue.totalRevenue,
                     totalCredits: credits.totalCreditPurchases,
-                    monthlyRevenue: revenue.monthlyCreditPurchases,
+                    monthlyRevenue: revenue.monthlyRevenue,
                     monthlyCredits: credits.monthlyCreditPurchases
                 },
                 paginations: {

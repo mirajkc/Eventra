@@ -51,7 +51,7 @@ class EventController {
                 status: "ORGANIZATION_NOT_FOUND_ERR"
             };
         }
-        await checkForCredit(organizationDetails.id);
+        const { credits: refreshedCredits } = await checkForCredit(organizationDetails.id);
         const creatorDetails = await organizationMemberService.getMemberByFilter({
             filter: {
                 userId: userDetails.id,
@@ -69,10 +69,10 @@ class EventController {
                 status: 'AUTHORIZAED_USER_NOT_FOUND_ERR'
             };
         }
-        if (organizationDetails.credits < 5) {
+        if (refreshedCredits < 5) {
             throw {
                 code: 406,
-                message: "You are out of organization creadits please purchase the addional credits or wait till the credit resets. ",
+                message: "You are out of organization credits please purchase the additional credits or wait till the credit resets. ",
                 status: "OUT_OF_CREDIT_ERR"
             };
         }
@@ -303,7 +303,7 @@ class EventController {
         try {
             const filters = req.query;
             const page = Number(filters.page) || 1;
-            const take = Number(filters.limit) || 10;
+            const take = Number(filters.take) || 10;
             const skip = (page - 1) * take;
             const where = {};
             if (filters.creatorId)

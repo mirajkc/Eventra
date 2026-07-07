@@ -5,6 +5,7 @@ class ErrorLogService {
     async getErrorLogs(skip : number, take : number, filter :{message?: {contains : string}}){
        const errorlog = await prisma.errorLog.findMany({
         where : filter,
+        orderBy: { id: 'desc' },
         skip : skip,
         take : take,
        })

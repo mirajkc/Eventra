@@ -48,6 +48,7 @@ class UserService {
     async getAllUsers(skip, take, filter) {
         const userDetails = await prisma.user.findMany({
             where: filter,
+            orderBy: { createdAt: 'desc' },
             skip: skip,
             take: take
         });

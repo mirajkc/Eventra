@@ -64,6 +64,7 @@ export interface IUpdateEvent {
 }
 export interface IEventQuery {
     page?: number;
+    take?: number;
     limit?: number;
     organizationId?: string;
     creatorId?: string;

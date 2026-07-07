@@ -26,11 +26,7 @@ export const useAuthStore = create<IAuthState>((set) => ({
       if(!accessToken){
         throw "access token not found"
       }
-      const response = await axiosInstance.get('/user/me', {
-        headers : {
-          Authorization : `Bearer ${accessToken}`
-        }
-      })
+      const response = await axiosInstance.get('/user/me')
       set({
         userDetails : response.data.data
       })

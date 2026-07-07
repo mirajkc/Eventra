@@ -68,6 +68,7 @@ export interface IUpdateEvent {
 
 export interface IEventQuery {
   page?: number,        // current page
+  take?: number,       // number of items per page
   limit?: number,       // number of items per page
   organizationId?: string, // filter by organization
   creatorId?: string,      // filter by creator (for admin/creator view)

@@ -180,7 +180,7 @@ class UserController {
     try {
       const query = req.query
       const page = Number(query.page) || 1
-      const take = Number(query.limit) || 10
+      const take = Number(query.take) || 10
       const skip = (page - 1) * take
       const filter = query.name ? { name: { contains: query.name, mode: 'insensitive' } } : {}
 

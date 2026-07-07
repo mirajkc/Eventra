@@ -97,7 +97,7 @@ export default function Dashboard() {
                      <Chart data={websiteMetadata.monthlyData.totalRegistrations} title="Registrations" description="Showing total registrations for the this year" />
                 </div>
                 <div className="w-full lg:col-span-3 h-[400px]">
-                     <Chart data={websiteMetadata.monthlyData.totalRegistrations} title="Registrations" description="Showing total registrations for the this year" />
+                     <Chart data={websiteMetadata.monthlyData.totalAttendees} title="Attendees" description="Showing total attendees for the this year" />
                 </div>
                 
                 

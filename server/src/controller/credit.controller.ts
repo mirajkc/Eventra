@@ -212,7 +212,7 @@ class CreditController {
 
       const { userId, organizationId, package: pkg, credits } = session.metadata as any;
 
-      const amount = session.amount_total ? session.amount_total / 100 : 0;
+      const amount = (session.amount_total ?? 0) / 100;
 
       const organizationDetails = await organizationService.getOrganizationByFilter({
         filter: { id: organizationId },

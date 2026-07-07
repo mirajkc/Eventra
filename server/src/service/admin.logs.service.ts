@@ -27,6 +27,7 @@ class AdminLogsService {
   async getAdminLogs(skip : number, take : number, filter : any){
     const adminLogs = await prisma.adminLogs.findMany({
        where : filter,
+       orderBy: { createdAt: 'desc' },
        skip : skip,
        take : take,
        include : {
