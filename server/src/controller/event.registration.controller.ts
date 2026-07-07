@@ -346,8 +346,8 @@ class EventRegistrationController {
         } as IErrorTypes
       }
       const query = req.query
-      const page = Number(query.page) | 1
-      const take = Number(query.take) | 10
+      const page = Number(query.page) || 1
+      const take = Number(query.take) || 10
       const skip = Math.floor((page - 1) * take)
       const attendedUsers = await eventParticipantService.getEventParticipants({
         filter: {

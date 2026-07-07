@@ -22,7 +22,7 @@ class AdminController {
     if(organizationId.length < 1){
       throw {
         code : 404, 
-        message : "Unable to fetchfethch organization details please try again. ",
+        message : "Unable to fetch organization details please try again. ",
         status : "ORGANIZATION_ID_NOT_FOUND_ERR"
       } as IErrorTypes
     }
@@ -94,7 +94,7 @@ class AdminController {
     if(eventId.length < 1){
       throw {
         code : 404, 
-        message : "Unable to fetchfethch event details please try again. ",
+        message : "Unable to fetch event details please try again. ",
         status : "EVENT_ID_NOT_FOUND_ERR"
       } as IErrorTypes
     }
@@ -161,7 +161,7 @@ class AdminController {
     if(userId.length < 1){
       throw {
         code : 404, 
-        message : "Unable to fetchfethch user details please try again. ",
+        message : "Unable to fetch user details please try again. ",
         status : "USER_ID_NOT_FOUND_ERR"
       } as IErrorTypes
     }

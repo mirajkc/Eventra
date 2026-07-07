@@ -23,6 +23,7 @@ import geoCode from "../service/geocode.service.js"
 
 class EventController {
   async createNewEvent(req: Request, res: Response, next: NextFunction) {
+    try {
     const data: ICreateEvent = req.body
     const userDetails: IUserDetails = req.userDetails
     const slug = getSlug(data.title)
@@ -154,6 +155,9 @@ class EventController {
       message: "Event created successfully. ",
       data: newEvent
     })
+    } catch (error) {
+      next(error)
+    }
   }
   async updateEventDetails(req: Request, res: Response, next: NextFunction) {
     try {
@@ -291,7 +295,7 @@ class EventController {
         } as IErrorTypes
       }
       const totalParticipants: any = eventDetails.participants?.length
-      eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date() ? "COMPLETED" : "PUBLISHED"
+      const effectiveStatus = eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date() ? "COMPLETED" : "PUBLISHED"
       return res.json({
         message: "Event details fetched successfully",
         data: {

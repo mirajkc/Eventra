@@ -10,7 +10,7 @@ export const organizationDTO = Joi.object({
 
 export const memberRoleDTO = Joi.object({
   id : Joi.string().required(),
-  role : Joi.string().required(),
+  role : Joi.string().valid("ADMIN", "MEMBER", "CREATOR").required(),
   organizationId : Joi.string().required()
 })
 

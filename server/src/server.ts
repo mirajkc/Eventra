@@ -3,6 +3,13 @@ import { Server, Socket } from 'socket.io';
 import app from './config/express.config.js'
 import enviroment from './config/enviroment.config.js'
 
+process.on('unhandledRejection', (reason) => {
+  console.error('UNHANDLED REJECTION:', reason)
+})
+
+process.on('uncaughtException', (error) => {
+  console.error('UNCAUGHT EXCEPTION:', error)
+})
 
 const server = http.createServer(app)
 const port = enviroment.portNumber

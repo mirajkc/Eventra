@@ -210,7 +210,7 @@ model Event {
 
   // relations
   organization  Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  creator       User                @relation(fields: [creatorId], references: [id])
+  creator       User                @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   participants  EventParticipants[]
   eventMessages EventMessage[]
   eventMetrics  EventMetric[]
