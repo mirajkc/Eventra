@@ -72,7 +72,7 @@ export default function ListOrganizations() {
   const queryParams = useMemo(
     () => ({
       page: currentPage,
-      limit: 9,
+      take: 9,
       premium,
       name : search,
       type,

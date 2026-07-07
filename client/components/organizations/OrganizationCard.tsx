@@ -32,8 +32,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
               alt={`${organization.name} banner`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              loading="eager"
-              unoptimized
+              loading="lazy"
             />
             {/* Overlay Badges */}
             <div className="absolute top-2.5 left-2.5">
@@ -59,7 +58,7 @@ export default function OrganizationCard({ organization }: { organization: IOrga
                   alt={organization.name}
                   fill
                   sizes="56px"
-                  unoptimized
+                  loading="lazy"
                 />
               </div>
             </div>

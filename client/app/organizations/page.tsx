@@ -1,11 +1,14 @@
 "use client";
 
-import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import BlurText from "@/components/BlurText";
-import ListOrganizations from "@/components/organizations/ListOrganizations";
-import { Spinner } from "@/components/ui/spinner";
+import { ListOrganizationsSkeleton } from "@/components/organizations/ListOrganizations";
 import { useTranslation } from "react-i18next";
 
+const ListOrganizations = dynamic(
+  () => import("@/components/organizations/ListOrganizations"),
+  { loading: () => <ListOrganizationsSkeleton /> }
+);
 
 export default function OrganizationsPage() {
   const { t } = useTranslation();
@@ -28,13 +31,7 @@ export default function OrganizationsPage() {
         />
       </div>
       <div>
-        <Suspense fallback={
-          <div className="flex justify-center items-center min-h-[50vh]">
-            <Spinner className="size-8" />
-          </div>
-        }>
-          <ListOrganizations />
-        </Suspense>
+        <ListOrganizations />
       </div>
     </div>
   );
