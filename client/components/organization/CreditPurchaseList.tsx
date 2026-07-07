@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { Spinner } from "../ui/spinner"
 import { useParams } from "next/navigation"
 import { formatDistanceToNow } from "date-fns"
+import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
@@ -75,7 +76,7 @@ export default function CreditPurchaseList() {
 
   if (purchases.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[40vh] text-neutral-500 italic">
+      <div className="flex items-center justify-center py-8 text-neutral-500 italic text-sm">
         No credit purchases found.
       </div>
     )
@@ -113,9 +114,9 @@ export default function CreditPurchaseList() {
             </div>
           </div>
           <div className="flex flex-col items-end gap-1.5">
-            <span className="text-[10px] font-bold px-2.5 py-1 bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full uppercase tracking-wider">
+            <Badge variant="success" className="uppercase text-[10px] px-2.5 py-0.5">
               {purchase.package}
-            </span>
+            </Badge>
             <p className="text-[10px] text-neutral-400 dark:text-neutral-500 font-medium text-right">
               {formatDistanceToNow(new Date(purchase.purchasedAt))} ago
             </p>

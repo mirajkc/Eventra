@@ -50,8 +50,8 @@ export default function OrganizationEvents() {
 
   if (error) {
     return (
-      <div className="flex flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50 min-h-[60vh]">
-        <div className="flex flex-col items-center justify-center min-h-[40vh] text-neutral-500 italic gap-3">
+      <div className="flex flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50">
+        <div className="flex flex-col items-center justify-center py-12 text-neutral-500 italic gap-3">
           <p>{t("organizations.single.events.failedToFetch")}</p>
           <Button variant="outline" size="sm" onClick={() => refetchEvents()}>
             Try again
@@ -62,7 +62,7 @@ export default function OrganizationEvents() {
   }
 
   return (
-    <div className="flex  flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50 min-h-[60vh]" >
+    <div className="flex flex-col p-4 w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white/50 shadow-xl backdrop-blur-md transition-all dark:border-neutral-800 dark:bg-neutral-950/50" >
       <div>
         <TypographyH4>{t("organizations.single.events.title")}</TypographyH4>
         <TypographyP>{t("organizations.single.events.subtitle")}</TypographyP>
@@ -100,7 +100,7 @@ export default function OrganizationEvents() {
               <OrganizationEventCard key={event.id} event={event} />
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="flex flex-col items-center justify-center py-12 text-center">
               <TypographyH4 className="text-muted-foreground">{t("organizations.single.events.noEventsFound")}</TypographyH4>
               <TypographyP>{t("organizations.single.events.noEventsSubtitle")}</TypographyP>
             </div>

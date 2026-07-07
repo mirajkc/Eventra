@@ -100,13 +100,10 @@ export default function OrganizationEventCard({ event }: OrganizationEventCardPr
 
         <div className="mt-4 flex flex-wrap gap-2">
           {event.tags?.map((tag) => (
-            <div
-              key={tag}
-              className="flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-0.5 text-[10px] font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
-            >
+            <Badge key={tag} variant="outline" className="gap-1 text-[10px]">
               <Tag className="h-2.5 w-2.5" />
               {tag}
-            </div>
+            </Badge>
           ))}
         </div>
 

@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { Spinner } from "../ui/spinner"
 import { useParams } from "next/navigation"
 import { formatDistanceToNow } from "date-fns"
+import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import HandleKickMember from "./HandleKickMember"
@@ -99,7 +100,7 @@ export default function JoinedMemberList() {
 
   if (joinedMembers.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[40vh] text-neutral-500 italic">
+      <div className="flex items-center justify-center py-8 text-neutral-500 italic text-sm">
         No members found.
       </div>
     )
@@ -119,14 +120,14 @@ export default function JoinedMemberList() {
       {joinedMembers.map((member) => (
         <div
           key={member.id}
-          className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-3xl shadow-sm hover:ring-1 hover:ring-primary/20 hover:border-primary/20 transition-all backdrop-blur-sm gap-4"
+          className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/40 dark:bg-neutral-900/40 border border-neutral-100 dark:border-neutral-800 rounded-2xl shadow-sm hover:ring-1 hover:ring-primary/20 hover:border-primary/20 transition-all backdrop-blur-sm gap-4"
         >
           <div className="flex items-center gap-4 min-w-0">
             <div className="relative shrink-0">
               <img
                 src={member.user.image || "https://github.com/shadcn.png"}
                 alt={member.user.name}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white dark:border-neutral-800 shadow-sm"
+                className="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-neutral-800 shadow-sm"
               />
             </div>
             <div className="flex flex-col min-w-0">
@@ -141,9 +142,9 @@ export default function JoinedMemberList() {
 
           <div className="flex flex-row items-center justify-between sm:justify-end gap-3 sm:gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-neutral-100 dark:border-neutral-800">
             <div className="flex flex-col items-start sm:items-end">
-              <span className="text-[10px] font-bold px-2.5 py-1 bg-blue-50/50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider border border-blue-100/50 dark:border-blue-800/30">
+              <Badge variant="info" className="uppercase text-[10px] px-2.5 py-0.5">
                 {member.role}
-              </span>
+              </Badge>
               <p className="hidden sm:block text-[10px] text-neutral-400 dark:text-neutral-500 font-medium mt-1">
                 Joined {formatDistanceToNow(new Date(member.joinedAt))} ago
               </p>

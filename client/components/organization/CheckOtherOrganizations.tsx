@@ -48,7 +48,7 @@ export default function CheckOtherOrganizations() {
       </div>
       <div className="flex items-center justify-center text-center w-full h-full">
         <Link href="/organizations">
-          <Button type='button' variant="outline" className="p-6">{t("organizations.single.other.goToOrganizations")}</Button>
+          <Button type='button' variant="outline" size="lg" className="rounded-full px-8">{t("organizations.single.other.goToOrganizations")}</Button>
         </Link>
       </div>
 

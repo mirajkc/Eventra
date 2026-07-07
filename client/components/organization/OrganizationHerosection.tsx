@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { TypographyH4 } from "@/components/ui/Typography"
 import { ISingleOrganization } from "@/types/organization.types"
 import { Globe, Calendar, ExternalLink, ShieldCheck, Plus } from "lucide-react"
 import * as motion from "motion/react-client"
@@ -128,18 +129,18 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
 
       {/* Profile Section */}
       <div className="px-6 pb-10 md:px-12">
-        <div className="flex flex-col items-center gap-6 mt-4 md:flex-row md:items-end">
+        <div className="flex flex-col gap-6 mt-4 md:flex-row md:items-end">
           {/* Info Details */}
           <div className="flex w-full flex-col gap-4 pt-4 md:pt-0">
-            <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-end">
-              <div className="space-y-3 text-center md:text-left">
-                <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <h1 className="bg-linear-to-br from-neutral-900 to-neutral-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-white dark:to-neutral-400 md:text-4xl">
                     {organizationData.name}
                   </h1>
                   <div className="flex gap-2">
                     {organizationData.isPremium && (
-                      <Badge className="bg-amber-500 hover:bg-amber-600 border-none text-white shadow-sm gap-1 animate-pulse">
+                      <Badge variant="warning" className="gap-1">
                         <ShieldCheck className="w-3 h-3" /> {t("organizations.single.hero.premium")}
                       </Badge>
                     )}
@@ -149,7 +150,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-5 text-sm font-medium text-neutral-500 dark:text-neutral-400 md:justify-start">
+                <div className="flex flex-wrap items-center gap-5 text-sm font-medium text-neutral-500 dark:text-neutral-400">
                   {organizationData.website && (
                     <Link
                       href={organizationData.website.startsWith('http') ? organizationData.website : `https://${organizationData.website}`}
@@ -179,56 +180,48 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
                 </div>
               </div>
               <div className="flex flex-col justify-end w-full md:flex-row gap-2">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full md:w-auto flex gap-2"
-                >
+                <div className="flex flex-col w-full md:flex-row gap-2 md:self-end">
                   {
-                    userRole === "OWNER" || userRole === "CREATOR" ? (
-                      <>
-                        <Link
-                          className="w-full md:w-auto"
-                          href={`/organization/${organizationId}/create-event`}>
+                    (userRole === "OWNER" || userRole === "CREATOR") && (
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Link href={`/organization/${organizationId}/create-event`}>
                           <Button
                             size="lg"
-                            className="w-full md:w-auto h-12 hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 "
+                            className="w-full md:w-auto rounded-2xl px-8"
                           >
                             <Plus />
                             {t("organizations.single.hero.createEvent")}
-                          </Button></Link>
-                      </>
-                    ) : (<></>)
+                          </Button>
+                        </Link>
+                      </motion.div>
+                    )
                   }
-
-                </motion.div>
-
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full md:w-auto flex gap-2"
-                >
 
                   {
                     isJoined ? (
-                      <Button
-                        onClick={handleLeave}
-                        size="lg"
-                        className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
-                      >
-                        {t("organizations.single.hero.leaveOrganization")}
-                      </Button>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button
+                          onClick={handleLeave}
+                          variant="destructive"
+                          size="lg"
+                          className="w-full md:w-auto rounded-2xl px-8"
+                        >
+                          {t("organizations.single.hero.leaveOrganization")}
+                        </Button>
+                      </motion.div>
                     ) : (
-                      <Button
-                        onClick={handleJoin}
-                        size="lg"
-                        className="h-12 w-full hover:cursor-pointer rounded-2xl bg-primary px-10 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 md:w-auto"
-                      >
-                        {t("organizations.single.hero.joinOrganization")}
-                      </Button>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button
+                          onClick={handleJoin}
+                          size="lg"
+                          className="w-full md:w-auto rounded-2xl px-8"
+                        >
+                          {t("organizations.single.hero.joinOrganization")}
+                        </Button>
+                      </motion.div>
                     )
                   }
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
@@ -243,7 +236,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
         >
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">{t("organizations.single.hero.aboutOrganization")}</h3>
+              <TypographyH4 className="mb-3">{t("organizations.single.hero.aboutOrganization")}</TypographyH4>
               <p className="max-w-4xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
                 {organizationData.description || t("organizations.single.hero.defaultDescription")}
               </p>
@@ -257,7 +250,7 @@ export default function OrganizationHeroSection({ organizationData }: Organizati
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-neutral-500">{t("organizations.single.hero.status")}</span>
-                <Badge variant={organizationData.isPremium ? "default" : "secondary"} className="text-[10px] h-5">
+                <Badge variant={organizationData.isPremium ? "warning" : "secondary"} className="text-[10px] h-5">
                   {organizationData.isPremium ? t("organizations.single.hero.activePremium") : t("organizations.single.hero.standard")}
                 </Badge>
               </div>

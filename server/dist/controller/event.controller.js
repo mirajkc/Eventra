@@ -16,134 +16,139 @@ import averageRecomendationScore from "../Algorithms/averageRecomendationScore.j
 import geoCode from "../service/geocode.service.js";
 class EventController {
     async createNewEvent(req, res, next) {
-        const data = req.body;
-        const userDetails = req.userDetails;
-        const slug = getSlug(data.title);
-        if (new Date(data.startDate) < new Date()) {
-            throw {
-                code: 400,
-                message: "Event start date cannot be in the past. ",
-                status: "EVENT_START_DATE_ERR"
-            };
-        }
-        const eventDetials = await eventService.getEvent({
-            filter: { slug: slug }
-        });
-        if (eventDetials) {
-            throw {
-                code: 400,
-                message: "Duplicate event detected please make sure that the title is unique. ",
-                status: "DUPLICATE_EVENT_ERR"
-            };
-        }
-        const organizationDetails = await organizationService.getOrganizationByFilter({
-            filter: { id: data.organizationId },
-            include: {
-                members: {
-                    select: { userId: true }
+        try {
+            const data = req.body;
+            const userDetails = req.userDetails;
+            const slug = getSlug(data.title);
+            if (new Date(data.startDate) < new Date()) {
+                throw {
+                    code: 400,
+                    message: "Event start date cannot be in the past. ",
+                    status: "EVENT_START_DATE_ERR"
+                };
+            }
+            const eventDetials = await eventService.getEvent({
+                filter: { slug: slug }
+            });
+            if (eventDetials) {
+                throw {
+                    code: 400,
+                    message: "Duplicate event detected please make sure that the title is unique. ",
+                    status: "DUPLICATE_EVENT_ERR"
+                };
+            }
+            const organizationDetails = await organizationService.getOrganizationByFilter({
+                filter: { id: data.organizationId },
+                include: {
+                    members: {
+                        select: { userId: true }
+                    }
                 }
+            });
+            if (!organizationDetails) {
+                throw {
+                    code: 404,
+                    message: "Error organization not found make sure organization exists. ",
+                    status: "ORGANIZATION_NOT_FOUND_ERR"
+                };
             }
-        });
-        if (!organizationDetails) {
-            throw {
-                code: 404,
-                message: "Error organization not found make sure organization exists. ",
-                status: "ORGANIZATION_NOT_FOUND_ERR"
-            };
-        }
-        const { credits: refreshedCredits } = await checkForCredit(organizationDetails.id);
-        const creatorDetails = await organizationMemberService.getMemberByFilter({
-            filter: {
+            const { credits: refreshedCredits } = await checkForCredit(organizationDetails.id);
+            const creatorDetails = await organizationMemberService.getMemberByFilter({
+                filter: {
+                    userId: userDetails.id,
+                    organizationId: data.organizationId,
+                    OR: [
+                        { role: "CREATOR" },
+                        { role: "OWNER" }
+                    ]
+                }
+            });
+            if (!creatorDetails) {
+                throw {
+                    code: 404,
+                    message: "Error member not found make sure that you have joined the organization and are authorized to create the events. ",
+                    status: 'AUTHORIZAED_USER_NOT_FOUND_ERR'
+                };
+            }
+            if (refreshedCredits < 5) {
+                throw {
+                    code: 406,
+                    message: "You are out of organization credits please purchase the additional credits or wait till the credit resets. ",
+                    status: "OUT_OF_CREDIT_ERR"
+                };
+            }
+            let imageUrl = null;
+            if (req.file) {
+                const imageFile = req.file.buffer;
+                imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
+            }
+            const token = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase();
+            const { lat, lon } = await geoCode.getLatitudeLongitude(data.location);
+            const newEvent = await eventService.createEvent({
+                data: {
+                    organizationId: organizationDetails.id,
+                    title: data.title,
+                    location: data.location,
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    capacity: Number(data.capacity),
+                    category: data.category,
+                    tags: data.tags,
+                    description: data.description,
+                    creatorId: userDetails.id,
+                    image: imageUrl,
+                    slug: slug,
+                    status: "PUBLISHED",
+                    latitude: Number(lat),
+                    longitude: Number(lon)
+                },
+                checkInToken: token
+            });
+            // generate the event score for newly created event
+            const eventScore = getEventScore({
+                title: newEvent.title,
+                description: newEvent.description,
+                category: newEvent.category,
+                tags: newEvent.tags,
+                image: newEvent.image,
+                premium: organizationDetails.isPremium
+            });
+            await eventService.updateEvent({
+                filter: { id: newEvent.id },
+                data: {
+                    eventScore: eventScore
+                }
+            });
+            const groupNotification = organizationDetails.members?.map((m) => ({
+                userId: m.userId,
+                title: "New event has been created.",
+                message: `Hi, ${userDetails.name} a new event has been posted for ${organizationDetails.name}. `,
+                type: 'EVENT_CREATED',
+                entityType: "EVENT",
+                entityId: newEvent.id
+            })) ?? [];
+            await notificationService.sendManyNotification(groupNotification);
+            await emailService.sendEmail({
+                to: userDetails.email,
+                subject: "New event created",
+                message: newEventTemplate(newEvent.title, userDetails.name)
+            });
+            await notificationService.sendNotificaion({
                 userId: userDetails.id,
-                organizationId: data.organizationId,
-                OR: [
-                    { role: "CREATOR" },
-                    { role: "OWNER" }
-                ]
-            }
-        });
-        if (!creatorDetails) {
-            throw {
-                code: 404,
-                message: "Error member not found make sure that you have joined the organization and are authorized to create the events. ",
-                status: 'AUTHORIZAED_USER_NOT_FOUND_ERR'
-            };
+                title: "Your check in token for the event " + newEvent.title,
+                message: `Hello, your check in token for the event ${newEvent.title} is ${token} please keep it safe as this token will be needed during the check in proccess. `,
+                entityType: "EVENT",
+                entityId: newEvent.id,
+                type: 'EVENT_CREATED'
+            });
+            res.json({
+                message: "Event created successfully. ",
+                data: newEvent
+            });
         }
-        if (refreshedCredits < 5) {
-            throw {
-                code: 406,
-                message: "You are out of organization credits please purchase the additional credits or wait till the credit resets. ",
-                status: "OUT_OF_CREDIT_ERR"
-            };
+        catch (error) {
+            next(error);
         }
-        let imageUrl = null;
-        if (req.file) {
-            const imageFile = req.file.buffer;
-            imageUrl = await uploadImage(imageFile, "Eventra/Event/Thumbnail");
-        }
-        const token = generateString({ length: 5, charset: 'alphanumeric' }).toUpperCase();
-        const { lat, lon } = await geoCode.getLatitudeLongitude(data.location);
-        const newEvent = await eventService.createEvent({
-            data: {
-                organizationId: organizationDetails.id,
-                title: data.title,
-                location: data.location,
-                startDate: data.startDate,
-                endDate: data.endDate,
-                capacity: Number(data.capacity),
-                category: data.category,
-                tags: data.tags,
-                description: data.description,
-                creatorId: userDetails.id,
-                image: imageUrl,
-                slug: slug,
-                status: "PUBLISHED",
-                latitude: Number(lat),
-                longitude: Number(lon)
-            },
-            checkInToken: token
-        });
-        // generate the event score for newly created event
-        const eventScore = getEventScore({
-            title: newEvent.title,
-            description: newEvent.description,
-            category: newEvent.category,
-            tags: newEvent.tags,
-            image: newEvent.image,
-            premium: organizationDetails.isPremium
-        });
-        await eventService.updateEvent({
-            filter: { id: newEvent.id },
-            data: {
-                eventScore: eventScore
-            }
-        });
-        const groupNotification = organizationDetails.members?.map((m) => ({
-            userId: m.userId,
-            title: "New event has been created.",
-            message: `Hi, ${userDetails.name} a new event has been posted for ${organizationDetails.name}. `,
-            type: 'EVENT_CREATED',
-            entityType: "EVENT",
-            entityId: newEvent.id
-        })) ?? [];
-        await notificationService.sendManyNotification(groupNotification);
-        await emailService.sendEmail({
-            to: userDetails.email,
-            subject: "New event created",
-            message: newEventTemplate(newEvent.title, userDetails.name)
-        });
-        await notificationService.sendNotificaion({
-            userId: userDetails.id,
-            title: "Your check in token for the event " + newEvent.title,
-            message: `Hello, your check in token for the event ${newEvent.title} is ${token} please keep it safe as this token will be needed during the check in proccess. `,
-            entityType: "EVENT",
-            entityId: newEvent.id,
-            type: 'EVENT_CREATED'
-        });
-        res.json({
-            message: "Event created successfully. ",
-            data: newEvent
-        });
     }
     async updateEventDetails(req, res, next) {
         try {
@@ -278,7 +283,7 @@ class EventController {
                 };
             }
             const totalParticipants = eventDetails.participants?.length;
-            eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date() ? "COMPLETED" : "PUBLISHED";
+            const effectiveStatus = eventDetails.status === "CANCELLED" ? "CANCELLED" : eventDetails.endDate < new Date() ? "COMPLETED" : "PUBLISHED";
             return res.json({
                 message: "Event details fetched successfully",
                 data: {

@@ -1,7 +1,13 @@
 import 'dotenv/config';
 class Enviroment {
     portNumber = Number(process.env.PORT) || 9000;
-    secretKey = process.env.SECRET_KEY || "SECRET";
+    secretKey = (() => {
+        const key = process.env.SECRET_KEY;
+        if (!key || key === "SECRET") {
+            console.warn("WARNING: Using default JWT secret. Set SECRET_KEY env var for production security.");
+        }
+        return key || "SECRET";
+    })();
     mode = process.env.MODE || "development";
     clientURL = process.env.CLIENT_URL || "http://localhost:3000";
     allowedOrigins = (process.env.ALLOWED_ORIGINS ?? "").split(",");

@@ -36,18 +36,16 @@ export default function OrganizationCard({ organization }: { organization: IOrga
             />
             {/* Overlay Badges */}
             <div className="absolute top-2.5 left-2.5">
-              <div className="px-2.5 py-1 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md rounded-full text-[10px] font-bold text-neutral-800 dark:text-neutral-100 shadow-sm border border-black/5 dark:border-white/5 uppercase tracking-wider">
+              <Badge variant="secondary" className="uppercase">
                 {organization.type}
-              </div>
+              </Badge>
             </div>
             {organization.isPremium && (
               <div className="absolute top-2.5 right-2.5 z-10">
-                <div className="px-2.5 py-1 bg-amber-500/95 backdrop-blur-md rounded-full flex items-center gap-1.5 shadow-sm border border-amber-600/20">
-                    <BadgeCheck className="w-3 h-3 text-white" />
-                    <span className="text-[10px] font-bold text-white uppercase">
-                        {t("organizations.card.premium")}
-                    </span>
-                </div>
+                <Badge variant="warning" className="gap-1 uppercase">
+                  <BadgeCheck className="w-3 h-3" />
+                  {t("organizations.card.premium")}
+                </Badge>
               </div>
             )}
             <div className="absolute -bottom-1 left-2.5">
