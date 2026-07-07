@@ -1,6 +1,7 @@
 "use client"
 import getAccessToken from "@/lib/access.token";
-import socket from "@/lib/socket";
+import { connectSocket } from "@/lib/socket";
+const socket = connectSocket();
 import { IEventChatTypes } from "@/types/chat.types";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";

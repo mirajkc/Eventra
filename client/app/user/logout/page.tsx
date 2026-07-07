@@ -7,9 +7,12 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "@/state/hooks";
+import { logout } from "@/state/slices/auth.slice";
 
 export default function Logout() {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false)
 
@@ -30,6 +33,7 @@ export default function Logout() {
       const result = await response.json()
       Cookies.remove("accessToken")
       Cookies.remove("refreshToken")
+      dispatch(logout())
       toast.success(result.message)
       window.location.href = "/"
     } catch (error) {

@@ -1,6 +1,7 @@
 "use client"
 import getAccessToken from "@/lib/access.token";
-import socket from "@/lib/socket";
+import { connectSocket } from "@/lib/socket";
+const socket = connectSocket();
 import { chatMessageDTO } from "@/rules/chat.types.rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send } from "lucide-react";

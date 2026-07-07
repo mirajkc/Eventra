@@ -27,6 +27,11 @@ export default function Event() {
     try {
       setLoading(true)
       const accessToken = await getAccessToken()
+      if (!accessToken) {
+        setIsUserJoined(false)
+        setLoading(false)
+        return
+      }
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/is-logged-in-user-joined/${eventId}`, {
         method: "GET",
         headers: {

@@ -29,6 +29,11 @@ export default async function getAccessToken() {
 
     return result.data
   } catch (error) {
+    Cookies.remove("accessToken", { path: "/" })
+    Cookies.remove("refreshToken", { path: "/" })
+    if (typeof window !== "undefined") {
+      window.location.href = "/auth/login"
+    }
     throw error
   }
 }

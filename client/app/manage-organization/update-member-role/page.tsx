@@ -97,8 +97,8 @@ export default function UpdateMemberRolePage() {
                 <p>{t("manageOrganization.updateRole.pagination.totalMembers", { total: pagination.totalDocs })}</p>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <Button variant={"outline"} onClick={() => { setPagination({ ...pagination, currentPage: pagination.currentPage-- }); getOrganizationMembers() }} disabled={pagination.currentPage === 1}> <ChevronLeft /> {t("manageOrganization.updateRole.pagination.previous")}</Button>
-                <Button variant={"outline"} onClick={() => { setPagination({ ...pagination, currentPage: pagination.currentPage++ }); getOrganizationMembers() }} disabled={pagination.currentPage === pagination.totalPages}>{t("manageOrganization.updateRole.pagination.next")} <ChevronRight /></Button>
+                <Button variant={"outline"} onClick={() => { setPagination(prev => ({ ...prev, currentPage: prev.currentPage - 1 })); getOrganizationMembers() }} disabled={pagination.currentPage === 1}> <ChevronLeft /> {t("manageOrganization.updateRole.pagination.previous")}</Button>
+                <Button variant={"outline"} onClick={() => { setPagination(prev => ({ ...prev, currentPage: prev.currentPage + 1 })); getOrganizationMembers() }} disabled={pagination.currentPage === pagination.totalPages}>{t("manageOrganization.updateRole.pagination.next")} <ChevronRight /></Button>
               </div>
             </>
           ) : (<></>)

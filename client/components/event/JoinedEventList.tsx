@@ -58,7 +58,7 @@ export default function JoinedEventList() {
     if (pagination.hasNextPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage++,
+        currentPage: prev.currentPage + 1,
       }));
 
     }
@@ -68,7 +68,7 @@ export default function JoinedEventList() {
     if (pagination.hasPreviousPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage--,
+        currentPage: prev.currentPage - 1,
       }));
 
     }

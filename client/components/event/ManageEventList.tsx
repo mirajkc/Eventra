@@ -63,7 +63,7 @@ export default function ManageEventList() {
     if (pagination.hasNextPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage++,
+        currentPage: prev.currentPage + 1,
       }));
 
     }
@@ -73,7 +73,7 @@ export default function ManageEventList() {
     if (pagination.hasPreviousPage) {
       setPagination((prev) => ({
         ...prev,
-        currentPage: prev.currentPage--,
+        currentPage: prev.currentPage - 1,
       }));
 
     }

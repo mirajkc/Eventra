@@ -56,21 +56,17 @@ export default function NotificationDropdown({ userId }: { userId: string }) {
 
   const handleNextPage = () => {
     if (pagination.hasNextPage) {
-      setPagination({
-        ...pagination,
-        currentPage: pagination.currentPage++
-      })
-      fetchUserNotifications()
+      const nextPage = pagination.currentPage + 1
+      setPagination(prev => ({ ...prev, currentPage: nextPage }))
+      fetchUserNotifications(nextPage)
     }
   }
 
   const handlePrevPage = () => {
     if (pagination.hasPreviousPage) {
-      setPagination({
-        ...pagination,
-        currentPage: pagination.currentPage--
-      })
-      fetchUserNotifications()
+      const prevPage = pagination.currentPage - 1
+      setPagination(prev => ({ ...prev, currentPage: prevPage }))
+      fetchUserNotifications(prevPage)
     }
   }
 

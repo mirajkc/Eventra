@@ -62,7 +62,7 @@ export default function JoinedOrganizationList() {
     if (pagination.hasNextPage) {
       setPaginations((prev) => ({
         ...prev,
-        currentPage: prev.currentPage++,
+        currentPage: prev.currentPage + 1,
       }));
 
     }
@@ -72,7 +72,7 @@ export default function JoinedOrganizationList() {
     if (pagination.hasPreviousPage) {
       setPaginations((prev) => ({
         ...prev,
-        currentPage: prev.currentPage--,
+        currentPage: prev.currentPage - 1,
       }));
 
     }
