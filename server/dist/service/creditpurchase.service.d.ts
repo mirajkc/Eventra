@@ -15,11 +15,11 @@ declare class CreditPurchaseService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
         thumbnail: string | null;
         website: string | null;
+        description: string;
+        type: import("../generated/prisma/enums.js").OrganizationType;
+        credits: number;
         lastCreditReset: Date;
         isPremium: boolean;
     }>;
@@ -49,10 +49,10 @@ declare class CreditPurchaseService {
         [x: symbol]: never;
     } & {
         id: string;
+        credits: number;
         organizationId: string;
         purchasedBy: string;
         package: import("../generated/prisma/enums.js").CreditPackage;
-        credits: number;
         amount: number;
         purchasedAt: Date;
     })[]>;

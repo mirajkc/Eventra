@@ -2,9 +2,9 @@ import type { ICreateOTP } from "../lib/types/otp.types.js";
 declare class OTPService {
     createOtp(data: ICreateOTP): Promise<{
         id: string;
-        otp: string;
         createdAt: Date;
         userId: string;
+        otp: string;
         purpose: import("../generated/prisma/enums.js").OtpPurpose;
         expiresAt: Date;
         used: boolean;
@@ -19,9 +19,9 @@ declare class OTPService {
         };
     }): Promise<{
         id: string;
-        otp: string;
         createdAt: Date;
         userId: string;
+        otp: string;
         purpose: import("../generated/prisma/enums.js").OtpPurpose;
         expiresAt: Date;
         used: boolean;
@@ -33,9 +33,9 @@ declare class OTPService {
         };
     }): Promise<{
         id: string;
-        otp: string;
         createdAt: Date;
         userId: string;
+        otp: string;
         purpose: import("../generated/prisma/enums.js").OtpPurpose;
         expiresAt: Date;
         used: boolean;

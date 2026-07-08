@@ -1,5 +1,5 @@
-import path from "node:path";
-import type { NextConfig } from "next";
+import path from 'node:path';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   turbopack: {
@@ -7,11 +7,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "res.cloudinary.com" },
-      { protocol: "https", hostname: "github.com" },
-      { protocol: "https", hostname: "i.pravatar.cc" },
-      { protocol: "https", hostname: "images.unsplash.com" },
-       {
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'https', hostname: 'github.com' },
+      { protocol: 'https', hostname: 'i.pravatar.cc' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      {
         protocol: 'https',
         hostname: 'ui-avatars.com',
       },
@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'api.dicebear.com',
       },
-    ]
+    ],
   },
 };
 

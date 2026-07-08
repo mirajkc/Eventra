@@ -15,15 +15,13 @@ declare class EventService {
         data: any;
     }): Promise<{
         id: string;
-        status: import("../generated/prisma/enums.js").EventStatus;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        description: string;
         organizationId: string;
         slug: string;
-        creatorId: string;
         title: string;
-        description: string;
         location: string;
         latitude: number | null;
         longitude: number | null;
@@ -31,9 +29,11 @@ declare class EventService {
         endDate: Date;
         capacity: number;
         registeredCount: number;
+        status: import("../generated/prisma/enums.js").EventStatus;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
         eventScore: number | null;
+        creatorId: string;
     }>;
     getEvent({ filter, include }: {
         filter: {
@@ -60,14 +60,14 @@ declare class EventService {
             checkedInAt: Date | null;
         })[] | ({
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         } | {
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         })[] | ({
@@ -96,8 +96,8 @@ declare class EventService {
             checkedInAt: Date | null;
         }[] | {
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         }[] | {
@@ -113,15 +113,13 @@ declare class EventService {
         [x: symbol]: never;
     } & {
         id: string;
-        status: import("../generated/prisma/enums.js").EventStatus;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        description: string;
         organizationId: string;
         slug: string;
-        creatorId: string;
         title: string;
-        description: string;
         location: string;
         latitude: number | null;
         longitude: number | null;
@@ -129,14 +127,13 @@ declare class EventService {
         endDate: Date;
         capacity: number;
         registeredCount: number;
+        status: import("../generated/prisma/enums.js").EventStatus;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
         eventScore: number | null;
+        creatorId: string;
     }) | null>;
     getManyEvents(skip: number, take: number, filter: any, orderBy: any): Promise<({
-        _count: {
-            participants: number;
-        };
         organization: {
             id: string;
             name: string;
@@ -148,17 +145,18 @@ declare class EventService {
             name: string;
             image: string | null;
         };
+        _count: {
+            participants: number;
+        };
     } & {
         id: string;
-        status: import("../generated/prisma/enums.js").EventStatus;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        description: string;
         organizationId: string;
         slug: string;
-        creatorId: string;
         title: string;
-        description: string;
         location: string;
         latitude: number | null;
         longitude: number | null;
@@ -166,9 +164,11 @@ declare class EventService {
         endDate: Date;
         capacity: number;
         registeredCount: number;
+        status: import("../generated/prisma/enums.js").EventStatus;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
         eventScore: number | null;
+        creatorId: string;
     })[]>;
     deleteEvent(id: string, include: any): Promise<{
         [x: string]: ({
@@ -189,14 +189,14 @@ declare class EventService {
             checkedInAt: Date | null;
         })[] | ({
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         } | {
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         })[] | ({
@@ -225,8 +225,8 @@ declare class EventService {
             checkedInAt: Date | null;
         }[] | {
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         }[] | {
@@ -242,15 +242,13 @@ declare class EventService {
         [x: symbol]: never;
     } & {
         id: string;
-        status: import("../generated/prisma/enums.js").EventStatus;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
+        description: string;
         organizationId: string;
         slug: string;
-        creatorId: string;
         title: string;
-        description: string;
         location: string;
         latitude: number | null;
         longitude: number | null;
@@ -258,9 +256,11 @@ declare class EventService {
         endDate: Date;
         capacity: number;
         registeredCount: number;
+        status: import("../generated/prisma/enums.js").EventStatus;
         category: import("../generated/prisma/enums.js").EventType;
         tags: string[];
         eventScore: number | null;
+        creatorId: string;
     }>;
 }
 declare const eventService: EventService;

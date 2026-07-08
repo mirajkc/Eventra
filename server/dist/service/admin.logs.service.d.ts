@@ -14,8 +14,8 @@ declare class AdminLogsService {
     getAdminLogs(skip: number, take: number, filter: any): Promise<({
         admin: {
             id: string;
-            name: string;
             email: string;
+            name: string;
         };
     } & {
         id: string;

@@ -5,9 +5,9 @@ declare class ErrorLogService {
         };
     }): Promise<{
         id: string;
+        status: string;
         code: number;
         message: string;
-        status: string;
     }[]>;
     getErrorLogsCount(filter: {
         message?: {

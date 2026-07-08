@@ -7,11 +7,11 @@ declare class OrganizationService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
         thumbnail: string | null;
         website: string | null;
+        description: string;
+        type: import("../generated/prisma/enums.js").OrganizationType;
+        credits: number;
         lastCreditReset: Date;
         isPremium: boolean;
     } | null>;
@@ -35,26 +35,24 @@ declare class OrganizationService {
         [x: string]: ({
             id: string;
             role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
             userId: string;
             organizationId: string;
-            joinedAt: Date;
         } | {
             id: string;
             role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
             userId: string;
             organizationId: string;
-            joinedAt: Date;
         })[] | ({
             id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
             createdAt: Date;
             updatedAt: Date;
             image: string | null;
+            description: string;
             organizationId: string;
             slug: string;
-            creatorId: string;
             title: string;
-            description: string;
             location: string;
             latitude: number | null;
             longitude: number | null;
@@ -62,20 +60,20 @@ declare class OrganizationService {
             endDate: Date;
             capacity: number;
             registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
             eventScore: number | null;
+            creatorId: string;
         } | {
             id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
             createdAt: Date;
             updatedAt: Date;
             image: string | null;
+            description: string;
             organizationId: string;
             slug: string;
-            creatorId: string;
             title: string;
-            description: string;
             location: string;
             latitude: number | null;
             longitude: number | null;
@@ -83,42 +81,42 @@ declare class OrganizationService {
             endDate: Date;
             capacity: number;
             registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
             eventScore: number | null;
+            creatorId: string;
         })[] | ({
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         } | {
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         })[] | {
             id: string;
             role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
             userId: string;
             organizationId: string;
-            joinedAt: Date;
         }[] | {
             id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
             createdAt: Date;
             updatedAt: Date;
             image: string | null;
+            description: string;
             organizationId: string;
             slug: string;
-            creatorId: string;
             title: string;
-            description: string;
             location: string;
             latitude: number | null;
             longitude: number | null;
@@ -126,15 +124,17 @@ declare class OrganizationService {
             endDate: Date;
             capacity: number;
             registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
             eventScore: number | null;
+            creatorId: string;
         }[] | {
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         }[];
@@ -146,11 +146,11 @@ declare class OrganizationService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
         thumbnail: string | null;
         website: string | null;
+        description: string;
+        type: import("../generated/prisma/enums.js").OrganizationType;
+        credits: number;
         lastCreditReset: Date;
         isPremium: boolean;
     }>;
@@ -165,11 +165,11 @@ declare class OrganizationService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
         thumbnail: string | null;
         website: string | null;
+        description: string;
+        type: import("../generated/prisma/enums.js").OrganizationType;
+        credits: number;
         lastCreditReset: Date;
         isPremium: boolean;
     }[]>;
@@ -184,11 +184,11 @@ declare class OrganizationService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
         thumbnail: string | null;
         website: string | null;
+        description: string;
+        type: import("../generated/prisma/enums.js").OrganizationType;
+        credits: number;
         lastCreditReset: Date;
         isPremium: boolean;
     }>;
@@ -196,26 +196,24 @@ declare class OrganizationService {
         [x: string]: ({
             id: string;
             role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
             userId: string;
             organizationId: string;
-            joinedAt: Date;
         } | {
             id: string;
             role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
             userId: string;
             organizationId: string;
-            joinedAt: Date;
         })[] | ({
             id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
             createdAt: Date;
             updatedAt: Date;
             image: string | null;
+            description: string;
             organizationId: string;
             slug: string;
-            creatorId: string;
             title: string;
-            description: string;
             location: string;
             latitude: number | null;
             longitude: number | null;
@@ -223,20 +221,20 @@ declare class OrganizationService {
             endDate: Date;
             capacity: number;
             registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
             eventScore: number | null;
+            creatorId: string;
         } | {
             id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
             createdAt: Date;
             updatedAt: Date;
             image: string | null;
+            description: string;
             organizationId: string;
             slug: string;
-            creatorId: string;
             title: string;
-            description: string;
             location: string;
             latitude: number | null;
             longitude: number | null;
@@ -244,42 +242,42 @@ declare class OrganizationService {
             endDate: Date;
             capacity: number;
             registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
             eventScore: number | null;
+            creatorId: string;
         })[] | ({
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         } | {
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         })[] | {
             id: string;
             role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
             userId: string;
             organizationId: string;
-            joinedAt: Date;
         }[] | {
             id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
             createdAt: Date;
             updatedAt: Date;
             image: string | null;
+            description: string;
             organizationId: string;
             slug: string;
-            creatorId: string;
             title: string;
-            description: string;
             location: string;
             latitude: number | null;
             longitude: number | null;
@@ -287,15 +285,17 @@ declare class OrganizationService {
             endDate: Date;
             capacity: number;
             registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
             category: import("../generated/prisma/enums.js").EventType;
             tags: string[];
             eventScore: number | null;
+            creatorId: string;
         }[] | {
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         }[];
@@ -307,11 +307,11 @@ declare class OrganizationService {
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
-        description: string;
-        credits: number;
-        type: import("../generated/prisma/enums.js").OrganizationType;
         thumbnail: string | null;
         website: string | null;
+        description: string;
+        type: import("../generated/prisma/enums.js").OrganizationType;
+        credits: number;
         lastCreditReset: Date;
         isPremium: boolean;
     }>;

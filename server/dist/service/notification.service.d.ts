@@ -8,11 +8,11 @@ declare class NotificationService {
     }): Promise<number>;
     sendNotificaion({ userId, title, message, type, entityId, entityType }: ICreateNotificaion): Promise<{
         id: string;
-        message: string;
         createdAt: Date;
+        type: import("../generated/prisma/enums.js").NotificationType;
         userId: string;
         title: string;
-        type: import("../generated/prisma/enums.js").NotificationType;
+        message: string;
         entityType: import("../generated/prisma/enums.js").NotificationEntity;
         entityId: string | null;
         isRead: boolean;
@@ -25,11 +25,11 @@ declare class NotificationService {
         };
     }, skip: number, limit: number): Promise<{
         id: string;
-        message: string;
         createdAt: Date;
+        type: import("../generated/prisma/enums.js").NotificationType;
         userId: string;
         title: string;
-        type: import("../generated/prisma/enums.js").NotificationType;
+        message: string;
         entityType: import("../generated/prisma/enums.js").NotificationEntity;
         entityId: string | null;
         isRead: boolean;
@@ -38,11 +38,11 @@ declare class NotificationService {
         id: string;
     }): Promise<{
         id: string;
-        message: string;
         createdAt: Date;
+        type: import("../generated/prisma/enums.js").NotificationType;
         userId: string;
         title: string;
-        type: import("../generated/prisma/enums.js").NotificationType;
+        message: string;
         entityType: import("../generated/prisma/enums.js").NotificationEntity;
         entityId: string | null;
         isRead: boolean;

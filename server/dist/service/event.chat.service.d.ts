@@ -4,8 +4,8 @@ declare class EventChatService {
         data: ISendEventMessage;
     }): Promise<{
         id: string;
-        message: string;
         createdAt: Date;
+        message: string;
         eventId: string;
         senderId: string;
     }>;
@@ -20,8 +20,8 @@ declare class EventChatService {
         [x: symbol]: never;
     } & {
         id: string;
-        message: string;
         createdAt: Date;
+        message: string;
         eventId: string;
         senderId: string;
     })[]>;

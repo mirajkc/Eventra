@@ -2,6 +2,60 @@ declare class AuthService {
     getUserDetails(filter: any, include?: any): Promise<({
         [x: string]: ({
             id: string;
+            role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
+            userId: string;
+            organizationId: string;
+        } | {
+            id: string;
+            role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
+            userId: string;
+            organizationId: string;
+        })[] | ({
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            description: string;
+            organizationId: string;
+            slug: string;
+            title: string;
+            location: string;
+            latitude: number | null;
+            longitude: number | null;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+            eventScore: number | null;
+            creatorId: string;
+        } | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            description: string;
+            organizationId: string;
+            slug: string;
+            title: string;
+            location: string;
+            latitude: number | null;
+            longitude: number | null;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+            eventScore: number | null;
+            creatorId: string;
+        })[] | ({
+            id: string;
             createdAt: Date;
             updatedAt: Date;
             userId: string;
@@ -18,72 +72,18 @@ declare class AuthService {
             expiresOn: Date;
         })[] | ({
             id: string;
-            role: import("../generated/prisma/enums.js").OrganizationRole;
-            userId: string;
-            organizationId: string;
-            joinedAt: Date;
-        } | {
-            id: string;
-            role: import("../generated/prisma/enums.js").OrganizationRole;
-            userId: string;
-            organizationId: string;
-            joinedAt: Date;
-        })[] | ({
-            id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
-            createdAt: Date;
-            updatedAt: Date;
-            image: string | null;
-            organizationId: string;
-            slug: string;
-            creatorId: string;
-            title: string;
-            description: string;
-            location: string;
-            latitude: number | null;
-            longitude: number | null;
-            startDate: Date;
-            endDate: Date;
-            capacity: number;
-            registeredCount: number;
-            category: import("../generated/prisma/enums.js").EventType;
-            tags: string[];
-            eventScore: number | null;
-        } | {
-            id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
-            createdAt: Date;
-            updatedAt: Date;
-            image: string | null;
-            organizationId: string;
-            slug: string;
-            creatorId: string;
-            title: string;
-            description: string;
-            location: string;
-            latitude: number | null;
-            longitude: number | null;
-            startDate: Date;
-            endDate: Date;
-            capacity: number;
-            registeredCount: number;
-            category: import("../generated/prisma/enums.js").EventType;
-            tags: string[];
-            eventScore: number | null;
-        })[] | ({
-            id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         } | {
             id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         })[] | ({
@@ -104,50 +104,50 @@ declare class AuthService {
             checkedInAt: Date | null;
         })[] | ({
             id: string;
-            message: string;
             createdAt: Date;
+            type: import("../generated/prisma/enums.js").NotificationType;
             userId: string;
             title: string;
-            type: import("../generated/prisma/enums.js").NotificationType;
+            message: string;
             entityType: import("../generated/prisma/enums.js").NotificationEntity;
             entityId: string | null;
             isRead: boolean;
         } | {
             id: string;
-            message: string;
             createdAt: Date;
+            type: import("../generated/prisma/enums.js").NotificationType;
             userId: string;
             title: string;
-            type: import("../generated/prisma/enums.js").NotificationType;
+            message: string;
             entityType: import("../generated/prisma/enums.js").NotificationEntity;
             entityId: string | null;
             isRead: boolean;
         })[] | ({
             id: string;
-            otp: string;
             createdAt: Date;
             userId: string;
+            otp: string;
             purpose: import("../generated/prisma/enums.js").OtpPurpose;
             expiresAt: Date;
             used: boolean;
         } | {
             id: string;
-            otp: string;
             createdAt: Date;
             userId: string;
+            otp: string;
             purpose: import("../generated/prisma/enums.js").OtpPurpose;
             expiresAt: Date;
             used: boolean;
         })[] | ({
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         } | {
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         })[] | ({
@@ -184,6 +184,33 @@ declare class AuthService {
             hasJoined: boolean;
         })[] | {
             id: string;
+            role: import("../generated/prisma/enums.js").OrganizationRole;
+            joinedAt: Date;
+            userId: string;
+            organizationId: string;
+        }[] | {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            image: string | null;
+            description: string;
+            organizationId: string;
+            slug: string;
+            title: string;
+            location: string;
+            latitude: number | null;
+            longitude: number | null;
+            startDate: Date;
+            endDate: Date;
+            capacity: number;
+            registeredCount: number;
+            status: import("../generated/prisma/enums.js").EventStatus;
+            category: import("../generated/prisma/enums.js").EventType;
+            tags: string[];
+            eventScore: number | null;
+            creatorId: string;
+        }[] | {
+            id: string;
             createdAt: Date;
             updatedAt: Date;
             userId: string;
@@ -192,37 +219,10 @@ declare class AuthService {
             expiresOn: Date;
         }[] | {
             id: string;
-            role: import("../generated/prisma/enums.js").OrganizationRole;
-            userId: string;
-            organizationId: string;
-            joinedAt: Date;
-        }[] | {
-            id: string;
-            status: import("../generated/prisma/enums.js").EventStatus;
-            createdAt: Date;
-            updatedAt: Date;
-            image: string | null;
-            organizationId: string;
-            slug: string;
-            creatorId: string;
-            title: string;
-            description: string;
-            location: string;
-            latitude: number | null;
-            longitude: number | null;
-            startDate: Date;
-            endDate: Date;
-            capacity: number;
-            registeredCount: number;
-            category: import("../generated/prisma/enums.js").EventType;
-            tags: string[];
-            eventScore: number | null;
-        }[] | {
-            id: string;
+            credits: number;
             organizationId: string;
             purchasedBy: string;
             package: import("../generated/prisma/enums.js").CreditPackage;
-            credits: number;
             amount: number;
             purchasedAt: Date;
         }[] | {
@@ -235,26 +235,26 @@ declare class AuthService {
             checkedInAt: Date | null;
         }[] | {
             id: string;
-            message: string;
             createdAt: Date;
+            type: import("../generated/prisma/enums.js").NotificationType;
             userId: string;
             title: string;
-            type: import("../generated/prisma/enums.js").NotificationType;
+            message: string;
             entityType: import("../generated/prisma/enums.js").NotificationEntity;
             entityId: string | null;
             isRead: boolean;
         }[] | {
             id: string;
-            otp: string;
             createdAt: Date;
             userId: string;
+            otp: string;
             purpose: import("../generated/prisma/enums.js").OtpPurpose;
             expiresAt: Date;
             used: boolean;
         }[] | {
             id: string;
-            message: string;
             createdAt: Date;
+            message: string;
             eventId: string;
             senderId: string;
         }[] | {
@@ -278,11 +278,11 @@ declare class AuthService {
         [x: symbol]: never;
     } & {
         id: string;
-        name: string;
         email: string;
+        name: string;
+        phone: string | null;
         password: string | null;
         role: import("../generated/prisma/enums.js").Role;
-        phone: string | null;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
@@ -291,11 +291,11 @@ declare class AuthService {
     }) | null>;
     createNewUser(data: any): Promise<{
         id: string;
-        name: string;
         email: string;
+        name: string;
+        phone: string | null;
         password: string | null;
         role: import("../generated/prisma/enums.js").Role;
-        phone: string | null;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;
@@ -309,11 +309,11 @@ declare class AuthService {
         data: any;
     }): Promise<{
         id: string;
-        name: string;
         email: string;
+        name: string;
+        phone: string | null;
         password: string | null;
         role: import("../generated/prisma/enums.js").Role;
-        phone: string | null;
         createdAt: Date;
         updatedAt: Date;
         image: string | null;

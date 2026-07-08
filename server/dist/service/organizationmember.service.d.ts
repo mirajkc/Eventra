@@ -10,16 +10,16 @@ declare class OrganizationMember {
     }): Promise<{
         id: string;
         role: import("../generated/prisma/enums.js").OrganizationRole;
+        joinedAt: Date;
         userId: string;
         organizationId: string;
-        joinedAt: Date;
     } | null>;
     createNewMember(data: any): Promise<{
         id: string;
         role: import("../generated/prisma/enums.js").OrganizationRole;
+        joinedAt: Date;
         userId: string;
         organizationId: string;
-        joinedAt: Date;
     }>;
     deleteMember({ filter }: {
         filter: {
@@ -29,9 +29,9 @@ declare class OrganizationMember {
     }): Promise<{
         id: string;
         role: import("../generated/prisma/enums.js").OrganizationRole;
+        joinedAt: Date;
         userId: string;
         organizationId: string;
-        joinedAt: Date;
     }>;
     updateMember({ filter, data }: {
         filter: {
@@ -44,9 +44,9 @@ declare class OrganizationMember {
     }): Promise<{
         id: string;
         role: import("../generated/prisma/enums.js").OrganizationRole;
+        joinedAt: Date;
         userId: string;
         organizationId: string;
-        joinedAt: Date;
     }>;
 }
 declare const organizationMemberService: OrganizationMember;

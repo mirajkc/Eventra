@@ -1,52 +1,50 @@
 import { prisma } from "../config/prisma.config.js";
+import { ensureCorpus, getUserProfileVector, getDocumentVector, cosineSimilarity } from "./tfidf.js";
 /*
  * PSEUDO CODE for averageRecommendationScore Algorithm
  *
  * FUNCTION averageRecomendationScore(userId):
- *   1. GET user details (userScore) FROM DB WHERE id = userId
- *      IF user NOT FOUND, THROW Error
+ *   0. FETCH ALL published events → build TF-IDF corpus (once)
  *
- *   2. GET user interactions (eventMetrics) FROM DB WHERE userId = userId
- *      EXTRACT interacted eventIds
+ *   1. GET user's click history (eventIds only)
  *
- *   3. FIND similar users:
- *      GET distinct userIds FROM eventMetrics WHERE eventId IN interacted_eventIds AND userId != currentUserId
+ *   2. BUILD user TF-IDF profile (Content-Based):
+ *        FOR each clicked event:
+ *          GET its TF-IDF vector from corpus
+ *        AVERAGE all clicked vectors into userProfileVector
  *
- *   4. FETCH candidate events:
- *      GET events FROM DB WHERE status = "PUBLISHED" AND startDate >= NOW
- *      INCLUDE eventMetrics for similar users only
+ *   3. FIND similar users (Collaborative):
+ *        GET distinct userIds FROM eventMetrics
+ *        WHERE eventId IN clicked_eventIds AND userId != currentUserId
+ *
+ *   4. FETCH candidate events (upcoming, published)
+ *      INCLUDE eventMetrics for similar users
  *
  *   5. CALCULATE scores for each candidate event:
  *      FOR EACH event:
- *        a. contentScore = 1 - ABS(userScore - eventScore)
- *        b. IF similarUsers exist:
- *             collabScore = (count of similar users who interacted with this event) / (total similar users)
- *           ELSE:
- *             collabScore = 0
- *        c. hybridScore = (contentScore + collabScore) / 2
- *        d. ATTACH hybridScore to event object
+ *        a. contentScore = cosineSimilarity(userProfileVector, eventTFIDFVector)
+ *        b. collabScore  = (similar users who interacted) / (total similar users)
+ *        c. hybridScore  = (contentScore + collabScore) / 2
  *
- *   6. SORT events by hybridScore DESCENDING using QUICK SORT algorithm
- *
- *   7. RETURN top 10 events
+ *   6. QUICK SORT by hybridScore descending
+ *   7. RETURN top 10
  */
 export default async function averageRecomendationScore(userId) {
-    const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { id: true, userScore: true }
+    // 0. Build TF-IDF corpus from all published events (lazy, runs once)
+    const allEvents = await prisma.event.findMany({
+        where: { status: "PUBLISHED" },
+        select: { id: true, title: true, description: true }
     });
-    if (!user) {
-        throw new Error("User not found");
-    }
-    const userPrefScore = user.userScore;
-    // 2. Collaborative Filtering: Find similar users
-    // Get events this user has interacted with
+    await ensureCorpus(allEvents);
+    // 1. Get user's click history
     const userInteractions = await prisma.eventMetric.findMany({
         where: { userId: userId },
         select: { eventId: true }
     });
     const userEventIds = userInteractions.map(i => i.eventId);
-    // Find other users who interacted with ANY of these events (Similar Users)
+    // 2. Content-Based: Build user TF-IDF profile from clicked events
+    const profileVec = getUserProfileVector(userEventIds);
+    // 3. Collaborative Filtering: Find similar users
     let similarUserIds = [];
     if (userEventIds.length > 0) {
         const similarUsersMetrics = await prisma.eventMetric.findMany({
@@ -59,8 +57,7 @@ export default async function averageRecomendationScore(userId) {
         });
         similarUserIds = similarUsersMetrics.map(m => m.userId);
     }
-    // 3. Fetch Candidate Events (Upcoming Published Events)
-    // We include eventMetrics filtered by similar users to compute collab score efficiently
+    // 4. Fetch Candidate Events (Upcoming Published Events)
     const events = await prisma.event.findMany({
         where: {
             status: "PUBLISHED",
@@ -68,26 +65,19 @@ export default async function averageRecomendationScore(userId) {
         },
         include: {
             eventMetrics: {
-                where: {
-                    userId: { in: similarUserIds }
-                },
+                where: { userId: { in: similarUserIds } },
                 select: { userId: true, hasClicked: true, hasJoined: true }
             },
-            organization: {
-                select: { id: true, name: true, image: true, isPremium: true }
-            },
-            creator: {
-                select: { id: true, name: true, image: true }
-            }
+            organization: { select: { id: true, name: true, image: true, isPremium: true } },
+            creator: { select: { id: true, name: true, image: true } }
         }
     });
-    // Calculate Scores
+    // 5. Calculate Scores
     const eventsWithScores = events.map(event => {
-        // Content Score: 1 - |userScore - eventScore|
-        const eScore = event.eventScore ?? 0;
-        const contentScore = 1 - Math.min(Math.abs(userPrefScore - eScore), 1);
+        // Content-Based Score: TF-IDF Cosine Similarity
+        const candidateVec = getDocumentVector(event.id);
+        const contentScore = cosineSimilarity(profileVec, candidateVec);
         // Collaborative Score
-        // Ratio of similar users who interacted with this event
         let collabScore = 0;
         if (similarUserIds.length > 0) {
             const interactionCount = event.eventMetrics.length;
@@ -95,16 +85,24 @@ export default async function averageRecomendationScore(userId) {
         }
         // Hybrid Score (Average)
         const hybridScore = (contentScore + collabScore) / 2;
-        // clean up eventMetrics from the object to return clean event data
         const { eventMetrics, ...eventData } = event;
-        return {
-            ...eventData,
-            recommendationScore: hybridScore
-        };
+        return { ...eventData, recommendationScore: hybridScore };
     });
-    // Sort by Hybrid Score Descending using Quick Sort
+    // 6. Sort by Hybrid Score Descending
     const sortedEvents = quickSort(eventsWithScores);
-    // Return Top 10
+    // 7. Debug: Log top keywords and scores (visible in server console)
+    const topKeywords = Object.entries(profileVec)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 5)
+        .map(([term, weight]) => `${term}(${weight.toFixed(2)})`);
+    if (topKeywords.length > 0) {
+        console.log(`\n📊 User ${userId.slice(0, 8)} → Top keywords: [${topKeywords.join(', ')}]`);
+    }
+    console.log(`📊 Recommendations (top 3):`);
+    sortedEvents.slice(0, 3).forEach((e, i) => {
+        console.log(`   ${i + 1}. "${e.title}" → hybrid: ${e.recommendationScore.toFixed(3)}`);
+    });
+    // 8. Return Top 10
     return sortedEvents.slice(0, 10);
 }
 function quickSort(arr) {
