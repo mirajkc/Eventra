@@ -1,4 +1,4 @@
-﻿import type { Request, Response, NextFunction } from "express"
+import type { Request, Response, NextFunction } from "express"
 import type { ICreateEvent, IEvent, IEventQuery, IUpdateEvent } from "../lib/types/event.types.js"
 import type { IUserDetails } from "../lib/types/user.types.js"
 import organizationService from "../service/organization.service.js"
@@ -18,6 +18,7 @@ import { checkForCredit } from "../utilities/checkforcredit.js"
 import getEventScore from "../Algorithms/getEventScore.js"
 import eventMetricsService from "../service/eventmetrics.service.js"
 import averageRecomendationScore from "../Algorithms/averageRecomendationScore.js"
+import { invalidateCorpus } from "../Algorithms/tfidf.js"
 import geoCode from "../service/geocode.service.js"
 
 
@@ -128,6 +129,9 @@ class EventController {
       }
     })
 
+    // Invalidate TF-IDF corpus so it includes the new event on next recommendation
+    invalidateCorpus()
+
     const groupNotification: Array<ICreateNotificaion> =
       organizationDetails.members?.map((m: any) => ({
         userId: (m as { userId: string }).userId,
@@ -226,6 +230,10 @@ class EventController {
           eventScore: eventScore
         }
       })
+
+    // Invalidate TF-IDF corpus since event content may have changed
+    invalidateCorpus()
+
       const registerdParticipantsId: Array<any> = await eventParticipantService.getEventParticipants({
         filter: { eventId: updatedEvent.id },
         select: {

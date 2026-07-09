@@ -1,14 +1,19 @@
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { TfIdf } = require('natural') as { TfIdf: new () => { addDocument(text: string): void; listTerms(index: number): Array<{ term: string; tfidf: number }> } };
+const { TfIdf } = require('natural') as {
+  TfIdf: new () => {
+    addDocument(text: string): void;
+    listTerms(index: number): Array<{ term: string; tfidf: number }>;
+  };
+};
 
 let tfidf: InstanceType<typeof TfIdf> | null = null;
 let eventIndexMap: Map<string, number> | null = null;
 let isBuilt = false;
 
 export async function ensureCorpus(
-  events: Array<{ id: string; title: string; description: string }>
+  events: Array<{ id: string; title: string; description: string }>,
 ) {
   if (isBuilt) return;
 
@@ -24,27 +29,37 @@ export async function ensureCorpus(
   isBuilt = true;
 }
 
+export function invalidateCorpus() {
+  isBuilt = false;
+  tfidf = null;
+  eventIndexMap = null;
+}
+
 export function getDocumentVector(eventId: string): Record<string, number> {
   const idx = eventIndexMap!.get(eventId);
   if (idx === undefined) return {};
 
   const terms = tfidf!.listTerms(idx);
   const vector: Record<string, number> = {};
-  terms.forEach(t => { vector[t.term] = t.tfidf; });
+  terms.forEach((t) => {
+    vector[t.term] = t.tfidf;
+  });
   return vector;
 }
 
-export function getUserProfileVector(clickedEventIds: string[]): Record<string, number> {
+export function getUserProfileVector(
+  clickedEventIds: string[],
+): Record<string, number> {
   if (clickedEventIds.length === 0) return {};
 
   const profile: Record<string, number> = {};
 
-  clickedEventIds.forEach(eventId => {
+  clickedEventIds.forEach((eventId) => {
     const idx = eventIndexMap!.get(eventId);
     if (idx === undefined) return;
 
     const terms = tfidf!.listTerms(idx);
-    terms.forEach(t => {
+    terms.forEach((t) => {
       profile[t.term] = (profile[t.term] || 0) + t.tfidf;
     });
   });
@@ -61,7 +76,7 @@ export function getUserProfileVector(clickedEventIds: string[]): Record<string, 
 
 export function cosineSimilarity(
   vecA: Record<string, number>,
-  vecB: Record<string, number>
+  vecB: Record<string, number>,
 ): number {
   let dotProduct = 0;
   let magA = 0;
