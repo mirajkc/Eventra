@@ -7,6 +7,7 @@ import { ISingleEvent } from '@/types/event.type';
 import getAccessToken from '@/lib/access.token';
 import { useAppSelector } from '@/state/hooks';
 import { Spinner } from '../ui/spinner';
+import { trackEventRegistrationCompleted } from '@/lib/analytics/posthog';
 
 import EventBanner from './hero/EventBanner';
 import EventMetaStrip from './hero/EventMetaStrip';
@@ -68,6 +69,10 @@ export default function InvitationComponent({ event }: InvitationComponentProps)
         toast.error(result.message || t('events.single.anErrorOccurred'));
         return;
       }
+      trackEventRegistrationCompleted({
+        eventId: event.id,
+        organizationId: event.organizationId,
+      });
       toast.success(t('events.single.joinedSuccessfully'));
       window.location.reload();
     } catch {

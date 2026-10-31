@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import ReduxProvider from "@/state/redux.provider";
 import { Analytics } from '@vercel/analytics/next';
 import FloatingAiAssistant from "@/components/ui/glowing-ai-chat-assistant";
+import PostHog from "@/components/PostHog";
+import ScrollDepthTracker from "@/components/ScrollDepthTracker";
 
 
 
@@ -44,6 +46,16 @@ export default function RootLayout({
         className={`${poppins.variable} ${geistMono.variable} ${fraunces.variable} antialiased`}
       >
         <ReduxProvider>
+          <PostHog
+            apiKey={process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN}
+            host={process.env.NEXT_PUBLIC_POSTHOG_HOST}
+          />
+          <ScrollDepthTracker
+            enabled={Boolean(
+              process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN &&
+              process.env.NEXT_PUBLIC_POSTHOG_HOST
+            )}
+          />
           <ThemeProvider
             attribute="class"
             defaultTheme="light"

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import getAccessToken from "@/lib/access.token";
 import { toast } from "sonner";
+import { trackEventCreated } from "@/lib/analytics/posthog";
 
 export default function CreateEventForm() {
   const params = useParams();
@@ -85,7 +86,14 @@ export default function CreateEventForm() {
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok) {
+        if (result.data?.id) {
+          trackEventCreated({
+            eventId: result.data.id,
+            organizationId,
+            category: data.category,
+          });
+        }
         toast.success(result.message || "Event created successfully!");
         reset()
         router.push(`/organization/${organizationId}/events`);

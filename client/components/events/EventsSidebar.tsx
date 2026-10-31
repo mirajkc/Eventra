@@ -11,6 +11,7 @@ import { EventSearch } from "./Search";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { setSearch } from "@/state/slices/search.slice";
+import { trackSearchSubmitted } from "@/lib/analytics/posthog";
 
 export function EventsSidebar() {
   const { t } = useTranslation();
@@ -44,6 +45,18 @@ export function EventsSidebar() {
     if (type) params.set("category", type);
     if (createdAt) params.set("createdAt", createdAt);
     if (updatedAt) params.set("updatedAt", updatedAt);
+
+    if (searchTerm.trim() || isPremium || capacity || type || createdAt || updatedAt) {
+      trackSearchSubmitted({
+        queryLength: searchTerm.trim().length,
+        category: type || undefined,
+        capacity: capacity || undefined,
+        status: isPremium ? "PUBLISHED" : undefined,
+        createdAt: createdAt || undefined,
+        updatedAt: updatedAt || undefined,
+      });
+    }
+
     replace(`${pathName}?${params.toString()}`);
   }
   useEffect(() => {

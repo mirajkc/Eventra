@@ -17,6 +17,7 @@ import Cookies from 'js-cookie';
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { IUserDetails } from "@/types/user.types";
 import { getUserDetails } from "@/state/slices/auth.slice";
+import posthog from "posthog-js";
 import { useTranslation } from "react-i18next";
 import { useAuthVisual } from "@/app/auth/layout";
 
@@ -71,7 +72,13 @@ export default function Login() {
         secure: process.env.NODE_ENV === "production",
         path: "/"
       });
-      await dispatch(getUserDetails());
+      const userDetailsAction = await dispatch(getUserDetails());
+      if (getUserDetails.fulfilled.match(userDetailsAction)) {
+        const loggedInUser = userDetailsAction.payload?.data;
+        if (loggedInUser?.id) {
+          posthog.identify(loggedInUser.id, { role: loggedInUser.role });
+        }
+      }
       toast.success(t("auth.login.loginSuccess"));
       router.push('/home');
     } catch (error) {

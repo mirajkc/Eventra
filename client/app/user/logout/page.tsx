@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "@/state/hooks";
 import { logout } from "@/state/slices/auth.slice";
+import posthog from "posthog-js";
 
 export default function Logout() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ export default function Logout() {
         throw new Error(t("user.logout.error"))
       }
       const result = await response.json()
+      posthog.reset()
       Cookies.remove("accessToken")
       Cookies.remove("refreshToken")
       dispatch(logout())

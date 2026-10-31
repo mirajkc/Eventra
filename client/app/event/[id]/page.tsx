@@ -6,9 +6,10 @@ import { Spinner } from "@/components/ui/spinner";
 import getAccessToken from "@/lib/access.token";
 import { ISingleEvent } from "@/types/event.type";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { trackEventViewed } from "@/lib/analytics/posthog";
 
 export default function Event() {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ export default function Event() {
   const [isUserJoined, setIsUserJoined] = useState(false)
   const [eventMetadata, setEventMetadata] = useState<ISingleEvent>()
   const [paticipantsCount, setParticipantsCount] = useState(0)
+  const viewedEventId = useRef<string | null>(null);
 
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -67,6 +69,14 @@ export default function Event() {
       }
       setEventMetadata(result.data.eventDetails)
       setParticipantsCount(result.data.totalParticipants)
+      const event = result.data.eventDetails as ISingleEvent;
+      if (viewedEventId.current !== event.id) {
+        trackEventViewed({
+          eventId: event.id,
+          organizationId: event.organizationId,
+        });
+        viewedEventId.current = event.id;
+      }
     } catch (error) {
       toast.error(t("events.single.failedEventData"))
     } finally {
